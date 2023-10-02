@@ -97,9 +97,7 @@ User.encryptUser = async (user) => {
 User.authenticate = async function ({ email, password }) {
   const user = await User.findOne({ where: { email: email } });
 
-  if (user &&
-    (await bcrypt.compare(password, user.dataValues.password))
-  ) {
+  if (user && (await bcrypt.compare(password, user.dataValues.password))) {
     return {
       user,
       token: User.generateToken(user),
@@ -108,6 +106,24 @@ User.authenticate = async function ({ email, password }) {
     const error = Error("bad credentials");
     error.status = 401;
     console.log(error);
+  }
+};
+
+User.validate = async (token) => {
+  try {
+    const { userId } = await jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findByPk(userId);
+
+    if (user) {
+      return user;
+    }
+    const error = Error("bad credentials");
+    error.status = 401;
+    throw error;
+  } catch (err) {
+    const error = Error("bad credentials");
+    error.status = 401;
+    throw (error, err);
   }
 };
 

@@ -4,7 +4,6 @@ const User = require("../db/models/User");
 //POST '/auth/login'
 authRouter.post("/login", async (req, res, next) => {
   try {
-    console.log("!!!!!!", req.body)
     const user = await User.authenticate(req.body);
     res.send(user);
   } catch (err) {

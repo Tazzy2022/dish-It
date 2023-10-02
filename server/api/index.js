@@ -1,10 +1,12 @@
 const router = require('express').Router()
-module.exports = router
+const validateToken = require('./middleware')
 
-router.use('/users', require('./users'))
+router.use('/users', validateToken, require('./users'))
 
 router.use((req, res, next) => {
   const error = new Error('Not Found')
   error.status = 404
   next(error)
 })
+
+module.exports = router

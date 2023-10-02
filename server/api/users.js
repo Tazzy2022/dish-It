@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const User = require("../db/index");
+const User = require("../db/models/User");
 module.exports = router;
 
 router.get("/", async (req, res, next) => {
@@ -16,10 +16,12 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/me", async (req, res, next) => {
+//GET "/api/users/id"
+router.get("/:id", async (req, res, next) => {
   try {
-    res.send(await User.findByToken(req.headers.authorization));
+    const user = await User.findByPk(req.params.id);
+    res.send(user);
   } catch (ex) {
-    next(ex);
+    console.log(ex);
   }
 });
