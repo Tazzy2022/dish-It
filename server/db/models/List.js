@@ -1,0 +1,48 @@
+const Sequelize = require("sequelize");
+const { UUID, UUIDV4, STRING, BOOLEAN, ARRAY } = Sequelize;
+const db = require("../db");
+
+const List = db.define("list", {
+  id: {
+    type: UUID,
+    primaryKey: true,
+    defaultValue: UUIDV4,
+  },
+  listName: {
+    type: STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
+  },
+  isPersonal: {
+    type: BOOLEAN,
+    defaultValue: true,
+  },
+  isPrivate: {
+    type: BOOLEAN,
+    defaultValue: true,
+  },
+  imageUrl: {
+    type: STRING,
+    defaultValue: "image",
+  },
+  // restaurantIdArray: {
+  //   type: STRING,
+  //   get allIds() {
+  //     return this.getDataValue();
+  //   },
+  //   set id(value) {
+  //     this.setDataValue(value);
+  //   },
+  // },
+  //OR:
+  restaurantIdArray: {
+    type: ARRAY(
+  		Sequelize.STRING
+  	),
+  	defaultValue: null,
+  },
+});
+
+module.exports = List;

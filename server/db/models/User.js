@@ -68,12 +68,6 @@ const User = db.define(
   }
 );
 
-User.addHook("beforeSave", async (user) => {
-  if (user.changed("password")) {
-    user.password = await bcrypt.hash(user.password, 5);
-  }
-});
-
 /* generate token function
 returns a signed jwt using the environment secret
 */
@@ -87,65 +81,55 @@ User.generateToken = (user) => {
   );
 };
 
-module.exports = User;
-
-//below is all boilerplate
-/**
- * instanceMethods
- */
-User.prototype.correctPassword = function (candidatePwd) {
-  //we need to compare the plain version to an encrypted version of the password
-  return bcrypt.compare(candidatePwd, this.password);
+//returns a jwt token for the created user
+User.encryptUser = async (user) => {
+  //create user
+  const { dataValues } = await User.create(user);
+  //return the jwt for the newly created user
+  return User.generateToken(dataValues);
 };
 
-User.prototype.generateToken = function () {
-  return jwt.sign({ id: this.id }, process.env.JWT);
-};
+// User.prototype.correctPassword = function (candidatePwd) {
+//   //we need to compare the plain version to an encrypted version of the password
+//   return bcrypt.compare(candidatePwd, this.password);
+// };
 
-/**
- * classMethods
- */
-User.authenticate = async function ({ username, password }) {
-  const user = await this.findOne({ where: { username } });
+User.authenticate = async function ({ email, password }) {
+  const user = await User.findOne({ where: { email } });
   if (!user || !(await user.correctPassword(password))) {
     const error = Error("Incorrect username/password");
     error.status = 401;
     throw error;
-  }
-  return user.generateToken();
-};
-
-User.findByToken = async function (token) {
-  try {
-    const { id } = await jwt.verify(token, process.env.JWT);
-    const user = User.findByPk(id);
-    if (!user) {
-      throw "nooo";
-    }
-    return user;
-  } catch (ex) {
-    const error = Error("bad token");
+  } else if (user && (await bcrypt.compare(password, user.password))) {
+    return {
+      user,
+      token: User.generateToken(user),
+    };
+  } else {
+    const error = Error("bad credentials");
     error.status = 401;
     throw error;
   }
 };
 
-User.addHook("beforeSave", async (user) => {
-  if (user.changed("password")) {
-    user.password = await bcrypt.hash(user.password, 5);
-  }
-});
+// User.addHook("beforeSave", async (user) => {
+//   if (user.changed("password")) {
+//     user.password = await bcrypt.hash(user.password, 5);
+//   }
+// });
 
 /**
  * hooks
  */
-const hashPassword = async (user) => {
-  //in case the password has been changed, we want to encrypt it with bcrypt
-  if (user.changed("password")) {
-    user.password = await bcrypt.hash(user.password, SALT_ROUNDS);
-  }
-};
+// const hashPassword = async (user) => {
+//   //in case the password has been changed, we want to encrypt it with bcrypt
+//   if (user.changed("password")) {
+//     user.password = await bcrypt.hash(user.password, parseInt(process.env.ROUNDS));
+//   }
+// };
 
-User.beforeCreate(hashPassword);
-User.beforeUpdate(hashPassword);
-//User.beforeBulkCreate(users => Promise.all(users.map(hashPassword)))
+// User.beforeCreate(hashPassword);
+// User.beforeUpdate(hashPassword);
+// User.beforeBulkCreate((users) => Promise.all(users.map(hashPassword)));
+
+module.exports = User;
