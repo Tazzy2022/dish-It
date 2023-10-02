@@ -95,12 +95,11 @@ User.encryptUser = async (user) => {
 // };
 
 User.authenticate = async function ({ email, password }) {
-  const user = await User.findOne({ where: { email } });
-  if (!user || !(await user.correctPassword(password))) {
-    const error = Error("Incorrect username/password");
-    error.status = 401;
-    throw error;
-  } else if (user && (await bcrypt.compare(password, user.password))) {
+  const user = await User.findOne({ where: { email: email } });
+
+  if (user &&
+    (await bcrypt.compare(password, user.dataValues.password))
+  ) {
     return {
       user,
       token: User.generateToken(user),
@@ -108,7 +107,7 @@ User.authenticate = async function ({ email, password }) {
   } else {
     const error = Error("bad credentials");
     error.status = 401;
-    throw error;
+    console.log(error);
   }
 };
 
