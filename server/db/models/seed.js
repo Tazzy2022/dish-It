@@ -39,42 +39,64 @@ const syncAndSeed = async () => {
         isPersonal: true,
         isPrivate: false,
         restaurantIdArray: ["1", "2"],
+        userId: michele.id,
       }),
       List.create({
         listName: "Brooklyn brunch",
         isPersonal: true,
         isPrivate: false,
         restaurantIdArray: ["4", "6"],
+        userId: michele.id,
       }),
       List.create({
         listName: "La taquerias",
         isPersonal: true,
         isPrivate: false,
-        restaurantIdArray: ["1"],
+        restaurantIdArray: ["8"],
+        userId: jen.id,
       }),
       List.create({
         listName: "San Francisco date night",
         isPersonal: true,
         isPrivate: false,
         restaurantIdArray: ["71", "2", "44"],
+        userId: michele.id,
       }),
     ]);
     const [yum, green, pork, love] = await Promise.all([
       RestaurantNotes.create({
         restaurantId: "2",
         personalNotes: "yum, everything tasted amazing here",
+        listId: bangkok.id,
       }),
       RestaurantNotes.create({
         restaurantId: "6",
-        personalNotes: "great ambiance and big portion, coffee was just okay",
+        personalNotes: "great ambiance and big portions, coffee was just okay",
+        listId: brooklyn.id,
       }),
       RestaurantNotes.create({
         restaurantId: "1",
         personalNotes: "the pork is best meat option here",
+        listId: la.id,
       }),
       RestaurantNotes.create({
         restaurantId: "71",
         personalNotes: "great spot for a proposal",
+        listId: sf.id,
+      }),
+    ]);
+    await Promise.all([
+      Follow.create({
+        userId: michele.id,
+        follower_id: jen.id,
+      }),
+      Follow.create({
+        userId: michele.id,
+        follower_id: kim.id,
+      }),
+      Follow.create({
+        userId: amanda.id,
+        follower_id: michele.id,
       }),
     ]);
     db.close();
