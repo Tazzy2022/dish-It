@@ -98,6 +98,10 @@ const syncAndSeed = async () => {
         userId: amanda.id,
         follower_id: michele.id,
       }),
+      Follow.create({
+        userId: jen.id,
+        follower_id: michele.id,
+      }),
     ]);
     db.close();
   } catch (error) {

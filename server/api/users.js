@@ -1,20 +1,6 @@
 const router = require("express").Router();
-const User = require("../db/models/User");
+const { User, Follow } = require("../db/index");
 module.exports = router;
-
-router.get("/", async (req, res, next) => {
-  try {
-    const users = await User.findAll({
-      // explicitly select only the id and username fields - even though
-      // users' passwords are encrypted, it won't help if we just
-      // send everything to anyone who asks!
-      attributes: ["id", "username"],
-    });
-    res.json(users);
-  } catch (err) {
-    next(err);
-  }
-});
 
 //GET "/api/users/id"
 router.get("/:id", async (req, res, next) => {
@@ -25,3 +11,29 @@ router.get("/:id", async (req, res, next) => {
     console.log(ex);
   }
 });
+
+//GET "/api/users/id/following"
+// router.get("/:id/following", async (req, res, next) => {
+//   try {
+//     const amFollowing = await Follow.findAll({
+//       where: { follower_id: req.params.id },
+//       include: [{ model: User }],
+//     });
+//     res.send(amFollowing);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// });
+
+//GET "/api/users/id/followers"
+// router.get("/:id/followers", async (req, res, next) => {
+//   try {
+//     const followers = await Follow.findAll({
+//       where: { userId: req.params.id },
+//       include: [{ model: User }],
+//     });
+//     res.send(followers);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// });
