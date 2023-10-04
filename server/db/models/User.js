@@ -13,13 +13,6 @@ const User = db.define(
       primaryKey: true,
       defaultValue: UUIDV4,
     },
-    username: {
-      type: STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
     email: {
       type: STRING,
       allowNull: false,
@@ -29,6 +22,13 @@ const User = db.define(
       unique: true,
     },
     password: {
+      type: STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    username: {
       type: STRING,
       allowNull: false,
       validate: {
@@ -83,8 +83,8 @@ User.generateToken = (user) => {
 
 //returns a jwt token for the created user
 User.encryptUser = async (user) => {
-  //create user
   const { dataValues } = await User.create(user);
+
   //return the jwt for the newly created user
   return User.generateToken(dataValues);
 };

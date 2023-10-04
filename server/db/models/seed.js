@@ -1,4 +1,10 @@
-const { db, User, RestaurantNotes, List, Follow } = require("../index");
+const {
+  db,
+  User,
+  RestaurantNotes,
+  List,
+  Follow
+} = require("../index");
 
 const syncAndSeed = async () => {
   try {
