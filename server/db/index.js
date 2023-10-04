@@ -6,7 +6,7 @@ const RestaurantNotes = require("./models/RestaurantNotes");
 
 User.hasMany(List);
 Follow.belongsTo(User);
-User.hasMany(Follow)
+User.hasMany(Follow, { foreignKey: "follower_id" });
 List.belongsTo(User);
 List.hasMany(RestaurantNotes);
 RestaurantNotes.belongsTo(List);
@@ -16,5 +16,5 @@ module.exports = {
   User,
   RestaurantNotes,
   List,
-  Follow
+  Follow,
 };
