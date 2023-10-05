@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const validateToken = require("./middleware");
 
+router.use("/restaurants", validateToken, require("./restaurants"));
 router.use("/users", validateToken, require("./users"));
 router.use("/following/user", validateToken, require("./following"));
 router.use("/followers/user", validateToken, require("./followers"));
