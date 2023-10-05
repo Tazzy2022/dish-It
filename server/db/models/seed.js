@@ -1,10 +1,4 @@
-const {
-  db,
-  User,
-  RestaurantNotes,
-  List,
-  Follow
-} = require("../index");
+const { db, User, RestaurantNotes, List, Follow } = require("../index");
 
 const syncAndSeed = async () => {
   try {
@@ -51,21 +45,25 @@ const syncAndSeed = async () => {
         listName: "Brooklyn brunch",
         isPersonal: true,
         isPrivate: false,
-        restaurantIdArray: ["4", "6"],
+        restaurantIdArray: ["CfOBb6NU2awo8xclJpKU3g", "jAaVnUKLITkuhzwXIe0vLQ"],
         userId: michele.id,
       }),
       List.create({
         listName: "La taquerias",
         isPersonal: true,
         isPrivate: false,
-        restaurantIdArray: ["8"],
+        restaurantIdArray: ["cz_0AmDhRH7T_iRvvx0THg"],
         userId: jen.id,
       }),
       List.create({
         listName: "San Francisco date night",
         isPersonal: true,
         isPrivate: false,
-        restaurantIdArray: ["71", "2", "44"],
+        restaurantIdArray: [
+          "WavvLdfdP6g8aZTtbBQHTw",
+          "8dUaybEPHsZMgr1iKgqgMQ",
+          "4KfQnlcSu4bbTqnvGdGptw",
+        ],
         userId: michele.id,
       }),
     ]);
@@ -76,17 +74,17 @@ const syncAndSeed = async () => {
         listId: bangkok.id,
       }),
       RestaurantNotes.create({
-        restaurantId: "6",
+        restaurantId: "CfOBb6NU2awo8xclJpKU3g",
         personalNotes: "great ambiance and big portions, coffee was just okay",
         listId: brooklyn.id,
       }),
       RestaurantNotes.create({
-        restaurantId: "1",
+        restaurantId: "cz_0AmDhRH7T_iRvvx0THg",
         personalNotes: "the pork is best meat option here",
         listId: la.id,
       }),
       RestaurantNotes.create({
-        restaurantId: "71",
+        restaurantId: "WavvLdfdP6g8aZTtbBQHTw",
         personalNotes: "great spot for a proposal",
         listId: sf.id,
       }),
