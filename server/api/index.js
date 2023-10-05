@@ -3,8 +3,7 @@ const validateToken = require("./middleware");
 
 router.use("/restaurants", validateToken, require("./restaurants"));
 router.use("/users", validateToken, require("./users"));
-router.use("/following/user", validateToken, require("./following"));
-router.use("/followers/user", validateToken, require("./followers"));
+router.use("/user", validateToken, require("./user"));
 
 router.use((req, res, next) => {
   const error = new Error("Not Found");
