@@ -18,8 +18,11 @@ router.get("/location/:id", async (req, res, next) => {
     );
     const data = restaurants.body;
     res.send(data);
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    res.status(404).json({
+      message: "could not find any restaurants",
+      error: err.message,
+    });
   }
 });
 
@@ -39,8 +42,11 @@ router.get("/location/categories/:id", async (req, res, next) => {
     );
     const data = restaurants.body;
     res.send(data);
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    res.status(404).json({
+      message: "could not find any restaurants",
+      error: err.message,
+    });
   }
 });
 
@@ -58,8 +64,11 @@ router.get("/location/categories/price/:id", async (req, res, next) => {
     );
     const data = restaurants.body;
     res.send(data);
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    res.status(404).json({
+      message: "could not find any restaurants",
+      error: err.message,
+    });
   }
 });
 
@@ -79,8 +88,11 @@ router.get("/name/location", async (req, res, next) => {
     );
     const data = restaurant.body;
     res.send(data);
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    res.status(404).json({
+      message: "could not find that restaurant",
+      error: err.message,
+    });
   }
 });
 module.exports = router;

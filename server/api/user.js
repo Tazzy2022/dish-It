@@ -68,9 +68,6 @@ router.put("/:id", async (req, res, next) => {
       where: { email: req.params.id },
     });
     //need to check if they're already falling them and handle it on client
-    console.log("USER", user);
-    console.log("req.body.id", req.body.id);
-    // await user.update(array_append(pendingFollowers, req.body.id));
     await user.update({
       pendingFollowers: Sequelize.fn(
         "array_append",
@@ -87,6 +84,31 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
+//PUT "/api/user/:id/followers  add new follower
+router.put("/:id/followers", async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    const newFollower = req.body.id;
+    await user.update({
+      pendingFollowers: Sequelize.fn(
+        "array_remove",
+        Sequelize.col("pendingFollowers"),
+        newFollower
+      ),
+    });
+    await Follow.create({
+      userId: req.params.id,
+      follower_id: newFollower,
+    });
+    res.status(200).json({ message: "added new follower" });
+  } catch (err) {
+    res.status(500).json({
+      message: "could not add that follower",
+      error: err.message,
+    });
+  }
+});
+
 //GET "/api/user/:id/lists
 router.get("/:id/lists", async (req, res, next) => {
   try {
@@ -98,6 +120,42 @@ router.get("/:id/lists", async (req, res, next) => {
   } catch (err) {
     res.status(404).json({
       message: "could not find lists",
+      error: err.message,
+    });
+  }
+});
+
+//POST "/api/user/list  create new list
+router.post("/list", async (req, res, next) => {
+  try {
+    const newList = await List.create(req.body);
+    res.send(newList);
+  } catch (err) {
+    res.status(500).json({
+      message: "could not create new list",
+      error: err.message,
+    });
+  }
+});
+
+//PUT "/api/user/list  add restaurant to a newly created list or existing list
+router.put("/list", async (req, res, next) => {
+  try {
+    const [list, created] = await List.findOrCreate({
+      where: { userId: req.body.id, listName: req.body.listName },
+      defaults: req.body,
+    });
+    await list.update({
+      restaurantIdArray: Sequelize.fn(
+        "array_append",
+        Sequelize.col("restaurantIdArray"),
+        req.body.restaurantId
+      ),
+    });
+    res.send(list);
+  } catch (err) {
+    res.status(500).json({
+      message: "could not add that restaurant",
       error: err.message,
     });
   }
