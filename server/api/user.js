@@ -125,8 +125,8 @@ router.get("/:id/lists", async (req, res, next) => {
   }
 });
 
-//POST "/api/user/list  create new list
-router.post("/list", async (req, res, next) => {
+//POST "/api/user/:id/list  create new list
+router.post("/:id/list", async (req, res, next) => {
   try {
     const newList = await List.create(req.body);
     res.send(newList);
@@ -138,8 +138,8 @@ router.post("/list", async (req, res, next) => {
   }
 });
 
-//PUT "/api/user/list  add restaurant to a newly created list or existing list
-router.put("/list", async (req, res, next) => {
+//PUT "/api/user/:id/list  add restaurant to a newly created list or existing list
+router.put("/:id/list", async (req, res, next) => {
   try {
     const [list, created] = await List.findOrCreate({
       where: { userId: req.body.id, listName: req.body.listName },
@@ -156,6 +156,23 @@ router.put("/list", async (req, res, next) => {
   } catch (err) {
     res.status(500).json({
       message: "could not add that restaurant",
+      error: err.message,
+    });
+  }
+});
+
+//PUT "/api/user/:id/list/restaurantNotes  update/add notes to restaurant in a user's list
+router.put("/:id/list/restaurantNotes", async (req, res, next) => {
+  try {
+    const note = await RestaurantNotes.findOrCreate({
+      where: { listId: req.body.id, restaurantId: req.body.restaurantIdArray },
+      defaults: req.body,
+    });
+    await note.update(req.body.personalNotes);
+    res.send(note);
+  } catch (err) {
+    res.status(500).json({
+      message: "could not add that info",
       error: err.message,
     });
   }
@@ -208,5 +225,39 @@ const getRestosFromApi = async (id) => {
     console.log(error);
   }
 };
+
+//DELETE "/api/user/:id/list  delete user's list
+router.delete("/:id/list", async (req, res, next) => {
+  try {
+    const list = await List.findByPk(req.body.id);
+    await list.destroy();
+    res.status(204).end();
+  } catch (err) {
+    res.status(500).json({
+      message: "could not delete that list",
+      error: err.message,
+    });
+  }
+});
+
+//DELETE "/api/user/:id/list/restaurant  delete restaurant from user's list
+router.delete("/:id/list/restaurant", async (req, res, next) => {
+  try {
+    const list = await List.findByPk(req.body.id);
+    await list.update({
+      restaurantIdArray: Sequelize.fn(
+        "array_remove",
+        Sequelize.col("restaurantIdArray"),
+        req.body.restaurantId
+      ),
+    });
+    res.send(list);
+  } catch (err) {
+    res.status(500).json({
+      message: "could not delete that restaurant",
+      error: err.message,
+    });
+  }
+});
 
 module.exports = router;
