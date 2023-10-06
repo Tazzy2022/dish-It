@@ -44,6 +44,39 @@ router.get("/:id/following", async (req, res, next) => {
   }
 });
 
+//GET "/api/user/:id  find a friend to request to follow
+router.get("/:id", async (req, res, next) => {
+  try {
+    const newFollow = await User.findOne({
+      where: { email: req.params.id },
+      attributes: ["username", "city", "state", "imageUrl", "email"],
+    });
+    res.send(newFollow);
+  } catch (err) {
+    res.status(404).json({
+      message: "could not find lists",
+      error: err.message,
+    });
+  }
+});
+
+//PUT "/api/user/:id  send request to follow
+router.put("/:id", async (req, res, next) => {
+  try {
+    const user = await User.findOne({
+      where: { email: req.params.id },
+    });
+    //need to check if they're already falling them and handle it
+    await user.update({ pendingFollowers: req.body.id });
+    res.status(200).json({ message: "your request has been sent" });
+  } catch (err) {
+    res.status(500).json({
+      message: "could not send request",
+      error: err.message,
+    });
+  }
+});
+
 //GET "/api/user/:id/lists
 router.get("/:id/lists", async (req, res, next) => {
   try {
@@ -68,7 +101,10 @@ router.get("/list/:id", async (req, res, next) => {
       attributes: ["restaurantIdArray", "listName", "id"],
     });
     const results = await loopThroughArray(idArray.restaurantIdArray);
-    res.send(results);
+    const notes = await RestaurantNotes.findAll({
+      where: { restaurantId: idArray.restaurantIdArray },
+    });
+    res.send({ results, notes });
   } catch (err) {
     res.status(404).json({
       message: "could not find restaurants",

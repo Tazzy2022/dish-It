@@ -1,5 +1,5 @@
 const Sequelize = require("sequelize");
-const { UUID, UUIDV4, STRING } = Sequelize;
+const { UUID, UUIDV4, STRING, ARRAY } = Sequelize;
 const db = require("../db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -53,6 +53,10 @@ const User = db.define(
       type: STRING,
       defaultValue:
         "https://images.getbento.com/accounts/fa5a0ad193d9db0f760b62a4b1633afd/media/images/46877Avocado_Toast_by_Kimberly_Park_2.jpeg?w=1000&fit=max&auto=compress,format&h=1000",
+    },
+    pendingFollowers: {
+      type: ARRAY(Sequelize.STRING),
+      defaultValue: null,
     },
   },
   {
