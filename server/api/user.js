@@ -3,6 +3,7 @@ const BASE_URL = "https://api.yelp.com/v3/businesses/";
 const needle = require("needle");
 require("dotenv").config();
 const { User, Follow, List, RestaurantNotes } = require("../db/index");
+const Sequelize = require("sequelize");
 
 //GET "/api/user/:id/followers
 router.get("/:id/followers", async (req, res, next) => {
@@ -66,8 +67,17 @@ router.put("/:id", async (req, res, next) => {
     const user = await User.findOne({
       where: { email: req.params.id },
     });
-    //need to check if they're already falling them and handle it
-    await user.update({ pendingFollowers: req.body.id });
+    //need to check if they're already falling them and handle it on client
+    console.log("USER", user);
+    console.log("req.body.id", req.body.id);
+    // await user.update(array_append(pendingFollowers, req.body.id));
+    await user.update({
+      pendingFollowers: Sequelize.fn(
+        "array_append",
+        Sequelize.col("pendingFollowers"),
+        req.body.id
+      ),
+    });
     res.status(200).json({ message: "your request has been sent" });
   } catch (err) {
     res.status(500).json({
