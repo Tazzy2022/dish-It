@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Header from "./Header";
+import Home from "./Home";
 
 const App = () => {
   return (
@@ -9,7 +10,7 @@ const App = () => {
         <Header />
       </nav>
       <Routes>
-        <Route />
+        <Route exact path="/" element={<Home />} />
       </Routes>
     </div>
   );
