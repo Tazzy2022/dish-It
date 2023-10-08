@@ -2,6 +2,10 @@ body {
   font-family: sans-serif;
 }
 
+.header {
+  font-weight: bolder;
+}
+
 .header,
 .login-link,
 .signup-link {
@@ -11,4 +15,13 @@ body {
 
 a {
   text-decoration: none;
+}
+
+.signup-link {
+  padding: 0px 20px;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
 }
