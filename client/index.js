@@ -4,11 +4,6 @@ import App from "./Components/App";
 import { Provider } from "react-redux";
 import store from "./store";
 import { BrowserRouter } from "react-router-dom";
-// Import our custom CSS
-import "../public/styles.scss";
-
-// Import all of Bootstrap's JS
-import * as bootstrap from "bootstrap";
 
 const root = createRoot(document.querySelector("#root"));
 

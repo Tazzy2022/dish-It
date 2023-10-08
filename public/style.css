@@ -1,0 +1,14 @@
+body {
+  font-family: sans-serif;
+}
+
+.header,
+.login-link,
+.signup-link {
+  color: #e00707;
+  font-size: 2rem;
+}
+
+a {
+  text-decoration: none;
+}

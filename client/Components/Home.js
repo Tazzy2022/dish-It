@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import bootstrap from 'bootstrap'
 
 const Home = () => {
   return (
-    <div>
-      <article>
+    <div className="container">
+      {/* <article>
         <p>Researching restaurants for a trip?</p>
         <p>Like keeping track of restaurants to try?</p>
         <p>
@@ -14,23 +13,23 @@ const Home = () => {
         <p>The options are endless on Dish iT.</p>
       </article>
       <main id="home-main-container">
-        <section className="home-header-container">
+        <section className="row home-header-container">
           <img
-            className="profile-img"
-            src="../../public/profile-pic.jpg"
+            className="col profile-img"
+            src="../../public/profile-pic.jpeg"
             alt="profile pic"
           />
-          <p>Michele's Lists...</p>
-          <p>+ new list</p>
+          <p className="col">Michele's Lists...</p>
+          <p className="col">+ new list</p>
         </section>
-        <section className="home-links-container">
-          <p>filter by:</p>
-          <input type="checkbox" className="filter-personal-checkbox" />
-          <label>personal</label>
-          <input type="checkbox" className="filter-following-checkbox" />
-          <label>following</label>
+        <section className="row home-links-container">
+          <p className="col">filter by:</p>
+          <input type="checkbox" className="col filter-personal-checkbox" />
+          <label className="col">personal</label>
+          <input type="checkbox" className=" col filter-following-checkbox" />
+          <label className="col">following</label>
         </section>
-        <section className="home-lists-container">
+        <section className="row home-lists-container">
           <div className="card text-bg-dark">
             <img
               src="../../public/brunch.png"
@@ -43,9 +42,9 @@ const Home = () => {
                 <small>from owlram2002</small>
               </p>
             </div>
-          </div>
+          </div> */}
 
-          {/* <div className="list-card">
+      {/* <div className="list-card">
             <img
               className="list-bkgrnd-img"
               src="../../public/brunch.png"
@@ -54,10 +53,10 @@ const Home = () => {
             <p>Brooklyn brunch</p>
             <p>from owlram2002</p>
           </div> */}
-          {/* <div className="list-card">
+      {/* <div className="list-card">
             <img
               className="list-bkgrnd-img"
-              src="../../public/tacos.png"
+              src="/Users/micheletazbaz/Documents/folio/dish/public/tacos.png"
               alt="list background image"
             />
             <p>Los Angeles taquerias</p>
@@ -70,8 +69,8 @@ const Home = () => {
             />
             <p>Los Angeles date night spots</p>
           </div> */}
-        </section>
-      </main>
+      {/* </section>
+      </main> */}
     </div>
   );
 };

@@ -1,19 +1,19 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
+import NavDropdown from "react-bootstrap/NavDropdown";
 
 const Header = () => {
   return (
-    <div className="header-container">
-      <div>
-        <Link to="/">
-          <h1 id="header">Dish iT</h1>
-        </Link>
-      </div>
-      <div id="login-signUp-container">
-        <Link id="login-link">Log in</Link>
-        <Link id="signup-link">Sign up</Link>
-      </div>
-    </div>
+    <Nav className="d-flex mb-3">
+      <Navbar.Brand className="me-auto p-2 header" href="/">
+        Dish iT
+      </Navbar.Brand>
+
+      <Nav.Link className="p-2 login-link">Log in</Nav.Link>
+
+      <Nav.Link className="p-2 signup-link">Sign up</Nav.Link>
+    </Nav>
   );
 };
 
