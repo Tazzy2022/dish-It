@@ -2,15 +2,16 @@ body {
   font-family: sans-serif;
 }
 
-.header {
-  font-weight: bolder;
-}
-
 .header,
 .login-link,
 .signup-link {
   color: #e00707;
-  font-size: 2rem;
+  font-size: 20px;
+}
+
+.header {
+  font-weight: bolder;
+  font-size: 25px;
 }
 
 a {
@@ -18,10 +19,72 @@ a {
 }
 
 .signup-link {
-  padding: 0px 20px;
+  padding-left: 20px;
 }
 
 .header-container {
   display: flex;
   justify-content: space-between;
+  padding: 15px;
+  border-bottom: solid 1.5px rgb(244, 239, 239);
+}
+
+.home-main-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-img {
+  width: 20vw;
+  height: 20vh;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.list-card {
+  border: solid 1px rgba(235, 235, 235, 1);
+  box-shadow: 1px 1px rgb(244, 239, 239);
+  border-radius: 15px;
+  width: 20vw;
+  margin: 20px;
+}
+
+.list-card p {
+  text-align: center;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.home-header-container,
+.home-lists-container,
+.home-filter-container,
+.intro {
+  display: flex;
+  justify-content: center;
+}
+
+.profile-name {
+  font-size: 2rem;
+  padding: 20px;
+}
+
+.profile-add-list {
+  font-size: 25px;
+  padding: 30px 20px;
+}
+
+.profile-img {
+  padding: 20px;
+  width: 10vw;
+  border-radius: 30px;
+}
+
+.home-filter-container label {
+  padding-right: 10px;
+  font-size: 20px;
+}
+
+.intro {
+  font-size: 20px;
+  margin-top: 20px;
 }
