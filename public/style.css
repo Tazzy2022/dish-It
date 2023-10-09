@@ -1,5 +1,6 @@
 body {
   font-family: sans-serif;
+  color: rgb(39, 38, 38);
 }
 
 .header,
@@ -71,6 +72,7 @@ a {
 .profile-add-list {
   font-size: 25px;
   padding: 30px 20px;
+  color: #e00707;
 }
 
 .profile-img {
@@ -84,7 +86,51 @@ a {
   font-size: 20px;
 }
 
+.home-filter-container input {
+  padding-right: 5px;
+}
+
 .intro {
   font-size: 20px;
   margin-top: 20px;
+}
+
+#login-container {
+  margin: auto;
+  width: 40vw;
+}
+
+#login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-headings {
+  text-align: center;
+}
+
+#login-form input {
+  margin: 5px 0px 20px;
+  font-size: 17px;
+}
+
+.button {
+  font-size: 17px;
+  color: white;
+  background-color: #e00707;
+  align-self: center;
+  width: 15vw;
+  border-radius: 5px;
+  border: #e00707;
+  margin-bottom: 10px;
+  height: 25px;
+}
+
+.sign-up-link-container {
+  text-align: center;
+}
+
+.sign-up-link-container a {
+  padding-left: 10px;
+  color: rgb(39, 38, 38);
 }
