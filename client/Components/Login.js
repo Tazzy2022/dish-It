@@ -15,7 +15,6 @@ const Login = () => {
       setUser({ email: "", password: "" });
       //navigate only when user is accurate
       if (loggedUser.payload) navigate("/userhome");
-      console.log(loggedUser.payload);
     } catch (err) {
       console.log(err);
     }
@@ -34,7 +33,7 @@ const Login = () => {
       <form id="login-form" onSubmit={login}>
         <label>email:</label>
         <input
-				type="email"
+          type="email"
           placeholder="enter your email"
           value={user.email}
           name="email"
@@ -51,8 +50,10 @@ const Login = () => {
         <button className="button">Login</button>
       </form>
       <div className="sign-up-link-container">
-        <p>Don't have an account?
-        <Link to="/signUp">Sign up</Link></p>
+        <p>
+          Don't have an account?
+          <Link to="/signUp">Sign up</Link>
+        </p>
       </div>
     </div>
   );

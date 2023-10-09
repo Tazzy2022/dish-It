@@ -52,7 +52,7 @@ const User = db.define(
     imageUrl: {
       type: STRING,
       defaultValue:
-        "https://images.getbento.com/accounts/fa5a0ad193d9db0f760b62a4b1633afd/media/images/46877Avocado_Toast_by_Kimberly_Park_2.jpeg?w=1000&fit=max&auto=compress,format&h=1000",
+        "https://repository-images.githubusercontent.com/130118224/a2c75780-e0a9-11eb-8494-3581a0b1c93b",
     },
     pendingFollowers: {
       type: ARRAY(Sequelize.STRING),

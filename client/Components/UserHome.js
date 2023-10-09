@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { getUser } from "../features/authSlice";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getAllLists } from "../features/listSlice";
+import ListCard from "./ListCard";
 
 const UserHome = () => {
   const auth = useSelector((state) => state.auth);
@@ -9,7 +9,7 @@ const UserHome = () => {
 
   useEffect(() => {
     dispatch(
-      getUser({
+      getAllLists({
         id: auth.user.id,
         token: auth.token,
       })
@@ -21,10 +21,10 @@ const UserHome = () => {
       <section className="home-header-container">
         <img
           className="profile-img"
-          src="/profile-pic.jpeg"
+          src={auth.user.imageUrl}
           alt="profile pic"
         />
-        <p className="profile-name">{authSlice.username} Lists...</p>
+        <p className="profile-name">{auth.user.username}'s Lists...</p>
         <p className="profile-add-list">+ new list</p>
       </section>
       <section className="home-filter-container">
@@ -34,16 +34,14 @@ const UserHome = () => {
         <input type="checkbox" className="filter-following-checkbox" />
         <label>following</label>
       </section>
-      <section className="home-lists-container">
-        <div className="list-card">
-          <img
-            className="card-img"
-            src="/brunch.jpeg"
-            alt="list background image"
-          />
-          <p>list name placholder</p>
-        </div>
-      </section>
+      {/* {lists.length > 0 ? (
+        //lists.lists.map((list) => {
+        console.log("LIST")
+      ) : (
+        // return <ListCard key={list.id} list={list} />;
+        // })
+        <p>this list is empty</p>
+      )} */}
     </div>
   );
 };

@@ -25,7 +25,8 @@ const List = db.define("list", {
   },
   imageUrl: {
     type: STRING,
-    defaultValue: "image",
+    defaultValue:
+      "https://image.shutterstock.com/image-photo/healthy-food-clean-eating-selection-260nw-722718097.jpg",
   },
   // restaurantIdArray: {
   //   type: STRING,
@@ -38,10 +39,8 @@ const List = db.define("list", {
   // },
   //OR:
   restaurantIdArray: {
-    type: ARRAY(
-  		Sequelize.STRING
-  	),
-  	defaultValue: null,
+    type: ARRAY(Sequelize.STRING),
+    defaultValue: null,
   },
 });
 
