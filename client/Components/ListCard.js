@@ -10,7 +10,7 @@ const ListCard = (props) => {
           src={props.list.imageUrl}
           alt="list background image"
         />
-        <p>{props.listName}</p>
+        <p>{props.list.listName}</p>
       </Link>
     </div>
   );

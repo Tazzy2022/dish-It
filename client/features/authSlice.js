@@ -106,6 +106,5 @@ const authSlice = createSlice({
 });
 
 export const { loggedoutUser } = authSlice.actions;
-//need to export actions for non-axios action calls
 
 export default authSlice.reducer;

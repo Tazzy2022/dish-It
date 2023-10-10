@@ -8696,8 +8696,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _features_authSlice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../features/authSlice */ "./client/features/authSlice.js");
+/* harmony import */ var _features_listSlice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../features/listSlice */ "./client/features/listSlice.js");
 
 
 
@@ -8705,34 +8707,39 @@ __webpack_require__.r(__webpack_exports__);
 
 const Header = () => {
   const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
-  console.log("auth.user.id", auth.user.id);
-  const handleSelect = eventKey => alert(`selected ${eventKey}`);
+  const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
+  const handleLogout = () => {
+    console.log("CLICKED");
+    dispatch((0,_features_authSlice__WEBPACK_IMPORTED_MODULE_2__.loggedoutUser)());
+    dispatch((0,_features_listSlice__WEBPACK_IMPORTED_MODULE_3__.loggoutUserLists)());
+  };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "header-container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("nav", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("nav", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
     to: "/",
     className: "header"
-  }, "Dish iT")), auth.user.id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("nav", {
+  }, "Dish iT")), auth?.user.id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("nav", {
     className: "nav-dropdown-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: "dropbtn"
   }, auth.user.username, "'s account"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "dropdown-content"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
     to: "/userlists"
-  }, "my lists"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+  }, "my lists"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
     to: "/usersearch"
-  }, "search for restaurant"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+  }, "search for restaurants"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
     to: "/useraccount"
-  }, "my account"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+  }, "my account"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+    onClick: handleLogout,
     to: "/"
   }, "log out"))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("nav", {
     className: "login-signUp-container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
     to: "/login",
     className: "login-link"
-  }, "Log in"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
-    to: "/signUp",
+  }, "Log in"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+    to: "/",
     className: "signup-link"
   }, "Sign up")));
 };
@@ -8831,7 +8838,7 @@ const ListCard = props => {
     className: "card-img",
     src: props.list.imageUrl,
     alt: "list background image"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.listName)));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.list.listName)));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ListCard);
 
@@ -9034,15 +9041,31 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 const UserHome = () => {
   const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
   const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
+  const [isLoading, setIsLoading] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    dispatch((0,_features_listSlice__WEBPACK_IMPORTED_MODULE_2__.getAllLists)({
-      id: auth.user.id,
-      token: auth.token
-    }));
-  });
+    const getList = async () => {
+      try {
+        setIsLoading(true);
+        await dispatch((0,_features_listSlice__WEBPACK_IMPORTED_MODULE_2__.getAllLists)({
+          id: auth.user.id,
+          token: auth.token
+        }));
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    getList();
+  }, []);
+  const lists = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.lists);
+  if (isLoading) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
+  }
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
     className: "home-header-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
@@ -9061,7 +9084,27 @@ const UserHome = () => {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "personal"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "checkbox",
     className: "filter-following-checkbox"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "following")));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "following")), lists?.length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "this list is empty") : lists?.length > 0 &&
+  //console.log(lists[0], lists.length)
+  //<pre>{JSON.stringify(lists, null, 2)}</pre>
+  lists?.map(list => {
+    // return (
+    //   <div key={list.id} className="home-lists-container">
+    //     <Link className="list-card">
+    //       <img
+    //         className="card-img"
+    //         src={list.imageUrl}
+    //         alt="list background image"
+    //       />
+    //       <p>{list.listName}</p>
+    //     </Link>
+    //   </div>
+    // );
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ListCard__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      key: list.id,
+      list: list
+    });
+  }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (UserHome);
 
@@ -9180,8 +9223,6 @@ const authSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)(
 const {
   loggedoutUser
 } = authSlice.actions;
-//need to export actions for non-axios action calls
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (authSlice.reducer);
 
 /***/ }),
@@ -9196,7 +9237,8 @@ const {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
-/* harmony export */   getAllLists: () => (/* binding */ getAllLists)
+/* harmony export */   getAllLists: () => (/* binding */ getAllLists),
+/* harmony export */   loggoutUserLists: () => (/* binding */ loggoutUserLists)
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
@@ -9205,6 +9247,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const initialState = {
   lists: [],
+  isloading: false,
   error: ""
 };
 const getAllLists = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("auth/getAllLists", async ({
@@ -9217,7 +9260,7 @@ const getAllLists = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsync
         authorization: token
       }
     });
-    return response.data;
+    return response?.data;
   } catch (error) {
     return error.message;
   }
@@ -9225,17 +9268,26 @@ const getAllLists = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsync
 const listSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)({
   name: "lists",
   initialState,
-  reducers: {},
+  reducers: {
+    loggoutUserLists: state => {
+      state.lists = [];
+      state.error = "";
+      state.token = "";
+    }
+  },
   extraReducers: builder => {
-    builder.addCase(getAllLists.fulfilled, (state, action) => {
-      //state.lists = action.payload;
-      return action.payload;
-    });
     builder.addCase(getAllLists.rejected, (state, action) => {
       state.error = action.error.message;
     });
+    builder.addCase(getAllLists.fulfilled, (state, action) => {
+      //state.lists = action.payload.lists;
+      return action.payload;
+    });
   }
 });
+const {
+  loggoutUserLists
+} = listSlice.actions;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (listSlice.reducer);
 
 /***/ }),

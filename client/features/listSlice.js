@@ -4,6 +4,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   lists: [],
+  isloading: false,
   error: "",
 };
 
@@ -16,7 +17,7 @@ export const getAllLists = createAsyncThunk(
           authorization: token,
         },
       });
-      return response.data;
+      return response?.data;
     } catch (error) {
       return error.message;
     }
@@ -26,16 +27,24 @@ export const getAllLists = createAsyncThunk(
 const listSlice = createSlice({
   name: "lists",
   initialState,
-  reducers: {},
+  reducers: {
+    loggoutUserLists: (state) => {
+      state.lists = [];
+      state.error = "";
+      state.token = "";
+    },
+  },
   extraReducers: (builder) => {
-    builder.addCase(getAllLists.fulfilled, (state, action) => {
-      //state.lists = action.payload;
-      return action.payload;
-    });
     builder.addCase(getAllLists.rejected, (state, action) => {
       state.error = action.error.message;
     });
+    builder.addCase(getAllLists.fulfilled, (state, action) => {
+      //state.lists = action.payload.lists;
+      return action.payload;
+    });
   },
 });
+
+export const { loggoutUserLists } = listSlice.actions;
 
 export default listSlice.reducer;

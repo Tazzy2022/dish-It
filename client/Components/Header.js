@@ -1,14 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import Nav from "react-bootstrap/Nav";
-import NavDropdown from "react-bootstrap/NavDropdown";
+import { useDispatch, useSelector } from "react-redux";
+import { loggedoutUser } from "../features/authSlice";
+import { loggoutUserLists } from "../features/listSlice";
 
 const Header = () => {
   const auth = useSelector((state) => state.auth);
-  console.log("auth.user.id", auth.user.id);
 
-  const handleSelect = (eventKey) => alert(`selected ${eventKey}`);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    console.log("CLICKED");
+    dispatch(loggedoutUser());
+    dispatch(loggoutUserLists());
+  };
 
   return (
     <div className="header-container">
@@ -17,14 +22,16 @@ const Header = () => {
           Dish iT
         </Link>
       </nav>
-      {auth.user.id ? (
+      {auth?.user.id ? (
         <nav className="nav-dropdown-container">
           <button className="dropbtn">{auth.user.username}'s account</button>
           <div className="dropdown-content">
             <Link to="/userlists">my lists</Link>
-            <Link to="/usersearch">search for restaurant</Link>
+            <Link to="/usersearch">search for restaurants</Link>
             <Link to="/useraccount">my account</Link>
-            <Link to="/">log out</Link>
+            <Link onClick={handleLogout} to="/">
+              log out
+            </Link>
           </div>
         </nav>
       ) : (
@@ -32,7 +39,7 @@ const Header = () => {
           <Link to="/login" className="login-link">
             Log in
           </Link>
-          <Link to="/signUp" className="signup-link">
+          <Link to="/" className="signup-link">
             Sign up
           </Link>
         </nav>
