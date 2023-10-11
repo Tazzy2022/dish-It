@@ -4,12 +4,11 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   lists: [],
-  isloading: false,
   error: "",
 };
 
 export const getAllLists = createAsyncThunk(
-  "auth/getAllLists",
+  "lists/getAllLists",
   async ({ id, token }) => {
     try {
       const response = await axios.get(`/api/user/${id}/lists`, {

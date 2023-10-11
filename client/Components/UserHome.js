@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { getAllLists } from "../features/listSlice";
 import ListCard from "./ListCard";
 
@@ -56,21 +55,7 @@ const UserHome = () => {
         <p>this list is empty</p>
       ) : (
         lists?.length > 0 &&
-        //console.log(lists[0], lists.length)
-        //<pre>{JSON.stringify(lists, null, 2)}</pre>
         lists?.map((list) => {
-          // return (
-          //   <div key={list.id} className="home-lists-container">
-          //     <Link className="list-card">
-          //       <img
-          //         className="card-img"
-          //         src={list.imageUrl}
-          //         alt="list background image"
-          //       />
-          //       <p>{list.listName}</p>
-          //     </Link>
-          //   </div>
-          // );
           return <ListCard key={list.id} list={list} />;
         })
       )}
