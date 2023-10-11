@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { getAllLists } from "../features/listSlice";
 import ListCard from "./ListCard";
 
@@ -52,11 +53,14 @@ const UserHome = () => {
         <label>following</label>
       </section>
       {lists?.length === 0 ? (
-        <p>this list is empty</p>
+        <div>
+        <p>no saved lists yet...</p>
+        <Link to="/usersearch">start your search here</Link>
+        </div>
       ) : (
         lists?.length > 0 &&
         lists?.map((list) => {
-          return <ListCard key={list.id} list={list} />;
+          return <ListCard key={list.id} list={list} auth={auth} />;
         })
       )}
     </div>

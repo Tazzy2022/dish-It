@@ -26,7 +26,7 @@ const Header = () => {
         <nav className="nav-dropdown-container">
           <button className="dropbtn">{auth.user.username}'s account</button>
           <div className="dropdown-content">
-            <Link to="/userlists">my lists</Link>
+            <Link to="/userhome">my lists</Link>
             <Link to="/usersearch">search for restaurants</Link>
             <Link to="/useraccount">my account</Link>
             <Link onClick={handleLogout} to="/">

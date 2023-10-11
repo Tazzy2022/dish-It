@@ -16,8 +16,7 @@ export const getSavedRestaurants = createAsyncThunk(
           authorization: token,
         },
       });
-      console.log("response.data", response.data);
-      //return response?.data;
+      return response?.data;
     } catch (error) {
       return error.message;
     }
