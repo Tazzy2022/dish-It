@@ -1,28 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getSavedRestaurants } from "../features/savedRestaurantsSlice";
+import React from "react";
+import { Link } from "react-router-dom";
 
 const ListCard = (props) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const handleclick = (listId) => {
-    dispatch(
-      getSavedRestaurants({
-        id: listId,
-        token: props.auth.token,
-      })
-    );
-  };
-
   return (
     <div className="home-lists-container">
-      <Link
-        onClick={handleclick(props.list.id)}
-        to={`/userlists/${props.list.id}`}
-        className="list-card"
-      >
+      <Link to={`/userlists/${props.list.id}`} className="list-card">
         <img
           className="card-img"
           src={props.list.imageUrl}

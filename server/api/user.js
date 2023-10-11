@@ -178,18 +178,18 @@ router.put("/:id/list/restaurantNotes", async (req, res, next) => {
   }
 });
 
-//GET "/api/user/list/:id
+//GET "/api/user/list/:id    get single user list and restaurants
 //loop through restoArray and do api calls to yelp on each
 router.get("/list/:id", async (req, res, next) => {
   try {
     const idArray = await List.findByPk(req.params.id, {
       attributes: ["restaurantIdArray", "listName", "id"],
     });
-    const results = await loopThroughArray(idArray.restaurantIdArray);
+    const list = await loopThroughArray(idArray.restaurantIdArray);
     const notes = await RestaurantNotes.findAll({
       where: { restaurantId: idArray.restaurantIdArray },
     });
-    res.send({ results, notes });
+    res.send({ list, notes });
   } catch (err) {
     res.status(404).json({
       message: "could not find restaurants",

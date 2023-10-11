@@ -5,7 +5,7 @@ import Home from "./Home";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import UserHome from "./UserHome";
-import RestaurantList from "./RestaurantList";
+import UserSingleList from "./UserSingleList";
 
 const App = () => {
   return (
@@ -19,7 +19,7 @@ const App = () => {
         <Route exact path="/signUp" element={<SignUp />} />
 
         <Route exact path="/userhome" element={<UserHome />} />
-        <Route exact path="/userlists/:id" element={<RestaurantList />} />
+        <Route exact path="/userlists/:id" element={<UserSingleList />} />
       </Routes>
     </>
   );

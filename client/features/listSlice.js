@@ -5,6 +5,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 const initialState = {
   lists: [],
   error: "",
+  token: "",
 };
 
 export const getAllLists = createAsyncThunk(
@@ -39,7 +40,7 @@ const listSlice = createSlice({
     });
     builder.addCase(getAllLists.fulfilled, (state, action) => {
       //state.lists = action.payload.lists;
-      return action.payload;
+      return action.payload
     });
   },
 });

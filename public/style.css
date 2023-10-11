@@ -65,7 +65,9 @@ a {
   justify-content: center;
 }
 
-.profile-name {
+.profile-name,
+.list-name,
+.loading-p {
   font-size: 2rem;
   padding: 20px;
 }

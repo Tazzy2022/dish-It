@@ -31,7 +31,7 @@ const UserHome = () => {
   const lists = useSelector((state) => state.lists);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="loading-p">Loading...</div>;
   }
 
   return (
@@ -54,8 +54,8 @@ const UserHome = () => {
       </section>
       {lists?.length === 0 ? (
         <div>
-        <p>no saved lists yet...</p>
-        <Link to="/usersearch">start your search here</Link>
+          <p>no saved lists yet...</p>
+          <Link to="/usersearch">start your search here</Link>
         </div>
       ) : (
         lists?.length > 0 &&
