@@ -14,7 +14,7 @@ const Login = () => {
       const loggedUser = await dispatch(loginUser(user));
       setUser({ email: "", password: "" });
       //navigate only when user is accurate
-      if (loggedUser.payload) navigate("/userhome");
+      if (loggedUser.payload) navigate("/usersearch");
     } catch (err) {
       console.log(err);
     }

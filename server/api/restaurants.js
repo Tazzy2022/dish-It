@@ -77,6 +77,7 @@ router.get("/location/categories/price/:id", async (req, res, next) => {
 //GET /api/restaurants/name/location
 router.get("/name/location", async (req, res, next) => {
   try {
+    console.log(req.body.name)
     const restaurant = await needle(
       "get",
       `${BASE_URL}${req.body.name}-${req.body.location}`,

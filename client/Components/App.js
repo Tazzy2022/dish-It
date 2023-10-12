@@ -6,6 +6,7 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import UserHome from "./UserHome";
 import UserSingleList from "./UserSingleList";
+import Search from "./Search"
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/signUp" element={<SignUp />} />
 
+        <Route exact path="/usersearch" element={<Search />} />
         <Route exact path="/userhome" element={<UserHome />} />
         <Route exact path="/userlists/:id" element={<UserSingleList />} />
       </Routes>
