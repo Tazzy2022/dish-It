@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Header from "./Header";
 import Home from "./Home";
 import Login from "./Login";
@@ -22,6 +22,8 @@ const App = () => {
         <Route exact path="/usersearch" element={<Search />} />
         <Route exact path="/userhome" element={<UserHome />} />
         <Route exact path="/userlists/:id" element={<UserSingleList />} />
+
+        <Route exact path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </>
   );

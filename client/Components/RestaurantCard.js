@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const RestaurantCard = (props) => {
-  console.log("!!!!", props);
   return (
     <div className="restaurant-list-container">
       <section className="list-card">

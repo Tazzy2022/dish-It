@@ -3,12 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import FilterCategorySearch from "./FilterCategorySearch";
 import FilterPriceSearch from "./FilterPriceSearch";
 import {
-  getRestaurantsByLocation,
-  getRestaurantsByNameLocation,
-} from "../features/restaurantAPISlice";
+  getSingleRestaurant,
+  renderSingleRestaurant,
+} from "../features/singleRestaurantSlice";
+import {
+  renderAllRestaurants,
+  getAllRestaurants,
+} from "../features/allRestaurantsSlice";
+import SingleRestaurant from "./SingleRestaurant";
 
 const Search = () => {
   const auth = useSelector((state) => state.auth);
+  const restaurants = useSelector(renderAllRestaurants);
+  const singleRestaurant = useSelector(renderSingleRestaurant);
   const dispatch = useDispatch();
 
   const [search, setSearch] = useState({ restaurant: "", location: "" });
@@ -16,23 +23,22 @@ const Search = () => {
   const getSearch = async (event) => {
     event.preventDefault();
     try {
-      if (event.target.value === "restaurant") {
-        //just dispatch location search
-        dispatch(
-          getRestaurantsByLocation({
+      if (search.restaurant.length === 0) {
+        await dispatch(
+          getAllRestaurants({
             token: auth.token,
-            search,
+            location: search.location,
           })
         );
-        setSearch({ restaurant: "", location: "" });
+      } else {
+        await dispatch(
+          getSingleRestaurant({
+            token: auth.token,
+            name: search.restaurant,
+            location: search.location,
+          })
+        );
       }
-      //otherwise search resto name and location
-      dispatch(
-        getRestaurantsByNameLocation({
-          token: auth.token,
-          search,
-        })
-      );
       setSearch({ restaurant: "", location: "" });
     } catch (error) {
       console.log(error);
@@ -52,13 +58,13 @@ const Search = () => {
         <label>search by name and / or by restaurant:</label>
         <input
           placeholder="restaurant name"
-          value={restaurant}
-          name="resturant"
+          value={search.restaurant}
+          name="restaurant"
           onChange={handleChange}
         />
         <input
           placeholder="city, state"
-          value={location}
+          value={search.location}
           name="location"
           onChange={handleChange}
         />
@@ -70,7 +76,7 @@ const Search = () => {
       <section className="category-search-container">
         <FilterCategorySearch />
       </section>
-      <p>map through cards</p>
+      <SingleRestaurant />
     </div>
   );
 };

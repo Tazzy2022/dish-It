@@ -73,20 +73,14 @@ router.get("/location/categories/price/:id", async (req, res, next) => {
 });
 
 //GET https://api.yelp.com/v3/businesses/north-india-restaurant-san-francisco
-//loop through req.body and split any words with "-"
-//GET /api/restaurants/name/location
-router.get("/name/location", async (req, res, next) => {
+//GET /api/restaurants/name-location
+router.get("/:search", async (req, res, next) => {
   try {
-    console.log(req.body.name)
-    const restaurant = await needle(
-      "get",
-      `${BASE_URL}${req.body.name}-${req.body.location}`,
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.API_KEY}`,
-        },
-      }
-    );
+    const restaurant = await needle("get", `${BASE_URL}${req.params.search}`, {
+      headers: {
+        Authorization: `Bearer ${process.env.API_KEY}`,
+      },
+    });
     const data = restaurant.body;
     res.send(data);
   } catch (err) {

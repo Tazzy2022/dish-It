@@ -8689,6 +8689,13 @@ const App = () => {
     exact: true,
     path: "/userlists/:id",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_UserSingleList__WEBPACK_IMPORTED_MODULE_6__["default"], null)
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
+    exact: true,
+    path: "*",
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Navigate, {
+      to: "/",
+      replace: true
+    })
   })));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
@@ -8713,6 +8720,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+const categories = ["African", "American (New)", "American (Traditional)", "Asian Fusion", "Bagels", "Bakeries", "Barbeque", "Brazilian", "Breakfast & Brunch", "Buffets", "Bubble Tea", "Burgers", "Burmese", "Cafes", "Cajun/Creole", "Caribbean", "Chicken Wings", "Chinese", "Coffee & Tea", "Colombian", "Comfort Food", "Creperies", "Cuban", "Delis", "Desserts", "Diners", "Dim Sum", "Dominican", "Fast Food", "Fish & Chips", "French", "Falafel", "Gastropubs", "Gluten-Free", "Greek", "Halal", "Himalayan/Nepalese", "Ice Cream & Frozen Yogurt", "Indian", "Irish", "Italian", "Japanese", "Juice Bars & Smoothies", "Korean", "Kosher", "Latin American", "Mediterranean", "Mexican", "Middle Eastern", "Pizza", "Ramen", "	Salad", "Sandwiches", "Seafood", "Soul Food", "Spanish", "Steakhouses", "Sushi Bars", "Tacos", "Tex-Mex", "Thai", "Vegan", "Vegetarian", "Vietnamese"];
 const FilterCategorySearch = () => {
   const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
   const [show, setShow] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
@@ -9035,7 +9043,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const RestaurantCard = props => {
-  console.log("!!!!", props);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "restaurant-list-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
@@ -9071,6 +9078,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _FilterCategorySearch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./FilterCategorySearch */ "./client/Components/FilterCategorySearch.js");
 /* harmony import */ var _FilterPriceSearch__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./FilterPriceSearch */ "./client/Components/FilterPriceSearch.js");
+/* harmony import */ var _features_singleRestaurantSlice__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../features/singleRestaurantSlice */ "./client/features/singleRestaurantSlice.js");
+/* harmony import */ var _features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../features/allRestaurantsSlice */ "./client/features/allRestaurantsSlice.js");
+/* harmony import */ var _SingleRestaurant__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SingleRestaurant */ "./client/Components/SingleRestaurant.js");
+
 
 
 
@@ -9079,11 +9090,41 @@ __webpack_require__.r(__webpack_exports__);
 
 const Search = () => {
   const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
-  const [show, setShow] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  const getSearch = () => {
-    console.log("hi");
+  const restaurants = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(_features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_5__.renderAllRestaurants);
+  const singleRestaurant = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(_features_singleRestaurantSlice__WEBPACK_IMPORTED_MODULE_4__.renderSingleRestaurant);
+  const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
+  const [search, setSearch] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    restaurant: "",
+    location: ""
+  });
+  const getSearch = async event => {
+    event.preventDefault();
+    try {
+      if (search.restaurant.length === 0) {
+        await dispatch((0,_features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_5__.getAllRestaurants)({
+          token: auth.token,
+          location: search.location
+        }));
+      } else {
+        await dispatch((0,_features_singleRestaurantSlice__WEBPACK_IMPORTED_MODULE_4__.getSingleRestaurant)({
+          token: auth.token,
+          name: search.restaurant,
+          location: search.location
+        }));
+      }
+      setSearch({
+        restaurant: "",
+        location: ""
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleChange = event => {
+    setSearch(prevState => ({
+      ...prevState,
+      [event.target.name]: event.target.value
+    }));
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "search-container"
@@ -9091,24 +9132,22 @@ const Search = () => {
     id: "search-form",
     onSubmit: getSearch
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "search by name and / or by restaurant:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    placeholder: "restaurant name"
-    // value={restaurant}
-    ,
-    name: "resturant"
-    // onChange={handleChange}
+    placeholder: "restaurant name",
+    value: search.restaurant,
+    name: "restaurant",
+    onChange: handleChange
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    placeholder: "city, state"
-    // value={location}
-    ,
-    name: "location"
-    // onChange={handleChange}
+    placeholder: "city, state",
+    value: search.location,
+    name: "location",
+    onChange: handleChange
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: "button"
   }, "search")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
     className: "price-search-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_FilterPriceSearch__WEBPACK_IMPORTED_MODULE_3__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
     className: "category-search-container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_FilterCategorySearch__WEBPACK_IMPORTED_MODULE_2__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "map through cards"));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_FilterCategorySearch__WEBPACK_IMPORTED_MODULE_2__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_SingleRestaurant__WEBPACK_IMPORTED_MODULE_6__["default"], null));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Search);
 
@@ -9209,6 +9248,50 @@ const SignUp = () => {
   }, "Log in"))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SignUp);
+
+/***/ }),
+
+/***/ "./client/Components/SingleRestaurant.js":
+/*!***********************************************!*\
+  !*** ./client/Components/SingleRestaurant.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../features/allRestaurantsSlice */ "./client/features/allRestaurantsSlice.js");
+/* harmony import */ var _features_singleRestaurantSlice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../features/singleRestaurantSlice */ "./client/features/singleRestaurantSlice.js");
+
+
+
+
+
+const SingleRestaurant = () => {
+  const restaurants = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(_features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_2__.renderAllRestaurants);
+  const restaurant = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(_features_singleRestaurantSlice__WEBPACK_IMPORTED_MODULE_3__.renderSingleRestaurant);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", {
+    className: "restaurant-list-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
+    className: "list-card"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: "card-img",
+    src: restaurant.image_url,
+    alt: "restaurant image"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, restaurant.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, restaurant.address1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, restaurant.location.city, ", ", restaurant.location.state, ",", " ", restaurant.location.zip_code), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "phone: ", restaurant.display_phone), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "price: ", restaurant.price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+    className: "yelp-link",
+    to: restaurant.url
+  }, "yelp link"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "food category:"), props.restaurant.categories.map((cat, index) => {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, cat[index]);
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "+ add to list")), ";");
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SingleRestaurant);
 
 /***/ }),
 
@@ -9367,6 +9450,64 @@ const UserSingleList = () => {
   }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (UserSingleList);
+
+/***/ }),
+
+/***/ "./client/features/allRestaurantsSlice.js":
+/*!************************************************!*\
+  !*** ./client/features/allRestaurantsSlice.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   getAllRestaurants: () => (/* binding */ getAllRestaurants),
+/* harmony export */   renderAllRestaurants: () => (/* binding */ renderAllRestaurants)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js");
+
+//import { createSelector } from 'reselect'
+
+
+const initialState = {
+  allRestaurants: [],
+  error: "",
+  token: ""
+};
+const getAllRestaurants = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("allRestaurants/getAllRestaurants", async ({
+  token,
+  location
+}) => {
+  try {
+    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`/api/restaurants/location/${location}`, {
+      headers: {
+        authorization: token
+      }
+    });
+    return response?.data;
+  } catch (error) {
+    return error.message;
+  }
+});
+const allRestaurantsSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)({
+  name: "allRestaurants",
+  initialState,
+  reducers: {},
+  extraReducers: builder => {
+    builder.addCase(getAllRestaurants.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(getAllRestaurants.fulfilled, (state, action) => {
+      return action.payload;
+    });
+  }
+});
+const renderAllRestaurants = state => state.allRestaurants;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (allRestaurantsSlice.reducer);
 
 /***/ }),
 
@@ -9623,6 +9764,65 @@ const {
 
 /***/ }),
 
+/***/ "./client/features/singleRestaurantSlice.js":
+/*!**************************************************!*\
+  !*** ./client/features/singleRestaurantSlice.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   getSingleRestaurant: () => (/* binding */ getSingleRestaurant),
+/* harmony export */   renderSingleRestaurant: () => (/* binding */ renderSingleRestaurant)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js");
+
+
+const initialState = {
+  singleRestaurant: {},
+  error: "",
+  token: ""
+};
+const getSingleRestaurant = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("singleRestaurant/getSingleRestaurant", async ({
+  name,
+  location,
+  token
+}) => {
+  try {
+    const nameLocation = name + "-" + location;
+    const search = nameLocation.split(" ").join("-");
+    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`/api/restaurants/${search}`, {
+      headers: {
+        authorization: token
+      }
+    });
+    return response?.data;
+  } catch (error) {
+    return error.message;
+  }
+});
+const singleRestaurantSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)({
+  name: "singleRestaurant",
+  initialState,
+  reducers: {},
+  extraReducers: builder => {
+    builder.addCase(getSingleRestaurant.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(getSingleRestaurant.fulfilled, (state, action) => {
+      return action.payload;
+    });
+  }
+});
+const renderSingleRestaurant = state => state.singleRestaurant;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (singleRestaurantSlice.reducer);
+
+/***/ }),
+
 /***/ "./client/store.js":
 /*!*************************!*\
   !*** ./client/store.js ***!
@@ -9634,29 +9834,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js");
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js");
 /* harmony import */ var _features_authSlice__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./features/authSlice */ "./client/features/authSlice.js");
 /* harmony import */ var _features_listSlice__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./features/listSlice */ "./client/features/listSlice.js");
-/* harmony import */ var _features_singleListSlice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./features/singleListSlice */ "./client/features/singleListSlice.js");
-/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux-logger */ "./node_modules/redux-logger/dist/redux-logger.js");
-/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(redux_logger__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
+/* harmony import */ var _features_singleRestaurantSlice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./features/singleRestaurantSlice */ "./client/features/singleRestaurantSlice.js");
+/* harmony import */ var _features_singleListSlice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./features/singleListSlice */ "./client/features/singleListSlice.js");
+/* harmony import */ var _features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./features/allRestaurantsSlice */ "./client/features/allRestaurantsSlice.js");
+/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! redux-logger */ "./node_modules/redux-logger/dist/redux-logger.js");
+/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(redux_logger__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
 
 
 
-// import savedRestaurantsReducer from "./features/savedRestaurantsSlice";
 
 
 
-const store = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_4__.configureStore)({
+
+
+const store = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_6__.configureStore)({
   reducer: {
     auth: _features_authSlice__WEBPACK_IMPORTED_MODULE_0__["default"],
     lists: _features_listSlice__WEBPACK_IMPORTED_MODULE_1__["default"],
-    list: _features_singleListSlice__WEBPACK_IMPORTED_MODULE_2__["default"]
-    // savedRestaurants: savedRestaurantsReducer,
+    list: _features_singleListSlice__WEBPACK_IMPORTED_MODULE_3__["default"],
+    singleRestaurant: _features_singleRestaurantSlice__WEBPACK_IMPORTED_MODULE_2__["default"],
+    allRestaurants: _features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
-
-  middleware: [(redux_logger__WEBPACK_IMPORTED_MODULE_3___default()), redux_thunk__WEBPACK_IMPORTED_MODULE_5__["default"]]
+  middleware: [(redux_logger__WEBPACK_IMPORTED_MODULE_5___default()), redux_thunk__WEBPACK_IMPORTED_MODULE_7__["default"]]
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
 
