@@ -2,11 +2,11 @@ import axios from "axios";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const initialState = {
-  restaurant: {},
-  error: "",
-  token: "",
-};
+// const initialState = {
+//   restaurant: {},
+//   error: "",
+//   token: "",
+// };
 
 export const getSingleRestaurant = createAsyncThunk(
   "singleRestaurant/getSingleRestaurant",
@@ -26,21 +26,21 @@ export const getSingleRestaurant = createAsyncThunk(
   }
 );
 
-const singleRestaurantSlice = createSlice({
-  name: "singleRestaurant",
-  initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(getSingleRestaurant.rejected, (state, action) => {
-      state.error = action.error.message;
-    });
-    builder.addCase(getSingleRestaurant.fulfilled, (state, action) => {
-      return action.payload;
-      //state.restaurant = action.payload
-    });
-  },
-});
+// const singleRestaurantSlice = createSlice({
+//   name: "singleRestaurant",
+//   initialState,
+//   reducers: {},
+//   extraReducers: (builder) => {
+//     builder.addCase(getSingleRestaurant.rejected, (state, action) => {
+//       state.error = action.error.message;
+//     });
+//     builder.addCase(getSingleRestaurant.fulfilled, (state, action) => {
+//       return action.payload;
+//       //state.restaurant = action.payload
+//     });
+//   },
+// });
 
-export const renderSingleRestaurant = (state) => state.restaurant;
+// export const renderSingleRestaurant = (state) => state.restaurant;
 
-export default singleRestaurantSlice.reducer;
+// export default singleRestaurantSlice.reducer;

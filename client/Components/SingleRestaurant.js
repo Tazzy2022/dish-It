@@ -1,11 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { renderAllRestaurants } from "../features/allRestaurantsSlice";
-import { renderSingleRestaurant } from "../features/singleRestaurantSlice";
 
 const SingleRestaurant = (props) => {
-  
+  console.log("@@@@@@", props);
+  const categories = {...props.restaurant.categories}
   return (
     <main className="restaurant-list-container">
       <section className="list-card">
@@ -26,9 +24,14 @@ const SingleRestaurant = (props) => {
           yelp link
         </Link>
         <p>food category:</p>
-        {props.restaurant.categories.map((cat, index) => {
+        {/* {props.restaurant.categories.map((cat, index) => {
           return <p>{cat[index]}</p>;
-        })}
+        })} */}
+        <p>{categories}</p>
+        <p>
+          {props.restaurant.rating}&#9733({props.restaurant.review_count}{" "}
+          reviews)
+        </p>
         <p>+ add to list</p>
       </section>
       ;
