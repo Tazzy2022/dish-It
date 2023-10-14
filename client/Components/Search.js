@@ -15,7 +15,7 @@ import SingleRestaurant from "./SingleRestaurant";
 const Search = () => {
   const auth = useSelector((state) => state.auth);
   const restaurants = useSelector(renderAllRestaurants);
-  const singleRestaurant = useSelector(renderSingleRestaurant);
+  const restaurant = useSelector(renderSingleRestaurant);
   const dispatch = useDispatch();
 
   const [search, setSearch] = useState({ restaurant: "", location: "" });
@@ -51,7 +51,7 @@ const Search = () => {
       [event.target.name]: event.target.value,
     }));
   };
-
+  console.log("****", restaurant);
   return (
     <div className="search-container">
       <form id="search-form" onSubmit={getSearch}>
@@ -76,7 +76,45 @@ const Search = () => {
       <section className="category-search-container">
         <FilterCategorySearch />
       </section>
-      <SingleRestaurant />
+      {restaurant?.length > 0 && (
+        <main className="restaurant-list-container">
+          <section className="list-card">
+            <img
+              className="card-img"
+              src={restaurant.image_url}
+              alt="restaurant image"
+            />
+            <p>{restaurant.name}</p>
+            <p>{restaurant.address1}</p>
+            <p>
+              {restaurant.location.city},{" "}
+              {restaurant.location.state},{" "}
+              {restaurant.location.zip_code}
+            </p>
+            <p>phone: {restaurant.display_phone}</p>
+            <p>price: {restaurant.price}</p>
+            <Link className="yelp-link" to={restaurant.url}>
+              yelp link
+            </Link>
+            <p>food category:</p>
+            {restaurant.categories.map((cat, index) => {
+              return <p>{cat[index]}</p>;
+            })}
+     <p>+ add to list</p>
+          </section>
+          ;
+        </main>
+      )}
+      {restaurants?.businesses?.length > 0 &&
+        restaurants?.businesses?.map((restaurant) => {
+          return (
+            <SingleRestaurant
+              key={restaurant.id}
+              restaurant={restaurant}
+              auth={auth}
+            />
+          );
+        })}
     </div>
   );
 };

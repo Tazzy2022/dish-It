@@ -56,7 +56,6 @@ const UserSingleList = () => {
       ) : (
         list?.length > 0 &&
         list?.map((restaurant, index) => {
-          console.log("hi");
           return (
             <RestaurantCard
               key={restaurant.id}

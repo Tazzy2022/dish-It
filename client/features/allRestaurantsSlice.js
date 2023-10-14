@@ -4,7 +4,7 @@ import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
-  allRestaurants: [],
+  restaurants: [],
   error: "",
   token: "",
 };
@@ -38,10 +38,11 @@ const allRestaurantsSlice = createSlice({
     });
     builder.addCase(getAllRestaurants.fulfilled, (state, action) => {
       return action.payload;
+      //state.restaurants = action.payload;
     });
   },
 });
 
-export const renderAllRestaurants = (state) => state.allRestaurants
+export const renderAllRestaurants = (state) => state.restaurants;
 
 export default allRestaurantsSlice.reducer;

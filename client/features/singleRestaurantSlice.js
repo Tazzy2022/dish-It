@@ -3,7 +3,7 @@ import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
-  singleRestaurant: {},
+  restaurant: {},
   error: "",
   token: "",
 };
@@ -12,8 +12,8 @@ export const getSingleRestaurant = createAsyncThunk(
   "singleRestaurant/getSingleRestaurant",
   async ({ name, location, token }) => {
     try {
-			const nameLocation = name + "-" + location
-			const search = nameLocation.split(" ").join("-")
+      const nameLocation = name + "-" + location;
+      const search = nameLocation.split(" ").join("-");
       const response = await axios.get(`/api/restaurants/${search}`, {
         headers: {
           authorization: token,
@@ -36,10 +36,11 @@ const singleRestaurantSlice = createSlice({
     });
     builder.addCase(getSingleRestaurant.fulfilled, (state, action) => {
       return action.payload;
+      //state.restaurant = action.payload
     });
   },
 });
 
-export const renderSingleRestaurant = (state) => state.singleRestaurant
+export const renderSingleRestaurant = (state) => state.restaurant;
 
 export default singleRestaurantSlice.reducer;

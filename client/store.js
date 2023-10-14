@@ -12,8 +12,8 @@ const store = configureStore({
     auth: authReducer,
     lists: listReducer,
     list: singleListReducer,
-    singleRestaurant: singleRestaurantReducer,
-    allRestaurants: allRestaurantsReducer,
+    restaurant: singleRestaurantReducer,
+    restaurants: allRestaurantsReducer,
   },
   middleware: [logger, thunk],
 });
