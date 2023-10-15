@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 const Home = () => {
@@ -13,8 +13,14 @@ const Home = () => {
           restaurant list.
           <br />
           The options are endless on Dish iT.
+          <br />
         </p>
       </article>
+      <span id="login-signup-link">
+        <p>
+          Login or Sign up<Link to="/login"> here</Link>
+        </p>
+      </span>
       <main id="home-main-container">
         <section className="home-header-container">
           <img

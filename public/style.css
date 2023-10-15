@@ -31,9 +31,73 @@ a {
   border-bottom: solid 1.5px rgb(244, 239, 239);
 }
 
-.home-main-container {
+.home-main-container,
+.search-container {
   display: flex;
   flex-direction: column;
+}
+
+.search-container {
+  align-items: center;
+}
+
+#search-form,
+#category-form,
+#price-form {
+  display: flex;
+}
+
+#price-form button {
+  margin: 0vw 10vw 0vw 1vw;
+  height: 20px;
+  background-color: #e00707;
+  color: white;
+  border-radius: 5px;
+  border: none;
+}
+
+#search-filter-containers {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-price-checkbox {
+  margin: 0px 3px 5px 10px;
+}
+
+#category-form button {
+  background-color: white;
+  font-size: 15px;
+  border: none;
+  color: #e00707;
+  margin-bottom: 4px;
+}
+
+#search-filter-containers p {
+  margin: 0px;
+}
+
+.filter-price-checkbox {
+  margin-left: 5px;
+}
+
+.search-label-input {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+}
+
+#search-form button {
+  margin-top: 19px;
+  width: 10vw;
+}
+
+.search-label-input input {
+  width: 20vw;
+  font-size: 17px;
+}
+
+#search-form {
+  margin: 20px;
 }
 
 .card-img {
@@ -176,7 +240,7 @@ a {
 }
 
 .nav-dropdown-container:hover .dropbtn {
-  background-color: red;
+  background-color: #e00707;
   color: white;
 }
 
@@ -204,4 +268,20 @@ a {
 
 .nav-dropdown-container:hover .dropdown-content {
   display: block;
+}
+
+#home-main-container {
+  filter: blur(1px);
+}
+
+#login-signup-link {
+  text-align: center;
+  font-size: 25px;
+  background-color: #e00707;
+  background-color: #ffe7e7;
+}
+
+#login-signup-link a {
+  color: #e00707;
+  font-weight: bolder;
 }

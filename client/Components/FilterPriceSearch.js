@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
 import { useDispatch, useSelector } from "react-redux";
 
 const FilterPriceSearch = () => {
@@ -12,8 +10,8 @@ const FilterPriceSearch = () => {
   const handleShow = () => setShow(true);
 
   const filterPriceSearch = () => {
-    console.log("hi")
-  }
+    console.log("hi");
+  };
   return (
     <form id="price-form" onSubmit={filterPriceSearch}>
       <p>Filter by price:</p>

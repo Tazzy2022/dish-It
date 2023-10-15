@@ -12,12 +12,12 @@ const Login = () => {
     event.preventDefault();
     try {
       const loggedUser = await dispatch(loginUser(user));
-      setUser({ email: "", password: "" });
       //navigate only when user is accurate
-      if (loggedUser.payload) navigate("/usersearch");
+      if (loggedUser.payload.user) navigate("/usersearch");
     } catch (err) {
       console.log(err);
     }
+    setUser({ email: "", password: "" });
   };
 
   const handleChange = (event) => {

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const SingleRestaurant = (props) => {
   console.log("@@@@@@", props);
-  const categories = {...props.restaurant.categories}
+  const categories = { ...props.restaurant.categories };
   return (
     <main className="restaurant-list-container">
       <section className="list-card">
@@ -24,10 +24,9 @@ const SingleRestaurant = (props) => {
           yelp link
         </Link>
         <p>food category:</p>
-        {/* {props.restaurant.categories.map((cat, index) => {
-          return <p>{cat[index]}</p>;
-        })} */}
-        <p>{categories}</p>
+        {props.restaurant.categories.map((cat, index) => {
+          return <p key={index}>{cat.title}</p>;
+        })}
         <p>
           {props.restaurant.rating}&#9733({props.restaurant.review_count}{" "}
           reviews)

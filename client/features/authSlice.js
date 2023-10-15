@@ -4,8 +4,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   user: {},
-  error: "",
-  token: "",
+  // error: "",
+  // token: "",
 };
 
 export const loginUser = createAsyncThunk("auth/loginUser", async (user) => {
@@ -72,8 +72,8 @@ const authSlice = createSlice({
     //Logout action
     loggedoutUser: (state) => {
       state.user = {};
-      state.error = "";
-      state.token = "";
+      // state.error = "";
+      // state.token = "";
     },
   },
   //extraReducers handle axios calls - unlike "reducers:{}"

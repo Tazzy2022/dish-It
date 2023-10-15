@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Header from "./Header";
+import AuthContainer from "./AuthContainer"
 import Home from "./Home";
 import Login from "./Login";
 import SignUp from "./SignUp";
@@ -16,8 +17,7 @@ const App = () => {
       </nav>
       <Routes>
         <Route exact path="/" element={<Home />} />
-        <Route exact path="/login" element={<Login />} />
-        <Route exact path="/signUp" element={<SignUp />} />
+        <Route exact path="/login" element={<AuthContainer />} />
 
         <Route exact path="/usersearch" element={<Search />} />
         <Route exact path="/userhome" element={<UserHome />} />

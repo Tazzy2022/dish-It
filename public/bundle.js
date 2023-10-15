@@ -8685,14 +8685,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _Header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Header */ "./client/Components/Header.js");
-/* harmony import */ var _Home__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Home */ "./client/Components/Home.js");
-/* harmony import */ var _Login__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Login */ "./client/Components/Login.js");
-/* harmony import */ var _SignUp__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SignUp */ "./client/Components/SignUp.js");
-/* harmony import */ var _UserHome__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./UserHome */ "./client/Components/UserHome.js");
-/* harmony import */ var _UserSingleList__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./UserSingleList */ "./client/Components/UserSingleList.js");
-/* harmony import */ var _Search__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Search */ "./client/Components/Search.js");
+/* harmony import */ var _AuthContainer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AuthContainer */ "./client/Components/AuthContainer.js");
+/* harmony import */ var _Home__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Home */ "./client/Components/Home.js");
+/* harmony import */ var _Login__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Login */ "./client/Components/Login.js");
+/* harmony import */ var _SignUp__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SignUp */ "./client/Components/SignUp.js");
+/* harmony import */ var _UserHome__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./UserHome */ "./client/Components/UserHome.js");
+/* harmony import */ var _UserSingleList__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./UserSingleList */ "./client/Components/UserSingleList.js");
+/* harmony import */ var _Search__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Search */ "./client/Components/Search.js");
+
 
 
 
@@ -8703,40 +8705,61 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const App = () => {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("nav", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Header__WEBPACK_IMPORTED_MODULE_1__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Routes, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("nav", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Header__WEBPACK_IMPORTED_MODULE_1__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Routes, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
     exact: true,
     path: "/",
-    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Home__WEBPACK_IMPORTED_MODULE_2__["default"], null)
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Home__WEBPACK_IMPORTED_MODULE_3__["default"], null)
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
     exact: true,
     path: "/login",
-    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Login__WEBPACK_IMPORTED_MODULE_3__["default"], null)
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
-    exact: true,
-    path: "/signUp",
-    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_SignUp__WEBPACK_IMPORTED_MODULE_4__["default"], null)
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_AuthContainer__WEBPACK_IMPORTED_MODULE_2__["default"], null)
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
     exact: true,
     path: "/usersearch",
-    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Search__WEBPACK_IMPORTED_MODULE_7__["default"], null)
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Search__WEBPACK_IMPORTED_MODULE_8__["default"], null)
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
     exact: true,
     path: "/userhome",
-    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_UserHome__WEBPACK_IMPORTED_MODULE_5__["default"], null)
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_UserHome__WEBPACK_IMPORTED_MODULE_6__["default"], null)
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
     exact: true,
     path: "/userlists/:id",
-    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_UserSingleList__WEBPACK_IMPORTED_MODULE_6__["default"], null)
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_UserSingleList__WEBPACK_IMPORTED_MODULE_7__["default"], null)
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
     exact: true,
     path: "*",
-    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Navigate, {
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Navigate, {
       to: "/",
       replace: true
     })
   })));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
+
+/***/ }),
+
+/***/ "./client/Components/AuthContainer.js":
+/*!********************************************!*\
+  !*** ./client/Components/AuthContainer.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Login */ "./client/Components/Login.js");
+/* harmony import */ var _SignUp__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SignUp */ "./client/Components/SignUp.js");
+
+
+
+const AuthContainer = () => {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Login__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_SignUp__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AuthContainer);
 
 /***/ }),
 
@@ -8770,10 +8793,7 @@ const FilterCategorySearch = () => {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
     id: "category-form",
     onSubmit: filterCategorySearch
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Filter by category:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    type: "checkbox",
-    className: "filter-category-checkbox"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "meat"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "update"));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Filter by category:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "+ show all"));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FilterCategorySearch);
 
@@ -8793,8 +8813,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-
-
 
 
 const FilterPriceSearch = () => {
@@ -8849,16 +8867,18 @@ const Header = () => {
   const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
   const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   const handleLogout = () => {
-    console.log("CLICKED");
     dispatch((0,_features_authSlice__WEBPACK_IMPORTED_MODULE_2__.loggedoutUser)());
     dispatch((0,_features_listSlice__WEBPACK_IMPORTED_MODULE_3__.loggoutUserLists)());
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "header-container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("nav", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("nav", null, auth?.user.id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+    to: "/usersearch",
+    className: "header"
+  }, "Dish iT") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
     to: "/",
     className: "header"
-  }, "Dish iT")), auth?.user.id ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("nav", {
+  }, "Dish iT")), auth?.user.id && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("nav", {
     className: "nav-dropdown-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: "dropbtn"
@@ -8873,15 +8893,7 @@ const Header = () => {
   }, "my account"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
     onClick: handleLogout,
     to: "/"
-  }, "log out"))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("nav", {
-    className: "login-signUp-container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
-    to: "/login",
-    className: "login-link"
-  }, "Log in"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
-    to: "/",
-    className: "signup-link"
-  }, "Sign up")));
+  }, "log out"))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Header);
 
@@ -8900,6 +8912,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
 
 
 const Home = () => {
@@ -8907,7 +8920,11 @@ const Home = () => {
     className: "home-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("article", {
     className: "intro"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Researching restaurants for a trip? Like keeping track of restaurants to try?", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), "Don't have the energy to search for a restaurant? Check out a friend's restaurant list.", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), "The options are endless on Dish iT.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Researching restaurants for a trip? Like keeping track of restaurants to try?", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), "Don't have the energy to search for a restaurant? Check out a friend's restaurant list.", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null), "The options are endless on Dish iT.", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("br", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    id: "login-signup-link"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Login or Sign up", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+    to: "/login"
+  }, " here"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", {
     id: "home-main-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
     className: "home-header-container"
@@ -9017,15 +9034,15 @@ const Login = () => {
     event.preventDefault();
     try {
       const loggedUser = await dispatch((0,_features_authSlice__WEBPACK_IMPORTED_MODULE_1__.loginUser)(user));
-      setUser({
-        email: "",
-        password: ""
-      });
       //navigate only when user is accurate
-      if (loggedUser.payload) navigate("/usersearch");
+      if (loggedUser.payload.user) navigate("/usersearch");
     } catch (err) {
       console.log(err);
     }
+    setUser({
+      email: "",
+      password: ""
+    });
   };
   const handleChange = event => {
     setUser(prevState => ({
@@ -9116,8 +9133,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _FilterCategorySearch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./FilterCategorySearch */ "./client/Components/FilterCategorySearch.js");
 /* harmony import */ var _FilterPriceSearch__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./FilterPriceSearch */ "./client/Components/FilterPriceSearch.js");
-/* harmony import */ var _features_singleRestaurantSlice__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../features/singleRestaurantSlice */ "./client/features/singleRestaurantSlice.js");
-/* harmony import */ var _features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../features/allRestaurantsSlice */ "./client/features/allRestaurantsSlice.js");
+/* harmony import */ var _features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../features/allRestaurantsSlice */ "./client/features/allRestaurantsSlice.js");
+/* harmony import */ var _features_singleRestaurantSlice__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../features/singleRestaurantSlice */ "./client/features/singleRestaurantSlice.js");
 /* harmony import */ var _SingleRestaurant__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SingleRestaurant */ "./client/Components/SingleRestaurant.js");
 /* harmony import */ var _AllRestaurants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./AllRestaurants */ "./client/Components/AllRestaurants.js");
 
@@ -9137,27 +9154,29 @@ const Search = () => {
     restaurant: "",
     location: ""
   });
-  const [restaurant, setSingleRestaurant] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
+  //const [restaurant, setSingleRestaurant] = useState([]);
   const [restaurants, setAllRestaurants] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const getSearch = async event => {
     event.preventDefault();
     try {
       if (search.restaurant.length === 0) {
-        const allRest = await dispatch((0,_features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_5__.getAllRestaurants)({
+        const allRest = await dispatch((0,_features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_4__.getAllRestaurants)({
           token: auth.token,
           location: search.location
         }));
         //console.log("allRest", allRest.payload.businesses);
         setAllRestaurants(allRest);
       } else {
-        const singleRest = await dispatch((0,_features_singleRestaurantSlice__WEBPACK_IMPORTED_MODULE_4__.getSingleRestaurant)({
+        const singleRest = await dispatch((0,_features_singleRestaurantSlice__WEBPACK_IMPORTED_MODULE_5__.getSingleRestaurant)({
           token: auth.token,
           name: search.restaurant,
           location: search.location
         }));
         //console.log("singleRest", singleRest.payload);
-        setSingleRestaurant(singleRest);
+        setAllRestaurants(singleRest);
+        //setSingleRestaurant(singleRest);
       }
+
       setSearch({
         restaurant: "",
         location: ""
@@ -9174,35 +9193,40 @@ const Search = () => {
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "search-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
+    id: "form-section"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
     id: "search-form",
     onSubmit: getSearch
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "search by name and / or by restaurant:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "search-label-input"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "search by name (optional)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     placeholder: "restaurant name",
     value: search.restaurant,
     name: "restaurant",
     onChange: handleChange
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "search-label-input"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "and / or by location:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     placeholder: "city, state",
     value: search.location,
     name: "location",
     onChange: handleChange
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: "button"
-  }, "search")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
+  }, "search"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
+    id: "search-filter-containers"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_FilterPriceSearch__WEBPACK_IMPORTED_MODULE_3__["default"], {
     className: "price-search-container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_FilterPriceSearch__WEBPACK_IMPORTED_MODULE_3__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_FilterCategorySearch__WEBPACK_IMPORTED_MODULE_2__["default"], {
     className: "category-search-container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_FilterCategorySearch__WEBPACK_IMPORTED_MODULE_2__["default"], null)), restaurant?.payload?.length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("pre", null, JSON.stringify(restaurant, null, 2)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_SingleRestaurant__WEBPACK_IMPORTED_MODULE_6__["default"], {
-    restaurant: restaurant,
-    auth: auth
-  })) : restaurants?.payload?.businesses?.length > 0 && restaurants?.payload?.businesses?.map(restaurant => {
+  })), restaurants?.payload?.businesses?.length > 0 ? restaurants?.payload?.businesses?.map(restaurant => {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_AllRestaurants__WEBPACK_IMPORTED_MODULE_7__["default"], {
       key: restaurant.id,
       restaurant: restaurant,
       auth: auth
     });
-  }));
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Search);
 
@@ -9260,27 +9284,29 @@ __webpack_require__.r(__webpack_exports__);
 const SignUp = () => {
   const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
   const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    username: "",
     email: "",
-    password: ""
+    password: "",
+    city: "",
+    state: ""
   });
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
   const signUp = async event => {
     event.preventDefault();
     try {
       const loggedUser = await dispatch((0,_features_authSlice__WEBPACK_IMPORTED_MODULE_1__.registerUser)(user));
-      setUser({
-        username: "",
-        email: "",
-        password: "",
-        city: "",
-        state: ""
-      });
       //navigate only when user is accurate
-      if (loggedUser.payload) navigate("/userhome");
-      console.log(loggedUser.payload);
+      if (loggedUser.payload.user) navigate("/usersearch");
     } catch (err) {
       console.log(err);
     }
+    setUser({
+      username: "",
+      email: "",
+      password: "",
+      city: "",
+      state: ""
+    });
   };
   const handleChange = event => {
     setUser(prevState => ({
@@ -9366,7 +9392,11 @@ const SingleRestaurant = props => {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.restaurant.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.restaurant.address1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.restaurant.location.city, ", ", props.restaurant.location.state, ",", " ", props.restaurant.location.zip_code), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "phone: ", props.restaurant.display_phone), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "price: ", props.restaurant.price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
     className: "yelp-link",
     to: props.restaurant.url
-  }, "yelp link"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "food category:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, categories), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.restaurant.rating, "&#9733(", props.restaurant.review_count, " ", "reviews)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "+ add to list")), ";");
+  }, "yelp link"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "food category:"), props.restaurant.categories.map((cat, index) => {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+      key: index
+    }, cat.title);
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.restaurant.rating, "&#9733(", props.restaurant.review_count, " ", "reviews)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "+ add to list")), ";");
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SingleRestaurant);
 
@@ -9538,21 +9568,20 @@ const UserSingleList = () => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   getAllRestaurants: () => (/* binding */ getAllRestaurants)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   getAllRestaurants: () => (/* binding */ getAllRestaurants),
+/* harmony export */   renderAllRestaurants: () => (/* binding */ renderAllRestaurants)
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js");
 
-//import { createSelector } from 'reselect'
 
-
-
-// const initialState = {
-//   restaurants: [],
-//   error: "",
-//   token: "",
-// };
+const initialState = {
+  restaurants: []
+  //   error: "",
+  //   token: "",
+};
 
 const getAllRestaurants = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("allRestaurants/getAllRestaurants", async ({
   token,
@@ -9569,25 +9598,23 @@ const getAllRestaurants = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.creat
     return error.message;
   }
 });
+const allRestaurantsSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)({
+  name: "allRestaurants",
+  initialState,
+  reducers: {},
+  extraReducers: builder => {
+    builder.addCase(getAllRestaurants.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(getAllRestaurants.fulfilled, (state, action) => {
+      return action.payload;
+      //state.restaurants = action.payload;
+    });
+  }
+});
 
-// const allRestaurantsSlice = createSlice({
-//   name: "allRestaurants",
-//   initialState,
-//   reducers: {},
-//   extraReducers: (builder) => {
-//     builder.addCase(getAllRestaurants.rejected, (state, action) => {
-//       state.error = action.error.message;
-//     });
-//     builder.addCase(getAllRestaurants.fulfilled, (state, action) => {
-//       return action.payload;
-//       //state.restaurants = action.payload;
-//     });
-//   },
-// });
-
-//export const renderAllRestaurants = (state) => state.restaurants;
-
-//export default allRestaurantsSlice.reducer;
+const renderAllRestaurants = state => state.restaurants;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (allRestaurantsSlice.reducer);
 
 /***/ }),
 
@@ -9613,10 +9640,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const initialState = {
-  user: {},
-  error: "",
-  token: ""
+  user: {}
+  // error: "",
+  // token: "",
 };
+
 const loginUser = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("auth/loginUser", async user => {
   try {
     const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`/auth/login`, user);
@@ -9669,10 +9697,11 @@ const authSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)(
     //Logout action
     loggedoutUser: state => {
       state.user = {};
-      state.error = "";
-      state.token = "";
+      // state.error = "";
+      // state.token = "";
     }
   },
+
   //extraReducers handle axios calls - unlike "reducers:{}"
   extraReducers: builder => {
     builder.addCase(getUser.fulfilled, (state, action) => {
@@ -9853,19 +9882,20 @@ const {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   getSingleRestaurant: () => (/* binding */ getSingleRestaurant)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   getSingleRestaurant: () => (/* binding */ getSingleRestaurant),
+/* harmony export */   renderSingleRestaurant: () => (/* binding */ renderSingleRestaurant)
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js");
 
 
-
-// const initialState = {
-//   restaurant: {},
-//   error: "",
-//   token: "",
-// };
+const initialState = {
+  restaurant: {}
+  //   error: "",
+  //   token: "",
+};
 
 const getSingleRestaurant = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("singleRestaurant/getSingleRestaurant", async ({
   name,
@@ -9885,25 +9915,23 @@ const getSingleRestaurant = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.cre
     return error.message;
   }
 });
+const singleRestaurantSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)({
+  name: "singleRestaurant",
+  initialState,
+  reducers: {},
+  extraReducers: builder => {
+    builder.addCase(getSingleRestaurant.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(getSingleRestaurant.fulfilled, (state, action) => {
+      return action.payload;
+      //state.restaurant = action.payload
+    });
+  }
+});
 
-// const singleRestaurantSlice = createSlice({
-//   name: "singleRestaurant",
-//   initialState,
-//   reducers: {},
-//   extraReducers: (builder) => {
-//     builder.addCase(getSingleRestaurant.rejected, (state, action) => {
-//       state.error = action.error.message;
-//     });
-//     builder.addCase(getSingleRestaurant.fulfilled, (state, action) => {
-//       return action.payload;
-//       //state.restaurant = action.payload
-//     });
-//   },
-// });
-
-// export const renderSingleRestaurant = (state) => state.restaurant;
-
-// export default singleRestaurantSlice.reducer;
+const renderSingleRestaurant = state => state.restaurant;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (singleRestaurantSlice.reducer);
 
 /***/ }),
 
@@ -9941,7 +9969,7 @@ const store = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_6__.configureStore)({
     lists: _features_listSlice__WEBPACK_IMPORTED_MODULE_1__["default"],
     list: _features_singleListSlice__WEBPACK_IMPORTED_MODULE_3__["default"]
     // restaurant: singleRestaurantReducer,
-    // restaurants: allRestaurantsReducer,
+    //restaurants: allRestaurantsReducer,
   },
 
   middleware: [(redux_logger__WEBPACK_IMPORTED_MODULE_5___default()), redux_thunk__WEBPACK_IMPORTED_MODULE_7__["default"]]

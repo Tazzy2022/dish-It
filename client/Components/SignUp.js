@@ -5,20 +5,25 @@ import { useDispatch } from "react-redux";
 
 const SignUp = () => {
   const dispatch = useDispatch();
-  const [user, setUser] = useState({ email: "", password: "" });
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
+    password: "",
+    city: "",
+    state: "",
+  });
   const navigate = useNavigate();
 
   const signUp = async (event) => {
     event.preventDefault();
     try {
       const loggedUser = await dispatch(registerUser(user));
-      setUser({ username: "", email: "", password: "", city: "", state: "" });
       //navigate only when user is accurate
-      if (loggedUser.payload) navigate("/userhome");
-      console.log(loggedUser.payload);
+      if (loggedUser.payload.user) navigate("/usersearch");
     } catch (err) {
       console.log(err);
     }
+    setUser({ username: "", email: "", password: "", city: "", state: "" });
   };
 
   const handleChange = (event) => {

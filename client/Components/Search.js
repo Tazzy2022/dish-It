@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import FilterCategorySearch from "./FilterCategorySearch";
 import FilterPriceSearch from "./FilterPriceSearch";
 import {
-  getSingleRestaurant,
-  renderSingleRestaurant,
-} from "../features/singleRestaurantSlice";
-import {
   renderAllRestaurants,
   getAllRestaurants,
 } from "../features/allRestaurantsSlice";
+import {
+  getSingleRestaurant,
+  renderSingleRestaurant,
+} from "../features/singleRestaurantSlice";
 import SingleRestaurant from "./SingleRestaurant";
 import AllRestaurants from "./AllRestaurants";
 
@@ -20,7 +20,7 @@ const Search = () => {
   const dispatch = useDispatch();
 
   const [search, setSearch] = useState({ restaurant: "", location: "" });
-  const [restaurant, setSingleRestaurant] = useState({});
+  //const [restaurant, setSingleRestaurant] = useState([]);
   const [restaurants, setAllRestaurants] = useState([]);
 
   const getSearch = async (event) => {
@@ -44,7 +44,8 @@ const Search = () => {
           })
         );
         //console.log("singleRest", singleRest.payload);
-        setSingleRestaurant(singleRest);
+        setAllRestaurants(singleRest);
+        //setSingleRestaurant(singleRest);
       }
       setSearch({ restaurant: "", location: "" });
     } catch (error) {
@@ -61,49 +62,47 @@ const Search = () => {
 
   return (
     <div className="search-container">
-      <form id="search-form" onSubmit={getSearch}>
-        <label>search by name and / or by restaurant:</label>
-        <input
-          placeholder="restaurant name"
-          value={search.restaurant}
-          name="restaurant"
-          onChange={handleChange}
-        />
-        <input
-          placeholder="city, state"
-          value={search.location}
-          name="location"
-          onChange={handleChange}
-        />
-        <button className="button">search</button>
-      </form>
-      <section className="price-search-container">
-        <FilterPriceSearch />
-      </section>
-      <section className="category-search-container">
-        <FilterCategorySearch />
-      </section>
-      {
-        restaurant?.payload?.length > 0 ? (
-          <div>
-            <pre>{JSON.stringify(restaurant, null, 2)}</pre>
-
-            <SingleRestaurant restaurant={restaurant} auth={auth} />
+      <section id="form-section">
+        <form id="search-form" onSubmit={getSearch}>
+          <div className="search-label-input">
+            <label>search by name (optional)</label>
+            <input
+              placeholder="restaurant name"
+              value={search.restaurant}
+              name="restaurant"
+              onChange={handleChange}
+            />
           </div>
-        ) : (
-        
-          restaurants?.payload?.businesses?.length > 0 &&
-          restaurants?.payload?.businesses?.map((restaurant) => {
-            return (
-              <AllRestaurants
-                key={restaurant.id}
-                restaurant={restaurant}
-                auth={auth}
-              />
-        )
+          <div className="search-label-input">
+            <label>and / or by location:</label>
+            <input
+              placeholder="city, state"
+              value={search.location}
+              name="location"
+              onChange={handleChange}
+            />
+          </div>
+          <button className="button">search</button>
+        </form>
+      </section>
+      <section id="search-filter-containers">
+        <FilterPriceSearch className="price-search-container" />
+        <div></div>
+        <FilterCategorySearch className="category-search-container" />
+      </section>
+      {restaurants?.payload?.businesses?.length > 0 ? (
+        restaurants?.payload?.businesses?.map((restaurant) => {
+          return (
+            <AllRestaurants
+              key={restaurant.id}
+              restaurant={restaurant}
+              auth={auth}
+            />
+          );
         })
-        )
-      }
+      ) : (
+        <p></p>
+      )}
     </div>
   );
 };

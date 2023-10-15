@@ -88,9 +88,11 @@ User.generateToken = (user) => {
 //returns a jwt token for the created user
 User.encryptUser = async (user) => {
   const { dataValues } = await User.create(user);
-
-  //return the jwt for the newly created user
-  return User.generateToken(dataValues);
+  //return the jwt and the newly created user
+  return {
+    user: dataValues,
+    token: User.generateToken(dataValues),
+  };
 };
 
 // User.prototype.correctPassword = function (candidatePwd) {
