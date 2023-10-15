@@ -49,12 +49,6 @@ const Login = () => {
         />
         <button className="button">Login</button>
       </form>
-      <div className="sign-up-link-container">
-        <p>
-          Don't have an account?
-          <Link to="/signUp">Sign up</Link>
-        </p>
-      </div>
     </div>
   );
 };

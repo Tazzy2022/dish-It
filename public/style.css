@@ -16,6 +16,10 @@ body {
   font-size: 25px;
 }
 
+.header:hover {
+  color: #c10505;
+}
+
 a {
   text-decoration: none;
 }
@@ -170,6 +174,14 @@ a {
 #signUp-container {
   margin: auto;
   width: 40vw;
+  background-color: rgb(234, 232, 232);
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+#signUp-container {
+  margin-top: 40px;
 }
 
 #login-form,
@@ -180,16 +192,15 @@ a {
 
 .form-headings {
   text-align: center;
+  margin: 0px;
 }
 
-#login-form input {
-  margin: 5px 0px 20px;
-  font-size: 17px;
-}
-
+#login-form input,
 #signup-form input {
   margin: 5px 0px 20px;
   font-size: 17px;
+  border-radius: 3px;
+  border: 1px solid rgb(222, 219, 219);
 }
 
 .button {
@@ -204,28 +215,11 @@ a {
   height: 25px;
 }
 
-.sign-up-link-container,
-.login-link-container {
-  text-align: center;
-}
-
-.sign-up-link-container a {
-  padding-left: 10px;
-  color: rgb(39, 38, 38);
-}
-
-.login-link-container a {
-  padding-left: 10px;
-  color: rgb(39, 38, 38);
-}
-
 .nav-dropdown-container a {
-  /* float: right; */
   text-decoration: none;
 }
 
 .nav-dropdown-container {
-  /* float: left; */
   overflow: hidden;
 }
 
@@ -274,14 +268,97 @@ a {
   filter: blur(1px);
 }
 
+#sign-up {
+  display: flex;
+  justify-content: center;
+}
+
 #login-signup-link {
-  text-align: center;
   font-size: 25px;
-  background-color: #e00707;
-  background-color: #ffe7e7;
+  background-color: #fdeded;
+  padding: 25px;
+  border-radius: 40px;
 }
 
 #login-signup-link a {
   color: #e00707;
   font-weight: bolder;
+}
+
+#login-signup-link a:hover {
+  color: #333333;
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  p,
+  #login-signup-link,
+  .profile-name,
+  .profile-add-list,
+  .home-filter-container label,
+  .form-headings,
+  #login-form label,
+  #login-form input,
+  #signup-form label,
+  #signup-form input,
+  #signup-form button,
+  #login-form button {
+    font-size: 16px;
+  }
+
+  .form-headings {
+    padding-bottom: 10px;
+  }
+
+  .intro {
+    margin: 0px;
+    padding: 0px 10px;
+  }
+
+  .profile-name,
+  #login-signup-link {
+    margin: 0px;
+  }
+
+  .profile-add-list {
+    margin: 0px;
+    background-color: white;
+    color: #e00707;
+    padding-top: 20px;
+  }
+
+  .profile-img {
+    display: none;
+  }
+
+  .home-lists-container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .list-card,
+  .card-img {
+    width: 50vw;
+  }
+
+  #home-main-container {
+    margin-top: 20px;
+  }
+  #login-container,
+  #signUp-container {
+    width: 60vw;
+  }
+
+  #login-container {
+    margin-top: 10px;
+  }
+
+  #signUp-container {
+    margin-bottom: 30px;
+  }
+
+  #signup-form button,
+  #login-form button {
+    width: 200px;
+  }
 }

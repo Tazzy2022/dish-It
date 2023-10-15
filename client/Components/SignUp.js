@@ -35,7 +35,7 @@ const SignUp = () => {
 
   return (
     <div id="signUp-container">
-      <h2 className="form-headings">Sign Up</h2>
+      <h2 className="form-headings">or Sign Up</h2>
       <form id="signup-form" onSubmit={signUp}>
         <label>username:</label>
         <input
@@ -76,12 +76,6 @@ const SignUp = () => {
         />
         <button className="button">Sign Up</button>
       </form>
-      <div className="login-link-container">
-        <p>
-          Already have an account?
-          <Link to="/login">Log in</Link>
-        </p>
-      </div>
     </div>
   );
 };

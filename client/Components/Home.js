@@ -16,11 +16,11 @@ const Home = () => {
           <br />
         </p>
       </article>
-      <span id="login-signup-link">
-        <p>
+      <div id="sign-up">
+        <p id="login-signup-link">
           Login or Sign up<Link to="/login"> here</Link>
         </p>
-      </span>
+      </div>
       <main id="home-main-container">
         <section className="home-header-container">
           <img
