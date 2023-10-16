@@ -32,7 +32,6 @@ const AllRestaurants = (props) => {
         </p>
         <p>+ add to list</p>
       </section>
-      ;
     </main>
   );
 };

@@ -27,6 +27,25 @@ export const getAllRestaurants = createAsyncThunk(
   }
 );
 
+export const getSingleRestaurant = createAsyncThunk(
+  "singleRestaurant/getSingleRestaurant",
+  async ({ name, location, token }) => {
+    try {
+      const nameLocation = name + "-" + location;
+      const search = nameLocation.split(" ").join("-");
+      const response = await axios.get(`/api/restaurants/${search}`, {
+        headers: {
+          authorization: token,
+        },
+      });
+      return response?.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
+
 const allRestaurantsSlice = createSlice({
   name: "allRestaurants",
   initialState,
@@ -38,6 +57,13 @@ const allRestaurantsSlice = createSlice({
     builder.addCase(getAllRestaurants.fulfilled, (state, action) => {
       return action.payload;
       //state.restaurants = action.payload;
+    });
+    builder.addCase(getSingleRestaurant.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(getSingleRestaurant.fulfilled, (state, action) => {
+      return action.payload;
+      //state.restaurant = action.payload
     });
   },
 });

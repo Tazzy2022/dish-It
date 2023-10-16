@@ -13,7 +13,7 @@ const store = configureStore({
     lists: listReducer,
     list: singleListReducer,
     // restaurant: singleRestaurantReducer,
-    //restaurants: allRestaurantsReducer,
+    restaurants: allRestaurantsReducer,
   },
   middleware: [logger, thunk],
 });

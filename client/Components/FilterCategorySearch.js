@@ -84,8 +84,10 @@ const FilterCategorySearch = () => {
   return (
     <form id="category-form" onSubmit={filterCategorySearch}>
       <p>Filter by category:</p>
-      {/* <input type="checkbox" className="filter-category-checkbox" />
+      <section>
+        {/* <input type="checkbox" className="filter-category-checkbox" />
       <label>meat</label> */}
+      </section>
       <button>+ show all</button>
     </form>
   );

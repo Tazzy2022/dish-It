@@ -15,12 +15,14 @@ const FilterPriceSearch = () => {
   return (
     <form id="price-form" onSubmit={filterPriceSearch}>
       <p>Filter by price:</p>
-      <input type="checkbox" className="filter-price-checkbox" />
-      <label>$</label>
-      <input type="checkbox" className="filter-price-checkbox" />
-      <label>$$</label>
-      <input type="checkbox" className="filter-price-checkbox" />
-      <label>$$$</label>
+      <section className="checkbox-container">
+        <input type="checkbox" className="filter-price-checkbox" />
+        <label>$</label>
+        <input type="checkbox" className="filter-price-checkbox" />
+        <label>$$</label>
+        <input type="checkbox" className="filter-price-checkbox" />
+        <label>$$$</label>
+      </section>
       <button>update</button>
     </form>
   );

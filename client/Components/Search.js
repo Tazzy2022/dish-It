@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FilterCategorySearch from "./FilterCategorySearch";
 import FilterPriceSearch from "./FilterPriceSearch";
@@ -6,46 +6,51 @@ import {
   renderAllRestaurants,
   getAllRestaurants,
 } from "../features/allRestaurantsSlice";
-import {
-  getSingleRestaurant,
-  renderSingleRestaurant,
-} from "../features/singleRestaurantSlice";
-import SingleRestaurant from "./SingleRestaurant";
 import AllRestaurants from "./AllRestaurants";
 
 const Search = () => {
   const auth = useSelector((state) => state.auth);
-  // const restaurants = useSelector(renderAllRestaurants);
-  // const restaurant = useSelector(renderSingleRestaurant);
+  const restaurants = useSelector(renderAllRestaurants);
   const dispatch = useDispatch();
 
   const [search, setSearch] = useState({ restaurant: "", location: "" });
-  //const [restaurant, setSingleRestaurant] = useState([]);
-  const [restaurants, setAllRestaurants] = useState([]);
+  // const [allRestaurants, setAllRestaurants] = useState([]);
+
+  useEffect(() => {
+    const setRestaurants = async () => {
+      try {
+        await dispatch(
+          getAllRestaurants({
+            token: auth.token,
+            location: auth.user.city,
+          })
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    setRestaurants();
+  }, []);
 
   const getSearch = async (event) => {
     event.preventDefault();
     try {
       if (search.restaurant.length === 0) {
-        const allRest = await dispatch(
+        await dispatch(
           getAllRestaurants({
             token: auth.token,
             location: search.location,
           })
         );
-        //console.log("allRest", allRest.payload.businesses);
-        setAllRestaurants(allRest);
       } else {
-        const singleRest = await dispatch(
+        await dispatch(
           getSingleRestaurant({
             token: auth.token,
             name: search.restaurant,
             location: search.location,
           })
         );
-        //console.log("singleRest", singleRest.payload);
-        setAllRestaurants(singleRest);
-        //setSingleRestaurant(singleRest);
       }
       setSearch({ restaurant: "", location: "" });
     } catch (error) {
@@ -90,8 +95,8 @@ const Search = () => {
         <div></div>
         <FilterCategorySearch className="category-search-container" />
       </section>
-      {restaurants?.payload?.businesses?.length > 0 ? (
-        restaurants?.payload?.businesses?.map((restaurant) => {
+      {restaurants?.businesses?.length > 0 ? (
+        restaurants?.businesses?.map((restaurant) => {
           return (
             <AllRestaurants
               key={restaurant.id}
@@ -101,38 +106,10 @@ const Search = () => {
           );
         })
       ) : (
-        <p></p>
+        <p>no restaurants matched your search criteria</p>
       )}
     </div>
   );
 };
 
 export default Search;
-
-// <main className="restaurant-list-container">
-//   <section className="list-card">
-//     <img
-//       className="card-img"
-//       src={restaurant.image_url}
-//       alt="restaurant image"
-//     />
-//     <p>{restaurant.name}</p>
-//     <p>{restaurant.address1}</p>
-//     <p>
-//       {restaurant.location.city}, {restaurant.location.state},{" "}
-//       {restaurant.location.zip_code}
-//     </p>
-//     <p>phone: {restaurant.display_phone}</p>
-//     <p>price: {restaurant.price}</p>
-//     <Link className="yelp-link" to={restaurant.url}>
-//       yelp link
-//     </Link>
-//     <p>food category:</p>
-//     {restaurant.categories.map((cat, index) => {
-//       return <p>{cat[index]}</p>;
-//     })}
-//     <p>+ add to list</p>
-//   </section>
-//   ;
-// </main>
-// )}

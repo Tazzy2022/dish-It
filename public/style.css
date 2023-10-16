@@ -361,4 +361,24 @@ a {
   #login-form button {
     width: 200px;
   }
+  #search-form {
+    flex-direction: column;
+  }
+  #search-form input {
+    width: 50vw;
+    margin-bottom: 10px;
+  }
+
+  #search-form button {
+    margin-top: 0px;
+    width: 100px;
+  }
+  #price-form,
+  #category-form {
+    flex-direction: column;
+  }
+
+  #price-form {
+    margin-right: 40px;
+  }
 }
