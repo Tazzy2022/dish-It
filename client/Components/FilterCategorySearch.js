@@ -83,7 +83,7 @@ const FilterCategorySearch = () => {
   };
   return (
     <form id="category-form" onSubmit={filterCategorySearch}>
-      <p>Filter by category:</p>
+      <p>Filter by category</p>
       <section>
         {/* <input type="checkbox" className="filter-category-checkbox" />
       <label>meat</label> */}

@@ -52,7 +52,8 @@ const Search = () => {
           })
         );
       }
-      setSearch({ restaurant: "", location: "" });
+      setSearch({ restaurant: "" });
+      // setSearch({ restaurant: "", location: "" });
     } catch (error) {
       console.log(error);
     }
@@ -81,7 +82,7 @@ const Search = () => {
           <div className="search-label-input">
             <label>and / or by location:</label>
             <input
-              placeholder="city, state"
+              placeholder={search.location || auth.user.city}
               value={search.location}
               name="location"
               onChange={handleChange}
@@ -91,7 +92,10 @@ const Search = () => {
         </form>
       </section>
       <section id="search-filter-containers">
-        <FilterPriceSearch className="price-search-container" />
+        <FilterPriceSearch
+          location={search.location || auth.user.city}
+          className="price-search-container"
+        />
         <div></div>
         <FilterCategorySearch className="category-search-container" />
       </section>

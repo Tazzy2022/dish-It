@@ -1,28 +1,58 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getRestaurantsLocationPrice } from "../features/allRestaurantsSlice";
 
-const FilterPriceSearch = () => {
+const FilterPriceSearch = (props) => {
+  const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
-  const [show, setShow] = useState(false);
+  const [price, setPrice] = useState([]);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  const filterPriceSearch = () => {
-    console.log("hi");
+  const getPriceSearch = async (e) => {
+    e.preventDefault();
+    // console.log("LOCATION", props.location);
+    // console.log("price", price);
+    try {
+      await dispatch(
+        getRestaurantsLocationPrice({
+          token: auth.token,
+          location: props.location,
+          price: price,
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+    e.target.reset();
   };
+
+  const handleChange = (e) => {
+    const { value, checked } = e.target;
+
+    if (checked) {
+      setPrice([...price, value]);
+    } else {
+      setPrice(price.filter((e) => e !== value));
+    }
+  };
+
   return (
-    <form id="price-form" onSubmit={filterPriceSearch}>
+    <form id="price-form" onSubmit={getPriceSearch}>
       <p>Filter by price:</p>
-      <section className="checkbox-container">
-        <input type="checkbox" className="filter-price-checkbox" />
-        <label>$</label>
-        <input type="checkbox" className="filter-price-checkbox" />
-        <label>$$</label>
-        <input type="checkbox" className="filter-price-checkbox" />
-        <label>$$$</label>
-      </section>
+      {["$", "$$", "$$$"].map((price, index) => {
+        return (
+          <div key={index} className="checkbox-container">
+            <input
+              type="checkbox"
+              name="price"
+              value={price.length}
+              className="filter-price-checkbox"
+              onChange={handleChange}
+            />
+            <label>{price}</label>
+          </div>
+        );
+      })}
       <button>update</button>
     </form>
   );

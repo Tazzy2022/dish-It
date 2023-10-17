@@ -27,6 +27,26 @@ export const getAllRestaurants = createAsyncThunk(
   }
 );
 
+export const getRestaurantsLocationPrice = createAsyncThunk(
+  "allRestaurants/getRestaurantsLocationPrice",
+  async ({ token, location, price }) => {
+    try {
+      const pricing = "&price=" + price.join("&price=")
+      const response = await axios.get(
+        `/api/restaurants/${location}/${pricing}`,
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+      return response?.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
 export const getSingleRestaurant = createAsyncThunk(
   "singleRestaurant/getSingleRestaurant",
   async ({ name, location, token }) => {
@@ -64,6 +84,13 @@ const allRestaurantsSlice = createSlice({
     builder.addCase(getSingleRestaurant.fulfilled, (state, action) => {
       return action.payload;
       //state.restaurant = action.payload
+    });
+    builder.addCase(getRestaurantsLocationPrice.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(getRestaurantsLocationPrice.fulfilled, (state, action) => {
+      return action.payload;
+      //state.restaurants = action.payload;
     });
   },
 });

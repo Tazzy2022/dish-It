@@ -51,13 +51,21 @@ a {
   display: flex;
 }
 
-#price-form button {
+#price-form button,
+#category-form button {
   margin: 0vw 10vw 0vw 1vw;
   height: 20px;
+  border: 1px solid #e00707;
+  border-radius: 5px;
+  color: #e00707;
+  padding-bottom: 5px;
+  background-color: white;
+}
+
+#price-form button:hover,
+#category-form button:hover {
   background-color: #e00707;
   color: white;
-  border-radius: 5px;
-  border: none;
 }
 
 #search-filter-containers {
@@ -66,14 +74,6 @@ a {
 }
 .filter-price-checkbox {
   margin: 0px 3px 5px 10px;
-}
-
-#category-form button {
-  background-color: white;
-  font-size: 15px;
-  border: none;
-  color: #e00707;
-  margin-bottom: 4px;
 }
 
 #search-filter-containers p {
@@ -117,6 +117,42 @@ a {
   border-radius: 15px;
   width: 20vw;
   margin: 20px;
+}
+
+.restaurant-list-card {
+  display: flex;
+  border: solid 1px rgb(214, 213, 213);
+  box-shadow: 1px 1px rgb(244, 239, 239);
+  border-radius: 15px;
+  width: 70vw;
+  height: 20vh;
+  margin: 20px 0px 20px;
+}
+
+.restaurant-list-card p,
+.restaurant-list-card a {
+  margin: 10px 0px;
+}
+
+.restaurant-card-img {
+  width: 15vw;
+  height: 20vh;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.restaurant-card-info {
+  display: relative;
+}
+
+#rest-card-info {
+  position: absolute;
+  left: 33%;
+}
+
+#rest-card-cat {
+  position: absolute;
+  left: 63%;
 }
 
 .list-card p {
@@ -381,4 +417,16 @@ a {
   #price-form {
     margin-right: 40px;
   }
+
+  /* .restaurant-list-card {
+    border: none;
+    border-radius: none;
+    width: 50vw;
+    margin: 0px;
+  } */
+
+  /* .card-img {
+    width: 40vw;
+    border-radius: none;
+  } */
 }
