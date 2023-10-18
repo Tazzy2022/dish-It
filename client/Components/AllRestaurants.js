@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import StarRating from "./StarRating";
 
 const AllRestaurants = (props) => {
   return (
@@ -31,8 +32,8 @@ const AllRestaurants = (props) => {
             return <p key={index}>{cat.title},</p>;
           })}
           <p>
-            {" "}
-            {props.restaurant.rating}&#9733({props.restaurant.review_count}{" "}
+            <StarRating rating={props.restaurant.rating} />(
+            {props.restaurant.review_count}
             reviews)
           </p>
           <p>+ add to list</p>

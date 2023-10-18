@@ -1,0 +1,71 @@
+.modalBackground {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(200, 200, 200);
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 999999;
+}
+
+.catContainer {
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  width: 70vw;
+  height: 70vh;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+}
+
+.cat-body {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.each-checkbox {
+  width: 10vw;
+  display: flex;
+  margin: 10px;
+  align-items: center;
+}
+
+.cat-title h1 {
+  margin: 0px;
+  padding: 10px 20px 0px;
+}
+
+.each-checkbox label {
+  font-size: 14px;
+}
+
+.cat-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cat-buttons {
+  margin-top: 20px;
+}
+
+.cat-buttons button {
+  margin-right: 20px;
+  color: white;
+  background-color: #e00707;
+  border-radius: 5px;
+  border: #e00707;
+  font-size: 16px;
+}
+
+.cat-buttons button:hover {
+  color: #333333;
+}

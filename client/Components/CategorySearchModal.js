@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const categories = [
@@ -38,7 +38,7 @@ const categories = [
   "Gluten-Free",
   "Greek",
   "Halal",
-  "Himalayan / Nepalese",
+  "Himalayan/Nepalese",
   "Ice Cream & Frozen Yogurt",
   "Indian",
   "Irish",
@@ -68,27 +68,19 @@ const categories = [
   "Vietnamese",
 ];
 
-const FilterCategorySearch = ({ openModal }) => {
+const CategorySearchModal = ({ openModal }) => {
   const auth = useSelector((state) => state.auth);
 
   return (
     <div className="modalBackground">
-      <div className="catContainer">
-        <div className="cat-title">
-          <div className="cat-header">
-            <div>
-              <h1>Categories:</h1>
-            </div>
-            <div className="cat-buttons">
-              <button onClick={() => openModal(false)}>cancel</button>
-              <button>update search</button>
-            </div>
-          </div>
+      <div className="modalContainer">
+        <div className="title">
+          <h1>Categories:</h1>
         </div>
-        <main className="cat-body">
+        <div className="body">
           {categories.map((category, index) => {
             return (
-              <div key={index} className="each-checkbox">
+              <div key={index} className="checkbox-container">
                 <input
                   type="checkbox"
                   name={category}
@@ -100,10 +92,14 @@ const FilterCategorySearch = ({ openModal }) => {
               </div>
             );
           })}
-        </main>
+        </div>
+        <div className="footer">
+          <button onClick={() => openModal(false)}>cancel</button>
+          <button>update search</button>
+        </div>
       </div>
     </div>
   );
 };
 
-export default FilterCategorySearch;
+export default CategorySearchModal;

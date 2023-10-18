@@ -17,7 +17,7 @@ body {
 }
 
 .header:hover {
-  color: #c10505;
+  color: #333333;
 }
 
 a {
@@ -249,6 +249,10 @@ a {
   border: #e00707;
   margin-bottom: 10px;
   height: 25px;
+}
+
+.button:hover {
+  color: black;
 }
 
 .nav-dropdown-container a {

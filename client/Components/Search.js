@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import FilterCategorySearch from "./FilterCategorySearch";
 import FilterPriceSearch from "./FilterPriceSearch";
 import {
   renderAllRestaurants,
   getAllRestaurants,
 } from "../features/allRestaurantsSlice";
 import AllRestaurants from "./AllRestaurants";
+import CategorySearchModal from "./CategorySearchModal";
+import FilterCategorySearch from "./FilterCategorySearch";
 
 const Search = () => {
   const auth = useSelector((state) => state.auth);
@@ -15,6 +16,8 @@ const Search = () => {
 
   const [search, setSearch] = useState({ restaurant: "", location: "" });
   // const [allRestaurants, setAllRestaurants] = useState([]);
+
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     const setRestaurants = async () => {
@@ -97,7 +100,11 @@ const Search = () => {
           className="price-search-container"
         />
         <div></div>
-        <FilterCategorySearch className="category-search-container" />
+        <p>Filter by category</p>
+        <button className="openModalBtn" onClick={() => setModalOpen(true)}>
+          show all
+        </button>
+        {modalOpen && <FilterCategorySearch openModal={setModalOpen} />}
       </section>
       {restaurants?.businesses?.length > 0 ? (
         restaurants?.businesses?.map((restaurant) => {
