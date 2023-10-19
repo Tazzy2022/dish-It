@@ -6,16 +6,22 @@ import {
   getAllRestaurants,
 } from "../features/allRestaurantsSlice";
 import AllRestaurants from "./AllRestaurants";
-import CategorySearchModal from "./CategorySearchModal";
 import FilterCategorySearch from "./FilterCategorySearch";
+import { setRestaurant, setLocation, searchState } from "../features/searchSlice"
 
 const Search = () => {
   const auth = useSelector((state) => state.auth);
   const restaurants = useSelector(renderAllRestaurants);
   const dispatch = useDispatch();
+  const searchInfo = useSelector(searchState);
+
+  //KEEP everything checked?? add clear filters button and list current filters
+  //assuming i will still use local state and update searchslice in my dispatch
+  //and grab all neccessary params in my dispatch from useSelector
+  //how to stay dry and not direct api query... one get restaurants thunk
+  //that delegates api call based on state
 
   const [search, setSearch] = useState({ restaurant: "", location: "" });
-  // const [allRestaurants, setAllRestaurants] = useState([]);
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -38,6 +44,7 @@ const Search = () => {
 
   const getSearch = async (event) => {
     event.preventDefault();
+    console.log("SEARCH", search)
     try {
       if (search.restaurant.length === 0) {
         await dispatch(
@@ -97,7 +104,6 @@ const Search = () => {
       <section id="search-filter-containers">
         <FilterPriceSearch
           location={search.location || auth.user.city}
-          className="price-search-container"
         />
         <div></div>
         <p>Filter by category</p>

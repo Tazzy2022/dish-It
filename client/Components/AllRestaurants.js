@@ -15,7 +15,7 @@ const AllRestaurants = (props) => {
       <section className="restaurant-card-info">
         <div id="rest-card-info">
           <p>{props.restaurant.name}</p>
-          <p>{props.restaurant.address1}</p>
+          <p>{props.restaurant.location.address1}</p>
           <p>
             {props.restaurant.location.city}, {props.restaurant.location.state},{" "}
             {props.restaurant.location.zip_code}

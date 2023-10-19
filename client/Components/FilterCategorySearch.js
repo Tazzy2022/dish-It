@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { setCategories, searchState } from "../features/searchSlice";
 
 const categories = [
   "African",
@@ -70,6 +71,7 @@ const categories = [
 
 const FilterCategorySearch = ({ openModal }) => {
   const auth = useSelector((state) => state.auth);
+  const searchInfo = useSelector(searchState);
 
   return (
     <div className="modalBackground">

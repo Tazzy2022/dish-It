@@ -52,7 +52,7 @@ a {
 }
 
 #price-form button,
-#category-form button {
+.catContainer button {
   margin: 0vw 10vw 0vw 1vw;
   height: 20px;
   border: 1px solid #e00707;

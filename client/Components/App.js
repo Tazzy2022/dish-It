@@ -6,7 +6,6 @@ import Home from "./Home";
 import UserHome from "./UserHome";
 import UserSingleList from "./UserSingleList";
 import Search from "./Search";
-import FilterCategorySearch from "./FilterCategorySearch";
 
 const App = () => {
   return (
@@ -21,8 +20,6 @@ const App = () => {
         <Route exact path="/usersearch" element={<Search />} />
         <Route exact path="/userhome" element={<UserHome />} />
         <Route exact path="/userlists/:id" element={<UserSingleList />} />
-
-        {/* <Route exact path="/useraccount" element={<FilterCategorySearch />} /> */}
 
         <Route exact path="*" element={<Navigate to="/" replace />} />
       </Routes>
