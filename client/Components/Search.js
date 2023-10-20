@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import FilterPriceSearch from "./FilterPriceSearch";
 import {
   renderAllRestaurants,
+  getSingleRestaurant,
   getAllRestaurants,
 } from "../features/allRestaurantsSlice";
 import AllRestaurants from "./AllRestaurants";
@@ -134,7 +135,7 @@ const Search = () => {
       ) : (
         <p></p>
       )}
-      {restaurants?.businesses?.length > 0 ? (
+      {restaurants?.businesses?.length > 1 ? (
         restaurants?.businesses?.map((restaurant) => {
           return (
             <AllRestaurants
@@ -145,8 +146,17 @@ const Search = () => {
           );
         })
       ) : (
-        <p>no restaurants matched your search criteria</p>
+        <p>no restaurants matched that search</p>
       )}
+      {/* { restaurants ? (
+            <AllRestaurants
+              key={restaurant.id}
+              restaurant={restaurants}
+              auth={auth}
+            />
+          ) : (
+            <p>no restaurants matched that search</p>
+          )} */}
     </div>
   );
 };

@@ -8789,7 +8789,75 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const categories = ["African", "American (New)", "American (Traditional)", "Asian Fusion", "Bagels", "Bakeries", "Barbeque", "Brazilian", "Breakfast & Brunch", "Buffets", "Bubble Tea", "Burgers", "Burmese", "Cafes", "Cajun/Creole", "Caribbean", "Chicken Wings", "Chinese", "Coffee & Tea", "Colombian", "Comfort Food", "Creperies", "Cuban", "Delis", "Desserts", "Diners", "Dim Sum", "Dominican", "Fast Food", "Fish & Chips", "French", "Falafel", "Gastropubs", "Gluten-Free", "Greek", "Halal", "Himalayan/Nepalese", "Ice Cream & Frozen Yogurt", "Indian", "Irish", "Italian", "Japanese", "Juice Bars & Smoothies", "Korean", "Kosher", "Latin American", "Mediterranean", "Mexican", "Middle Eastern", "Pizza", "Ramen", "Salad", "Sandwiches", "Seafood", "Soul Food", "Spanish", "Steakhouses", "Sushi Bars", "Tacos", "Tex-Mex", "Thai", "Vegan", "Vegetarian", "Vietnamese"];
+
+// const categories = [
+//   "African",
+//   "American (New)",
+//   "American (Traditional)",
+//   "Asian Fusion",
+//   "Bagels",
+//   "Bakeries",
+//   "Barbeque",
+//   "Brazilian",
+//   "Breakfast & Brunch",
+//   "Buffets",
+//   "Bubble Tea",
+//   "Burgers",
+//   "Burmese",
+//   "Cafes",
+//   "Cajun/Creole",
+//   "Caribbean",
+//   "Chicken Wings",
+//   "Chinese",
+//   "Coffee & Tea",
+//   "Colombian",
+//   "Comfort Food",
+//   "Creperies",
+//   "Cuban",
+//   "Delis",
+//   "Desserts",
+//   "Diners",
+//   "Dim Sum",
+//   "Dominican",
+//   "Fast Food",
+//   "Fish & Chips",
+//   "French",
+//   "Falafel",
+//   "Gastropubs",
+//   "Gluten-Free",
+//   "Greek",
+//   "Halal",
+//   "Himalayan/Nepalese",
+//   "Ice Cream & Frozen Yogurt",
+//   "Indian",
+//   "Irish",
+//   "Italian",
+//   "Japanese",
+//   "Juice Bars & Smoothies",
+//   "Korean",
+//   "Kosher",
+//   "Latin American",
+//   "Mediterranean",
+//   "Mexican",
+//   "Middle Eastern",
+//   "Pizza",
+//   "Ramen",
+//   "Salad",
+//   "Sandwiches",
+//   "Seafood",
+//   "Soul Food",
+//   "Spanish",
+//   "Steakhouses",
+//   "Sushi Bars",
+//   "Tacos",
+//   "Tex-Mex",
+//   "Thai",
+//   "Vegan",
+//   "Vegetarian",
+//   "Vietnamese",
+// ];
+
+const categories = ["african", "american (new)", "american (traditional)", "asian fusion", "bagels", "bakeries", "barbeque", "brazilian", "breakfast & brunch", "buffets", "bubble tea", "burgers", "burmese", "cafes", "cajun/creole", "caribbean", "chicken wings", "chinese", "coffee & tea", "colombian", "comfort food", "creperies", "cuban", "delis", "desserts", "diners", "dim sum", "dominican", "fast food", "fish & chips", "french", "falafel", "gastropubs", "gluten-free", "greek", "halal", "himalayan/nepalese", "ice cream & frozen yogurt", "indian", "irish", "italian", "japanese", "juice bars & smoothies", "korean", "kosher", "latin american", "mediterranean", "mexican", "middle eastern", "pizza", "ramen", "salad", "sandwiches", "seafood", "soul food", "spanish", "steakhouses", "sushi bars", "tacos", "tex-mex", "thai", "vegan", "vegetarian", "vietnamese"];
 const FilterCategorySearch = ({
   openModal
 }) => {
@@ -8798,7 +8866,6 @@ const FilterCategorySearch = ({
   const searchInfo = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(_features_searchSlice__WEBPACK_IMPORTED_MODULE_2__.searchState);
   const [category, updateCategory] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const handleChange = e => {
-    console.log("e.target", e.target);
     const {
       value,
       checked
@@ -8828,6 +8895,7 @@ const FilterCategorySearch = ({
     let updatedCat = refactorCategories(category);
     try {
       if (searchInfo.price.length === 0) {
+        console.log("updatedCat", updatedCat);
         await dispatch((0,_features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_3__.getRestaurantLocationCat)({
           token: auth.token,
           location: searchInfo.location,
@@ -9373,7 +9441,7 @@ const Search = () => {
           location: search.location
         }));
       } else {
-        await dispatch(getSingleRestaurant({
+        await dispatch((0,_features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_3__.getSingleRestaurant)({
           token: auth.token,
           name: search.restaurant,
           location: search.location
@@ -9432,13 +9500,13 @@ const Search = () => {
     id: "searched-filters"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "current filters: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, " filter container here"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: resetFilters
-  }, "clear all")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null), restaurants?.businesses?.length > 0 ? restaurants?.businesses?.map(restaurant => {
+  }, "clear all")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null), restaurants?.businesses?.length > 1 ? restaurants?.businesses?.map(restaurant => {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_AllRestaurants__WEBPACK_IMPORTED_MODULE_4__["default"], {
       key: restaurant.id,
       restaurant: restaurant,
       auth: auth
     });
-  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "no restaurants matched your search criteria"));
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "no restaurants matched that search"));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Search);
 
@@ -9812,15 +9880,14 @@ const getRestaurantLocationCat = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1_
   location,
   categories
 }) => {
+  console.log("IN THUNK");
   try {
     const allCategories = "&categories=" + categories.join("&categories=");
-    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`/api/restaurants/${location}/${allCategories}`, {
+    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`/api/restaurants/${allCategories}/${location}`, {
       headers: {
         authorization: token
       }
     });
-    console.log(`/api/restaurants/${location}/${allCategories}`);
-    console.log("response?.data", response?.data);
     return response?.data;
   } catch (error) {
     return error.message;
@@ -9885,12 +9952,12 @@ const allRestaurantsSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.cre
       state.error = action.error.message;
     });
     builder.addCase(getRestaurantLocationCat.fulfilled, (state, action) => {
-      return action.payload;
-      //state.restaurants = action.payload;
+      //return action.payload;
+      console.log("payload", action.payload);
+      state.restaurants = action.payload;
     });
   }
 });
-
 const renderAllRestaurants = state => state.restaurants;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (allRestaurantsSlice.reducer);
 
@@ -10112,6 +10179,8 @@ const searchSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createSlice
   reducers: {
     setRestaurant: (state, input) => {
       state.restaurant = input.payload;
+      state.categories = [];
+      state.price = [];
     },
     setLocation: (state, input) => {
       state.location = input.payload;
@@ -10315,7 +10384,7 @@ const store = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_7__.configureStore)({
     // restaurant: singleRestaurantReducer,
     restaurants: _features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
-  middleware: [(redux_logger__WEBPACK_IMPORTED_MODULE_6___default()), redux_thunk__WEBPACK_IMPORTED_MODULE_8__["default"]]
+  middleware: [redux_thunk__WEBPACK_IMPORTED_MODULE_8__["default"], (redux_logger__WEBPACK_IMPORTED_MODULE_6___default())]
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
 

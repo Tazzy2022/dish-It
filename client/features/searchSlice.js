@@ -14,6 +14,8 @@ const searchSlice = createSlice({
   reducers: {
     setRestaurant: (state, input) => {
       state.restaurant = input.payload;
+      state.categories = [];
+      state.price = [];
     },
     setLocation: (state, input) => {
       state.location = input.payload;
@@ -27,9 +29,7 @@ const searchSlice = createSlice({
     resetAll: (state, bool) => {
       state.resetAll = bool.payload;
       if (bool.payload === true) {
-        (state.categories = []),
-          (state.restaurant = ""),
-          (state.price = []);
+        (state.categories = []), (state.restaurant = ""), (state.price = []);
       }
       state.resetAll = false;
     },

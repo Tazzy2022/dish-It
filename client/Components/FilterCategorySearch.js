@@ -6,71 +6,138 @@ import {
   getRestLocationPriceCat,
 } from "../features/allRestaurantsSlice";
 
+// const categories = [
+//   "African",
+//   "American (New)",
+//   "American (Traditional)",
+//   "Asian Fusion",
+//   "Bagels",
+//   "Bakeries",
+//   "Barbeque",
+//   "Brazilian",
+//   "Breakfast & Brunch",
+//   "Buffets",
+//   "Bubble Tea",
+//   "Burgers",
+//   "Burmese",
+//   "Cafes",
+//   "Cajun/Creole",
+//   "Caribbean",
+//   "Chicken Wings",
+//   "Chinese",
+//   "Coffee & Tea",
+//   "Colombian",
+//   "Comfort Food",
+//   "Creperies",
+//   "Cuban",
+//   "Delis",
+//   "Desserts",
+//   "Diners",
+//   "Dim Sum",
+//   "Dominican",
+//   "Fast Food",
+//   "Fish & Chips",
+//   "French",
+//   "Falafel",
+//   "Gastropubs",
+//   "Gluten-Free",
+//   "Greek",
+//   "Halal",
+//   "Himalayan/Nepalese",
+//   "Ice Cream & Frozen Yogurt",
+//   "Indian",
+//   "Irish",
+//   "Italian",
+//   "Japanese",
+//   "Juice Bars & Smoothies",
+//   "Korean",
+//   "Kosher",
+//   "Latin American",
+//   "Mediterranean",
+//   "Mexican",
+//   "Middle Eastern",
+//   "Pizza",
+//   "Ramen",
+//   "Salad",
+//   "Sandwiches",
+//   "Seafood",
+//   "Soul Food",
+//   "Spanish",
+//   "Steakhouses",
+//   "Sushi Bars",
+//   "Tacos",
+//   "Tex-Mex",
+//   "Thai",
+//   "Vegan",
+//   "Vegetarian",
+//   "Vietnamese",
+// ];
+
 const categories = [
-  "African",
-  "American (New)",
-  "American (Traditional)",
-  "Asian Fusion",
-  "Bagels",
-  "Bakeries",
-  "Barbeque",
-  "Brazilian",
-  "Breakfast & Brunch",
-  "Buffets",
-  "Bubble Tea",
-  "Burgers",
-  "Burmese",
-  "Cafes",
-  "Cajun/Creole",
-  "Caribbean",
-  "Chicken Wings",
-  "Chinese",
-  "Coffee & Tea",
-  "Colombian",
-  "Comfort Food",
-  "Creperies",
-  "Cuban",
-  "Delis",
-  "Desserts",
-  "Diners",
-  "Dim Sum",
-  "Dominican",
-  "Fast Food",
-  "Fish & Chips",
-  "French",
-  "Falafel",
-  "Gastropubs",
-  "Gluten-Free",
-  "Greek",
-  "Halal",
-  "Himalayan/Nepalese",
-  "Ice Cream & Frozen Yogurt",
-  "Indian",
-  "Irish",
-  "Italian",
-  "Japanese",
-  "Juice Bars & Smoothies",
-  "Korean",
-  "Kosher",
-  "Latin American",
-  "Mediterranean",
-  "Mexican",
-  "Middle Eastern",
-  "Pizza",
-  "Ramen",
-  "Salad",
-  "Sandwiches",
-  "Seafood",
-  "Soul Food",
-  "Spanish",
-  "Steakhouses",
-  "Sushi Bars",
-  "Tacos",
-  "Tex-Mex",
-  "Thai",
-  "Vegan",
-  "Vegetarian",
-  "Vietnamese",
+  "african",
+  "american (new)",
+  "american (traditional)",
+  "asian fusion",
+  "bagels",
+  "bakeries",
+  "barbeque",
+  "brazilian",
+  "breakfast & brunch",
+  "buffets",
+  "bubble tea",
+  "burgers",
+  "burmese",
+  "cafes",
+  "cajun/creole",
+  "caribbean",
+  "chicken wings",
+  "chinese",
+  "coffee & tea",
+  "colombian",
+  "comfort food",
+  "creperies",
+  "cuban",
+  "delis",
+  "desserts",
+  "diners",
+  "dim sum",
+  "dominican",
+  "fast food",
+  "fish & chips",
+  "french",
+  "falafel",
+  "gastropubs",
+  "gluten-free",
+  "greek",
+  "halal",
+  "himalayan/nepalese",
+  "ice cream & frozen yogurt",
+  "indian",
+  "irish",
+  "italian",
+  "japanese",
+  "juice bars & smoothies",
+  "korean",
+  "kosher",
+  "latin american",
+  "mediterranean",
+  "mexican",
+  "middle eastern",
+  "pizza",
+  "ramen",
+  "salad",
+  "sandwiches",
+  "seafood",
+  "soul food",
+  "spanish",
+  "steakhouses",
+  "sushi bars",
+  "tacos",
+  "tex-mex",
+  "thai",
+  "vegan",
+  "vegetarian",
+  "vietnamese",
 ];
 
 const FilterCategorySearch = ({ openModal }) => {
@@ -81,7 +148,6 @@ const FilterCategorySearch = ({ openModal }) => {
   const [category, updateCategory] = useState([]);
 
   const handleChange = (e) => {
-    console.log("e.target", e.target);
     const { value, checked } = e.target;
 
     if (checked) {
@@ -92,18 +158,18 @@ const FilterCategorySearch = ({ openModal }) => {
   };
 
   const refactorCategories = (categories) => {
-    let newCategory = []
+    let newCategory = [];
     categories.forEach((cat) => {
-    if (cat.includes("&")) {
-       newCategory.push(cat.replace(" & ", "_"))
+      if (cat.includes("&")) {
+        newCategory.push(cat.replace(" & ", "_"));
       } else if (cat.includes(" ")) {
-       newCategory.push(cat.replace(/\s/g, ""))
+        newCategory.push(cat.replace(/\s/g, ""));
       } else {
-       newCategory.push(cat)
+        newCategory.push(cat);
       }
-  })
-      return newCategory;
-    };
+    });
+    return newCategory;
+  };
 
   const getCategorySearch = async (e) => {
     e.preventDefault();
@@ -111,6 +177,7 @@ const FilterCategorySearch = ({ openModal }) => {
     let updatedCat = refactorCategories(category);
     try {
       if (searchInfo.price.length === 0) {
+        console.log("updatedCat", updatedCat);
         await dispatch(
           getRestaurantLocationCat({
             token: auth.token,

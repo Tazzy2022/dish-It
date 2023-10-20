@@ -17,7 +17,7 @@ const store = configureStore({
     // restaurant: singleRestaurantReducer,
     restaurants: allRestaurantsReducer,
   },
-  middleware: [logger, thunk],
+  middleware: [thunk, logger],
 });
 
 export default store;

@@ -6,6 +6,7 @@ require("dotenv").config();
 
 //GET /api/restaurants/location/id
 router.get("/location/:id", async (req, res, next) => {
+  console.log("IN RESTAURANT / ID");
   try {
     const restaurants = await needle(
       "get",
@@ -26,7 +27,7 @@ router.get("/location/:id", async (req, res, next) => {
   }
 });
 
-//GET /api/restaurants/location/price  get restaurants by location and pricing
+//GET /api/restaurants/:location/:price  get restaurants by location and pricing
 router.get("/:location/:price", async (req, res, next) => {
   try {
     const restaurants = await needle(
@@ -48,15 +49,13 @@ router.get("/:location/:price", async (req, res, next) => {
   }
 });
 
-router.get("/:location/:categories", async (req, res, next) => {
+//GET /api/restaurants/:categories/:location
+router.get("/:allCategories/:location", async (req, res, next) => {
   console.log("HIIIIIIII");
   try {
-    console.log(
-      `PATH:  ${BASE_URL}search?location=${req.params.location}${req.params.categories}`
-    );
     const restaurants = await needle(
       "get",
-      `${BASE_URL}search?location=${req.params.location}${req.params.categories}`,
+      `${BASE_URL}search?location=${req.params.location}${req.params.allCategories}`,
       {
         headers: {
           Authorization: `Bearer ${process.env.API_KEY}`,
@@ -64,7 +63,7 @@ router.get("/:location/:categories", async (req, res, next) => {
       }
     );
     const data = restaurants.body;
-    console.log("DATA!", data);
+    console.log("DATA!", restaurants);
     res.send(data);
   } catch (err) {
     res.status(404).json({
