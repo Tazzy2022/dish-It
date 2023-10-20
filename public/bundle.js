@@ -8784,18 +8784,72 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _features_searchSlice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../features/searchSlice */ "./client/features/searchSlice.js");
+/* harmony import */ var _features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../features/allRestaurantsSlice */ "./client/features/allRestaurantsSlice.js");
 
 
 
-const categories = ["African", "American (New)", "American (Traditional)", "Asian Fusion", "Bagels", "Bakeries", "Barbeque", "Brazilian", "Breakfast & Brunch", "Buffets", "Bubble Tea", "Burgers", "Burmese", "Cafes", "Cajun/Creole", "Caribbean", "Chicken Wings", "Chinese", "Coffee & Tea", "Colombian", "Comfort Food", "Creperies", "Cuban", "Delis", "Desserts", "Diners", "Dim Sum", "Dominican", "Fast Food", "Fish & Chips", "French", "Falafel", "Gastropubs", "Gluten-Free", "Greek", "Halal", "Himalayan / Nepalese", "Ice Cream & Frozen Yogurt", "Indian", "Irish", "Italian", "Japanese", "Juice Bars & Smoothies", "Korean", "Kosher", "Latin American", "Mediterranean", "Mexican", "Middle Eastern", "Pizza", "Ramen", "	Salad", "Sandwiches", "Seafood", "Soul Food", "Spanish", "Steakhouses", "Sushi Bars", "Tacos", "Tex-Mex", "Thai", "Vegan", "Vegetarian", "Vietnamese"];
+
+const categories = ["African", "American (New)", "American (Traditional)", "Asian Fusion", "Bagels", "Bakeries", "Barbeque", "Brazilian", "Breakfast & Brunch", "Buffets", "Bubble Tea", "Burgers", "Burmese", "Cafes", "Cajun/Creole", "Caribbean", "Chicken Wings", "Chinese", "Coffee & Tea", "Colombian", "Comfort Food", "Creperies", "Cuban", "Delis", "Desserts", "Diners", "Dim Sum", "Dominican", "Fast Food", "Fish & Chips", "French", "Falafel", "Gastropubs", "Gluten-Free", "Greek", "Halal", "Himalayan/Nepalese", "Ice Cream & Frozen Yogurt", "Indian", "Irish", "Italian", "Japanese", "Juice Bars & Smoothies", "Korean", "Kosher", "Latin American", "Mediterranean", "Mexican", "Middle Eastern", "Pizza", "Ramen", "Salad", "Sandwiches", "Seafood", "Soul Food", "Spanish", "Steakhouses", "Sushi Bars", "Tacos", "Tex-Mex", "Thai", "Vegan", "Vegetarian", "Vietnamese"];
 const FilterCategorySearch = ({
   openModal
 }) => {
+  const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
   const searchInfo = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(_features_searchSlice__WEBPACK_IMPORTED_MODULE_2__.searchState);
+  const [category, updateCategory] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const handleChange = e => {
+    console.log("e.target", e.target);
+    const {
+      value,
+      checked
+    } = e.target;
+    if (checked) {
+      updateCategory([...category, value]);
+    } else {
+      updateCategory(category.filter(e => e !== value));
+    }
+  };
+  const refactorCategories = categories => {
+    let newCategory = [];
+    categories.forEach(cat => {
+      if (cat.includes("&")) {
+        newCategory.push(cat.replace(" & ", "_"));
+      } else if (cat.includes(" ")) {
+        newCategory.push(cat.replace(/\s/g, ""));
+      } else {
+        newCategory.push(cat);
+      }
+    });
+    return newCategory;
+  };
+  const getCategorySearch = async e => {
+    e.preventDefault();
+    openModal(false);
+    let updatedCat = refactorCategories(category);
+    try {
+      if (searchInfo.price.length === 0) {
+        await dispatch((0,_features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_3__.getRestaurantLocationCat)({
+          token: auth.token,
+          location: searchInfo.location,
+          categories: updatedCat
+        }));
+      } else {
+        await dispatch((0,_features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_3__.getRestLocationPriceCat)({
+          token: auth.token,
+          location: searchInfo.location,
+          categories: updatedCat,
+          price: searchInfo.price
+        }));
+      }
+      dispatch((0,_features_searchSlice__WEBPACK_IMPORTED_MODULE_2__.setCategories)(updatedCat));
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "modalBackground"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
+    onSubmit: getCategorySearch,
     className: "catContainer"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "cat-title"
@@ -8805,7 +8859,9 @@ const FilterCategorySearch = ({
     className: "cat-buttons"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: () => openModal(false)
-  }, "cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "update search")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", {
+  }, "cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    type: "submit"
+  }, "update search")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", {
     className: "cat-body"
   }, categories.map((category, index) => {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -8815,8 +8871,8 @@ const FilterCategorySearch = ({
       type: "checkbox",
       name: category,
       value: category,
-      className: "filter-category-checkbox"
-      // onChange={handleChange}
+      className: "filter-category-checkbox",
+      onChange: handleChange
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, category));
   }))));
 };
@@ -8844,33 +8900,51 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const FilterPriceSearch = props => {
+const FilterPriceSearch = () => {
   const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
   const searchInfo = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(_features_searchSlice__WEBPACK_IMPORTED_MODULE_3__.searchState);
-  const [price, setPrice] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const [pricing, updatePricing] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+
+  // useEffect(() => {
+  //   if(searchInfo.resetAll === true) {
+
+  //   }
+  // })
+
   const getPriceSearch = async e => {
     e.preventDefault();
     try {
-      await dispatch((0,_features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_2__.getRestaurantsLocationPrice)({
-        token: auth.token,
-        location: props.location,
-        price: price
-      }));
+      if (searchInfo.categories.length === 0) {
+        await dispatch((0,_features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_2__.getRestaurantsLocationPrice)({
+          token: auth.token,
+          location: searchInfo.location,
+          price: pricing
+        }));
+      } else {
+        await dispatch((0,_features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_2__.getRestLocationPriceCat)({
+          token: auth.token,
+          location: searchInfo.location,
+          categories: searchInfo.categories,
+          price: pricing
+        }));
+      }
+      dispatch((0,_features_searchSlice__WEBPACK_IMPORTED_MODULE_3__.setPrice)(pricing));
     } catch (error) {
       console.log(error);
     }
-    e.target.reset();
+    // e.target.reset();
   };
+
   const handleChange = e => {
     const {
       value,
       checked
     } = e.target;
     if (checked) {
-      setPrice([...price, value]);
+      updatePricing([...pricing, value]);
     } else {
-      setPrice(price.filter(e => e !== value));
+      updatePricing(pricing.filter(e => e !== value));
     }
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
@@ -8887,7 +8961,9 @@ const FilterPriceSearch = props => {
       className: "filter-price-checkbox",
       onChange: handleChange
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, price));
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "update"));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    type: "submit"
+  }, "update"));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FilterPriceSearch);
 
@@ -9261,6 +9337,7 @@ const Search = () => {
   const searchInfo = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(_features_searchSlice__WEBPACK_IMPORTED_MODULE_6__.searchState);
 
   //KEEP everything checked?? add clear filters button and list current filters
+
   //assuming i will still use local state and update searchslice in my dispatch
   //and grab all neccessary params in my dispatch from useSelector
   //how to stay dry and not direct api query... one get restaurants thunk
@@ -9272,21 +9349,23 @@ const Search = () => {
   });
   const [modalOpen, setModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    const setRestaurants = async () => {
-      try {
-        await dispatch((0,_features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_3__.getAllRestaurants)({
-          token: auth.token,
-          location: auth.user.city
-        }));
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    setRestaurants();
+    if (search.location.length === 0) {
+      const setRestaurants = async () => {
+        try {
+          await dispatch((0,_features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_3__.getAllRestaurants)({
+            token: auth.token,
+            location: auth.user.city
+          }));
+          dispatch((0,_features_searchSlice__WEBPACK_IMPORTED_MODULE_6__.setLocation)(auth.user.city));
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      setRestaurants();
+    }
   }, []);
   const getSearch = async event => {
     event.preventDefault();
-    console.log("SEARCH", search);
     try {
       if (search.restaurant.length === 0) {
         await dispatch((0,_features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_3__.getAllRestaurants)({
@@ -9299,11 +9378,10 @@ const Search = () => {
           name: search.restaurant,
           location: search.location
         }));
+        dispatch((0,_features_searchSlice__WEBPACK_IMPORTED_MODULE_6__.setRestaurant)(search.restaurant));
       }
-      setSearch({
-        restaurant: ""
-      });
-      // setSearch({ restaurant: "", location: "" });
+      dispatch((0,_features_searchSlice__WEBPACK_IMPORTED_MODULE_6__.setLocation)(search.location));
+      // setSearch({ restaurant: "" });
     } catch (error) {
       console.log(error);
     }
@@ -9314,6 +9392,11 @@ const Search = () => {
       [event.target.name]: event.target.value
     }));
   };
+  const resetFilters = () => {
+    dispatch((0,_features_searchSlice__WEBPACK_IMPORTED_MODULE_6__.resetAll)(true));
+    // e.target.reset();
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "search-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
@@ -9336,17 +9419,20 @@ const Search = () => {
     name: "location",
     onChange: handleChange
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    type: "submit",
     className: "button"
   }, "search"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
     id: "search-filter-containers"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_FilterPriceSearch__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    location: search.location || auth.user.city
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Filter by category"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_FilterPriceSearch__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Filter by category"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: "openModalBtn",
     onClick: () => setModalOpen(true)
   }, "show all"), modalOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_FilterCategorySearch__WEBPACK_IMPORTED_MODULE_5__["default"], {
     openModal: setModalOpen
-  })), restaurants?.businesses?.length > 0 ? restaurants?.businesses?.map(restaurant => {
+  })), searchInfo.categories.length > 0 || searchInfo.price.length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
+    id: "searched-filters"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "current filters: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, " filter container here"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: resetFilters
+  }, "clear all")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null), restaurants?.businesses?.length > 0 ? restaurants?.businesses?.map(restaurant => {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_AllRestaurants__WEBPACK_IMPORTED_MODULE_4__["default"], {
       key: restaurant.id,
       restaurant: restaurant,
@@ -9653,6 +9739,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
 /* harmony export */   getAllRestaurants: () => (/* binding */ getAllRestaurants),
+/* harmony export */   getRestLocationPriceCat: () => (/* binding */ getRestLocationPriceCat),
+/* harmony export */   getRestaurantLocationCat: () => (/* binding */ getRestaurantLocationCat),
 /* harmony export */   getRestaurantsLocationPrice: () => (/* binding */ getRestaurantsLocationPrice),
 /* harmony export */   getSingleRestaurant: () => (/* binding */ getSingleRestaurant),
 /* harmony export */   renderAllRestaurants: () => (/* binding */ renderAllRestaurants)
@@ -9695,6 +9783,44 @@ const getRestaurantsLocationPrice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE
         authorization: token
       }
     });
+    return response?.data;
+  } catch (error) {
+    return error.message;
+  }
+});
+const getRestLocationPriceCat = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("allRestaurants/getRestLocationPriceCat", async ({
+  token,
+  location,
+  price,
+  categories
+}) => {
+  try {
+    const pricing = "&price=" + price.join("&price=");
+    const allCategories = "&categories=" + categories.join("&categories=");
+    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`/api/restaurants/${location}/${allCategories}${pricing}`, {
+      headers: {
+        authorization: token
+      }
+    });
+    return response?.data;
+  } catch (error) {
+    return error.message;
+  }
+});
+const getRestaurantLocationCat = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("allRestaurants/getRestaurantLocationCat", async ({
+  token,
+  location,
+  categories
+}) => {
+  try {
+    const allCategories = "&categories=" + categories.join("&categories=");
+    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`/api/restaurants/${location}/${allCategories}`, {
+      headers: {
+        authorization: token
+      }
+    });
+    console.log(`/api/restaurants/${location}/${allCategories}`);
+    console.log("response?.data", response?.data);
     return response?.data;
   } catch (error) {
     return error.message;
@@ -9743,6 +9869,22 @@ const allRestaurantsSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.cre
       state.error = action.error.message;
     });
     builder.addCase(getRestaurantsLocationPrice.fulfilled, (state, action) => {
+      return action.payload;
+      //state.restaurants = action.payload;
+    });
+
+    builder.addCase(getRestLocationPriceCat.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(getRestLocationPriceCat.fulfilled, (state, action) => {
+      return action.payload;
+      //state.restaurants = action.payload;
+    });
+
+    builder.addCase(getRestaurantLocationCat.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(getRestaurantLocationCat.fulfilled, (state, action) => {
       return action.payload;
       //state.restaurants = action.payload;
     });
@@ -9948,6 +10090,7 @@ const {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   resetAll: () => (/* binding */ resetAll),
 /* harmony export */   searchState: () => (/* binding */ searchState),
 /* harmony export */   setCategories: () => (/* binding */ setCategories),
 /* harmony export */   setLocation: () => (/* binding */ setLocation),
@@ -9960,7 +10103,8 @@ const initialState = {
   restaurant: "",
   location: "",
   price: [],
-  categories: []
+  categories: [],
+  resetAll: false
 };
 const searchSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createSlice)({
   name: "search",
@@ -9977,6 +10121,13 @@ const searchSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createSlice
     },
     setCategories: (state, input) => {
       state.categories = input.payload;
+    },
+    resetAll: (state, bool) => {
+      state.resetAll = bool.payload;
+      if (bool.payload === true) {
+        state.categories = [], state.restaurant = "", state.price = [];
+      }
+      state.resetAll = false;
     }
   }
 });
@@ -9984,7 +10135,8 @@ const {
   setRestaurant,
   setLocation,
   setPrice,
-  setCategories
+  setCategories,
+  resetAll
 } = searchSlice.actions;
 const searchState = state => state.search;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (searchSlice.reducer);

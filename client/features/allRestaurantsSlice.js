@@ -4,8 +4,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   restaurants: [],
-//   error: "",
-//   token: "",
+  //   error: "",
+  //   token: "",
 };
 
 export const getAllRestaurants = createAsyncThunk(
@@ -31,7 +31,7 @@ export const getRestaurantsLocationPrice = createAsyncThunk(
   "allRestaurants/getRestaurantsLocationPrice",
   async ({ token, location, price }) => {
     try {
-      const pricing = "&price=" + price.join("&price=")
+      const pricing = "&price=" + price.join("&price=");
       const response = await axios.get(
         `/api/restaurants/${location}/${pricing}`,
         {
@@ -40,6 +40,49 @@ export const getRestaurantsLocationPrice = createAsyncThunk(
           },
         }
       );
+      return response?.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
+export const getRestLocationPriceCat = createAsyncThunk(
+  "allRestaurants/getRestLocationPriceCat",
+  async ({ token, location, price, categories }) => {
+    try {
+      const pricing = "&price=" + price.join("&price=");
+      const allCategories = "&categories=" + categories.join("&categories=");
+      const response = await axios.get(
+        `/api/restaurants/${location}/${allCategories}${pricing}`,
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+      return response?.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
+export const getRestaurantLocationCat = createAsyncThunk(
+  "allRestaurants/getRestaurantLocationCat",
+  async ({ token, location, categories }) => {
+    try {
+      const allCategories = "&categories=" + categories.join("&categories=");
+      const response = await axios.get(
+        `/api/restaurants/${location}/${allCategories}`,
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+      console.log(`/api/restaurants/${location}/${allCategories}`);
+      console.log("response?.data", response?.data);
       return response?.data;
     } catch (error) {
       return error.message;
@@ -65,7 +108,6 @@ export const getSingleRestaurant = createAsyncThunk(
   }
 );
 
-
 const allRestaurantsSlice = createSlice({
   name: "allRestaurants",
   initialState,
@@ -89,6 +131,20 @@ const allRestaurantsSlice = createSlice({
       state.error = action.error.message;
     });
     builder.addCase(getRestaurantsLocationPrice.fulfilled, (state, action) => {
+      return action.payload;
+      //state.restaurants = action.payload;
+    });
+    builder.addCase(getRestLocationPriceCat.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(getRestLocationPriceCat.fulfilled, (state, action) => {
+      return action.payload;
+      //state.restaurants = action.payload;
+    });
+    builder.addCase(getRestaurantLocationCat.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(getRestaurantLocationCat.fulfilled, (state, action) => {
       return action.payload;
       //state.restaurants = action.payload;
     });

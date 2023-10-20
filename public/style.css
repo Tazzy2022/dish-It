@@ -52,7 +52,8 @@ a {
 }
 
 #price-form button,
-.catContainer button {
+.openModalBtn,
+#searched-filters button {
   margin: 0vw 10vw 0vw 1vw;
   height: 20px;
   border: 1px solid #e00707;
@@ -63,7 +64,7 @@ a {
 }
 
 #price-form button:hover,
-#category-form button:hover {
+.openModalBtn:hover {
   background-color: #e00707;
   color: white;
 }
@@ -104,6 +105,26 @@ a {
   margin: 20px;
 }
 
+#searched-filters {
+  display: flex;
+  margin-top: 20px;
+}
+
+#searched-filters p {
+  font-size: 14px;
+  color: #e00707;
+}
+
+/* #searched-filters button {
+  font-size: 14px;
+  border: 1px solid #e00707;
+  background-color: white;
+  height: 16px;
+  margin-left: 5px;
+  color: #e00707;
+  border-radius: 5px;
+} */
+
 .card-img {
   width: 20vw;
   height: 20vh;
@@ -126,7 +147,7 @@ a {
   border-radius: 15px;
   width: 70vw;
   height: 20vh;
-  margin: 20px 0px 20px;
+  margin-bottom: 40px;
 }
 
 .restaurant-list-card p,

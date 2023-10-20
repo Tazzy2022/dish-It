@@ -7,7 +7,12 @@ import {
 } from "../features/allRestaurantsSlice";
 import AllRestaurants from "./AllRestaurants";
 import FilterCategorySearch from "./FilterCategorySearch";
-import { setRestaurant, setLocation, searchState } from "../features/searchSlice"
+import {
+  setRestaurant,
+  setLocation,
+  searchState,
+  resetAll,
+} from "../features/searchSlice";
 
 const Search = () => {
   const auth = useSelector((state) => state.auth);
@@ -16,6 +21,7 @@ const Search = () => {
   const searchInfo = useSelector(searchState);
 
   //KEEP everything checked?? add clear filters button and list current filters
+
   //assuming i will still use local state and update searchslice in my dispatch
   //and grab all neccessary params in my dispatch from useSelector
   //how to stay dry and not direct api query... one get restaurants thunk
@@ -26,25 +32,26 @@ const Search = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
-    const setRestaurants = async () => {
-      try {
-        await dispatch(
-          getAllRestaurants({
-            token: auth.token,
-            location: auth.user.city,
-          })
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    setRestaurants();
+    if (search.location.length === 0) {
+      const setRestaurants = async () => {
+        try {
+          await dispatch(
+            getAllRestaurants({
+              token: auth.token,
+              location: auth.user.city,
+            })
+          );
+          dispatch(setLocation(auth.user.city));
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      setRestaurants();
+    }
   }, []);
 
   const getSearch = async (event) => {
     event.preventDefault();
-    console.log("SEARCH", search)
     try {
       if (search.restaurant.length === 0) {
         await dispatch(
@@ -61,9 +68,10 @@ const Search = () => {
             location: search.location,
           })
         );
+        dispatch(setRestaurant(search.restaurant));
       }
-      setSearch({ restaurant: "" });
-      // setSearch({ restaurant: "", location: "" });
+      dispatch(setLocation(search.location));
+      // setSearch({ restaurant: "" });
     } catch (error) {
       console.log(error);
     }
@@ -74,6 +82,11 @@ const Search = () => {
       ...prevState,
       [event.target.name]: event.target.value,
     }));
+  };
+
+  const resetFilters = () => {
+    dispatch(resetAll(true));
+    // e.target.reset();
   };
 
   return (
@@ -98,13 +111,13 @@ const Search = () => {
               onChange={handleChange}
             />
           </div>
-          <button className="button">search</button>
+          <button type="submit" className="button">
+            search
+          </button>
         </form>
       </section>
       <section id="search-filter-containers">
-        <FilterPriceSearch
-          location={search.location || auth.user.city}
-        />
+        <FilterPriceSearch />
         <div></div>
         <p>Filter by category</p>
         <button className="openModalBtn" onClick={() => setModalOpen(true)}>
@@ -112,6 +125,15 @@ const Search = () => {
         </button>
         {modalOpen && <FilterCategorySearch openModal={setModalOpen} />}
       </section>
+      {searchInfo.categories.length > 0 || searchInfo.price.length > 0 ? (
+        <section id="searched-filters">
+          <p>current filters: </p>
+          <p> filter container here</p>
+          <button onClick={resetFilters}>clear all</button>
+        </section>
+      ) : (
+        <p></p>
+      )}
       {restaurants?.businesses?.length > 0 ? (
         restaurants?.businesses?.map((restaurant) => {
           return (

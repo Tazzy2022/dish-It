@@ -1,39 +1,59 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getRestaurantsLocationPrice } from "../features/allRestaurantsSlice";
-import { setPrice, searchState } from "../features/searchSlice";
+import {
+  getRestaurantsLocationPrice,
+  getRestLocationPriceCat,
+} from "../features/allRestaurantsSlice";
+import { resetAll, setPrice, searchState } from "../features/searchSlice";
 
-const FilterPriceSearch = (props) => {
+const FilterPriceSearch = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const searchInfo = useSelector(searchState);
 
-  const [price, setPrice] = useState([]);
+  const [pricing, updatePricing] = useState([]);
+
+  // useEffect(() => {
+  //   if(searchInfo.resetAll === true) {
+
+  //   }
+  // })
 
   const getPriceSearch = async (e) => {
     e.preventDefault();
-
     try {
-      await dispatch(
-        getRestaurantsLocationPrice({
-          token: auth.token,
-          location: props.location,
-          price: price,
-        })
-      );
+      if (searchInfo.categories.length === 0) {
+        await dispatch(
+          getRestaurantsLocationPrice({
+            token: auth.token,
+            location: searchInfo.location,
+            price: pricing,
+          })
+        );
+      } else {
+        await dispatch(
+          getRestLocationPriceCat({
+            token: auth.token,
+            location: searchInfo.location,
+            categories: searchInfo.categories,
+            price: pricing,
+          })
+        );
+      }
+      dispatch(setPrice(pricing));
     } catch (error) {
       console.log(error);
     }
-    e.target.reset();
+    // e.target.reset();
   };
 
   const handleChange = (e) => {
     const { value, checked } = e.target;
 
     if (checked) {
-      setPrice([...price, value]);
+      updatePricing([...pricing, value]);
     } else {
-      setPrice(price.filter((e) => e !== value));
+      updatePricing(pricing.filter((e) => e !== value));
     }
   };
 
@@ -54,7 +74,7 @@ const FilterPriceSearch = (props) => {
           </div>
         );
       })}
-      <button>update</button>
+      <button type="submit">update</button>
     </form>
   );
 };

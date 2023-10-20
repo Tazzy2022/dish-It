@@ -48,14 +48,15 @@ router.get("/:location/:price", async (req, res, next) => {
   }
 });
 
-//GET /api/restaurants/location/categories/id
-//pass categories in req.body maybe only allow one category
-//multiple categories are like: &categories=chinese&categories=japanese
-router.get("/location/categories/:id", async (req, res, next) => {
+router.get("/:location/:categories", async (req, res, next) => {
+  console.log("HIIIIIIII");
   try {
+    console.log(
+      `PATH:  ${BASE_URL}search?location=${req.params.location}${req.params.categories}`
+    );
     const restaurants = await needle(
       "get",
-      `${BASE_URL}search?location=${req.params.id}&categories=${req.body.categories}`,
+      `${BASE_URL}search?location=${req.params.location}${req.params.categories}`,
       {
         headers: {
           Authorization: `Bearer ${process.env.API_KEY}`,
@@ -63,6 +64,7 @@ router.get("/location/categories/:id", async (req, res, next) => {
       }
     );
     const data = restaurants.body;
+    console.log("DATA!", data);
     res.send(data);
   } catch (err) {
     res.status(404).json({
@@ -72,12 +74,12 @@ router.get("/location/categories/:id", async (req, res, next) => {
   }
 });
 
-//GET /api/restaurants/location/categories/price/id
-router.get("/location/categories/price/:id", async (req, res, next) => {
+//GET /api/restaurants/location/categories/price
+router.get("/:location/:categories/:price", async (req, res, next) => {
   try {
     const restaurants = await needle(
       "get",
-      `${BASE_URL}search?location=${req.params.id}&categories=${req.body.categories}$price=${req.body.price}`,
+      `${BASE_URL}search?location=${req.params.location}${req.params.categories}${req.params.price}`,
       {
         headers: {
           Authorization: `Bearer ${process.env.API_KEY}`,
