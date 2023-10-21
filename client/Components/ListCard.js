@@ -2,9 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const ListCard = (props) => {
+
   return (
     <div className="home-lists-container">
-      <Link to={`/userlists/${props.list.id}`} className="list-card">
+      <Link
+        to={`/userlists/${props.list.id}`}
+        className="list-card"
+      >
         <img
           className="card-img"
           src={props.list.imageUrl}

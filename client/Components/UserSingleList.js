@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getSingleList } from "../features/singleListSlice";
+import { getSingleList, renderSingleList } from "../features/singleListSlice";
 import RestaurantCard from "./RestaurantCard";
 
 const UserSingleList = () => {
+  const list = useSelector(renderSingleList);
   const lists = useSelector((state) => state.lists);
   const auth = useSelector((state) => state.auth);
   const { id } = useParams();
@@ -31,8 +32,6 @@ const UserSingleList = () => {
     getList();
   }, []);
 
-  const list = useSelector((state) => state.list);
-
   if (isLoading) {
     return <div className="loading-p">Loading...</div>;
   }
@@ -48,20 +47,20 @@ const UserSingleList = () => {
   return (
     <div className="single-list-container">
       <p className="list-name">{listname}</p>
-      {list?.length === 0 ? (
+      {list?.list?.length === 0 ? (
         <div>
           <p>this list is empty...</p>
           <Link to="/usersearch">you can start your search here</Link>
         </div>
       ) : (
-        list?.length > 0 &&
-        list?.map((restaurant, index) => {
+        list?.list?.length > 0 &&
+        list?.list?.map((restaurant, index) => {
           return (
             <RestaurantCard
               key={restaurant.id}
               restaurant={restaurant}
               auth={auth}
-              notes={list.notes[index]}
+             notes={list.notes}
             />
           );
         })

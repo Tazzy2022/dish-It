@@ -33,14 +33,7 @@ const syncAndSeed = async () => {
         state: "Washington",
       }),
     ]);
-    const [bangkok, brooklyn, la, sf] = await Promise.all([
-      List.create({
-        listName: "Bangkok veggie options",
-        isPersonal: true,
-        isPrivate: false,
-        restaurantIdArray: ["1", "2"],
-        userId: michele.id,
-      }),
+    const [brooklyn, la, sf] = await Promise.all([
       List.create({
         listName: "Brooklyn brunch",
         isPersonal: true,
@@ -67,12 +60,7 @@ const syncAndSeed = async () => {
         userId: michele.id,
       }),
     ]);
-    const [yum, green, pork, love] = await Promise.all([
-      RestaurantNotes.create({
-        restaurantId: "2",
-        personalNotes: "yum, everything tasted amazing here",
-        listId: bangkok.id,
-      }),
+    const [green, pork, love] = await Promise.all([
       RestaurantNotes.create({
         restaurantId: "CfOBb6NU2awo8xclJpKU3g",
         personalNotes: "great ambiance and big portions, coffee was just okay",

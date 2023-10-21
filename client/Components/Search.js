@@ -72,7 +72,6 @@ const Search = () => {
         dispatch(setRestaurant(search.restaurant));
       }
       dispatch(setLocation(search.location));
-      // setSearch({ restaurant: "" });
     } catch (error) {
       console.log(error);
     }

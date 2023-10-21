@@ -6,7 +6,6 @@ require("dotenv").config();
 
 //GET /api/restaurants/location/id
 router.get("/location/:id", async (req, res, next) => {
-  console.log("IN RESTAURANT / ID");
   try {
     const restaurants = await needle(
       "get",

@@ -2,6 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const RestaurantCard = (props) => {
+  const note = props.notes.find(
+    (note) => note.restaurantId === props.restaurant.id
+  );
+
   return (
     <div className="restaurant-list-container">
       <section className="list-card">
@@ -21,15 +25,18 @@ const RestaurantCard = (props) => {
         <Link className="yelp-link" to={props.restaurant.url}>
           yelp link
         </Link>
-        {props.restaurant.categories.map((cat) => {
-          return cat;
+        <p>Food category:</p>
+        {props.restaurant.categories.map((cat, index) => {
+          return <p key={index}>{cat.title},</p>;
         })}
-        {/* probably need to loop through the below */}
-        {/* <p>{props.restaurant.category}</p> */}
         <p>+ add notes</p>
         <p>x delete from list</p>
         <p>Notes:</p>
-        {props.notes[index] && <p>{props.notes[index].personalNotes}</p>}
+        {note?.personalNotes?.length > 0 ? (
+          <p>{note.personalNotes}</p>
+        ) : (
+          <p></p>
+        )}
       </section>
     </div>
   );
