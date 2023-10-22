@@ -9338,6 +9338,77 @@ const Login = () => {
 
 /***/ }),
 
+/***/ "./client/Components/NewListModal.js":
+/*!*******************************************!*\
+  !*** ./client/Components/NewListModal.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _features_singleListSlice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../features/singleListSlice */ "./client/features/singleListSlice.js");
+
+
+
+
+const NewListModal = ({
+  openModal
+}) => {
+  const [newList, setNewList] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    listName: ""
+  });
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
+  const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
+  const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
+  const handleChange = e => {
+    setNewList(prevState => ({
+      ...prevState,
+      [e.target.name]: e.target.value
+    }));
+  };
+  const createNewList = async e => {
+    e.preventDefault();
+    openModal(false);
+    const list = await dispatch((0,_features_singleListSlice__WEBPACK_IMPORTED_MODULE_2__.createList)({
+      id: auth.user.id,
+      token: auth.token,
+      listName: newList.listName
+    }));
+    // if (list.payload) navigate(`/userlists/${list.payload.id}`);
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modalBackground"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", {
+    className: "new-list-modal"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
+    className: "create-list-form",
+    onSubmit: createNewList
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "List name:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    id: "line-input",
+    type: "text",
+    name: "listName",
+    value: newList.listName,
+    onChange: handleChange
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "modalbtn",
+    type: "submit"
+  }, "create"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "modalbtn",
+    onClick: () => openModal(false)
+  }, "cancel")))));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NewListModal);
+
+/***/ }),
+
 /***/ "./client/Components/RestaurantCard.js":
 /*!*********************************************!*\
   !*** ./client/Components/RestaurantCard.js ***!
@@ -9408,14 +9479,6 @@ const Search = () => {
   const restaurants = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(_features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_3__.renderAllRestaurants);
   const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   const searchInfo = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(_features_searchSlice__WEBPACK_IMPORTED_MODULE_6__.searchState);
-
-  //KEEP everything checked?? add clear filters button and list current filters
-
-  //assuming i will still use local state and update searchslice in my dispatch
-  //and grab all neccessary params in my dispatch from useSelector
-  //how to stay dry and not direct api query... one get restaurants thunk
-  //that delegates api call based on state
-
   const [search, setSearch] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     restaurant: "",
     location: ""
@@ -9657,9 +9720,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
 /* harmony import */ var _features_listSlice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../features/listSlice */ "./client/features/listSlice.js");
 /* harmony import */ var _ListCard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ListCard */ "./client/Components/ListCard.js");
+/* harmony import */ var _NewListModal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NewListModal */ "./client/Components/NewListModal.js");
+
 
 
 
@@ -9669,6 +9734,7 @@ const UserHome = () => {
   const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
   const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   const [isLoading, setIsLoading] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [modalOpen, setModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     const getList = async () => {
       try {
@@ -9699,9 +9765,12 @@ const UserHome = () => {
     alt: "profile pic"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "profile-name"
-  }, auth.user.username, "'s Lists..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    className: "profile-add-list"
-  }, "+ new list")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
+  }, auth.user.username, "'s Lists..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "button",
+    onClick: () => setModalOpen(true)
+  }, "+ new list"), modalOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NewListModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    openModal: setModalOpen
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
     className: "home-filter-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "filter by:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "checkbox",
@@ -9709,7 +9778,7 @@ const UserHome = () => {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "personal"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "checkbox",
     className: "filter-following-checkbox"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "following")), lists?.length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "no saved lists yet..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "following")), lists?.length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "no saved lists yet..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
     to: "/usersearch"
   }, "start your search here")) : lists?.length > 0 && lists?.map(list => {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ListCard__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -10225,6 +10294,7 @@ const searchState = state => state.search;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createList: () => (/* binding */ createList),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
 /* harmony export */   getSingleList: () => (/* binding */ getSingleList),
 /* harmony export */   loggoutSingleList: () => (/* binding */ loggoutSingleList),
@@ -10256,6 +10326,24 @@ const getSingleList = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsy
     return error.message;
   }
 });
+const createList = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("lists/createList", async ({
+  id,
+  token,
+  listName
+}) => {
+  console.log("!!!!", listName);
+  const name = listName.listName;
+  try {
+    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`/api/user/${id}/list`, name, {
+      headers: {
+        authorization: token
+      }
+    });
+    return response?.data;
+  } catch (error) {
+    return error.message;
+  }
+});
 const singleListSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)({
   name: "list",
   initialState,
@@ -10267,12 +10355,13 @@ const singleListSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createS
     }
   },
   extraReducers: builder => {
-    //   builder.addCase(getSavedRestaurants.rejected, (state, action) => {
-    //     state.error = action.error.message;
-    //   });
-    //   builder.addCase(getSavedRestaurants.fulfilled, (state, action) => {
-    //     return action.payload;
-    //   });
+    builder.addCase(createList.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(createList.fulfilled, (state, action) => {
+      //state.lists = action.payload.lists;
+      return action.payload;
+    });
     builder.addCase(getSingleList.rejected, (state, action) => {
       state.error = action.error.message;
     });

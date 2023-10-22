@@ -128,7 +128,17 @@ router.get("/:id/lists", async (req, res, next) => {
 //POST "/api/user/:id/list  create new list
 router.post("/:id/list", async (req, res, next) => {
   try {
-    const newList = await List.create(req.body);
+    console.log(
+      "IN SERVER",
+      "userId:",
+      req.params.id,
+      "listName:",
+      req.body
+    );
+    const newList = await List.create({
+      userId: req.params.id,
+      listName: req.body.listName,
+    });
     res.send(newList);
   } catch (err) {
     res.status(500).json({

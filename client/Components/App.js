@@ -20,7 +20,7 @@ const App = () => {
         <Route exact path="/usersearch" element={<Search />} />
         <Route exact path="/userhome" element={<UserHome />} />
         <Route exact path="/userlists/:id" element={<UserSingleList />} />
-
+        
         <Route exact path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </>

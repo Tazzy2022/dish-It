@@ -21,7 +21,7 @@ const List = db.define("list", {
   },
   isPrivate: {
     type: BOOLEAN,
-    defaultValue: true,
+    defaultValue: false,
   },
   imageUrl: {
     type: STRING,

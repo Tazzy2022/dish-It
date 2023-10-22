@@ -21,13 +21,6 @@ const Search = () => {
   const dispatch = useDispatch();
   const searchInfo = useSelector(searchState);
 
-  //KEEP everything checked?? add clear filters button and list current filters
-
-  //assuming i will still use local state and update searchslice in my dispatch
-  //and grab all neccessary params in my dispatch from useSelector
-  //how to stay dry and not direct api query... one get restaurants thunk
-  //that delegates api call based on state
-
   const [search, setSearch] = useState({ restaurant: "", location: "" });
 
   const [modalOpen, setModalOpen] = useState(false);

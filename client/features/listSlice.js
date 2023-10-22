@@ -22,7 +22,7 @@ export const getAllLists = createAsyncThunk(
       return error.message;
     }
   }
-);
+)
 
 const listSlice = createSlice({
   name: "lists",

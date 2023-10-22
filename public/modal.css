@@ -69,3 +69,45 @@
 .cat-buttons button:hover {
   color: #333333;
 }
+
+#line-input {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 1px solid #333333;
+}
+
+.new-list-modal {
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  width: 40vw;
+  height: 25vh;
+  margin: auto;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+}
+
+.create-list-form {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin-top: 10%;
+}
+
+.create-list-form input,
+.modalbtn {
+  margin: 10px;
+}
+
+.modalbtn {
+  color: white;
+  background-color: #e00707;
+  border-radius: 5px;
+  border: #e00707;
+}
+
+.modalbtn:hover {
+  color: black;
+}

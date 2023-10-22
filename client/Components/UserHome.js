@@ -3,11 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getAllLists } from "../features/listSlice";
 import ListCard from "./ListCard";
+import NewListModal from "./NewListModal";
 
 const UserHome = () => {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
   const [isLoading, setIsLoading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     const getList = async () => {
@@ -43,7 +46,10 @@ const UserHome = () => {
           alt="profile pic"
         />
         <p className="profile-name">{auth.user.username}'s Lists...</p>
-        <p className="profile-add-list">+ new list</p>
+        <button className="button" onClick={() => setModalOpen(true)}>
+          + new list
+        </button>
+        {modalOpen && <NewListModal openModal={setModalOpen} />}
       </section>
       <section className="home-filter-container">
         <label>filter by:</label>
