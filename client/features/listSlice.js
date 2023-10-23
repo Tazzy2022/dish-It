@@ -22,7 +22,22 @@ export const getAllLists = createAsyncThunk(
       return error.message;
     }
   }
-)
+);
+
+export const deleteList = createAsyncThunk(
+  "lists/deleteList",
+  async ({ listId, token }) => {
+    try {
+      await axios.delete(`/api/user/${listId}`, {
+        headers: {
+          authorization: token,
+        },
+      });
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
 
 const listSlice = createSlice({
   name: "lists",
@@ -33,6 +48,10 @@ const listSlice = createSlice({
       state.error = "";
       state.token = "";
     },
+    removeList: (state, listId) => {
+      console.log(listId);
+      state.lists.filter((list) => list.id !== listId);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getAllLists.rejected, (state, action) => {
@@ -40,11 +59,11 @@ const listSlice = createSlice({
     });
     builder.addCase(getAllLists.fulfilled, (state, action) => {
       //state.lists = action.payload.lists;
-      return action.payload
+      return action.payload;
     });
   },
 });
 
-export const { loggoutUserLists } = listSlice.actions;
+export const { loggoutUserLists, removeList } = listSlice.actions;
 
 export default listSlice.reducer;

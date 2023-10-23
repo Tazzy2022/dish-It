@@ -9245,20 +9245,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _features_listSlice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../features/listSlice */ "./client/features/listSlice.js");
+
+
 
 
 const ListCard = props => {
+  const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
+  const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
+  const removeList = async listId => {
+    try {
+      await dispatch((0,_features_listSlice__WEBPACK_IMPORTED_MODULE_2__.deleteList)({
+        listId: listId,
+        token: auth.token
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "home-lists-container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
     to: `/userlists/${props.list.id}`,
     className: "list-card"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: "card-img",
     src: props.list.imageUrl,
     alt: "list background image"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.list.listName)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "delete list")));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.list.listName)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: () => removeList(props.list.id)
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "delete list")));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ListCard);
 
@@ -9361,14 +9379,12 @@ __webpack_require__.r(__webpack_exports__);
 const NewListModal = ({
   openModal
 }) => {
-  const [newList, setNewList] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-    listName: ""
-  });
+  const [listName, setListName] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
   const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
   const handleChange = e => {
-    setNewList(prevState => ({
+    setListName(prevState => ({
       ...prevState,
       [e.target.name]: e.target.value
     }));
@@ -9379,11 +9395,10 @@ const NewListModal = ({
     const list = await dispatch((0,_features_singleListSlice__WEBPACK_IMPORTED_MODULE_2__.createList)({
       id: auth.user.id,
       token: auth.token,
-      listName: newList.listName
+      listName: listName
     }));
-    // if (list.payload) navigate(`/userlists/${list.payload.id}`);
+    if (list.payload) navigate(`/userlists/${list.payload.id}`);
   };
-
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "modalBackground"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", {
@@ -9395,7 +9410,7 @@ const NewListModal = ({
     id: "line-input",
     type: "text",
     name: "listName",
-    value: newList.listName,
+    value: listName.listname,
     onChange: handleChange
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: "modalbtn",
@@ -9475,10 +9490,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const Search = () => {
-  const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
-  const restaurants = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(_features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_3__.renderAllRestaurants);
   const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   const searchInfo = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(_features_searchSlice__WEBPACK_IMPORTED_MODULE_6__.searchState);
+  const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
+  const restaurants = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(_features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_3__.renderAllRestaurants);
   const [search, setSearch] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     restaurant: "",
     location: ""
@@ -9573,7 +9588,11 @@ const Search = () => {
       restaurant: restaurant,
       auth: auth
     });
-  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "no restaurants matched that search"));
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "no restaurants matched that search"), restaurants?.id ? restaurants?.id && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_AllRestaurants__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    key: restaurants.id,
+    restaurant: restaurants,
+    auth: auth
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Search);
 
@@ -9807,6 +9826,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
 /* harmony import */ var _features_singleListSlice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../features/singleListSlice */ "./client/features/singleListSlice.js");
 /* harmony import */ var _RestaurantCard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./RestaurantCard */ "./client/Components/RestaurantCard.js");
 
@@ -9827,7 +9847,7 @@ const UserSingleList = () => {
     const getList = async () => {
       try {
         setIsLoading(true);
-        await dispatch((0,_features_singleListSlice__WEBPACK_IMPORTED_MODULE_2__.getSingleList)({
+        const list = await dispatch((0,_features_singleListSlice__WEBPACK_IMPORTED_MODULE_2__.getSingleList)({
           id: id,
           token: auth.token
         }));
@@ -9854,7 +9874,7 @@ const UserSingleList = () => {
     className: "single-list-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "list-name"
-  }, listname), list?.list?.length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "this list is empty..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Link, {
+  }, listname), list?.list?.length === 0 || Object.keys(list).length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "this list is empty..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
     to: "/usersearch"
   }, "you can start your search here")) : list?.list?.length > 0 && list?.list?.map((restaurant, index) => {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_RestaurantCard__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -10165,8 +10185,10 @@ const {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   deleteList: () => (/* binding */ deleteList),
 /* harmony export */   getAllLists: () => (/* binding */ getAllLists),
-/* harmony export */   loggoutUserLists: () => (/* binding */ loggoutUserLists)
+/* harmony export */   loggoutUserLists: () => (/* binding */ loggoutUserLists),
+/* harmony export */   removeList: () => (/* binding */ removeList)
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
@@ -10193,6 +10215,20 @@ const getAllLists = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsync
     return error.message;
   }
 });
+const deleteList = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("lists/deleteList", async ({
+  listId,
+  token
+}) => {
+  try {
+    await axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"](`/api/user/${listId}`, {
+      headers: {
+        authorization: token
+      }
+    });
+  } catch (error) {
+    return error.message;
+  }
+});
 const listSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)({
   name: "lists",
   initialState,
@@ -10201,6 +10237,10 @@ const listSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)(
       state.lists = [];
       state.error = "";
       state.token = "";
+    },
+    removeList: (state, listId) => {
+      console.log(listId);
+      state.lists.filter(list => list.id !== listId);
     }
   },
   extraReducers: builder => {
@@ -10214,7 +10254,8 @@ const listSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)(
   }
 });
 const {
-  loggoutUserLists
+  loggoutUserLists,
+  removeList
 } = listSlice.actions;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (listSlice.reducer);
 
@@ -10320,7 +10361,6 @@ const getSingleList = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsy
         authorization: token
       }
     });
-    console.log("response?.data", response?.data);
     return response?.data;
   } catch (error) {
     return error.message;
@@ -10331,10 +10371,8 @@ const createList = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncT
   token,
   listName
 }) => {
-  console.log("!!!!", listName);
-  const name = listName.listName;
   try {
-    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`/api/user/${id}/list`, name, {
+    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`/api/user/${id}/list`, listName, {
       headers: {
         authorization: token
       }

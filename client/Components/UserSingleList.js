@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { getSingleList, renderSingleList } from "../features/singleListSlice";
 import RestaurantCard from "./RestaurantCard";
 
@@ -17,7 +17,7 @@ const UserSingleList = () => {
     const getList = async () => {
       try {
         setIsLoading(true);
-        await dispatch(
+        const list = await dispatch(
           getSingleList({
             id: id,
             token: auth.token,
@@ -47,7 +47,7 @@ const UserSingleList = () => {
   return (
     <div className="single-list-container">
       <p className="list-name">{listname}</p>
-      {list?.list?.length === 0 ? (
+      {list?.list?.length === 0 || Object.keys(list).length === 0 ? (
         <div>
           <p>this list is empty...</p>
           <Link to="/usersearch">you can start your search here</Link>
@@ -60,7 +60,7 @@ const UserSingleList = () => {
               key={restaurant.id}
               restaurant={restaurant}
               auth={auth}
-             notes={list.notes}
+              notes={list.notes}
             />
           );
         })

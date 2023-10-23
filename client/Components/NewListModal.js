@@ -4,31 +4,30 @@ import { useNavigate } from "react-router-dom";
 import { createList } from "../features/singleListSlice";
 
 const NewListModal = ({ openModal }) => {
-  const [newList, setNewList] = useState({ listName: "" });
+  const [listName, setListName] = useState("");
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
   const handleChange = (e) => {
-    setNewList((prevState) => ({
+    setListName((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
   };
 
   const createNewList = async (e) => {
-	
     e.preventDefault();
     openModal(false);
     const list = await dispatch(
       createList({
         id: auth.user.id,
         token: auth.token,
-        listName: newList.listName,
+        listName: listName,
       })
     );
-    // if (list.payload) navigate(`/userlists/${list.payload.id}`);
+    if (list.payload) navigate(`/userlists/${list.payload.id}`);
   };
 
   return (
@@ -40,7 +39,7 @@ const NewListModal = ({ openModal }) => {
             id="line-input"
             type="text"
             name="listName"
-            value={newList.listName}
+            value={listName.listname}
             onChange={handleChange}
           />
           <div>

@@ -17,7 +17,6 @@ export const getSingleList = createAsyncThunk(
           authorization: token,
         },
       });
-      console.log("response?.data", response?.data);
       return response?.data;
     } catch (error) {
       return error.message;
@@ -27,11 +26,9 @@ export const getSingleList = createAsyncThunk(
 
 export const createList = createAsyncThunk(
   "lists/createList",
-  async ({ id, token, listName }) => {
-    console.log("!!!!", listName);
-    const name = listName.listName;
+  async ({id, token, listName}) => {
     try {
-      const response = await axios.post(`/api/user/${id}/list`, name, {
+      const response = await axios.post(`/api/user/${id}/list`, listName, {
         headers: {
           authorization: token,
         },

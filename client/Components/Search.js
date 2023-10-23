@@ -16,13 +16,13 @@ import {
 } from "../features/searchSlice";
 
 const Search = () => {
+  const dispatch = useDispatch();
+
+  const searchInfo = useSelector(searchState);
   const auth = useSelector((state) => state.auth);
   const restaurants = useSelector(renderAllRestaurants);
-  const dispatch = useDispatch();
-  const searchInfo = useSelector(searchState);
 
   const [search, setSearch] = useState({ restaurant: "", location: "" });
-
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
@@ -140,15 +140,17 @@ const Search = () => {
       ) : (
         <p>no restaurants matched that search</p>
       )}
-      {/* { restaurants ? (
-            <AllRestaurants
-              key={restaurant.id}
-              restaurant={restaurants}
-              auth={auth}
-            />
-          ) : (
-            <p>no restaurants matched that search</p>
-          )} */}
+      {restaurants?.id ? (
+        restaurants?.id && (
+          <AllRestaurants
+            key={restaurants.id}
+            restaurant={restaurants}
+            auth={auth}
+          />
+        )
+      ) : (
+        <p></p>
+      )}
     </div>
   );
 };

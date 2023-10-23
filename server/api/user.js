@@ -128,13 +128,6 @@ router.get("/:id/lists", async (req, res, next) => {
 //POST "/api/user/:id/list  create new list
 router.post("/:id/list", async (req, res, next) => {
   try {
-    console.log(
-      "IN SERVER",
-      "userId:",
-      req.params.id,
-      "listName:",
-      req.body
-    );
     const newList = await List.create({
       userId: req.params.id,
       listName: req.body.listName,
@@ -195,11 +188,15 @@ router.get("/list/:id", async (req, res, next) => {
     const idArray = await List.findByPk(req.params.id, {
       attributes: ["restaurantIdArray", "listName", "id"],
     });
-    const list = await loopThroughArray(idArray.restaurantIdArray);
-    const notes = await RestaurantNotes.findAll({
-      where: { restaurantId: idArray.restaurantIdArray },
-    });
-    res.send({ list, notes });
+    if (idArray.restaurantIdArray !== null) {
+      const list = await loopThroughArray(idArray.restaurantIdArray);
+      const notes = await RestaurantNotes.findAll({
+        where: { restaurantId: idArray.restaurantIdArray },
+      });
+      res.send({ list, notes });
+    } else {
+      res.send({});
+    }
   } catch (err) {
     res.status(404).json({
       message: "could not find restaurants",
@@ -236,10 +233,10 @@ const getRestosFromApi = async (id) => {
   }
 };
 
-//DELETE "/api/user/:id/list  delete user's list
-router.delete("/:id/list", async (req, res, next) => {
+//DELETE "/api/user/:list  delete user's list
+router.delete("/:list", async (req, res, next) => {
   try {
-    const list = await List.findByPk(req.body.id);
+    const list = await List.findByPk(req.params.list);
     await list.destroy();
     res.status(204).end();
   } catch (err) {
