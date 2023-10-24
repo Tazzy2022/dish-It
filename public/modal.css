@@ -111,3 +111,54 @@
 .modalbtn:hover {
   color: black;
 }
+
+.addTo-list-modal {
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  width: 60vw;
+  height: 50vh;
+  margin: auto;
+  z-index: 2;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+#addToList-section,
+.modal-lists {
+  display: flex;
+}
+
+#all-lists-container {
+  margin: 20px 0px 20px 20px;
+  overflow-y: auto;
+}
+
+#line-input {
+  width: 70%;
+}
+
+.addTo-list-form {
+  display: flex;
+  flex-direction: column;
+  margin-left: 5%;
+}
+
+.modalX {
+  width: 20px;
+  color: #e00707;
+  font-size: 20px;
+  background-color: white;
+  border: none;
+  margin: 10px;
+}
+
+.modalX:hover {
+  color: #333333;
+}
+
+#close-modal {
+  display: flex;
+  justify-content: flex-end;
+}

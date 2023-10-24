@@ -64,7 +64,8 @@ a {
 }
 
 #price-form button:hover,
-.openModalBtn:hover {
+.openModalBtn:hover,
+.add-to-list-click:hover {
   background-color: #e00707;
   color: white;
 }
@@ -110,7 +111,8 @@ a {
   margin-top: 20px;
 }
 
-#searched-filters p {
+#searched-filters p,
+.add-to-list-click {
   font-size: 14px;
   color: #e00707;
 }

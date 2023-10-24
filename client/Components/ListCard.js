@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteList } from "../features/listSlice";
 
 const ListCard = (props) => {
-  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
+  const auth = useSelector((state) => state.auth);
 
   const removeList = async (listId) => {
     try {

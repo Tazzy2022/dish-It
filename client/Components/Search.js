@@ -137,10 +137,7 @@ const Search = () => {
             />
           );
         })
-      ) : (
-        <p>no restaurants matched that search</p>
-      )}
-      {restaurants?.id ? (
+      ) : restaurants?.id ? (
         restaurants?.id && (
           <AllRestaurants
             key={restaurants.id}
@@ -149,7 +146,7 @@ const Search = () => {
           />
         )
       ) : (
-        <p></p>
+        <p>no restaurants matched that search</p>
       )}
     </div>
   );

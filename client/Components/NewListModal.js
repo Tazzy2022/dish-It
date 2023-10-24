@@ -34,7 +34,7 @@ const NewListModal = ({ openModal }) => {
     <div className="modalBackground">
       <main className="new-list-modal">
         <form className="create-list-form" onSubmit={createNewList}>
-          <label>List name:</label>
+          <label>new list name:</label>
           <input
             id="line-input"
             type="text"
