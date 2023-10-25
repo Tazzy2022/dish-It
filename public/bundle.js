@@ -8655,24 +8655,28 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const AddToListModal = ({
-  openModal
+  openModal,
+  restaurantId
 }) => {
   const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
   const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
   const lists = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.lists);
   const [listName, setListName] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
-
-  //   const newAdd = async(restId) => {
-  // try {
-  // await dispatch(addRestoToList({
-
-  // }))
-  // } catch (error) {
-  //   console.log(error);
-  // }
-  //   }
-
+  console.log("restaurantId in component", restaurantId);
+  const newAdd = async (restId, listName) => {
+    try {
+      openModal(false);
+      await dispatch((0,_features_singleListSlice__WEBPACK_IMPORTED_MODULE_2__.addRestoToList)({
+        userId: auth.user.id,
+        token: auth.token,
+        listName: listName,
+        restaurantId: restId
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleChange = e => {
     setListName(prevState => ({
       ...prevState,
@@ -8682,12 +8686,12 @@ const AddToListModal = ({
   const createNewList = async e => {
     e.preventDefault();
     openModal(false);
-    const list = await dispatch((0,_features_singleListSlice__WEBPACK_IMPORTED_MODULE_2__.createList)({
-      id: auth.user.id,
+    await dispatch((0,_features_singleListSlice__WEBPACK_IMPORTED_MODULE_2__.addRestoToList)({
+      userId: auth.user.id,
       token: auth.token,
-      listName: listName
+      listName: listName.listName,
+      restaurantId: restaurantId
     }));
-    if (list.payload) navigate(`/userlists/${list.payload.id}`);
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "modalBackground"
@@ -8720,6 +8724,7 @@ const AddToListModal = ({
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
       className: "modal-lists"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, list.listName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+      onClick: () => newAdd(restaurantId, list.listName),
       className: "modalbtn"
     }, "+")));
   }))));
@@ -10453,6 +10458,7 @@ const searchState = state => state.search;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   addRestoToList: () => (/* binding */ addRestoToList),
 /* harmony export */   createList: () => (/* binding */ createList),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
 /* harmony export */   getSingleList: () => (/* binding */ getSingleList),
@@ -10484,13 +10490,30 @@ const getSingleList = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsy
     return error.message;
   }
 });
-const createList = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("lists/createList", async ({
+const createList = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("list/createList", async ({
   id,
   token,
   listName
 }) => {
   try {
     const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`/api/user/${id}/list`, listName, {
+      headers: {
+        authorization: token
+      }
+    });
+    return response?.data;
+  } catch (error) {
+    return error.message;
+  }
+});
+const addRestoToList = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("list/addRestoToList", async ({
+  userId,
+  token,
+  listName,
+  restaurantId
+}) => {
+  try {
+    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().put(`/api/user/${userId}/${listName}`, restaurantId, {
       headers: {
         authorization: token
       }
@@ -10515,14 +10538,19 @@ const singleListSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createS
       state.error = action.error.message;
     });
     builder.addCase(createList.fulfilled, (state, action) => {
-      //state.lists = action.payload.lists;
       return action.payload;
     });
     builder.addCase(getSingleList.rejected, (state, action) => {
       state.error = action.error.message;
     });
     builder.addCase(getSingleList.fulfilled, (state, action) => {
-      //state.lists = action.payload.list;
+      return action.payload;
+    });
+    builder.addCase(addRestoToList.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(addRestoToList.fulfilled, (state, action) => {
+      //state.list = action.payload;
       return action.payload;
     });
   }

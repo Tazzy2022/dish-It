@@ -7,6 +7,7 @@ const app = express();
 app.use(morgan("dev"));
 
 // body parsing middleware
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // auth and api routes

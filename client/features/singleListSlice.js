@@ -25,14 +25,34 @@ export const getSingleList = createAsyncThunk(
 );
 
 export const createList = createAsyncThunk(
-  "lists/createList",
-  async ({id, token, listName}) => {
+  "list/createList",
+  async ({ id, token, listName }) => {
     try {
       const response = await axios.post(`/api/user/${id}/list`, listName, {
         headers: {
           authorization: token,
         },
       });
+      return response?.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
+export const addRestoToList = createAsyncThunk(
+  "list/addRestoToList",
+  async ({ userId, token, listName, restaurantId }) => {
+    try {
+      const response = await axios.put(
+        `/api/user/${userId}/${listName}`,
+        restaurantId,
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
       return response?.data;
     } catch (error) {
       return error.message;
@@ -55,14 +75,19 @@ const singleListSlice = createSlice({
       state.error = action.error.message;
     });
     builder.addCase(createList.fulfilled, (state, action) => {
-      //state.lists = action.payload.lists;
       return action.payload;
     });
     builder.addCase(getSingleList.rejected, (state, action) => {
       state.error = action.error.message;
     });
     builder.addCase(getSingleList.fulfilled, (state, action) => {
-      //state.lists = action.payload.list;
+      return action.payload;
+    });
+    builder.addCase(addRestoToList.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(addRestoToList.fulfilled, (state, action) => {
+      //state.list = action.payload;
       return action.payload;
     });
   },

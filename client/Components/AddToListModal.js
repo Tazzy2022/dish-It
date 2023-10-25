@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { createList } from "../features/singleListSlice";
+import { addRestoToList } from "../features/singleListSlice";
 
-const AddToListModal = ({ openModal }) => {
+const AddToListModal = ({ openModal, restaurantId }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -12,15 +12,22 @@ const AddToListModal = ({ openModal }) => {
 
   const [listName, setListName] = useState("");
 
-  //   const newAdd = async(restId) => {
-  // try {
-  // await dispatch(addRestoToList({
-
-  // }))
-  // } catch (error) {
-  //   console.log(error);
-  // }
-  //   }
+  console.log("restaurantId in component", restaurantId);
+  const newAdd = async (restId, listName) => {
+    try {
+      openModal(false);
+      await dispatch(
+        addRestoToList({
+          userId: auth.user.id,
+          token: auth.token,
+          listName: listName,
+          restaurantId: restId,
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleChange = (e) => {
     setListName((prevState) => ({
@@ -32,14 +39,14 @@ const AddToListModal = ({ openModal }) => {
   const createNewList = async (e) => {
     e.preventDefault();
     openModal(false);
-    const list = await dispatch(
-      createList({
-        id: auth.user.id,
+    await dispatch(
+      addRestoToList({
+        userId: auth.user.id,
         token: auth.token,
-        listName: listName,
+        listName: listName.listName,
+        restaurantId: restaurantId,
       })
     );
-    if (list.payload) navigate(`/userlists/${list.payload.id}`);
   };
 
   return (
@@ -73,7 +80,12 @@ const AddToListModal = ({ openModal }) => {
                 <div key={list.id}>
                   <section className="modal-lists">
                     <p>{list.listName}</p>
-                    <button className="modalbtn">+</button>
+                    <button
+                      onClick={() => newAdd(restaurantId, list.listName)}
+                      className="modalbtn"
+                    >
+                      +
+                    </button>
                   </section>
                 </div>
               );

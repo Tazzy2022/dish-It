@@ -141,18 +141,19 @@ router.post("/:id/list", async (req, res, next) => {
   }
 });
 
-//PUT "/api/user/:id/list  add restaurant to a newly created list or existing list
-router.put("/:id/list", async (req, res, next) => {
+//PUT "/api/user/:id/:listName add restaurant to a newly created list or existing list
+router.put("/:id/:listName", async (req, res, next) => {
   try {
+    const restaurantId = Object.keys(req.body).toString();
     const [list, created] = await List.findOrCreate({
-      where: { userId: req.body.id, listName: req.body.listName },
-      defaults: req.body,
+      where: { userId: req.params.id, listName: req.params.listName },
     });
+    console.log("restaurantId", restaurantId);
     await list.update({
       restaurantIdArray: Sequelize.fn(
         "array_append",
         Sequelize.col("restaurantIdArray"),
-        req.body.restaurantId
+        restaurantId
       ),
     });
     res.send(list);
