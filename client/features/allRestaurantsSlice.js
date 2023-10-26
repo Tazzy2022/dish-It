@@ -71,9 +71,11 @@ export const getRestLocationPriceCat = createAsyncThunk(
 export const getRestaurantLocationCat = createAsyncThunk(
   "allRestaurants/getRestaurantLocationCat",
   async ({ token, location, categories }) => {
-    console.log("IN THUNK");
+    console.log("categories", categories);
+    console.log("location", location);
     try {
       const allCategories = "&categories=" + categories.join("&categories=");
+      console.log("!!!!", `/api/restaurants/${allCategories}/${location}`);
       const response = await axios.get(
         `/api/restaurants/${allCategories}/${location}`,
         {
@@ -144,9 +146,7 @@ const allRestaurantsSlice = createSlice({
       state.error = action.error.message;
     });
     builder.addCase(getRestaurantLocationCat.fulfilled, (state, action) => {
-      //return action.payload;
-      console.log("payload", action.payload);
-      state.restaurants = action.payload;
+      return action.payload;
     });
   },
 });

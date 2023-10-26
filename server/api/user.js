@@ -148,7 +148,6 @@ router.put("/:id/:listName", async (req, res, next) => {
     const [list, created] = await List.findOrCreate({
       where: { userId: req.params.id, listName: req.params.listName },
     });
-    console.log("restaurantId", restaurantId);
     await list.update({
       restaurantIdArray: Sequelize.fn(
         "array_append",
@@ -165,12 +164,24 @@ router.put("/:id/:listName", async (req, res, next) => {
   }
 });
 
-//PUT "/api/user/:id/list/restaurantNotes  update/add notes to restaurant in a user's list
-router.put("/:id/list/restaurantNotes", async (req, res, next) => {
+//PUT "/api/user/:listId/:restaurantId  update/add notes to restaurant in a user's list
+router.put("/:listId/:restaurantId", async (req, res, next) => {
   try {
+    console.log(
+      "req.params.listId",
+      req.params.listId,
+      "req.params.restaurantId",
+      req.params.restaurantId,
+      "req.body.personalNotes",
+      req.body.personalNotes
+    );
     const note = await RestaurantNotes.findOrCreate({
-      where: { listId: req.body.id, restaurantId: req.body.restaurantIdArray },
-      defaults: req.body,
+      where: {
+        listId: req.params.listId,
+        restaurantId: req.params.restaurantId,
+      },
+      // },
+      // defaults: req.body,
     });
     await note.update(req.body.personalNotes);
     res.send(note);
@@ -189,12 +200,13 @@ router.get("/list/:id", async (req, res, next) => {
     const idArray = await List.findByPk(req.params.id, {
       attributes: ["restaurantIdArray", "listName", "id"],
     });
-    if (idArray.restaurantIdArray !== null) {
-      const list = await loopThroughArray(idArray.restaurantIdArray);
+    const { listName, id, restaurantIdArray } = idArray;
+    if (restaurantIdArray !== null) {
+      const list = await loopThroughArray(restaurantIdArray);
       const notes = await RestaurantNotes.findAll({
-        where: { restaurantId: idArray.restaurantIdArray },
+        where: { restaurantId: restaurantIdArray },
       });
-      res.send({ list, notes });
+      res.send({ listName, id, list, notes });
     } else {
       res.send({});
     }
@@ -249,14 +261,14 @@ router.delete("/:list", async (req, res, next) => {
 });
 
 //DELETE "/api/user/:id/list/restaurant  delete restaurant from user's list
-router.delete("/:id/list/restaurant", async (req, res, next) => {
+router.delete("/:listId/:restaurantId", async (req, res, next) => {
   try {
-    const list = await List.findByPk(req.body.id);
+    const list = await List.findByPk(req.params.listId);
     await list.update({
       restaurantIdArray: Sequelize.fn(
         "array_remove",
         Sequelize.col("restaurantIdArray"),
-        req.body.restaurantId
+        req.params.restaurantId
       ),
     });
     res.send(list);

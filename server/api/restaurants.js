@@ -50,11 +50,10 @@ router.get("/:location/:price", async (req, res, next) => {
 
 //GET /api/restaurants/:categories/:location
 router.get("/:allCategories/:location", async (req, res, next) => {
-  console.log("HIIIIIIII");
   try {
     const restaurants = await needle(
       "get",
-      `${BASE_URL}search?location=${req.params.location}${req.params.allCategories}`,
+      `${BASE_URL}search?location=${req.params.location}${allCategories}`,
       {
         headers: {
           Authorization: `Bearer ${process.env.API_KEY}`,

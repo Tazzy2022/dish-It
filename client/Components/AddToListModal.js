@@ -12,7 +12,6 @@ const AddToListModal = ({ openModal, restaurantId }) => {
 
   const [listName, setListName] = useState("");
 
-  console.log("restaurantId in component", restaurantId);
   const newAdd = async (restId, listName) => {
     try {
       openModal(false);

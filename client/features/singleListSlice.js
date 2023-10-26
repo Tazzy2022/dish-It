@@ -3,9 +3,9 @@ import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
-  singleList: {},
-  error: "",
-  token: "",
+  restaurantIdArray: [],
+  listName: "",
+  id: "",
 };
 
 export const getSingleList = createAsyncThunk(
@@ -60,6 +60,55 @@ export const addRestoToList = createAsyncThunk(
   }
 );
 
+export const updateNotes = createAsyncThunk(
+  "list/updateNotes",
+  async ({ token, listId, restaurantId, personalNotes }) => {
+    console.log(
+      "token",
+      token,
+      "listId",
+      listId,
+      "restaurantId",
+      restaurantId,
+      "personalNotes",
+      personalNotes
+    );
+    try {
+      const response = await axios.put(
+        `/api/user/${listId}/${restaurantId}`,
+        personalNotes,
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+      return response?.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
+export const removeRestaurantFromList = createAsyncThunk(
+  "list/removeRestaurantFromList",
+  async ({ listId, token, restaurantId }) => {
+    try {
+      const response = await axios.delete(
+        `/api/user/${listId}/${restaurantId}`,
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+      return response?.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
 const singleListSlice = createSlice({
   name: "list",
   initialState,
@@ -87,7 +136,6 @@ const singleListSlice = createSlice({
       state.error = action.error.message;
     });
     builder.addCase(addRestoToList.fulfilled, (state, action) => {
-      //state.list = action.payload;
       return action.payload;
     });
   },
