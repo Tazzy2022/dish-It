@@ -164,26 +164,25 @@ router.put("/:id/:listName", async (req, res, next) => {
   }
 });
 
-//PUT "/api/user/:listId/:restaurantId  update/add notes to restaurant in a user's list
-router.put("/:listId/:restaurantId", async (req, res, next) => {
+//PUT "/api/user/lists/:listId/:restaurantId  update/add notes to restaurant in a user's list
+router.put("/lists/:listId/:restaurantId", async (req, res, next) => {
   try {
-    console.log(
-      "req.params.listId",
-      req.params.listId,
-      "req.params.restaurantId",
-      req.params.restaurantId,
-      "req.body.personalNotes",
-      req.body.personalNotes
-    );
-    const note = await RestaurantNotes.findOrCreate({
+    const note = await RestaurantNotes.findOne({
       where: {
         listId: req.params.listId,
         restaurantId: req.params.restaurantId,
       },
-      // },
-      // defaults: req.body,
     });
-    await note.update(req.body.personalNotes);
+
+    if (note) {
+      await note.update({ personalNotes: req.body.personalNotes });
+    } else {
+      note = await RestaurantNotes.create({
+        listId: req.params.listId,
+        restaurantId: req.params.restaurantId,
+        personalNotes: req.body.personalNotes,
+      });
+    }
     res.send(note);
   } catch (err) {
     res.status(500).json({

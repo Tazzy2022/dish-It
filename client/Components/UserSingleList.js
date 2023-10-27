@@ -17,7 +17,7 @@ const UserSingleList = () => {
     const getList = async () => {
       try {
         setIsLoading(true);
-        const list = await dispatch(
+        await dispatch(
           getSingleList({
             id: id,
             token: auth.token,

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteList } from "../features/listSlice";
+import { deleteList, getAllLists } from "../features/listSlice";
 
 const ListCard = (props) => {
   const dispatch = useDispatch();
@@ -10,10 +10,18 @@ const ListCard = (props) => {
 
   const removeList = async (listId) => {
     try {
-      await dispatch(deleteList({
-        listId: listId,
-        token: auth.token}
-        ));
+      await dispatch(
+        deleteList({
+          listId: listId,
+          token: auth.token,
+        })
+      );
+      await dispatch(
+        getAllLists({
+          id: auth.user.id,
+          token: auth.token,
+        })
+      );
     } catch (error) {
       console.log(error);
     }

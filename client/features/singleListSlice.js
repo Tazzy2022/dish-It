@@ -6,6 +6,7 @@ const initialState = {
   restaurantIdArray: [],
   listName: "",
   id: "",
+  notes: "",
 };
 
 export const getSingleList = createAsyncThunk(
@@ -63,20 +64,11 @@ export const addRestoToList = createAsyncThunk(
 export const updateNotes = createAsyncThunk(
   "list/updateNotes",
   async ({ token, listId, restaurantId, personalNotes }) => {
-    console.log(
-      "token",
-      token,
-      "listId",
-      listId,
-      "restaurantId",
-      restaurantId,
-      "personalNotes",
-      personalNotes
-    );
+    console.log("personalNotes", personalNotes);
     try {
       const response = await axios.put(
-        `/api/user/${listId}/${restaurantId}`,
-        personalNotes,
+        `/api/user/lists/${listId}/${restaurantId}`,
+        { personalNotes },
         {
           headers: {
             authorization: token,
@@ -136,6 +128,18 @@ const singleListSlice = createSlice({
       state.error = action.error.message;
     });
     builder.addCase(addRestoToList.fulfilled, (state, action) => {
+      return action.payload;
+    });
+    builder.addCase(updateNotes.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(updateNotes.fulfilled, (state, action) => {
+      state.notes = action.payload;
+    });
+    builder.addCase(removeRestaurantFromList.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(removeRestaurantFromList.fulfilled, (state, action) => {
       return action.payload;
     });
   },

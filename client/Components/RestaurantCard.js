@@ -1,11 +1,39 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import NotesModal from "./NotesModal";
+import {
+  removeRestaurantFromList,
+  getSingleList,
+  renderSingleList,
+} from "../features/singleListSlice";
 
 const RestaurantCard = (props) => {
+  const dispatch = useDispatch();
+  const list = useSelector(renderSingleList);
+  const auth = useSelector((state) => state.auth);
+
   const [modalOpen, setModalOpen] = useState(false);
 
-  const deleteFromList = async (restId) => {};
+  const deleteFromList = async (restId) => {
+    try {
+      await dispatch(
+        removeRestaurantFromList({
+          listId: list.id,
+          token: auth.token,
+          restaurantId: restId,
+        })
+      );
+      await dispatch(
+        getSingleList({
+          id: list.id,
+          token: auth.token,
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const note = props.notes.find(
     (note) => note.restaurantId === props.restaurant.id
@@ -43,7 +71,7 @@ const RestaurantCard = (props) => {
             restaurantId={props.restaurant.id}
           />
         )}
-        <button onClick={() => deleteFromList(restId)}>x</button>
+        <button onClick={() => deleteFromList(props.restaurant.id)}>x</button>
         <label>remove from list</label>
         <p>Notes:</p>
         {note?.personalNotes?.length > 0 ? (

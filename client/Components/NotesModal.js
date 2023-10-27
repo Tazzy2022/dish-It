@@ -1,21 +1,18 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateNotes } from "../features/singleListSlice";
+import {
+  updateNotes,
+  getSingleList,
+  renderSingleList,
+} from "../features/singleListSlice";
 
 const NotesModal = (props) => {
-  console.log("props.notes", props.notes);
   const dispatch = useDispatch();
 
   const auth = useSelector((state) => state.auth);
+  const list = useSelector(renderSingleList);
 
   const [notes, setNotes] = useState(props.notes || "");
-  console.log("notes in usestate", notes);
-  // const handleChange = (e) => {
-  //   setNotes((notes) => ({
-  //     ...notes,
-  //     [e.target.name]: e.target.value,
-  //   }));
-  // };
 
   const addToNotes = async (e) => {
     e.preventDefault();
@@ -23,10 +20,16 @@ const NotesModal = (props) => {
     try {
       await dispatch(
         updateNotes({
-          listId: auth.user.id,
+          listId: list.id,
           token: auth.token,
-					restaurantId: props.restaurantId,
+          restaurantId: props.restaurantId,
           personalNotes: notes,
+        })
+      );
+      await dispatch(
+        getSingleList({
+          id: list.id,
+          token: auth.token,
         })
       );
     } catch (error) {

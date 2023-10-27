@@ -9383,6 +9383,10 @@ const ListCard = props => {
         listId: listId,
         token: auth.token
       }));
+      await dispatch((0,_features_listSlice__WEBPACK_IMPORTED_MODULE_2__.getAllLists)({
+        id: auth.user.id,
+        token: auth.token
+      }));
     } catch (error) {
       console.log(error);
     }
@@ -9565,27 +9569,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const NotesModal = props => {
-  console.log("props.notes", props.notes);
   const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
+  const list = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(_features_singleListSlice__WEBPACK_IMPORTED_MODULE_2__.renderSingleList);
   const [notes, setNotes] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(props.notes || "");
-  console.log("notes in usestate", notes);
-  // const handleChange = (e) => {
-  //   setNotes((notes) => ({
-  //     ...notes,
-  //     [e.target.name]: e.target.value,
-  //   }));
-  // };
-
   const addToNotes = async e => {
     e.preventDefault();
     props.openModal(false);
     try {
       await dispatch((0,_features_singleListSlice__WEBPACK_IMPORTED_MODULE_2__.updateNotes)({
-        listId: auth.user.id,
+        listId: list.id,
         token: auth.token,
         restaurantId: props.restaurantId,
         personalNotes: notes
+      }));
+      await dispatch((0,_features_singleListSlice__WEBPACK_IMPORTED_MODULE_2__.getSingleList)({
+        id: list.id,
+        token: auth.token
       }));
     } catch (error) {
       console.log(error);
@@ -9632,14 +9632,35 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
-/* harmony import */ var _NotesModal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NotesModal */ "./client/Components/NotesModal.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _NotesModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NotesModal */ "./client/Components/NotesModal.js");
+/* harmony import */ var _features_singleListSlice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../features/singleListSlice */ "./client/features/singleListSlice.js");
+
+
 
 
 
 const RestaurantCard = props => {
+  const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
+  const list = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(_features_singleListSlice__WEBPACK_IMPORTED_MODULE_3__.renderSingleList);
+  const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
   const [modalOpen, setModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  const deleteFromList = async restId => {};
+  const deleteFromList = async restId => {
+    try {
+      await dispatch((0,_features_singleListSlice__WEBPACK_IMPORTED_MODULE_3__.removeRestaurantFromList)({
+        listId: list.id,
+        token: auth.token,
+        restaurantId: restId
+      }));
+      await dispatch((0,_features_singleListSlice__WEBPACK_IMPORTED_MODULE_3__.getSingleList)({
+        id: list.id,
+        token: auth.token
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const note = props.notes.find(note => note.restaurantId === props.restaurant.id);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "restaurant-list-container"
@@ -9649,7 +9670,7 @@ const RestaurantCard = props => {
     className: "card-img",
     src: props.restaurant.image_url,
     alt: "restaurant image"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.restaurant.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.restaurant.address1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.restaurant.location.city, ", ", props.restaurant.location.state, ",", " ", props.restaurant.location.zip_code), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "phone: ", props.restaurant.display_phone), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "price: ", props.restaurant.price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.restaurant.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.restaurant.address1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.restaurant.location.city, ", ", props.restaurant.location.state, ",", " ", props.restaurant.location.zip_code), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "phone: ", props.restaurant.display_phone), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "price: ", props.restaurant.price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
     className: "yelp-link",
     to: props.restaurant.url
   }, "yelp link"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Food category:"), props.restaurant.categories.map((cat, index) => {
@@ -9658,12 +9679,12 @@ const RestaurantCard = props => {
     }, cat.title, ",");
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: () => setModalOpen(true)
-  }, "+"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "add notes"), modalOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NotesModal__WEBPACK_IMPORTED_MODULE_1__["default"], {
+  }, "+"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "add notes"), modalOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NotesModal__WEBPACK_IMPORTED_MODULE_2__["default"], {
     openModal: setModalOpen,
     notes: note?.personalNotes || "",
     restaurantId: props.restaurant.id
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: () => deleteFromList(restId)
+    onClick: () => deleteFromList(props.restaurant.id)
   }, "x"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "remove from list"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Notes:"), note?.personalNotes?.length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, note.personalNotes) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null)));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (RestaurantCard);
@@ -10054,7 +10075,7 @@ const UserSingleList = () => {
     const getList = async () => {
       try {
         setIsLoading(true);
-        const list = await dispatch((0,_features_singleListSlice__WEBPACK_IMPORTED_MODULE_2__.getSingleList)({
+        await dispatch((0,_features_singleListSlice__WEBPACK_IMPORTED_MODULE_2__.getSingleList)({
           id: id,
           token: auth.token
         }));
@@ -10559,7 +10580,8 @@ __webpack_require__.r(__webpack_exports__);
 const initialState = {
   restaurantIdArray: [],
   listName: "",
-  id: ""
+  id: "",
+  notes: ""
 };
 const getSingleList = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("list/getSingleList", async ({
   id,
@@ -10615,9 +10637,11 @@ const updateNotes = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsync
   restaurantId,
   personalNotes
 }) => {
-  console.log("token", token, "listId", listId, "restaurantId", restaurantId, "personalNotes", personalNotes);
+  console.log("personalNotes", personalNotes);
   try {
-    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().put(`/api/user/${listId}/${restaurantId}`, personalNotes, {
+    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().put(`/api/user/lists/${listId}/${restaurantId}`, {
+      personalNotes
+    }, {
       headers: {
         authorization: token
       }
@@ -10670,6 +10694,18 @@ const singleListSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createS
       state.error = action.error.message;
     });
     builder.addCase(addRestoToList.fulfilled, (state, action) => {
+      return action.payload;
+    });
+    builder.addCase(updateNotes.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(updateNotes.fulfilled, (state, action) => {
+      state.notes = action.payload;
+    });
+    builder.addCase(removeRestaurantFromList.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(removeRestaurantFromList.fulfilled, (state, action) => {
       return action.payload;
     });
   }
