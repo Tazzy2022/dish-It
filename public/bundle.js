@@ -8634,6 +8634,118 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./client/Components/AccountHome.js":
+/*!******************************************!*\
+  !*** ./client/Components/AccountHome.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+
+const AccountHome = () => {
+  const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", {
+    className: "user-account-h1"
+  }, auth.user.username, "'s account"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: "profile-img",
+    src: auth.user.imageUrl,
+    alt: "personal image"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "+"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "update image"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "pending follow requests:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
+    className: "follow-req-container"
+  }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AccountHome);
+
+/***/ }),
+
+/***/ "./client/Components/AccountModal.js":
+/*!*******************************************!*\
+  !*** ./client/Components/AccountModal.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _features_authSlice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../features/authSlice */ "./client/features/authSlice.js");
+
+
+
+const AccountModal = props => {
+  const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
+  const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
+  const key = Object.keys(props);
+  //const key = Object.keys(props).toString();
+  console.log("KEY", key[0]);
+  //console.log("KEY.slice", key.slice(0,1));
+
+  const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    username: "",
+    email: "",
+    password: "",
+    city: "",
+    state: ""
+  });
+  const handleChange = e => {
+    setUser(prevState => ({
+      ...prevState,
+      [e.target.name]: e.target.value
+    }));
+  };
+  const updateUser = async () => {
+    e.preventDefault();
+    openModal(false);
+    dispatch((0,_features_authSlice__WEBPACK_IMPORTED_MODULE_2__.updateUserInfo)({
+      ...auth.user,
+      username: user.username || auth.user.username,
+      email: user.email || auth.user.email,
+      password: user.password || auth.user.password,
+      city: user.city || auth.user.city,
+      state: user.state || auth.user.state,
+      token: auth.token
+    }));
+  };
+  console.log("PROPS", props);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modalBackground"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", {
+    className: "new-list-modal"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    id: "close-modal"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "modalX",
+    onClick: () => props.openModal(false)
+  }, "X")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
+    className: "create-list-form",
+    onSubmit: updateUser
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "new ", key[0], " :"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    id: "line-input",
+    type: "text",
+    name: key[0],
+    value: user.value,
+    onChange: handleChange
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "modalbtn",
+    type: "submit"
+  }, "update")))));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AccountModal);
+
+/***/ }),
+
 /***/ "./client/Components/AccountSideNav.js":
 /*!*********************************************!*\
   !*** ./client/Components/AccountSideNav.js ***!
@@ -8657,29 +8769,116 @@ const AccountSideNav = () => {
   const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "useraccount"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", {
-    className: "user-account-h1"
-  }, "My Account"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "user-account-container"
-  }, auth.user ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("aside", {
+  }, auth?.user && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("aside", {
     className: "useracc-left-nav"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
     className: "account-link",
     to: "/account"
   }, "Account home"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
     className: "account-link",
-    to: "/updateAccount"
+    to: "/account/updates"
   }, "Update Account info"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
-    className: "genrepref-link",
-    to: "/followers"
+    className: "account-link",
+    to: "/account/followers"
   }, "Followers"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
-    className: "genrepref-link",
-    to: "/following"
-  }, "Following")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "please log in..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", {
+    className: "account-link",
+    to: "/account/following"
+  }, "Following")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", {
     className: "useracc-right-main"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Outlet, null))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AccountSideNav);
+
+/***/ }),
+
+/***/ "./client/Components/AccountUpdates.js":
+/*!*********************************************!*\
+  !*** ./client/Components/AccountUpdates.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _AccountModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AccountModal */ "./client/Components/AccountModal.js");
+
+
+
+const AccountUpdates = () => {
+  const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
+  const [modalOpen, setModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", {
+    className: "user-account-h1"
+  }, "Update account info"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
+    className: "user-section"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "useracc-info"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "username:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, auth.user.username)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "account-Btn-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "openModalBtn",
+    onClick: () => setModalOpen(true)
+  }, "edit"), modalOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_AccountModal__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    username: auth.user.username,
+    openModal: setModalOpen
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
+    className: "user-section"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "useracc-info"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "email:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, auth.user.email)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "account-Btn-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "openModalBtn",
+    onClick: () => setModalOpen(true)
+  }, "edit"), modalOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_AccountModal__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    email: auth.user.email,
+    openModal: setModalOpen
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
+    className: "user-section"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "useracc-info"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "password:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "*******")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "account-Btn-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "openModalBtn",
+    onClick: () => setModalOpen(true)
+  }, "edit"), modalOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_AccountModal__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    password: auth.user.password,
+    openModal: setModalOpen
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
+    className: "user-section"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "useracc-info"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "city:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, auth.user.city)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "account-Btn-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "openModalBtn",
+    onClick: () => setModalOpen(true)
+  }, "edit"), modalOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_AccountModal__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    city: auth.user.city,
+    openModal: setModalOpen
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
+    className: "user-section"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "useracc-info"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "state:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, auth.user.state)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "account-Btn-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "openModalBtn",
+    onClick: () => setModalOpen(true)
+  }, "edit"), modalOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_AccountModal__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    state: auth.user.state,
+    openModal: setModalOpen
+  }))));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AccountUpdates);
 
 /***/ }),
 
@@ -8873,11 +9072,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _UserHome__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./UserHome */ "./client/Components/UserHome.js");
 /* harmony import */ var _UserSingleList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./UserSingleList */ "./client/Components/UserSingleList.js");
 /* harmony import */ var _Search__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Search */ "./client/Components/Search.js");
-/* harmony import */ var _UserAccount__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./UserAccount */ "./client/Components/UserAccount.js");
+/* harmony import */ var _AccountHome__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./AccountHome */ "./client/Components/AccountHome.js");
 /* harmony import */ var _Following__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Following */ "./client/Components/Following.js");
 /* harmony import */ var _Followers__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Followers */ "./client/Components/Followers.js");
 /* harmony import */ var _AccountSideNav__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./AccountSideNav */ "./client/Components/AccountSideNav.js");
-/* harmony import */ var _UpdateAccount__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./UpdateAccount */ "./client/Components/UpdateAccount.js");
+/* harmony import */ var _AccountUpdates__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./AccountUpdates */ "./client/Components/AccountUpdates.js");
 
 
 
@@ -8914,23 +9113,23 @@ const App = () => {
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_UserSingleList__WEBPACK_IMPORTED_MODULE_5__["default"], null)
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
     exact: true,
-    path: "/accountnav",
+    path: "/account",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_AccountSideNav__WEBPACK_IMPORTED_MODULE_10__["default"], null)
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
     exact: true,
-    path: "/updateAccount",
-    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_UpdateAccount__WEBPACK_IMPORTED_MODULE_11__["default"], null)
+    path: "/account/updates",
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_AccountUpdates__WEBPACK_IMPORTED_MODULE_11__["default"], null)
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
     exact: true,
     path: "/account",
-    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_UserAccount__WEBPACK_IMPORTED_MODULE_7__["default"], null)
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_AccountHome__WEBPACK_IMPORTED_MODULE_7__["default"], null)
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
     exact: true,
-    path: "/followers",
+    path: "/account/followers",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Followers__WEBPACK_IMPORTED_MODULE_9__["default"], null)
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
     exact: true,
-    path: "/following",
+    path: "/account/following",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Following__WEBPACK_IMPORTED_MODULE_8__["default"], null)
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
     exact: true,
@@ -9392,7 +9591,7 @@ const Header = () => {
   }, "my lists"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
     to: "/usersearch"
   }, "search for restaurants"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
-    to: "/useraccount"
+    to: "/account"
   }, "my account"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
     onClick: handleLogout,
     to: "/"
@@ -10085,48 +10284,6 @@ const StarRating = ratings => {
 
 /***/ }),
 
-/***/ "./client/Components/UpdateAccount.js":
-/*!********************************************!*\
-  !*** ./client/Components/UpdateAccount.js ***!
-  \********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-
-const UpdateAccount = () => {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null);
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (UpdateAccount);
-
-/***/ }),
-
-/***/ "./client/Components/UserAccount.js":
-/*!******************************************!*\
-  !*** ./client/Components/UserAccount.js ***!
-  \******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-
-const UserAccount = () => {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null);
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (UserAccount);
-
-/***/ }),
-
 /***/ "./client/Components/UserHome.js":
 /*!***************************************!*\
   !*** ./client/Components/UserHome.js ***!
@@ -10186,7 +10343,7 @@ const UserHome = () => {
     alt: "profile pic"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "profile-name"
-  }, auth.user.username, "'s Lists..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }, auth.user.username, "'s lists..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: "button",
     onClick: () => setModalOpen(true)
   }, "+ new list"), modalOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_NewListModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
@@ -10480,11 +10637,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const initialState = {
-  user: {}
-  // error: "",
-  // token: "",
+  user: {},
+  error: "",
+  token: ""
 };
-
 const loginUser = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("auth/loginUser", async user => {
   try {
     const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`/auth/login`, user);

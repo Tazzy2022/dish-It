@@ -7,26 +7,23 @@ const AccountSideNav = () => {
 
 	return (
 		<div className="useraccount">
-      <h1 className="user-account-h1">My Account</h1>
       <div className="user-account-container">
-        {auth.user ? (
+        {auth?.user &&
           <aside className="useracc-left-nav">
 						 <Link className="account-link" to="/account">
               Account home
             </Link>
-            <Link className="account-link" to="/updateAccount">
+            <Link className="account-link" to="/account/updates">
               Update Account info
             </Link>
-            <Link className="genrepref-link" to="/followers">
+            <Link className="account-link" to="/account/followers">
               Followers
             </Link>
-						<Link className="genrepref-link" to="/following">
+						<Link className="account-link" to="/account/following">
               Following
             </Link>
           </aside>
-        ) : (
-          <p>please log in...</p>
-        )}
+        }
         <main className="useracc-right-main">
           <Outlet />
         </main>

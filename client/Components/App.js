@@ -6,11 +6,11 @@ import Home from "./Home";
 import UserHome from "./UserHome";
 import UserSingleList from "./UserSingleList";
 import Search from "./Search";
-import UserAccount from "./UserAccount";
+import AccountHome from "./AccountHome";
 import Following from "./Following";
 import Followers from "./Followers";
 import AccountSideNav from "./AccountSideNav";
-import UpdateAccount from "./UpdateAccount";
+import AccountUpdates from "./AccountUpdates";
 
 const App = () => {
   return (
@@ -26,11 +26,11 @@ const App = () => {
         <Route exact path="/userhome" element={<UserHome />} />
         <Route exact path="/userlists/:id" element={<UserSingleList />} />
 
-        <Route exact path="/accountnav" element={<AccountSideNav />}>
-          <Route exact path="/updateAccount" element={<UpdateAccount />} />
-          <Route exact path="/account" element={<UserAccount />} />
-          <Route exact path="/followers" element={<Followers />} />
-          <Route exact path="/following" element={<Following />} />
+        <Route exact path="/account" element={<AccountSideNav />}>
+          <Route exact path="/account/updates" element={<AccountUpdates />} />
+          <Route exact path="/account" element={<AccountHome />} />
+          <Route exact path="/account/followers" element={<Followers />} />
+          <Route exact path="/account/following" element={<Following />} />
         </Route>
         <Route exact path="*" element={<Navigate to="/" replace />} />
       </Routes>

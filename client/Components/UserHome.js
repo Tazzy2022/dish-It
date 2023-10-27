@@ -45,7 +45,7 @@ const UserHome = () => {
           src={auth.user.imageUrl}
           alt="profile pic"
         />
-        <p className="profile-name">{auth.user.username}'s Lists...</p>
+        <p className="profile-name">{auth.user.username}'s lists...</p>
         <button className="button" onClick={() => setModalOpen(true)}>
           + new list
         </button>

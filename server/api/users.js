@@ -2,7 +2,7 @@ const router = require("express").Router();
 const { User } = require("../db/index");
 module.exports = router;
 
-//GET "/api/users/id"
+//GET "/api/users/id" get single user
 router.get("/:id", async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
@@ -15,7 +15,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-//PUT "/api/users/id"
+//PUT "/api/users/id"  update user account info
 router.put("/:id", async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);

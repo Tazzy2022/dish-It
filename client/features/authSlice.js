@@ -4,8 +4,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   user: {},
-  // error: "",
-  // token: "",
+  error: "",
+  token: "",
 };
 
 export const loginUser = createAsyncThunk("auth/loginUser", async (user) => {

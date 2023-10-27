@@ -117,16 +117,6 @@ a {
   color: #e00707;
 }
 
-/* #searched-filters button {
-  font-size: 14px;
-  border: 1px solid #e00707;
-  background-color: white;
-  height: 16px;
-  margin-left: 5px;
-  color: #e00707;
-  border-radius: 5px;
-} */
-
 .card-img {
   width: 20vw;
   height: 20vh;
@@ -350,6 +340,53 @@ a {
 
 #login-signup-link a:hover {
   color: #333333;
+}
+
+.user-account-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.useracc-left-nav {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 30px;
+}
+
+.user-account-h1 {
+  margin: 20px 30px;
+  font-size: 2rem;
+}
+
+.useracc-right-main {
+  margin-left: 5vw;
+}
+
+.useracc-left-nav a {
+  margin-top: 20px;
+  color: #333333;
+}
+
+.useracc-left-nav a:hover {
+  color: #e00707;
+}
+
+.user-section {
+  background-color: #f4f4f4;
+  border-radius: 0.3571428571rem;
+  padding: 20px 10px 10px;
+  margin-bottom: 10px;
+  width: 70vw;
+  display: flex;
+}
+.useracc-info p {
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+
+.account-Btn-container {
+  position: absolute;
+  left: 80%;
 }
 
 @media only screen and (max-width: 768px) {
