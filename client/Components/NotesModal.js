@@ -18,7 +18,7 @@ const NotesModal = (props) => {
     e.preventDefault();
     props.openModal(false);
     try {
-      await dispatch(
+      const newNote = await dispatch(
         updateNotes({
           listId: list.id,
           token: auth.token,
@@ -26,12 +26,14 @@ const NotesModal = (props) => {
           personalNotes: notes,
         })
       );
-      await dispatch(
-        getSingleList({
-          id: list.id,
-          token: auth.token,
-        })
-      );
+      if(newNote.payload) {
+				await dispatch(
+					getSingleList({
+						id: list.id,
+						token: auth.token,
+					})
+				);
+			}
     } catch (error) {
       console.log(error);
     }

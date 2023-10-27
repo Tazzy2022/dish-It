@@ -173,17 +173,17 @@ router.put("/lists/:listId/:restaurantId", async (req, res, next) => {
         restaurantId: req.params.restaurantId,
       },
     });
-
     if (note) {
       await note.update({ personalNotes: req.body.personalNotes });
+      res.send(note);
     } else {
-      note = await RestaurantNotes.create({
+      const note = await RestaurantNotes.create({
         listId: req.params.listId,
         restaurantId: req.params.restaurantId,
         personalNotes: req.body.personalNotes,
       });
+      res.send(note);
     }
-    res.send(note);
   } catch (err) {
     res.status(500).json({
       message: "could not add that info",

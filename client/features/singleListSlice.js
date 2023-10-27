@@ -64,7 +64,6 @@ export const addRestoToList = createAsyncThunk(
 export const updateNotes = createAsyncThunk(
   "list/updateNotes",
   async ({ token, listId, restaurantId, personalNotes }) => {
-    console.log("personalNotes", personalNotes);
     try {
       const response = await axios.put(
         `/api/user/lists/${listId}/${restaurantId}`,
@@ -134,7 +133,8 @@ const singleListSlice = createSlice({
       state.error = action.error.message;
     });
     builder.addCase(updateNotes.fulfilled, (state, action) => {
-      state.notes = action.payload;
+      //state.notes = action.payload;
+      return action.payload;
     });
     builder.addCase(removeRestaurantFromList.rejected, (state, action) => {
       state.error = action.error.message;

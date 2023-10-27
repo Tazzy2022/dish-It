@@ -14,9 +14,11 @@ const RestaurantCard = (props) => {
   const auth = useSelector((state) => state.auth);
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const deleteFromList = async (restId) => {
     try {
+      setIsLoading(true);
       await dispatch(
         removeRestaurantFromList({
           listId: list.id,
@@ -32,12 +34,18 @@ const RestaurantCard = (props) => {
       );
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const note = props.notes.find(
     (note) => note.restaurantId === props.restaurant.id
   );
+
+	if (isLoading) {
+    return <div className="loading-p">Loading...</div>;
+  }
 
   return (
     <div className="restaurant-list-container">
