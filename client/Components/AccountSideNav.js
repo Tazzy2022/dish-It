@@ -16,11 +16,8 @@ const AccountSideNav = () => {
             <Link className="account-link" to="/account/updates">
               Update Account info
             </Link>
-            <Link className="account-link" to="/account/followers">
-              Followers
-            </Link>
-						<Link className="account-link" to="/account/following">
-              Following
+            <Link className="account-link" to="/account/friends">
+              Friends
             </Link>
           </aside>
         }

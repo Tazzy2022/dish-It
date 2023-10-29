@@ -6,10 +6,7 @@ const AccountModal = (props) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
-  const key = Object.keys(props);
-  //const key = Object.keys(props).toString();
-  console.log("KEY", key[0]);
-  //console.log("KEY.slice", key.slice(0,1));
+  const [modalOpen, setModalOpen] = useState(false);
 
   const [user, setUser] = useState({
     username: "",
@@ -26,9 +23,8 @@ const AccountModal = (props) => {
     }));
   };
 
-  const updateUser = async () => {
+  const updateUser = async (e) => {
     e.preventDefault();
-    openModal(false);
     dispatch(
       updateUserInfo({
         ...auth.user,
@@ -40,33 +36,38 @@ const AccountModal = (props) => {
         token: auth.token,
       })
     );
+    setModalOpen(false);
   };
 
-  console.log("PROPS", props);
   return (
-    <div className="modalBackground">
-      <main className="new-list-modal">
-        <div id="close-modal">
-          <button className="modalX" onClick={() => props.openModal(false)}>
-            X
-          </button>
+    <div>
+      <button onClick={() => setModalOpen(true)}>edit</button>
+      {modalOpen && (
+        <div className="modalBackground">
+          <main className="new-list-modal">
+            <div id="close-modal">
+              <button className="modalX" onClick={() => setModalOpen(false)}>
+                X
+              </button>
+            </div>
+            <form className="create-list-form" onSubmit={updateUser}>
+              <label>new {props.name} :</label>
+              <input
+                id="line-input"
+                type="text"
+                name={props.name}
+                value={user.value}
+                onChange={handleChange}
+              />
+              <div>
+                <button className="modalbtn" type="submit">
+                  update
+                </button>
+              </div>
+            </form>
+          </main>
         </div>
-        <form className="create-list-form" onSubmit={updateUser}>
-          <label>new {key[0]} :</label>
-          <input
-            id="line-input"
-            type="text"
-            name={key[0]}
-            value={user.value}
-            onChange={handleChange}
-          />
-          <div>
-            <button className="modalbtn" type="submit">
-              update
-            </button>
-          </div>
-        </form>
-      </main>
+      )}
     </div>
   );
 };

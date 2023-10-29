@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import AccountModal from "./AccountModal"
+import AccountModal from "./AccountModal";
 
 const AccountUpdates = () => {
   const auth = useSelector((state) => state.auth);
-
-  const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <div>
@@ -16,15 +14,7 @@ const AccountUpdates = () => {
           <p>{auth.user.username}</p>
         </div>
         <div className="account-Btn-container">
-          <button className="openModalBtn" onClick={() => setModalOpen(true)}>
-            edit
-          </button>
-          {modalOpen && (
-            <AccountModal
-              username={auth.user.username}
-              openModal={setModalOpen}
-            />
-          )}
+            <AccountModal name="username" />
         </div>
       </section>
       <section className="user-section">
@@ -33,12 +23,7 @@ const AccountUpdates = () => {
           <p>{auth.user.email}</p>
         </div>
         <div className="account-Btn-container">
-          <button className="openModalBtn" onClick={() => setModalOpen(true)}>
-            edit
-          </button>
-          {modalOpen && (
-            <AccountModal email={auth.user.email} openModal={setModalOpen} />
-          )}
+         <AccountModal name="email" />
         </div>
       </section>
       <section className="user-section">
@@ -47,15 +32,7 @@ const AccountUpdates = () => {
           <p>*******</p>
         </div>
         <div className="account-Btn-container">
-          <button className="openModalBtn" onClick={() => setModalOpen(true)}>
-            edit
-          </button>
-          {modalOpen && (
-            <AccountModal
-              password={auth.user.password}
-              openModal={setModalOpen}
-            />
-          )}
+                      <AccountModal name="password" />
         </div>
       </section>
       <section className="user-section">
@@ -64,12 +41,7 @@ const AccountUpdates = () => {
           <p>{auth.user.city}</p>
         </div>
         <div className="account-Btn-container">
-          <button className="openModalBtn" onClick={() => setModalOpen(true)}>
-            edit
-          </button>
-          {modalOpen && (
-            <AccountModal city={auth.user.city} openModal={setModalOpen} />
-          )}
+          <AccountModal name="city" />
         </div>
       </section>
       <section className="user-section">
@@ -78,12 +50,7 @@ const AccountUpdates = () => {
           <p>{auth.user.state}</p>
         </div>
         <div className="account-Btn-container">
-          <button className="openModalBtn" onClick={() => setModalOpen(true)}>
-            edit
-          </button>
-          {modalOpen && (
-            <AccountModal state={auth.user.state} openModal={setModalOpen} />
-          )}
+          <AccountModal name="state"/>
         </div>
       </section>
     </div>
