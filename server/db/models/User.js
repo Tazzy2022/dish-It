@@ -58,6 +58,10 @@ const User = db.define(
       type: ARRAY(Sequelize.STRING),
       defaultValue: null,
     },
+    pendingFollows: {
+      type: ARRAY(Sequelize.STRING),
+      defaultValue: null,
+    },
   },
   {
     hooks: {
