@@ -8953,6 +8953,31 @@ const AddToListModal = ({
 
 /***/ }),
 
+/***/ "./client/Components/AllFriends.js":
+/*!*****************************************!*\
+  !*** ./client/Components/AllFriends.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+const AllFriends = props => {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "X"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: "profile-img",
+    src: props.friend.imageUrl,
+    alt: "friend's image"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.friend.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.friend.city, ", ", props.friend.state));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AllFriends);
+
+/***/ }),
+
 /***/ "./client/Components/AllRestaurants.js":
 /*!*********************************************!*\
   !*** ./client/Components/AllRestaurants.js ***!
@@ -9482,32 +9507,80 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _AllFriends__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AllFriends */ "./client/Components/AllFriends.js");
+/* harmony import */ var _features_FriendsSlice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../features/FriendsSlice */ "./client/features/FriendsSlice.js");
+
+
 
 
 const Friends = () => {
-  const [email, setEmail] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+  const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
+  const friends = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.friends);
+  const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
+  const [email, setEmail] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    email: ""
+  });
   const [modalOpen, setModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "search for friends on Dish it :"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+  let tempEmail;
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    dispatch((0,_features_FriendsSlice__WEBPACK_IMPORTED_MODULE_3__.getFriendsList)({
+      id: auth.user.id,
+      token: auth.token
+    }));
+  }, []);
+  const handleChange = e => {
+    setEmail(prevState => ({
+      ...prevState,
+      [e.target.name]: e.target.value
+    }));
+  };
+
+  //
+  ////
+  //also need to confirm they're not submitting their own email to break my site
+  const findFriends = async e => {
+    e.preventDefault();
+    tempEmail = email;
+    const found = friends.friends.find(friend => friend.email === email.email);
+    if (found) {
+      //throw this info into a modal
+      console.log("Oops. it looks like you're already friends with that user");
+      setEmail({
+        email: ""
+      });
+    } else {
+      const invite = await dispatch((0,_features_FriendsSlice__WEBPACK_IMPORTED_MODULE_3__.inviteFriends)({
+        token: auth.token,
+        email: email
+      }));
+      if (invite.payload) {
+        //throw this info into a modal
+        console.log("here she is! do you want to add her??");
+      } else {
+        //throw this info into a modal
+        console.log("Could not find anyone with that email. Would you like us to send {email} an invite from you to sign up for Dish it?");
+      }
+    }
+    setEmail({
+      email: ""
+    });
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
+    onSubmit: findFriends
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "search for friends on Dish it :"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     placeholder: "email",
-    value: email,
+    value: email.value,
     name: "email",
     type: "email",
     onChange: handleChange
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     type: "submit"
-  }, "submit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "or invite friends to join Dish it :"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    placeholder: "email",
-    value: email,
-    name: "email",
-    type: "email",
-    onChange: handleChange
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    type: "submit"
-  }, "submit")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Friends on Dish it :"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "X"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    className: "profile-img",
-    src: friend.imageUrl,
-    alt: "friend's image"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, friend.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, friend.city, ", ", friend.state))));
+  }, "submit")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Friends on Dish it :"), friends?.friends.length > 0 && friends.friends.map(friend => {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_AllFriends__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      key: friend.id,
+      friend: friend
+    });
+  })));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Friends);
 
@@ -10418,6 +10491,98 @@ const UserSingleList = () => {
 
 /***/ }),
 
+/***/ "./client/features/FriendsSlice.js":
+/*!*****************************************!*\
+  !*** ./client/features/FriendsSlice.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   getFriendsList: () => (/* binding */ getFriendsList),
+/* harmony export */   inviteFriends: () => (/* binding */ inviteFriends)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js");
+
+
+const initialState = {
+  friends: [],
+  friendInvited: {},
+  //friendEmail: {},
+  error: ""
+};
+const getFriendsList = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("friends/getFriendsList", async ({
+  token,
+  id
+}) => {
+  try {
+    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`/api/user/${id}/followers`, {
+      headers: {
+        authorization: token
+      }
+    });
+    return response?.data;
+  } catch (error) {
+    return error.message;
+  }
+});
+const inviteFriends = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("friends/inviteFriends", async ({
+  token,
+  email
+}) => {
+  console.log(" token ", token, "email", email.email);
+  try {
+    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`/api/user/friend/${email.email}`, {
+      headers: {
+        authorization: token
+      }
+    });
+    console.log("response.data", response.data);
+    return response.data;
+  } catch (error) {
+    return error.message;
+  }
+});
+
+//check if they exist in db, if so send back
+//that user's pic, user name, city, state for possible
+//follow
+
+//if none of the above hang on to email and ask if they
+//want us to email invite to them
+
+//then handle invite
+
+const FriendsSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)({
+  name: "friends",
+  initialState,
+  reducers: {},
+  extraReducers: builder => {
+    builder.addCase(getFriendsList.fulfilled, (state, action) => {
+      state.friends = action.payload;
+    });
+    builder.addCase(getFriendsList.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(inviteFriends.fulfilled, (state, action) => {
+      state.friendInvited = action.payload;
+    });
+    builder.addCase(inviteFriends.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+  }
+});
+
+//export const { loggedoutUser } = authSlice.actions;
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FriendsSlice.reducer);
+
+/***/ }),
+
 /***/ "./client/features/allRestaurantsSlice.js":
 /*!************************************************!*\
   !*** ./client/features/allRestaurantsSlice.js ***!
@@ -11091,16 +11256,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js");
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js");
 /* harmony import */ var _features_authSlice__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./features/authSlice */ "./client/features/authSlice.js");
 /* harmony import */ var _features_listSlice__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./features/listSlice */ "./client/features/listSlice.js");
 /* harmony import */ var _features_singleRestaurantSlice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./features/singleRestaurantSlice */ "./client/features/singleRestaurantSlice.js");
 /* harmony import */ var _features_singleListSlice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./features/singleListSlice */ "./client/features/singleListSlice.js");
 /* harmony import */ var _features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./features/allRestaurantsSlice */ "./client/features/allRestaurantsSlice.js");
 /* harmony import */ var _features_searchSlice__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./features/searchSlice */ "./client/features/searchSlice.js");
-/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! redux-logger */ "./node_modules/redux-logger/dist/redux-logger.js");
-/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(redux_logger__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
+/* harmony import */ var _features_FriendsSlice__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./features/FriendsSlice */ "./client/features/FriendsSlice.js");
+/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! redux-logger */ "./node_modules/redux-logger/dist/redux-logger.js");
+/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(redux_logger__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
 
 
 
@@ -11110,16 +11276,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const store = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_7__.configureStore)({
+
+const store = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_8__.configureStore)({
   reducer: {
     auth: _features_authSlice__WEBPACK_IMPORTED_MODULE_0__["default"],
     lists: _features_listSlice__WEBPACK_IMPORTED_MODULE_1__["default"],
     list: _features_singleListSlice__WEBPACK_IMPORTED_MODULE_3__["default"],
     search: _features_searchSlice__WEBPACK_IMPORTED_MODULE_5__["default"],
+    friends: _features_FriendsSlice__WEBPACK_IMPORTED_MODULE_6__["default"],
     // restaurant: singleRestaurantReducer,
     restaurants: _features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
-  middleware: [redux_thunk__WEBPACK_IMPORTED_MODULE_8__["default"], (redux_logger__WEBPACK_IMPORTED_MODULE_6___default())]
+  middleware: [redux_thunk__WEBPACK_IMPORTED_MODULE_9__["default"], (redux_logger__WEBPACK_IMPORTED_MODULE_7___default())]
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
 

@@ -23,39 +23,40 @@ router.get("/:id/followers", async (req, res, next) => {
     res.send(result);
   } catch (err) {
     res.status(404).json({
-      message: "looks like no one is following you yet",
+      message: "looks like you haven't added any friends yet",
       error: err.message,
     });
   }
 });
 
 //GET "/api/user/:id/following
-router.get("/:id/following", async (req, res, next) => {
-  try {
-    const amFollowing = await Follow.findAll({
-      where: { follower_id: req.params.id },
-      include: [{ model: User }],
-    });
-    res.send(amFollowing);
-  } catch (err) {
-    res.status(404).json({
-      message: "looks like you are not following anyone",
-      error: err.message,
-    });
-  }
-});
+// router.get("/:id/following", async (req, res, next) => {
+//   try {
+//     const amFollowing = await Follow.findAll({
+//       where: { follower_id: req.params.id },
+//       include: [{ model: User }],
+//     });
+//     res.send(amFollowing);
+//   } catch (err) {
+//     res.status(404).json({
+//       message: "looks like you are not following anyone",
+//       error: err.message,
+//     });
+//   }
+// });
 
-//GET "/api/user/:id  find a friend to request to follow
-router.get("/:id", async (req, res, next) => {
+//GET "/api/user/friend/:email  find a friend to request to follow
+router.get("/friend/:email", async (req, res, next) => {
   try {
     const newFollow = await User.findOne({
-      where: { email: req.params.id },
+      where: { email: req.params.email },
       attributes: ["username", "city", "state", "imageUrl", "email"],
     });
     res.send(newFollow);
   } catch (err) {
     res.status(404).json({
-      message: "could not find lists",
+      message:
+        "Could not find that anyone by that email. Do you want us to send them an email invite to Dish it?",
       error: err.message,
     });
   }
