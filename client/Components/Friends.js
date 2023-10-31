@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AllFriends from "./AllFriends";
 import { getFriendsList, inviteFriends } from "../features/FriendsSlice";
+import FriendModal from "./FriendModal";
 
 const Friends = () => {
   const dispatch = useDispatch();
@@ -9,7 +10,7 @@ const Friends = () => {
   const auth = useSelector((state) => state.auth);
 
   const [email, setEmail] = useState({ email: "" });
-  const [modalOpen, setModalOpen] = useState(false);
+  const [popUpSeen, setPopUpSeen] = useState(false);
 
   let tempEmail;
 
@@ -29,12 +30,11 @@ const Friends = () => {
     }));
   };
 
-  //
-  ////
-  //also need to confirm they're not submitting their own email to break my site
-  const findFriends = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    tempEmail = email;
+    console.log("email.email", email.email, "auth.user.email", auth.user.email);
+    tempEmail = email.email;
+
     const found = friends.friends.find(
       (friend) => friend.email === email.email
     );
@@ -42,29 +42,38 @@ const Friends = () => {
       //throw this info into a modal
       console.log("Oops. it looks like you're already friends with that user");
       setEmail({ email: "" });
+    } else if (email.email === auth.user.email) {
+      //throw this info into a modal
+      console.log("Sorry, you can't add yourself as a friend");
     } else {
+      findFriend();
+    }
+    setEmail({ email: "" });
+  };
+
+  const findFriend = async () => {
+    try {
       const invite = await dispatch(
         inviteFriends({
           token: auth.token,
           email: email,
         })
       );
-      if (invite.payload) {
-        //throw this info into a modal
+      if (invite.payload.username) {
+        setPopUpSeen(true);
         console.log("here she is! do you want to add her??");
       } else {
         //throw this info into a modal
         console.log(
-          "Could not find anyone with that email. Would you like us to send {email} an invite from you to sign up for Dish it?"
+          `Could not find ${tempEmail}. Do you want us to send them an email invite to Dish it?`
         );
       }
-    }
-    setEmail({ email: "" });
+    } catch (error) {}
   };
 
   return (
     <div>
-      <form onSubmit={findFriends}>
+      <form onSubmit={handleSubmit}>
         <label>search for friends on Dish it :</label>
         <input
           placeholder="email"
@@ -75,6 +84,9 @@ const Friends = () => {
         />
         <button type="submit">submit</button>
       </form>
+      {popUpSeen && (
+        <FriendModal openPopUp={setPopUpSeen} friend={friends.friendInvited} />
+      )}
       <main>
         <h1>Friends on Dish it :</h1>
         {friends?.friends.length > 0 &&

@@ -6,6 +6,8 @@ const initialState = {
   user: {},
   error: "",
   token: "",
+  pendingFollows: [],
+  pendingFollowers: [],
 };
 
 export const loginUser = createAsyncThunk("auth/loginUser", async (user) => {

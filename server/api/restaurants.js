@@ -23,6 +23,7 @@ router.get("/location/:id", async (req, res, next) => {
       message: "could not find any restaurants",
       error: err.message,
     });
+    next(err);
   }
 });
 
@@ -45,6 +46,7 @@ router.get("/:location/:price", async (req, res, next) => {
       message: "could not find any restaurants",
       error: err.message,
     });
+    next(err);
   }
 });
 
@@ -68,6 +70,7 @@ router.get("/:allCategories/:location", async (req, res, next) => {
       message: "could not find any restaurants",
       error: err.message,
     });
+    next(err);
   }
 });
 
@@ -90,6 +93,7 @@ router.get("/:location/:categories/:price", async (req, res, next) => {
       message: "could not find any restaurants",
       error: err.message,
     });
+    next(err);
   }
 });
 
@@ -109,6 +113,7 @@ router.get("/:search", async (req, res, next) => {
       message: "could not find that restaurant",
       error: err.message,
     });
+    next(err);
   }
 });
 module.exports = router;

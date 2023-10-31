@@ -10,6 +10,7 @@ import AccountHome from "./AccountHome";
 import Friends from "./Friends";
 import AccountSideNav from "./AccountSideNav";
 import AccountUpdates from "./AccountUpdates";
+import FriendReqs from "./FriendReqs";
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
           <Route exact path="/account/updates" element={<AccountUpdates />} />
           <Route exact path="/account" element={<AccountHome />} />
           <Route exact path="/account/friends" element={<Friends />} />
+          <Route exact path="/account/friendReq" element={<FriendReqs />} />
         </Route>
         <Route exact path="*" element={<Navigate to="/" replace />} />
       </Routes>

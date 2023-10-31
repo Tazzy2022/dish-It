@@ -1,4 +1,4 @@
-const { db, User, RestaurantNotes, List, Follow } = require("../index");
+const { db, User, RestaurantNotes, List, Follow, Friend } = require("../index");
 
 const syncAndSeed = async () => {
   try {
@@ -93,6 +93,23 @@ const syncAndSeed = async () => {
       Follow.create({
         userId: jen.id,
         follower_id: michele.id,
+      }),
+    ]);
+    await Promise.all([
+      Friend.create({
+        userId: michele.id,
+        friendId: jen.id,
+        pending: false,
+      }),
+      Friend.create({
+        userId: michele.id,
+        friendId: kim.id,
+        pending: true,
+      }),
+      Friend.create({
+        userId: jen.id,
+        friendId: michele.id,
+        pending: false,
       }),
     ]);
     db.close();

@@ -5,7 +5,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 const initialState = {
   friends: [],
   friendInvited: {},
-  //friendEmail: {},
   error: "",
 };
 
@@ -28,14 +27,28 @@ export const getFriendsList = createAsyncThunk(
 export const inviteFriends = createAsyncThunk(
   "friends/inviteFriends",
   async ({ token, email }) => {
-    console.log(" token ", token, "email", email.email);
     try {
       const response = await axios.get(`/api/user/friend/${email.email}`, {
         headers: {
           authorization: token,
         },
       });
-      console.log("response.data", response.data);
+      return response.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
+export const sendFriendRequest = createAsyncThunk(
+  "friends/sendFriendRequest",
+  async ({ token, email, id }) => {
+    try {
+      const response = await axios.put(`/api/user/friendReq/${email}`, id, {
+        headers: {
+          authorization: token,
+        },
+      });
       return response.data;
     } catch (error) {
       return error.message;
@@ -67,6 +80,12 @@ const FriendsSlice = createSlice({
       state.friendInvited = action.payload;
     });
     builder.addCase(inviteFriends.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(sendFriendRequest.fulfilled, (state, action) => {
+      state.friendInvited = initialState
+    });
+    builder.addCase(sendFriendRequest.rejected, (state, action) => {
       state.error = action.error.message;
     });
   },
