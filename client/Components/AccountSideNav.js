@@ -19,9 +19,6 @@ const AccountSideNav = () => {
             <Link className="account-link" to="/account/friends">
               Friends
             </Link>
-            <Link className="account-link" to="/account/friendReq">
-              Pending friends Requests
-            </Link>
           </aside>
         )}
         <main className="useracc-right-main">

@@ -9,7 +9,7 @@ const Sequelize = require("sequelize");
 router.get("/:id/friends", async (req, res, next) => {
   try {
     const allFriends = [];
-    const friends = await Friends.findAll({
+    const friends = await Friend.findAll({
       where: { userId: req.params.id, pending: false },
     });
     friends.forEach((f) => {
@@ -70,7 +70,7 @@ router.post("/:id/friendReq", async (req, res, next) => {
 router.get("/:id/pendingfollowers", async (req, res, next) => {
   try {
     const allpending = [];
-    const pending = await Friends.findAll({
+    const pending = await Friend.findAll({
       where: { userId: req.params.id, pending: true },
     });
     pending.forEach((f) => {
@@ -101,8 +101,8 @@ router.put("/:id/addfriend", async (req, res, next) => {
     await pendingFriend.update({ pending: false });
 
     await Friend.create({
-      userId: req.params.id,
-      friendId: req.body.id,
+      userId: req.body.id,
+      friendId: req.params.id,
       pending: false,
     });
     res.status(201).json({ message: "added new friend" });
@@ -115,32 +115,50 @@ router.put("/:id/addfriend", async (req, res, next) => {
   }
 });
 
-/////////////////////////////////
-
-//GET "/api/user/:id/followers
-router.get("/:id/followers", async (req, res, next) => {
+//DELETE  "/api/user/:id/deleteFriend   delete friend request from other user or confirmed friend
+//on one user only - other user will not know and will still show them in friends list
+router.delete("/:id/deleteFriend", async (req, res, next) => {
   try {
-    const allFollowers = [];
-    const followers = await Follow.findAll({
-      where: { userId: req.params.id },
+    const friend = await Friend.findOne({
+      where: { userId: req.params.id, friendId: req.body.id },
     });
-    followers.forEach((f) => {
-      allFollowers.push(f.follower_id);
-    });
-    const result = await User.findAll({
-      where: {
-        id: allFollowers,
-      },
-    });
-    res.send(result);
+    await friend.destroy();
+    res.status(201).json({ message: "friend was removed from your list" });
   } catch (err) {
-    res.status(404).json({
-      message: "looks like you haven't added any friends yet",
+    res.status(500).json({
+      message: "could not send request",
       error: err.message,
     });
     next(err);
   }
 });
+
+/////////////////////////////////
+
+//GET "/api/user/:id/followers
+// router.get("/:id/followers", async (req, res, next) => {
+//   try {
+//     const allFollowers = [];
+//     const followers = await Follow.findAll({
+//       where: { userId: req.params.id },
+//     });
+//     followers.forEach((f) => {
+//       allFollowers.push(f.follower_id);
+//     });
+//     const result = await User.findAll({
+//       where: {
+//         id: allFollowers,
+//       },
+//     });
+//     res.send(result);
+//   } catch (err) {
+//     res.status(404).json({
+//       message: "looks like you haven't added any friends yet",
+//       error: err.message,
+//     });
+//     next(err);
+//   }
+// });
 
 //GET "/api/user/:id/following
 // router.get("/:id/following", async (req, res, next) => {
@@ -159,97 +177,97 @@ router.get("/:id/followers", async (req, res, next) => {
 // });
 
 //GET "/api/user/friend/:email  find a friend to request to follow
-router.get("/friend/:email", async (req, res, next) => {
-  try {
-    const newFollow = await User.findOne({
-      where: { email: req.params.email },
-      attributes: ["username", "city", "state", "imageUrl", "email"],
-    });
-    res.send(newFollow);
-  } catch (err) {
-    console.log(err);
-    next(err);
-  }
-});
+// router.get("/friend/:email", async (req, res, next) => {
+//   try {
+//     const newFollow = await User.findOne({
+//       where: { email: req.params.email },
+//       attributes: ["username", "city", "state", "imageUrl", "email"],
+//     });
+//     res.send(newFollow);
+//   } catch (err) {
+//     console.log(err);
+//     next(err);
+//   }
+// });
 
 //PUT "/api/user/friendReq/:email  send friend request
-router.put("/friendReq/:email", async (req, res, next) => {
-  try {
-    //find user to follow
-    const user = await User.findOne({
-      where: { email: req.params.email },
-    });
-    //pushed my id into that user's pending followers
-    await user.update({
-      pendingFollowers: Sequelize.fn(
-        "array_append",
-        Sequelize.col("pendingFollowers"),
-        req.body.id
-      ),
-    });
-    //pushed their id into my pending follows
-    const me = await User.findByPk(req.body.id);
-    await me.update({
-      pendingFollows: Sequelize.fn(
-        "array_append",
-        Sequelize.col("pendingFollows"),
-        user
-      ),
-    });
-    //send back my updated pending follows array as response
-    res.send(me);
-  } catch (err) {
-    res.status(500).json({
-      message: "could not send request",
-      error: err.message,
-    });
-    next(err);
-  }
-});
+// router.put("/friendReq/:email", async (req, res, next) => {
+//   try {
+//     //find user to follow
+//     const user = await User.findOne({
+//       where: { email: req.params.email },
+//     });
+//     //pushed my id into that user's pending followers
+//     await user.update({
+//       pendingFollowers: Sequelize.fn(
+//         "array_append",
+//         Sequelize.col("pendingFollowers"),
+//         req.body.id
+//       ),
+//     });
+//     //pushed their id into my pending follows
+//     const me = await User.findByPk(req.body.id);
+//     await me.update({
+//       pendingFollows: Sequelize.fn(
+//         "array_append",
+//         Sequelize.col("pendingFollows"),
+//         user
+//       ),
+//     });
+//     //send back my updated pending follows array as response
+//     res.send(me);
+//   } catch (err) {
+//     res.status(500).json({
+//       message: "could not send request",
+//       error: err.message,
+//     });
+//     next(err);
+//   }
+// });
 
 //GET "/api/user/:id/pendingfriends  all pending friend requests
-router.get("/:id/pendingfriends", async (req, res, next) => {
-  try {
-    const pendingFollowers = await User.findByPk(req.params.id, {
-      attributes: ["pendingFollowers", "pendingFollows"],
-    });
-    console.log("pendingFollowers", pendingFollowers);
-    // const sent =
-    // const rcvd =
-    //res.send(result);
-  } catch (err) {
-    res.status(404).json({
-      error: err.message,
-    });
-    next(err);
-  }
-});
+// router.get("/:id/pendingfriends", async (req, res, next) => {
+//   try {
+//     const pendingFollowers = await User.findByPk(req.params.id, {
+//       attributes: ["pendingFollowers", "pendingFollows"],
+//     });
+//     console.log("pendingFollowers", pendingFollowers);
+//     // const sent =
+//     // const rcvd =
+//     //res.send(result);
+//   } catch (err) {
+//     res.status(404).json({
+//       error: err.message,
+//     });
+//     next(err);
+//   }
+// });
 
 //PUT "/api/user/:id/followers  add /accept new friend request
-router.put("/:id/followers", async (req, res, next) => {
-  try {
-    const user = await User.findByPk(req.params.id);
-    const newFollower = req.body.id;
-    await user.update({
-      pendingFollowers: Sequelize.fn(
-        "array_remove",
-        Sequelize.col("pendingFollowers"),
-        newFollower
-      ),
-    });
-    await Follow.create({
-      userId: req.params.id,
-      follower_id: newFollower,
-    });
-    res.status(200).json({ message: "added new follower" });
-  } catch (err) {
-    res.status(500).json({
-      message: "could not add that follower",
-      error: err.message,
-    });
-    next(err);
-  }
-});
+// router.put("/:id/followers", async (req, res, next) => {
+//   try {
+//     const user = await User.findByPk(req.params.id);
+//     const newFollower = req.body.id;
+//     await user.update({
+//       pendingFollowers: Sequelize.fn(
+//         "array_remove",
+//         Sequelize.col("pendingFollowers"),
+//         newFollower
+//       ),
+//     });
+//     await Follow.create({
+//       userId: req.params.id,
+//       follower_id: newFollower,
+//     });
+//     res.status(200).json({ message: "added new follower" });
+//   } catch (err) {
+//     res.status(500).json({
+//       message: "could not add that follower",
+//       error: err.message,
+//     });
+//     next(err);
+//   }
+// });
 
 //GET "/api/user/:id/lists
 router.get("/:id/lists", async (req, res, next) => {

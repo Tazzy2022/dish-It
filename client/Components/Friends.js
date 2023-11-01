@@ -90,8 +90,8 @@ const Friends = () => {
       <main>
         <h1>Friends on Dish it :</h1>
         {friends?.friends.length > 0 &&
-          friends.friends.map((friend) => {
-            return <AllFriends key={friend.id} friend={friend} />;
+          friends.friends.map((friend, index) => {
+            return <AllFriends key={index} friend={friend} />;
           })}
       </main>
     </div>

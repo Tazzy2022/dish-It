@@ -8648,19 +8648,78 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _features_FriendsSlice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../features/FriendsSlice */ "./client/features/FriendsSlice.js");
+/* harmony import */ var _features_authSlice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../features/authSlice */ "./client/features/authSlice.js");
+/* harmony import */ var _PendingCard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./PendingCard */ "./client/Components/PendingCard.js");
+
+
+
 
 
 const AccountHome = () => {
+  const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
+  const friends = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.friends);
+  const [image, setImage] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    dispatch((0,_features_FriendsSlice__WEBPACK_IMPORTED_MODULE_2__.getPendingFriends)({
+      id: auth.user.id,
+      token: auth.token
+    }));
+  }, []);
+  const handleChange = e => {
+    const fReader = new FileReader();
+    fReader.readAsDataURL(e.target.value);
+    fReader.onloadend = e => {
+      setImage(prevState => ({
+        ...prevState,
+        [e.target.name]: e.target.result
+      }));
+    };
+
+    // setImage((prevState) => ({
+    //   ...prevState,
+    //   [e.target.name]: e.target.value,
+    // }));
+  };
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    try {
+      console.log("IMAGE", image.image);
+      await dispatch((0,_features_authSlice__WEBPACK_IMPORTED_MODULE_3__.updateUserInfo)({
+        ...auth.user,
+        token: auth.token,
+        imageUrl: image
+        // imageUrl: e.target.value,
+      }));
+    } catch (error) {
+      console.log("error");
+    }
+  };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", {
     className: "user-account-h1"
   }, auth.user.username, "'s account"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: "profile-img",
     src: auth.user.imageUrl,
     alt: "personal image"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "+"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "update image"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "pending follow requests:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    type: "file",
+    name: "image",
+    accept: "image/*",
+    onChange: handleChange
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "update image"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    type: "submit"
+  }, "submit")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "pending follow requests:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
     className: "follow-req-container"
-  }));
+  }, friends?.friendRequests?.length > 0 && friends?.friendRequests.map((friend, index) => {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_PendingCard__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      key: index,
+      friend: friend
+    });
+  })));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AccountHome);
 
@@ -8779,10 +8838,7 @@ const AccountSideNav = () => {
   }, "Update Account info"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
     className: "account-link",
     to: "/account/friends"
-  }, "Friends"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
-    className: "account-link",
-    to: "/account/friendReq"
-  }, "Pending friends Requests")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", {
+  }, "Friends")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", {
     className: "useracc-right-main"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Outlet, null))));
 };
@@ -9066,7 +9122,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _Header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Header */ "./client/Components/Header.js");
 /* harmony import */ var _AuthContainer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AuthContainer */ "./client/Components/AuthContainer.js");
 /* harmony import */ var _Home__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Home */ "./client/Components/Home.js");
@@ -9077,8 +9133,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Friends__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Friends */ "./client/Components/Friends.js");
 /* harmony import */ var _AccountSideNav__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./AccountSideNav */ "./client/Components/AccountSideNav.js");
 /* harmony import */ var _AccountUpdates__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./AccountUpdates */ "./client/Components/AccountUpdates.js");
-/* harmony import */ var _FriendReqs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./FriendReqs */ "./client/Components/FriendReqs.js");
-
 
 
 
@@ -9092,50 +9146,46 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const App = () => {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("nav", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Header__WEBPACK_IMPORTED_MODULE_1__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Routes, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("nav", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Header__WEBPACK_IMPORTED_MODULE_1__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Routes, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
     exact: true,
     path: "/",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Home__WEBPACK_IMPORTED_MODULE_3__["default"], null)
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
     exact: true,
     path: "/login",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_AuthContainer__WEBPACK_IMPORTED_MODULE_2__["default"], null)
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
     exact: true,
     path: "/usersearch",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Search__WEBPACK_IMPORTED_MODULE_6__["default"], null)
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
     exact: true,
     path: "/userhome",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_UserHome__WEBPACK_IMPORTED_MODULE_4__["default"], null)
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
     exact: true,
     path: "/userlists/:id",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_UserSingleList__WEBPACK_IMPORTED_MODULE_5__["default"], null)
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
     exact: true,
     path: "/account",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_AccountSideNav__WEBPACK_IMPORTED_MODULE_9__["default"], null)
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
     exact: true,
     path: "/account/updates",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_AccountUpdates__WEBPACK_IMPORTED_MODULE_10__["default"], null)
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
     exact: true,
     path: "/account",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_AccountHome__WEBPACK_IMPORTED_MODULE_7__["default"], null)
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
     exact: true,
     path: "/account/friends",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Friends__WEBPACK_IMPORTED_MODULE_8__["default"], null)
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
-    exact: true,
-    path: "/account/friendReq",
-    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_FriendReqs__WEBPACK_IMPORTED_MODULE_11__["default"], null)
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
     exact: true,
     path: "*",
-    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Navigate, {
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Navigate, {
       to: "/",
       replace: true
     })
@@ -9523,9 +9573,14 @@ __webpack_require__.r(__webpack_exports__);
 const FriendModal = props => {
   const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
+  const friends = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.friends);
   const sendInvite = async () => {
     props.openPopUp(false);
-    await dispatch((0,_features_FriendsSlice__WEBPACK_IMPORTED_MODULE_2__.sendFriendRequest)());
+    await dispatch((0,_features_FriendsSlice__WEBPACK_IMPORTED_MODULE_2__.sendFriendRequest)({
+      token: auth.token,
+      id: auth.user.id,
+      userId: friends.friendInvited.id
+    }));
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "modalBackground"
@@ -9548,30 +9603,6 @@ const FriendModal = props => {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "send friend request")))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FriendModal);
-
-/***/ }),
-
-/***/ "./client/Components/FriendReqs.js":
-/*!*****************************************!*\
-  !*** ./client/Components/FriendReqs.js ***!
-  \*****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-
-
-const FriendReqs = () => {
-  const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Pending friend requests :"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Sent:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Received:")));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FriendReqs);
 
 /***/ }),
 
@@ -9667,9 +9698,9 @@ const Friends = () => {
   }, "submit")), popUpSeen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_FriendModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
     openPopUp: setPopUpSeen,
     friend: friends.friendInvited
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Friends on Dish it :"), friends?.friends.length > 0 && friends.friends.map(friend => {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Friends on Dish it :"), friends?.friends.length > 0 && friends.friends.map((friend, index) => {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_AllFriends__WEBPACK_IMPORTED_MODULE_2__["default"], {
-      key: friend.id,
+      key: index,
       friend: friend
     });
   })));
@@ -10073,6 +10104,31 @@ const NotesModal = props => {
   }, "update")))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NotesModal);
+
+/***/ }),
+
+/***/ "./client/Components/PendingCard.js":
+/*!******************************************!*\
+  !*** ./client/Components/PendingCard.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+const PendingCard = props => {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "X"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: "profile-img",
+    src: props.friend.imageUrl,
+    alt: "friend's image"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.friend.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.friend.city, ", ", props.friend.state), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "+"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "accept"));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PendingCard);
 
 /***/ }),
 
@@ -10592,8 +10648,11 @@ const UserSingleList = () => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   acceptFriendRequest: () => (/* binding */ acceptFriendRequest),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   deleteFriend: () => (/* binding */ deleteFriend),
 /* harmony export */   getFriendsList: () => (/* binding */ getFriendsList),
+/* harmony export */   getPendingFriends: () => (/* binding */ getPendingFriends),
 /* harmony export */   inviteFriends: () => (/* binding */ inviteFriends),
 /* harmony export */   sendFriendRequest: () => (/* binding */ sendFriendRequest)
 /* harmony export */ });
@@ -10605,6 +10664,8 @@ __webpack_require__.r(__webpack_exports__);
 const initialState = {
   friends: [],
   friendInvited: {},
+  friendRequests: [],
+  message: "",
   error: ""
 };
 const getFriendsList = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("friends/getFriendsList", async ({
@@ -10612,7 +10673,7 @@ const getFriendsList = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAs
   id
 }) => {
   try {
-    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`/api/user/${id}/followers`, {
+    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`/api/user/${id}/friends`, {
       headers: {
         authorization: token
       }
@@ -10639,11 +10700,11 @@ const inviteFriends = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsy
 });
 const sendFriendRequest = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("friends/sendFriendRequest", async ({
   token,
-  email,
-  id
+  id,
+  userId
 }) => {
   try {
-    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().put(`/api/user/friendReq/${email}`, id, {
+    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`/api/user/${id}/friendReq`, userId, {
       headers: {
         authorization: token
       }
@@ -10653,16 +10714,53 @@ const sendFriendRequest = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.creat
     return error.message;
   }
 });
-
-//check if they exist in db, if so send back
-//that user's pic, user name, city, state for possible
-//follow
-
-//if none of the above hang on to email and ask if they
-//want us to email invite to them
-
-//then handle invite
-
+const getPendingFriends = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("friends/getPendingFriends", async ({
+  token,
+  id
+}) => {
+  try {
+    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`/api/user/${id}/pendingfollowers`, {
+      headers: {
+        authorization: token
+      }
+    });
+    return response?.data;
+  } catch (error) {
+    return error.message;
+  }
+});
+const acceptFriendRequest = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("friends/acceptFriendRequest", async ({
+  token,
+  id,
+  friendId
+}) => {
+  try {
+    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().put(`/api/user/${id}/addfriend`, friendId, {
+      headers: {
+        authorization: token
+      }
+    });
+    return response.data;
+  } catch (error) {
+    return error.message;
+  }
+});
+const deleteFriend = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("friends/deleteFriend", async ({
+  token,
+  id,
+  friendId
+}) => {
+  try {
+    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().put(`/api/user/${id}/deleteFriend`, friendId, {
+      headers: {
+        authorization: token
+      }
+    });
+    return response.data;
+  } catch (error) {
+    return error.message;
+  }
+});
 const FriendsSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)({
   name: "friends",
   initialState,
@@ -10682,8 +10780,27 @@ const FriendsSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlic
     });
     builder.addCase(sendFriendRequest.fulfilled, (state, action) => {
       state.friendInvited = initialState;
+      state.message = "your friend request has been sent";
     });
     builder.addCase(sendFriendRequest.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(getPendingFriends.fulfilled, (state, action) => {
+      state.friendRequests = action.payload;
+    });
+    builder.addCase(getPendingFriends.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(acceptFriendRequest.fulfilled, (state, action) => {
+      state.message = "added new friend";
+    });
+    builder.addCase(acceptFriendRequest.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(deleteFriend.fulfilled, (state, action) => {
+      state.message = "that friend was removed from your list";
+    });
+    builder.addCase(deleteFriend.rejected, (state, action) => {
       state.error = action.error.message;
     });
   }
@@ -10914,6 +11031,7 @@ const getUser = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThun
   }
 });
 const updateUserInfo = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("auth/updateUserInfo", async userInfo => {
+  console.log("userInfo", userInfo);
   try {
     const {
       data: updated

@@ -5,6 +5,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 const initialState = {
   friends: [],
   friendInvited: {},
+  friendRequests: [],
+  message: "",
   error: "",
 };
 
@@ -12,7 +14,7 @@ export const getFriendsList = createAsyncThunk(
   "friends/getFriendsList",
   async ({ token, id }) => {
     try {
-      const response = await axios.get(`/api/user/${id}/followers`, {
+      const response = await axios.get(`/api/user/${id}/friends`, {
         headers: {
           authorization: token,
         },
@@ -42,9 +44,9 @@ export const inviteFriends = createAsyncThunk(
 
 export const sendFriendRequest = createAsyncThunk(
   "friends/sendFriendRequest",
-  async ({ token, email, id }) => {
+  async ({ token, id, userId }) => {
     try {
-      const response = await axios.put(`/api/user/friendReq/${email}`, id, {
+      const response = await axios.post(`/api/user/${id}/friendReq`, userId, {
         headers: {
           authorization: token,
         },
@@ -56,14 +58,53 @@ export const sendFriendRequest = createAsyncThunk(
   }
 );
 
-//check if they exist in db, if so send back
-//that user's pic, user name, city, state for possible
-//follow
+export const getPendingFriends = createAsyncThunk(
+  "friends/getPendingFriends",
+  async ({ token, id }) => {
+    try {
+      const response = await axios.get(`/api/user/${id}/pendingfollowers`, {
+        headers: {
+          authorization: token,
+        },
+      });
+      return response?.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
 
-//if none of the above hang on to email and ask if they
-//want us to email invite to them
+export const acceptFriendRequest = createAsyncThunk(
+  "friends/acceptFriendRequest",
+  async ({ token, id, friendId }) => {
+    try {
+      const response = await axios.put(`/api/user/${id}/addfriend`, friendId, {
+        headers: {
+          authorization: token,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
 
-//then handle invite
+export const deleteFriend = createAsyncThunk(
+  "friends/deleteFriend",
+  async ({ token, id, friendId }) => {
+    try {
+      const response = await axios.put(`/api/user/${id}/deleteFriend`, friendId, {
+        headers: {
+          authorization: token,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
 
 const FriendsSlice = createSlice({
   name: "friends",
@@ -84,8 +125,27 @@ const FriendsSlice = createSlice({
     });
     builder.addCase(sendFriendRequest.fulfilled, (state, action) => {
       state.friendInvited = initialState
+      state.message = "your friend request has been sent"
     });
     builder.addCase(sendFriendRequest.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(getPendingFriends.fulfilled, (state, action) => {
+      state.friendRequests = action.payload;
+    });
+    builder.addCase(getPendingFriends.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(acceptFriendRequest.fulfilled, (state, action) => {
+      state.message = "added new friend"
+    });
+    builder.addCase(acceptFriendRequest.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(deleteFriend.fulfilled, (state, action) => {
+      state.message = "that friend was removed from your list"
+    });
+    builder.addCase(deleteFriend.rejected, (state, action) => {
       state.error = action.error.message;
     });
   },

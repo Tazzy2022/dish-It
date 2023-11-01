@@ -1,15 +1,22 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { sendFriendRequest} from "../features/FriendsSlice"
+import { sendFriendRequest } from "../features/FriendsSlice";
 
 const FriendModal = (props) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
+  const friends = useSelector((state) => state.friends);
 
-	const sendInvite = async() => {
-		props.openPopUp(false)
-		await dispatch(sendFriendRequest())
-	}
+  const sendInvite = async () => {
+    props.openPopUp(false);
+    await dispatch(
+      sendFriendRequest({
+        token: auth.token,
+        id: auth.user.id,
+        userId: friends.friendInvited.id,
+      })
+    );
+  };
 
   return (
     <div>
@@ -21,8 +28,8 @@ const FriendModal = (props) => {
             </button>
           </div>
           <section className="modal-content">
-						<p>Do you want to add {props.friend.email}</p>
-						 <img
+            <p>Do you want to add {props.friend.email}</p>
+            <img
               className="profile-img"
               src={props.friend.imageUrl}
               alt="friend's image"
