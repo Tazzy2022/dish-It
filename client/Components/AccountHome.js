@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPendingFriends } from "../features/FriendsSlice";
-import { updateUserInfo } from "../features/authSlice";
+import { updatePhoto } from "../features/authSlice";
 import PendingCard from "./PendingCard";
 
 const AccountHome = () => {
@@ -9,7 +9,7 @@ const AccountHome = () => {
   const auth = useSelector((state) => state.auth);
   const friends = useSelector((state) => state.friends);
 
-  const [image, setImage] = useState("");
+  //const [file, setFile] = useState(null);
 
   useEffect(() => {
     dispatch(
@@ -20,38 +20,52 @@ const AccountHome = () => {
     );
   }, []);
 
-  const handleChange = (e) => {
-    const fReader = new FileReader();
-    fReader.readAsDataURL(e.target.value);
-    fReader.onloadend = (e) => {
-      setImage((prevState) => ({
-        ...prevState,
-        [e.target.name]: e.target.result,
-      }));
-    };
+  // const handleChange = (e) => {
+  //   const fr = new FileReader();
+  //   fr.readAsDataURL(e.target.files[0]);
 
-    // setImage((prevState) => ({
-    //   ...prevState,
-    //   [e.target.name]: e.target.value,
-    // }));
-  };
+  //   fr.onload = () => {
+  //     //console.log("fr.result", fr.result)
+  //     setFile(fr.result);
+  //   };
+  // };
+
+  const fileInput = createRef();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.set("avatar", fileInput.current.files[0]);
     try {
-      console.log("IMAGE", image.image);
       await dispatch(
-        updateUserInfo({
+        updatePhoto({
           ...auth.user,
+          id: auth.user.id,
           token: auth.token,
-          imageUrl: image,
-          // imageUrl: e.target.value,
+          imageUrl: formData,
         })
       );
     } catch (error) {
-      console.log("error");
+      console.log(error);
     }
   };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   console.log("FILE", file);
+  //   try {
+  //     await dispatch(
+  //       updatePhoto({
+  //         ...auth.user,
+  //         id: auth.user.id,
+  //         token: auth.token,
+  //         imageUrl: file,
+  //       })
+  //     );
+  //   } catch (error) {
+  //     console.log("error");
+  //   }
+  // };
 
   return (
     <div>
@@ -64,9 +78,9 @@ const AccountHome = () => {
       <form onSubmit={handleSubmit}>
         <input
           type="file"
-          name="image"
+          name="avatar"
+          ref={fileInput}
           accept="image/*"
-          onChange={handleChange}
         />
         <label>update image</label>
         <button type="submit">submit</button>

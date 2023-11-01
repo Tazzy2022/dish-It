@@ -8660,43 +8660,60 @@ const AccountHome = () => {
   const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
   const friends = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.friends);
-  const [image, setImage] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+
+  //const [file, setFile] = useState(null);
+
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     dispatch((0,_features_FriendsSlice__WEBPACK_IMPORTED_MODULE_2__.getPendingFriends)({
       id: auth.user.id,
       token: auth.token
     }));
   }, []);
-  const handleChange = e => {
-    const fReader = new FileReader();
-    fReader.readAsDataURL(e.target.value);
-    fReader.onloadend = e => {
-      setImage(prevState => ({
-        ...prevState,
-        [e.target.name]: e.target.result
-      }));
-    };
 
-    // setImage((prevState) => ({
-    //   ...prevState,
-    //   [e.target.name]: e.target.value,
-    // }));
-  };
+  // const handleChange = (e) => {
+  //   const fr = new FileReader();
+  //   fr.readAsDataURL(e.target.files[0]);
 
+  //   fr.onload = () => {
+  //     //console.log("fr.result", fr.result)
+  //     setFile(fr.result);
+  //   };
+  // };
+
+  const fileInput = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createRef)();
   const handleSubmit = async e => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.set("avatar", fileInput.current.files[0]);
     try {
-      console.log("IMAGE", image.image);
-      await dispatch((0,_features_authSlice__WEBPACK_IMPORTED_MODULE_3__.updateUserInfo)({
+      await dispatch((0,_features_authSlice__WEBPACK_IMPORTED_MODULE_3__.updatePhoto)({
         ...auth.user,
+        id: auth.user.id,
         token: auth.token,
-        imageUrl: image
-        // imageUrl: e.target.value,
+        imageUrl: formData
       }));
     } catch (error) {
-      console.log("error");
+      console.log(error);
     }
   };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   console.log("FILE", file);
+  //   try {
+  //     await dispatch(
+  //       updatePhoto({
+  //         ...auth.user,
+  //         id: auth.user.id,
+  //         token: auth.token,
+  //         imageUrl: file,
+  //       })
+  //     );
+  //   } catch (error) {
+  //     console.log("error");
+  //   }
+  // };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", {
     className: "user-account-h1"
   }, auth.user.username, "'s account"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
@@ -8707,9 +8724,9 @@ const AccountHome = () => {
     onSubmit: handleSubmit
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "file",
-    name: "image",
-    accept: "image/*",
-    onChange: handleChange
+    name: "avatar",
+    ref: fileInput,
+    accept: "image/*"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "update image"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     type: "submit"
   }, "submit")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "pending follow requests:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
@@ -10993,6 +11010,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   loggedoutUser: () => (/* binding */ loggedoutUser),
 /* harmony export */   loginUser: () => (/* binding */ loginUser),
 /* harmony export */   registerUser: () => (/* binding */ registerUser),
+/* harmony export */   updatePhoto: () => (/* binding */ updatePhoto),
 /* harmony export */   updateUserInfo: () => (/* binding */ updateUserInfo)
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
@@ -11045,6 +11063,21 @@ const updateUserInfo = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAs
     return error.message;
   }
 });
+const updatePhoto = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("auth/updatePhoto", async userInfo => {
+  try {
+    console.log("userInfo", userInfo.imageUrl);
+    const {
+      data: updated
+    } = await axios__WEBPACK_IMPORTED_MODULE_0___default().put(`/api/users/${userInfo.id}/avatar`, userInfo.imageUrl, {
+      headers: {
+        authorization: userInfo.token
+      }
+    });
+    return updated;
+  } catch (error) {
+    return error.message;
+  }
+});
 const registerUser = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("auth/registerUser", async userInfo => {
   try {
     const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().post("/auth/signup", userInfo);
@@ -11077,6 +11110,12 @@ const authSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)(
       state.user = action.payload;
     });
     builder.addCase(updateUserInfo.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(updatePhoto.fulfilled, (state, action) => {
+      state.user = action.payload;
+    });
+    builder.addCase(updatePhoto.rejected, (state, action) => {
       state.error = action.error.message;
     });
     builder.addCase(loginUser.fulfilled, (state, action) => {

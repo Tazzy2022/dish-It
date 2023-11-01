@@ -38,11 +38,32 @@ export const getUser = createAsyncThunk(
 export const updateUserInfo = createAsyncThunk(
   "auth/updateUserInfo",
   async (userInfo) => {
-    console.log("userInfo", userInfo)
+    console.log("userInfo", userInfo);
     try {
       const { data: updated } = await axios.put(
         `/api/users/${userInfo.id}`,
         userInfo,
+        {
+          headers: {
+            authorization: userInfo.token,
+          },
+        }
+      );
+      return updated;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
+export const updatePhoto = createAsyncThunk(
+  "auth/updatePhoto",
+  async (userInfo) => {
+    try {
+      console.log("userInfo", userInfo.imageUrl);
+      const { data: updated } = await axios.put(
+        `/api/users/${userInfo.id}/avatar`,
+        userInfo.imageUrl,
         {
           headers: {
             authorization: userInfo.token,
@@ -91,6 +112,12 @@ const authSlice = createSlice({
       state.user = action.payload;
     });
     builder.addCase(updateUserInfo.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(updatePhoto.fulfilled, (state, action) => {
+      state.user = action.payload;
+    });
+    builder.addCase(updatePhoto.rejected, (state, action) => {
       state.error = action.error.message;
     });
     builder.addCase(loginUser.fulfilled, (state, action) => {

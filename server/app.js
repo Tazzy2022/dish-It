@@ -1,10 +1,16 @@
 const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
+const fileUpload = require("express-fileupload");
+const cors = require("cors");
+
 const app = express();
 
 // logging middleware
 app.use(morgan("dev"));
+
+app.use(cors());
+app.use(fileUpload());
 
 // body parsing middleware
 app.use(express.urlencoded({ extended: true }));
