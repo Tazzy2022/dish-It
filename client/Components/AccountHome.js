@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { getPendingFriends } from "../features/FriendsSlice";
-import { updatePhoto } from "../features/authSlice";
+import { updatePhoto, getUserImage } from "../features/authSlice";
 import PendingCard from "./PendingCard";
 
 const AccountHome = () => {
@@ -15,6 +15,12 @@ const AccountHome = () => {
   useEffect(() => {
     dispatch(
       getPendingFriends({
+        id: auth.user.id,
+        token: auth.token,
+      })
+    );
+    dispatch(
+      getUserImage({
         id: auth.user.id,
         token: auth.token,
       })
@@ -32,15 +38,12 @@ const AccountHome = () => {
           authorization: auth.token,
         },
       });
-
-      // await dispatch(
-      //   updatePhoto(
-      //     {
-      //       userId: auth.user.id,
-      //       token: auth.token,
-      //       image: upload
-      //     }
-      //   )
+      await dispatch(
+        getUserImage({
+          id: auth.user.id,
+          token: auth.token,
+        })
+      );
     } catch (error) {
       console.log(error);
     }
@@ -50,6 +53,11 @@ const AccountHome = () => {
     <div>
       <h1 className="user-account-h1">{auth.user.username}'s account</h1>
       {/* <img className="profile-img" src={auth.user.image} alt="personal image" /> */}
+      {/* <img
+        className="profile-img"
+        src={auth.image.title}
+        alt="personal image"
+      /> */}
       <form onSubmit={handleSubmit} method="POST" encType="multipart/form-data">
         <input
           type="file"

@@ -1,4 +1,5 @@
 import axios from "axios";
+import download from 'downloadjs';
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -60,13 +61,23 @@ export const updateUserInfo = createAsyncThunk(
 export const getUserImage = createAsyncThunk(
   "auth/getUserImage",
   async ({ id, token }) => {
+    console.log("ID", id, token);
     try {
-      const response = await axios.get(`/api/users/${id}/image`, {
-        headers: {
-          authorization: token,
+      const response = await axios.get(
+        `/api/users/${id}/image`,
+        {
+          headers: {
+            authorization: token,
+          },
         },
-      });
-      return response.data;
+        { responseType: "blob" }
+      );
+      console.log("response.data", response.data);
+
+      // const split = response.data.file_path.split('/');
+      // const filename = split[split.length - 1];
+      // response.send(download(response.data, filename, response.data.file_mimetype));
+      //return response.data;
     } catch (error) {
       return error.message;
     }
@@ -126,6 +137,7 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.user = action.payload;
+      state.image = action.payload;
     });
     builder.addCase(getUser.rejected, (state, action) => {
       state.error = action.error.message;

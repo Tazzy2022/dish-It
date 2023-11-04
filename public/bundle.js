@@ -8669,6 +8669,10 @@ const AccountHome = () => {
       id: auth.user.id,
       token: auth.token
     }));
+    dispatch((0,_features_authSlice__WEBPACK_IMPORTED_MODULE_4__.getUserImage)({
+      id: auth.user.id,
+      token: auth.token
+    }));
   }, []);
   const handleSubmit = async e => {
     e.preventDefault();
@@ -8680,15 +8684,10 @@ const AccountHome = () => {
           authorization: auth.token
         }
       });
-
-      // await dispatch(
-      //   updatePhoto(
-      //     {
-      //       userId: auth.user.id,
-      //       token: auth.token,
-      //       image: upload
-      //     }
-      //   )
+      await dispatch((0,_features_authSlice__WEBPACK_IMPORTED_MODULE_4__.getUserImage)({
+        id: auth.user.id,
+        token: auth.token
+      }));
     } catch (error) {
       console.log(error);
     }
@@ -10985,6 +10984,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
 /* harmony export */   getUser: () => (/* binding */ getUser),
+/* harmony export */   getUserImage: () => (/* binding */ getUserImage),
 /* harmony export */   loggedoutUser: () => (/* binding */ loggedoutUser),
 /* harmony export */   loginUser: () => (/* binding */ loginUser),
 /* harmony export */   registerUser: () => (/* binding */ registerUser),
@@ -10993,17 +10993,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js");
+/* harmony import */ var downloadjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! downloadjs */ "./node_modules/downloadjs/download.js");
+/* harmony import */ var downloadjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(downloadjs__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js");
+
 
 
 const initialState = {
   user: {},
+  image: {},
   error: "",
   token: "",
   pendingFollows: [],
   pendingFollowers: []
 };
-const loginUser = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("auth/loginUser", async user => {
+const loginUser = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_2__.createAsyncThunk)("auth/loginUser", async user => {
   try {
     const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`/auth/login`, user);
     return response.data;
@@ -11011,7 +11015,7 @@ const loginUser = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncTh
     console.log(err);
   }
 });
-const getUser = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("auth/getUser", async ({
+const getUser = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_2__.createAsyncThunk)("auth/getUser", async ({
   id,
   token
 }) => {
@@ -11026,7 +11030,7 @@ const getUser = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThun
     return error.message;
   }
 });
-const updateUserInfo = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("auth/updateUserInfo", async userInfo => {
+const updateUserInfo = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_2__.createAsyncThunk)("auth/updateUserInfo", async userInfo => {
   console.log("userInfo", userInfo);
   try {
     const {
@@ -11041,7 +11045,30 @@ const updateUserInfo = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAs
     return error.message;
   }
 });
-const updatePhoto = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("auth/updatePhoto", async userInfo => {
+const getUserImage = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_2__.createAsyncThunk)("auth/getUserImage", async ({
+  id,
+  token
+}) => {
+  console.log("ID", id, token);
+  try {
+    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`/api/users/${id}/image`, {
+      headers: {
+        authorization: token
+      }
+    }, {
+      responseType: "blob"
+    });
+    console.log("response.data", response.data);
+
+    // const split = response.data.file_path.split('/');
+    // const filename = split[split.length - 1];
+    // response.send(download(response.data, filename, response.data.file_mimetype));
+    //return response.data;
+  } catch (error) {
+    return error.message;
+  }
+});
+const updatePhoto = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_2__.createAsyncThunk)("auth/updatePhoto", async userInfo => {
   try {
     console.log("userInfo", userInfo);
 
@@ -11062,7 +11089,7 @@ const updatePhoto = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsync
     return error.message;
   }
 });
-const registerUser = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("auth/registerUser", async userInfo => {
+const registerUser = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_2__.createAsyncThunk)("auth/registerUser", async userInfo => {
   try {
     const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().post("/auth/signup", userInfo);
     return response.data;
@@ -11070,7 +11097,7 @@ const registerUser = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyn
     return error.message;
   }
 });
-const authSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)({
+const authSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_2__.createSlice)({
   name: "auth",
   initialState,
   reducers: {
@@ -11086,6 +11113,7 @@ const authSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)(
   extraReducers: builder => {
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.user = action.payload;
+      state.image = action.payload;
     });
     builder.addCase(getUser.rejected, (state, action) => {
       state.error = action.error.message;
@@ -11112,6 +11140,12 @@ const authSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)(
       state.user = action.payload;
     });
     builder.addCase(registerUser.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(getUserImage.fulfilled, (state, action) => {
+      state.image = action.payload;
+    });
+    builder.addCase(getUserImage.rejected, (state, action) => {
       state.error = action.error.message;
     });
   }
@@ -11545,6 +11579,178 @@ const store = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_8__.configureStore)({
   middleware: [redux_thunk__WEBPACK_IMPORTED_MODULE_9__["default"], (redux_logger__WEBPACK_IMPORTED_MODULE_7___default())]
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
+
+/***/ }),
+
+/***/ "./node_modules/downloadjs/download.js":
+/*!*********************************************!*\
+  !*** ./node_modules/downloadjs/download.js ***!
+  \*********************************************/
+/***/ (function(module, exports) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//download.js v4.2, by dandavis; 2008-2016. [MIT] see http://danml.com/download.html for tests/usage
+// v1 landed a FF+Chrome compat way of downloading strings to local un-named files, upgraded to use a hidden frame and optional mime
+// v2 added named files via a[download], msSaveBlob, IE (10+) support, and window.URL support for larger+faster saves than dataURLs
+// v3 added dataURL and Blob Input, bind-toggle arity, and legacy dataURL fallback was improved with force-download mime and base64 support. 3.1 improved safari handling.
+// v4 adds AMD/UMD, commonJS, and plain browser support
+// v4.1 adds url download capability via solo URL argument (same domain/CORS only)
+// v4.2 adds semantic variable names, long (over 2MB) dataURL support, and hidden by default temp anchors
+// https://github.com/rndme/download
+
+(function (root, factory) {
+	if (true) {
+		// AMD. Register as an anonymous module.
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {}
+}(this, function () {
+
+	return function download(data, strFileName, strMimeType) {
+
+		var self = window, // this script is only for browsers anyway...
+			defaultMime = "application/octet-stream", // this default mime also triggers iframe downloads
+			mimeType = strMimeType || defaultMime,
+			payload = data,
+			url = !strFileName && !strMimeType && payload,
+			anchor = document.createElement("a"),
+			toString = function(a){return String(a);},
+			myBlob = (self.Blob || self.MozBlob || self.WebKitBlob || toString),
+			fileName = strFileName || "download",
+			blob,
+			reader;
+			myBlob= myBlob.call ? myBlob.bind(self) : Blob ;
+	  
+		if(String(this)==="true"){ //reverse arguments, allowing download.bind(true, "text/xml", "export.xml") to act as a callback
+			payload=[payload, mimeType];
+			mimeType=payload[0];
+			payload=payload[1];
+		}
+
+
+		if(url && url.length< 2048){ // if no filename and no mime, assume a url was passed as the only argument
+			fileName = url.split("/").pop().split("?")[0];
+			anchor.href = url; // assign href prop to temp anchor
+		  	if(anchor.href.indexOf(url) !== -1){ // if the browser determines that it's a potentially valid url path:
+        		var ajax=new XMLHttpRequest();
+        		ajax.open( "GET", url, true);
+        		ajax.responseType = 'blob';
+        		ajax.onload= function(e){ 
+				  download(e.target.response, fileName, defaultMime);
+				};
+        		setTimeout(function(){ ajax.send();}, 0); // allows setting custom ajax headers using the return:
+			    return ajax;
+			} // end if valid url?
+		} // end if url?
+
+
+		//go ahead and download dataURLs right away
+		if(/^data:([\w+-]+\/[\w+.-]+)?[,;]/.test(payload)){
+		
+			if(payload.length > (1024*1024*1.999) && myBlob !== toString ){
+				payload=dataUrlToBlob(payload);
+				mimeType=payload.type || defaultMime;
+			}else{			
+				return navigator.msSaveBlob ?  // IE10 can't do a[download], only Blobs:
+					navigator.msSaveBlob(dataUrlToBlob(payload), fileName) :
+					saver(payload) ; // everyone else can save dataURLs un-processed
+			}
+			
+		}else{//not data url, is it a string with special needs?
+			if(/([\x80-\xff])/.test(payload)){			  
+				var i=0, tempUiArr= new Uint8Array(payload.length), mx=tempUiArr.length;
+				for(i;i<mx;++i) tempUiArr[i]= payload.charCodeAt(i);
+			 	payload=new myBlob([tempUiArr], {type: mimeType});
+			}		  
+		}
+		blob = payload instanceof myBlob ?
+			payload :
+			new myBlob([payload], {type: mimeType}) ;
+
+
+		function dataUrlToBlob(strUrl) {
+			var parts= strUrl.split(/[:;,]/),
+			type= parts[1],
+			decoder= parts[2] == "base64" ? atob : decodeURIComponent,
+			binData= decoder( parts.pop() ),
+			mx= binData.length,
+			i= 0,
+			uiArr= new Uint8Array(mx);
+
+			for(i;i<mx;++i) uiArr[i]= binData.charCodeAt(i);
+
+			return new myBlob([uiArr], {type: type});
+		 }
+
+		function saver(url, winMode){
+
+			if ('download' in anchor) { //html5 A[download]
+				anchor.href = url;
+				anchor.setAttribute("download", fileName);
+				anchor.className = "download-js-link";
+				anchor.innerHTML = "downloading...";
+				anchor.style.display = "none";
+				document.body.appendChild(anchor);
+				setTimeout(function() {
+					anchor.click();
+					document.body.removeChild(anchor);
+					if(winMode===true){setTimeout(function(){ self.URL.revokeObjectURL(anchor.href);}, 250 );}
+				}, 66);
+				return true;
+			}
+
+			// handle non-a[download] safari as best we can:
+			if(/(Version)\/(\d+)\.(\d+)(?:\.(\d+))?.*Safari\//.test(navigator.userAgent)) {
+				if(/^data:/.test(url))	url="data:"+url.replace(/^data:([\w\/\-\+]+)/, defaultMime);
+				if(!window.open(url)){ // popup blocked, offer direct download:
+					if(confirm("Displaying New Document\n\nUse Save As... to download, then click back to return to this page.")){ location.href=url; }
+				}
+				return true;
+			}
+
+			//do iframe dataURL download (old ch+FF):
+			var f = document.createElement("iframe");
+			document.body.appendChild(f);
+
+			if(!winMode && /^data:/.test(url)){ // force a mime that will download:
+				url="data:"+url.replace(/^data:([\w\/\-\+]+)/, defaultMime);
+			}
+			f.src=url;
+			setTimeout(function(){ document.body.removeChild(f); }, 333);
+
+		}//end saver
+
+
+
+
+		if (navigator.msSaveBlob) { // IE10+ : (has Blob, but not a[download] or URL)
+			return navigator.msSaveBlob(blob, fileName);
+		}
+
+		if(self.URL){ // simple fast and modern way using Blob and URL:
+			saver(self.URL.createObjectURL(blob), true);
+		}else{
+			// handle non-Blob()+non-URL browsers:
+			if(typeof blob === "string" || blob.constructor===toString ){
+				try{
+					return saver( "data:" +  mimeType   + ";base64,"  +  self.btoa(blob)  );
+				}catch(y){
+					return saver( "data:" +  mimeType   + "," + encodeURIComponent(blob)  );
+				}
+			}
+
+			// Blob but not URL support:
+			reader=new FileReader();
+			reader.onload=function(e){
+				saver(this.result);
+			};
+			reader.readAsDataURL(blob);
+		}
+		return true;
+	}; /* end download() */
+}));
+
 
 /***/ }),
 

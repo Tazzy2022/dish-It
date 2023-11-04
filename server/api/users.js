@@ -54,7 +54,9 @@ const upload = multer({
 //GET "/api/users/id" get single user
 router.get("/:id", async (req, res, next) => {
   try {
-    const user = await User.findByPk(req.params.id);
+    const user = await User.findByPk(req.params.id, {
+      include: [{ model: Image }],
+    });
     res.send(user);
   } catch (ex) {
     res.status(404).json({
@@ -66,11 +68,14 @@ router.get("/:id", async (req, res, next) => {
 
 router.get("/:id/image", async (req, res, next) => {
   try {
+    console.log("req.params.id", req.params.id);
     const avatar = await Image.findOne({ where: { userId: req.params.id } });
-    res.set({
-      "Content-Type": avatar.file_mimetype,
-    });
-    res.sendFile(path.join(__dirname, "..", avatar.file_path));
+    // res.set({
+    //   "Content-Type": avatar.file_mimetype,
+    // });
+    // res.sendFile(path.join(__dirname, "..", avatar.file_path));
+    console.log("avatar", avatar);
+    res.send(avatar);
   } catch (ex) {
     res.status(404).json({
       message: "could not find user",
@@ -106,7 +111,7 @@ router.post("/:id/avatar", upload.single("file"), async (req, res, next) => {
     if (user) {
       res.send(
         await user.update({
-          title: req.file.originalname,
+          title: req.file.filename,
           file_path: req.file.path,
           file_mimetype: req.file.mimetype,
         })
