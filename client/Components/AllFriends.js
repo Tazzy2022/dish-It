@@ -7,7 +7,7 @@ const AllFriends = (props) => {
 <button>X</button>
           <img
             className="profile-img"
-            src={props.friend.imageUrl}
+            src={props.friend.imageData}
             alt="friend's image"
           />
           <p>{props.friend.username}</p>

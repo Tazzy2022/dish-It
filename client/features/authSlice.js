@@ -4,6 +4,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   user: {},
+  image: {},
   error: "",
   token: "",
   pendingFollows: [],
@@ -56,17 +57,38 @@ export const updateUserInfo = createAsyncThunk(
   }
 );
 
+export const getUserImage = createAsyncThunk(
+  "auth/getUserImage",
+  async ({ id, token }) => {
+    try {
+      const response = await axios.get(`/api/users/${id}/image`, {
+        headers: {
+          authorization: token,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
 export const updatePhoto = createAsyncThunk(
   "auth/updatePhoto",
   async (userInfo) => {
     try {
-      console.log("userInfo", userInfo.imageUrl);
-      const { data: updated } = await axios.put(
-        `/api/users/${userInfo.id}/avatar`,
-        userInfo.imageUrl,
+      console.log("userInfo", userInfo);
+
+      //   const formData = new FormData();
+      // formData.append("avatar", userInfo.avatar);
+
+      const { data: updated } = await axios.post(
+        `/api/users/${userInfo.userId}/avatar`,
+        userInfo.avatar,
         {
           headers: {
             authorization: userInfo.token,
+            // "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -130,6 +152,12 @@ const authSlice = createSlice({
       state.user = action.payload;
     });
     builder.addCase(registerUser.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(getUserImage.fulfilled, (state, action) => {
+      state.image = action.payload;
+    });
+    builder.addCase(getUserImage.rejected, (state, action) => {
       state.error = action.error.message;
     });
   },

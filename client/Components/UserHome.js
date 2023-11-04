@@ -42,7 +42,7 @@ const UserHome = () => {
       <section className="home-header-container">
         <img
           className="profile-img"
-          src={auth.user.imageUrl}
+          src={auth.user.image}
           alt="profile pic"
         />
         <p className="profile-name">{auth.user.username}'s lists...</p>

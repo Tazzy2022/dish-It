@@ -1,5 +1,3 @@
-//middleware to validate jwt for protected routes
-//and send back user info
 const User = require("../db/models/User");
 
 const validateToken = async (req, res, next) => {
@@ -16,4 +14,6 @@ const validateToken = async (req, res, next) => {
   }
 };
 
-module.exports = validateToken;
+module.exports =
+  validateToken;
+

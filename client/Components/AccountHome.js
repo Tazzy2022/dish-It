@@ -1,5 +1,6 @@
-import React, { useEffect, useState, createRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 import { getPendingFriends } from "../features/FriendsSlice";
 import { updatePhoto } from "../features/authSlice";
 import PendingCard from "./PendingCard";
@@ -9,7 +10,7 @@ const AccountHome = () => {
   const auth = useSelector((state) => state.auth);
   const friends = useSelector((state) => state.friends);
 
-  //const [file, setFile] = useState(null);
+  const [file, setFile] = useState(null);
 
   useEffect(() => {
     dispatch(
@@ -20,67 +21,41 @@ const AccountHome = () => {
     );
   }, []);
 
-  // const handleChange = (e) => {
-  //   const fr = new FileReader();
-  //   fr.readAsDataURL(e.target.files[0]);
-
-  //   fr.onload = () => {
-  //     //console.log("fr.result", fr.result)
-  //     setFile(fr.result);
-  //   };
-  // };
-
-  const fileInput = createRef();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.set("avatar", fileInput.current.files[0]);
+    formData.append("file", file);
+
     try {
-      await dispatch(
-        updatePhoto({
-          ...auth.user,
-          id: auth.user.id,
-          token: auth.token,
-          imageUrl: formData,
-        })
-      );
+      await axios.post(`/api/users/${auth.user.id}/avatar`, formData, {
+        headers: {
+          authorization: auth.token,
+        },
+      });
+
+      // await dispatch(
+      //   updatePhoto(
+      //     {
+      //       userId: auth.user.id,
+      //       token: auth.token,
+      //       image: upload
+      //     }
+      //   )
     } catch (error) {
       console.log(error);
     }
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   console.log("FILE", file);
-  //   try {
-  //     await dispatch(
-  //       updatePhoto({
-  //         ...auth.user,
-  //         id: auth.user.id,
-  //         token: auth.token,
-  //         imageUrl: file,
-  //       })
-  //     );
-  //   } catch (error) {
-  //     console.log("error");
-  //   }
-  // };
-
   return (
     <div>
       <h1 className="user-account-h1">{auth.user.username}'s account</h1>
-      <img
-        className="profile-img"
-        src={auth.user.imageUrl}
-        alt="personal image"
-      />
-      <form onSubmit={handleSubmit}>
+      {/* <img className="profile-img" src={auth.user.image} alt="personal image" /> */}
+      <form onSubmit={handleSubmit} method="POST" encType="multipart/form-data">
         <input
           type="file"
-          name="avatar"
-          ref={fileInput}
+          name="file"
           accept="image/*"
+          onChange={(e) => setFile(e.target.files[0])}
         />
         <label>update image</label>
         <button type="submit">submit</button>

@@ -23,7 +23,7 @@ const List = db.define("list", {
     type: BOOLEAN,
     defaultValue: false,
   },
-  imageUrl: {
+  image: {
     type: STRING,
     defaultValue:
       "https://image.shutterstock.com/image-photo/healthy-food-clean-eating-selection-260nw-722718097.jpg",

@@ -1,7 +1,6 @@
 const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
-const fileUpload = require("express-fileupload");
 const cors = require("cors");
 
 const app = express();
@@ -10,7 +9,6 @@ const app = express();
 app.use(morgan("dev"));
 
 app.use(cors());
-app.use(fileUpload());
 
 // body parsing middleware
 app.use(express.urlencoded({ extended: true }));
@@ -26,6 +24,7 @@ app.get("/", (req, res) =>
 
 // static file-serving middleware
 app.use(express.static(path.join(__dirname, "..", "public")));
+//app.use("uploads", express.static("./uploads"));
 
 // sends index.html
 app.use("*", (req, res) => {

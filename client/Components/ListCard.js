@@ -32,7 +32,7 @@ const ListCard = (props) => {
       <Link to={`/userlists/${props.list.id}`} className="list-card">
         <img
           className="card-img"
-          src={props.list.imageUrl}
+          src={props.list.image}
           alt="list background image"
         />
         <p>{props.list.listName}</p>

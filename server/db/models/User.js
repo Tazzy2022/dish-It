@@ -1,5 +1,5 @@
 const Sequelize = require("sequelize");
-const { UUID, UUIDV4, STRING, ARRAY } = Sequelize;
+const { UUID, UUIDV4, STRING, BLOB } = Sequelize;
 const db = require("../db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -49,19 +49,9 @@ const User = db.define(
         notEmpty: true,
       },
     },
-    imageUrl: {
-      type: STRING,
-      defaultValue:
-        "https://repository-images.githubusercontent.com/130118224/a2c75780-e0a9-11eb-8494-3581a0b1c93b",
-    },
-    // pendingFollowers: {
-    //   type: ARRAY(Sequelize.STRING),
-    //   defaultValue: null,
-    // },
-    // pendingFollows: {
-    //   type: ARRAY(Sequelize.STRING),
-    //   defaultValue: null,
-    // },
+    // image: {
+    //   type: STRING,
+    // }
   },
   {
     hooks: {

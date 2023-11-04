@@ -8648,9 +8648,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _features_FriendsSlice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../features/FriendsSlice */ "./client/features/FriendsSlice.js");
-/* harmony import */ var _features_authSlice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../features/authSlice */ "./client/features/authSlice.js");
-/* harmony import */ var _PendingCard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./PendingCard */ "./client/Components/PendingCard.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _features_FriendsSlice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../features/FriendsSlice */ "./client/features/FriendsSlice.js");
+/* harmony import */ var _features_authSlice__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../features/authSlice */ "./client/features/authSlice.js");
+/* harmony import */ var _PendingCard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./PendingCard */ "./client/Components/PendingCard.js");
+
 
 
 
@@ -8660,79 +8663,53 @@ const AccountHome = () => {
   const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
   const friends = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.friends);
-
-  //const [file, setFile] = useState(null);
-
+  const [file, setFile] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    dispatch((0,_features_FriendsSlice__WEBPACK_IMPORTED_MODULE_2__.getPendingFriends)({
+    dispatch((0,_features_FriendsSlice__WEBPACK_IMPORTED_MODULE_3__.getPendingFriends)({
       id: auth.user.id,
       token: auth.token
     }));
   }, []);
-
-  // const handleChange = (e) => {
-  //   const fr = new FileReader();
-  //   fr.readAsDataURL(e.target.files[0]);
-
-  //   fr.onload = () => {
-  //     //console.log("fr.result", fr.result)
-  //     setFile(fr.result);
-  //   };
-  // };
-
-  const fileInput = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createRef)();
   const handleSubmit = async e => {
     e.preventDefault();
     const formData = new FormData();
-    formData.set("avatar", fileInput.current.files[0]);
+    formData.append("file", file);
     try {
-      await dispatch((0,_features_authSlice__WEBPACK_IMPORTED_MODULE_3__.updatePhoto)({
-        ...auth.user,
-        id: auth.user.id,
-        token: auth.token,
-        imageUrl: formData
-      }));
+      await axios__WEBPACK_IMPORTED_MODULE_2___default().post(`/api/users/${auth.user.id}/avatar`, formData, {
+        headers: {
+          authorization: auth.token
+        }
+      });
+
+      // await dispatch(
+      //   updatePhoto(
+      //     {
+      //       userId: auth.user.id,
+      //       token: auth.token,
+      //       image: upload
+      //     }
+      //   )
     } catch (error) {
       console.log(error);
     }
   };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   console.log("FILE", file);
-  //   try {
-  //     await dispatch(
-  //       updatePhoto({
-  //         ...auth.user,
-  //         id: auth.user.id,
-  //         token: auth.token,
-  //         imageUrl: file,
-  //       })
-  //     );
-  //   } catch (error) {
-  //     console.log("error");
-  //   }
-  // };
-
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", {
     className: "user-account-h1"
-  }, auth.user.username, "'s account"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    className: "profile-img",
-    src: auth.user.imageUrl,
-    alt: "personal image"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
-    onSubmit: handleSubmit
+  }, auth.user.username, "'s account"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
+    onSubmit: handleSubmit,
+    method: "POST",
+    encType: "multipart/form-data"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: "file",
-    name: "avatar",
-    ref: fileInput,
-    accept: "image/*"
+    name: "file",
+    accept: "image/*",
+    onChange: e => setFile(e.target.files[0])
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "update image"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     type: "submit"
   }, "submit")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "pending follow requests:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
     className: "follow-req-container"
   }, friends?.friendRequests?.length > 0 && friends?.friendRequests.map((friend, index) => {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_PendingCard__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_PendingCard__WEBPACK_IMPORTED_MODULE_5__["default"], {
       key: index,
       friend: friend
     });
@@ -9046,7 +9023,7 @@ __webpack_require__.r(__webpack_exports__);
 const AllFriends = props => {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "X"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: "profile-img",
-    src: props.friend.imageUrl,
+    src: props.friend.imageData,
     alt: "friend's image"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.friend.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.friend.city, ", ", props.friend.state));
 };
@@ -9612,7 +9589,7 @@ const FriendModal = props => {
     className: "modal-content"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Do you want to add ", props.friend.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: "profile-img",
-    src: props.friend.imageUrl,
+    src: props.friend.imageData,
     alt: "friend's image"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.friend.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.friend.city, ", ", props.friend.state)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: "modalbtn",
@@ -9901,7 +9878,7 @@ const ListCard = props => {
     className: "list-card"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: "card-img",
-    src: props.list.imageUrl,
+    src: props.list.image,
     alt: "list background image"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.list.listName)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: () => removeList(props.list.id)
@@ -10140,8 +10117,9 @@ __webpack_require__.r(__webpack_exports__);
 
 const PendingCard = props => {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "X"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    className: "profile-img",
-    src: props.friend.imageUrl,
+    className: "profile-img"
+    // src={props.friend.imageData}
+    ,
     alt: "friend's image"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.friend.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.friend.city, ", ", props.friend.state), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", null, "+"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "accept"));
 };
@@ -10547,7 +10525,7 @@ const UserHome = () => {
     className: "home-header-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: "profile-img",
-    src: auth.user.imageUrl,
+    src: auth.user.image,
     alt: "profile pic"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "profile-name"
@@ -11065,14 +11043,20 @@ const updateUserInfo = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAs
 });
 const updatePhoto = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("auth/updatePhoto", async userInfo => {
   try {
-    console.log("userInfo", userInfo.imageUrl);
+    console.log("userInfo", userInfo);
+
+    //   const formData = new FormData();
+    // formData.append("avatar", userInfo.avatar);
+
     const {
       data: updated
-    } = await axios__WEBPACK_IMPORTED_MODULE_0___default().put(`/api/users/${userInfo.id}/avatar`, userInfo.imageUrl, {
+    } = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`/api/users/${userInfo.userId}/avatar`, userInfo.avatar, {
       headers: {
         authorization: userInfo.token
+        // "Content-Type": "multipart/form-data",
       }
     });
+
     return updated;
   } catch (error) {
     return error.message;

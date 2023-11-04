@@ -31,7 +31,7 @@ const FriendModal = (props) => {
             <p>Do you want to add {props.friend.email}</p>
             <img
               className="profile-img"
-              src={props.friend.imageUrl}
+              src={props.friend.imageData}
               alt="friend's image"
             />
             <p>{props.friend.username}</p>
