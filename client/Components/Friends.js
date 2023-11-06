@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AllFriends from "./AllFriends";
 import { getFriendsList, inviteFriends } from "../features/FriendsSlice";
 import FriendModal from "./FriendModal";
+import ErrorModal from "./ErrorModal"
 
 const Friends = () => {
   const dispatch = useDispatch();
@@ -11,6 +12,8 @@ const Friends = () => {
 
   const [email, setEmail] = useState({ email: "" });
   const [popUpSeen, setPopUpSeen] = useState(false);
+  const [error, setErrorModal] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("")
 
   let tempEmail;
 
@@ -39,12 +42,12 @@ const Friends = () => {
       (friend) => friend.email === email.email
     );
     if (found) {
-      //throw this info into a modal
-      console.log("Oops. it looks like you're already friends with that user");
+      setErrorMessage("Oops. it looks like you're already friends with that user")
+      setErrorModal(true)
       setEmail({ email: "" });
     } else if (email.email === auth.user.email) {
-      //throw this info into a modal
-      console.log("Sorry, you can't add yourself as a friend");
+      setErrorModal(true)
+      setErrorMessage("Sorry, you can't add yourself as a friend")
     } else {
       findFriend();
     }
@@ -86,6 +89,9 @@ const Friends = () => {
       </form>
       {popUpSeen && (
         <FriendModal openPopUp={setPopUpSeen} friend={friends.friendInvited} />
+      )}
+      {error && (
+        <ErrorModal openErrorModal={setErrorModal} content={errorMessage}/>
       )}
       <main>
         <h1>Friends on Dish it :</h1>

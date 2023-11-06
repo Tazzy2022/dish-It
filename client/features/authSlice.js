@@ -1,11 +1,11 @@
 import axios from "axios";
-import download from 'downloadjs';
+//import download from 'downloadjs';
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   user: {},
-  image: {},
+  // image: {},
   error: "",
   token: "",
   pendingFollows: [],
@@ -58,31 +58,31 @@ export const updateUserInfo = createAsyncThunk(
   }
 );
 
-export const getUserImage = createAsyncThunk(
-  "auth/getUserImage",
-  async ({ id, token }) => {
-    console.log("ID", id, token);
-    try {
-      const response = await axios.get(
-        `/api/users/${id}/image`,
-        {
-          headers: {
-            authorization: token,
-          },
-        },
-        { responseType: "blob" }
-      );
-      console.log("response.data", response.data);
+// export const getUserImage = createAsyncThunk(
+//   "auth/getUserImage",
+//   async ({ id, token }) => {
+//     console.log("ID", id, token);
+//     try {
+//       const response = await axios.get(
+//         `/api/users/${id}/image`,
+//         {
+//           headers: {
+//             authorization: token,
+//           },
+//         },
+//         { responseType: "blob" }
+//       );
+//       console.log("response.data", response.data);
 
       // const split = response.data.file_path.split('/');
       // const filename = split[split.length - 1];
       // response.send(download(response.data, filename, response.data.file_mimetype));
       //return response.data;
-    } catch (error) {
-      return error.message;
-    }
-  }
-);
+//     } catch (error) {
+//       return error.message;
+//     }
+//   }
+// );
 
 export const updatePhoto = createAsyncThunk(
   "auth/updatePhoto",
@@ -137,7 +137,6 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.user = action.payload;
-      state.image = action.payload;
     });
     builder.addCase(getUser.rejected, (state, action) => {
       state.error = action.error.message;
@@ -166,12 +165,12 @@ const authSlice = createSlice({
     builder.addCase(registerUser.rejected, (state, action) => {
       state.error = action.error.message;
     });
-    builder.addCase(getUserImage.fulfilled, (state, action) => {
-      state.image = action.payload;
-    });
-    builder.addCase(getUserImage.rejected, (state, action) => {
-      state.error = action.error.message;
-    });
+    // builder.addCase(getUserImage.fulfilled, (state, action) => {
+    //   state.image = action.payload;
+    // });
+    // builder.addCase(getUserImage.rejected, (state, action) => {
+    //   state.error = action.error.message;
+    // });
   },
 });
 

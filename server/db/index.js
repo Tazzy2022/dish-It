@@ -14,8 +14,8 @@ List.hasMany(RestaurantNotes);
 RestaurantNotes.belongsTo(List);
 Friend.belongsTo(User);
 User.hasMany(Friend, { foreignKey: "friendId" });
-User.hasOne(Image)
-Image.belongsTo(User)
+// User.hasOne(Image)
+// Image.belongsTo(User)
 
 module.exports = {
   db,
@@ -23,5 +23,5 @@ module.exports = {
   RestaurantNotes,
   List,
   Friend,
-  Image
+ // Image
 };

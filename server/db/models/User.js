@@ -49,9 +49,9 @@ const User = db.define(
         notEmpty: true,
       },
     },
-    // image: {
-    //   type: STRING,
-    // }
+    image: {
+      type: STRING,
+    }
   },
   {
     hooks: {

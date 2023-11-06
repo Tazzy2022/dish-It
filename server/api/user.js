@@ -2,7 +2,7 @@ const router = require("express").Router();
 const BASE_URL = "https://api.yelp.com/v3/businesses/";
 const needle = require("needle");
 require("dotenv").config();
-const { User, List, RestaurantNotes, Friend, Image } = require("../db/index");
+const { User, List, RestaurantNotes, Friend } = require("../db/index");
 const Sequelize = require("sequelize");
 
 ///NEW "/api/user/:id/friends  get all friends
@@ -19,8 +19,8 @@ router.get("/:id/friends", async (req, res, next) => {
       where: {
         id: allFriends,
       },
-      attributes: ["username", "city", "state", "email"],
-      include: [{ model: Image }],
+      attributes: ["username", "city", "state", "email", "image"],
+      // include: [{ model: Image }],
     });
     res.send(result);
   } catch (err) {
@@ -38,8 +38,8 @@ router.get("/friend/:email", async (req, res, next) => {
   try {
     const newFollow = await User.findOne({
       where: { email: req.params.email },
-      attributes: ["username", "city", "state", "email"],
-      include: [{ model: Image }],
+      attributes: ["username", "city", "state", "email", "image"],
+      // include: [{ model: Image }],
     });
     res.send(newFollow);
   } catch (err) {
@@ -82,8 +82,8 @@ router.get("/:id/pendingfollowers", async (req, res, next) => {
       where: {
         id: allpending,
       },
-      attributes: ["username", "city", "state", "email"],
-     include: [{ model: Image }],
+      attributes: ["username", "city", "state", "email", "image"],
+    //  include: [{ model: Image }],
     });
     res.send(result);
   } catch (err) {
@@ -278,8 +278,8 @@ router.get("/:id/lists", async (req, res, next) => {
     const lists = await List.findAll({
       where: { userId: req.params.id },
       include: [
-        { model: User, attributes: ["username"]
-        , include: [{ model: Image }]
+        { model: User, attributes: ["username", "image"]
+        // , include: [{ model: Image }]
       },
       ],
     });

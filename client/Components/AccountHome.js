@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { getPendingFriends } from "../features/FriendsSlice";
-import { updatePhoto, getUserImage } from "../features/authSlice";
+import { updatePhoto, getUser } from "../features/authSlice";
 import PendingCard from "./PendingCard";
 
 const AccountHome = () => {
@@ -19,12 +19,12 @@ const AccountHome = () => {
         token: auth.token,
       })
     );
-    dispatch(
-      getUserImage({
-        id: auth.user.id,
-        token: auth.token,
-      })
-    );
+    // dispatch(
+    //   getUserImage({
+    //     id: auth.user.id,
+    //     token: auth.token,
+    //   })
+    // );
   }, []);
 
   const handleSubmit = async (e) => {
@@ -38,12 +38,12 @@ const AccountHome = () => {
           authorization: auth.token,
         },
       });
-      await dispatch(
-        getUserImage({
-          id: auth.user.id,
-          token: auth.token,
-        })
-      );
+      // await dispatch(
+      //   getUser({
+      //     id: auth.user.id,
+      //     token: auth.token,
+      //   })
+      // );
     } catch (error) {
       console.log(error);
     }
@@ -52,7 +52,7 @@ const AccountHome = () => {
   return (
     <div>
       <h1 className="user-account-h1">{auth.user.username}'s account</h1>
-      {/* <img className="profile-img" src={auth.user.image} alt="personal image" /> */}
+      <img className="profile-img" src={auth.user.image} alt="personal image" />
       {/* <img
         className="profile-img"
         src={auth.image.title}
