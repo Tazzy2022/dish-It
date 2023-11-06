@@ -44,9 +44,10 @@ export const inviteFriends = createAsyncThunk(
 
 export const sendFriendRequest = createAsyncThunk(
   "friends/sendFriendRequest",
-  async ({ token, id, userId }) => {
+  async ({ token, id, userEmail }) => {
+    console.log("ID", id, "userEmail", userEmail);
     try {
-      const response = await axios.post(`/api/user/${id}/friendReq`, userId, {
+      const response = await axios.post(`/api/user/${id}/friendReq`, userEmail, {
         headers: {
           authorization: token,
         },
@@ -94,11 +95,15 @@ export const deleteFriend = createAsyncThunk(
   "friends/deleteFriend",
   async ({ token, id, friendId }) => {
     try {
-      const response = await axios.put(`/api/user/${id}/deleteFriend`, friendId, {
-        headers: {
-          authorization: token,
-        },
-      });
+      const response = await axios.put(
+        `/api/user/${id}/deleteFriend`,
+        friendId,
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
       return response.data;
     } catch (error) {
       return error.message;
@@ -124,8 +129,8 @@ const FriendsSlice = createSlice({
       state.error = action.error.message;
     });
     builder.addCase(sendFriendRequest.fulfilled, (state, action) => {
-      state.friendInvited = initialState
-      state.message = "your friend request has been sent"
+      state.friendInvited = initialState;
+      state.message = "your friend request has been sent";
     });
     builder.addCase(sendFriendRequest.rejected, (state, action) => {
       state.error = action.error.message;
@@ -137,13 +142,13 @@ const FriendsSlice = createSlice({
       state.error = action.error.message;
     });
     builder.addCase(acceptFriendRequest.fulfilled, (state, action) => {
-      state.message = "added new friend"
+      state.message = "added new friend";
     });
     builder.addCase(acceptFriendRequest.rejected, (state, action) => {
       state.error = action.error.message;
     });
     builder.addCase(deleteFriend.fulfilled, (state, action) => {
-      state.message = "that friend was removed from your list"
+      state.message = "that friend was removed from your list";
     });
     builder.addCase(deleteFriend.rejected, (state, action) => {
       state.error = action.error.message;

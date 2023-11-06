@@ -1,21 +1,28 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sendFriendRequest } from "../features/FriendsSlice";
+import ContentModal from "./ContentModal";
 
 const FriendModal = (props) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const friends = useSelector((state) => state.friends);
 
+  const [contentModal, setContentModal] = useState(false);
+  const [content, setContent] = useState("");
+
   const sendInvite = async () => {
+    console.log("friends.friendInvited", friends.friendInvited);
     props.openPopUp(false);
     await dispatch(
       sendFriendRequest({
         token: auth.token,
         id: auth.user.id,
-        userId: friends.friendInvited.id,
+        userEmail: friends.friendInvited.email,
       })
     );
+    setContentModal(true);
+    setContent("Your request has been sent!");
   };
 
   return (
@@ -44,6 +51,9 @@ const FriendModal = (props) => {
             <label>send friend request</label>
           </div>
         </main>
+        {contentModal && (
+          <ContentModal openContentModal={setContentModal} content={content} />
+        )}
       </div>
     </div>
   );

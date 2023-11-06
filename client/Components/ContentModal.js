@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const ErrorModal = (props) => {
+const ContentModal = (props) => {
 
 	return (
 		<div>
@@ -20,4 +20,4 @@ const ErrorModal = (props) => {
 	)
 }
 
-export default ErrorModal
+export default ContentModal

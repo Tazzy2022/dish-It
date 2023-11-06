@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AllFriends from "./AllFriends";
 import { getFriendsList, inviteFriends } from "../features/FriendsSlice";
 import FriendModal from "./FriendModal";
-import ErrorModal from "./ErrorModal"
+import ContentModal from "./ContentModal"
 
 const Friends = () => {
   const dispatch = useDispatch();
@@ -42,10 +42,11 @@ const Friends = () => {
       (friend) => friend.email === email.email
     );
     if (found) {
+      setEmail({ email: "" });
       setErrorMessage("Oops. it looks like you're already friends with that user")
       setErrorModal(true)
-      setEmail({ email: "" });
     } else if (email.email === auth.user.email) {
+      setEmail({ email: "" });
       setErrorModal(true)
       setErrorMessage("Sorry, you can't add yourself as a friend")
     } else {
@@ -91,7 +92,7 @@ const Friends = () => {
         <FriendModal openPopUp={setPopUpSeen} friend={friends.friendInvited} />
       )}
       {error && (
-        <ErrorModal openErrorModal={setErrorModal} content={errorMessage}/>
+        <ContentModal openErrorModal={setErrorModal} content={errorMessage}/>
       )}
       <main>
         <h1>Friends on Dish it :</h1>

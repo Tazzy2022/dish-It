@@ -1,33 +1,6 @@
 const router = require("express").Router();
 const multer = require("multer");
-//const upload = multer({ dest: "public/uploads" });
-const fs = require("fs");
-const path = require("path");
 const { User } = require("../db/index");
-
-// const storage = multer.diskStorage({
-//   destination: (req, res, callback) => {
-//     callback(null, "public/Images");
-//   },
-//   filename: (req, file, callback) => {
-//     callback(null, Date.now() + path.extname(file.orginalname));
-//   },
-// });
-
-// const upload = multer({
-//   storage: storage,
-//   limits: { fileSize: "1000000" },
-//   fileFilter: (req, file, callback) => {
-//     const fileTypes = /jpeg|jpg|png|gif/;
-//     const mimeType = fileTypes.test(file.mimetype);
-//     const extname = fileTypes.test(path.extname(file.originalname));
-
-//     if (mimeType && extname) {
-//       return callback(null, true);
-//     }
-//     callback("Give proper files formate to upload");
-//   },
-// }).single("file");
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -98,12 +71,6 @@ router.put("/:id", async (req, res, next) => {
     });
   }
 });
-
-// router.post(
-//   "/:id/avatar",
-//   upload.single("avatar"),
-//   imageController.uploadFiles
-// );
 
 //POST "/api/users/:id/avatar"  update user account info
 router.post("/:id/avatar", upload.single("file"), async (req, res, next) => {

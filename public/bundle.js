@@ -9223,10 +9223,10 @@ const AuthContainer = () => {
 
 /***/ }),
 
-/***/ "./client/Components/ErrorModal.js":
-/*!*****************************************!*\
-  !*** ./client/Components/ErrorModal.js ***!
-  \*****************************************/
+/***/ "./client/Components/ContentModal.js":
+/*!*******************************************!*\
+  !*** ./client/Components/ContentModal.js ***!
+  \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -9237,7 +9237,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
-const ErrorModal = props => {
+const ContentModal = props => {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "modalBackground"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", {
@@ -9251,7 +9251,7 @@ const ErrorModal = props => {
     className: "modal-content"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.content)))));
 };
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ErrorModal);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ContentModal);
 
 /***/ }),
 
@@ -9600,6 +9600,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _features_FriendsSlice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../features/FriendsSlice */ "./client/features/FriendsSlice.js");
+/* harmony import */ var _ContentModal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ContentModal */ "./client/Components/ContentModal.js");
+
 
 
 
@@ -9607,13 +9609,18 @@ const FriendModal = props => {
   const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
   const friends = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.friends);
+  const [contentModal, setContentModal] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [content, setContent] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
   const sendInvite = async () => {
+    console.log("friends.friendInvited", friends.friendInvited);
     props.openPopUp(false);
     await dispatch((0,_features_FriendsSlice__WEBPACK_IMPORTED_MODULE_2__.sendFriendRequest)({
       token: auth.token,
       id: auth.user.id,
-      userId: friends.friendInvited.id
+      userEmail: friends.friendInvited.email
     }));
+    setContentModal(true);
+    setContent("Your request has been sent!");
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "modalBackground"
@@ -9633,7 +9640,10 @@ const FriendModal = props => {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.friend.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.friend.city, ", ", props.friend.state)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: "modalbtn",
     onClick: () => sendInvite()
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "send friend request")))));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "send friend request"))), contentModal && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ContentModal__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    openContentModal: setContentModal,
+    content: content
+  })));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FriendModal);
 
@@ -9656,7 +9666,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AllFriends__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AllFriends */ "./client/Components/AllFriends.js");
 /* harmony import */ var _features_FriendsSlice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../features/FriendsSlice */ "./client/features/FriendsSlice.js");
 /* harmony import */ var _FriendModal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FriendModal */ "./client/Components/FriendModal.js");
-/* harmony import */ var _ErrorModal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ErrorModal */ "./client/Components/ErrorModal.js");
+/* harmony import */ var _ContentModal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ContentModal */ "./client/Components/ContentModal.js");
 
 
 
@@ -9692,12 +9702,15 @@ const Friends = () => {
     tempEmail = email.email;
     const found = friends.friends.find(friend => friend.email === email.email);
     if (found) {
-      setErrorMessage("Oops. it looks like you're already friends with that user");
-      setErrorModal(true);
       setEmail({
         email: ""
       });
+      setErrorMessage("Oops. it looks like you're already friends with that user");
+      setErrorModal(true);
     } else if (email.email === auth.user.email) {
+      setEmail({
+        email: ""
+      });
       setErrorModal(true);
       setErrorMessage("Sorry, you can't add yourself as a friend");
     } else {
@@ -9735,7 +9748,7 @@ const Friends = () => {
   }, "submit")), popUpSeen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_FriendModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
     openPopUp: setPopUpSeen,
     friend: friends.friendInvited
-  }), error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ErrorModal__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }), error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ContentModal__WEBPACK_IMPORTED_MODULE_5__["default"], {
     openErrorModal: setErrorModal,
     content: errorMessage
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Friends on Dish it :"), friends?.friends.length > 0 && friends.friends.map((friend, index) => {
@@ -10742,10 +10755,11 @@ const inviteFriends = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsy
 const sendFriendRequest = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("friends/sendFriendRequest", async ({
   token,
   id,
-  userId
+  userEmail
 }) => {
+  console.log("ID", id, "userEmail", userEmail);
   try {
-    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`/api/user/${id}/friendReq`, userId, {
+    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`/api/user/${id}/friendReq`, userEmail, {
       headers: {
         authorization: token
       }

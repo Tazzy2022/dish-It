@@ -51,10 +51,12 @@ router.get("/friend/:email", async (req, res, next) => {
 //POST "/api/user/:id/friendReq send friend request to user
 router.post("/:id/friendReq", async (req, res, next) => {
   try {
+    console.log("req.body", req.body, "req.params.id", req.params.id);
+    const user = User.findOne({ where: { email: req.body.userEmail } });
     //get user to follow
     await Friend.create({
-      userId: req.body.id,
-      friendId: req.params.id,
+      userId: req.body.userId,
+      friendId: user.id,
       pending: true,
     });
     //send back my updated pending follows array as response
@@ -83,7 +85,7 @@ router.get("/:id/pendingfollowers", async (req, res, next) => {
         id: allpending,
       },
       attributes: ["username", "city", "state", "email", "image"],
-    //  include: [{ model: Image }],
+      //  include: [{ model: Image }],
     });
     res.send(result);
   } catch (err) {
@@ -278,9 +280,11 @@ router.get("/:id/lists", async (req, res, next) => {
     const lists = await List.findAll({
       where: { userId: req.params.id },
       include: [
-        { model: User, attributes: ["username", "image"]
-        // , include: [{ model: Image }]
-      },
+        {
+          model: User,
+          attributes: ["username", "image"],
+          // , include: [{ model: Image }]
+        },
       ],
     });
     res.send(lists);
