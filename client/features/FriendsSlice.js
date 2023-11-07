@@ -4,7 +4,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   friends: [],
-  friendInvited: {},
+  //friendInvited: {},
   friendRequests: [],
   message: "",
   error: "",
@@ -45,7 +45,6 @@ export const inviteFriends = createAsyncThunk(
 export const sendFriendRequest = createAsyncThunk(
   "friends/sendFriendRequest",
   async ({ token, id, userEmail }) => {
-    console.log("ID", id, "userEmail", userEmail);
     try {
       const response = await axios.post(`/api/user/${id}/friendReq`, userEmail, {
         headers: {

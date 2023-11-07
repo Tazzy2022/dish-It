@@ -9612,12 +9612,11 @@ const FriendModal = props => {
   const [contentModal, setContentModal] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [content, setContent] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
   const sendInvite = async () => {
-    console.log("friends.friendInvited", friends.friendInvited);
     props.openPopUp(false);
     await dispatch((0,_features_FriendsSlice__WEBPACK_IMPORTED_MODULE_2__.sendFriendRequest)({
       token: auth.token,
       id: auth.user.id,
-      userEmail: friends.friendInvited.email
+      userEmail: props.friend.email
     }));
     setContentModal(true);
     setContent("Your request has been sent!");
@@ -10717,7 +10716,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const initialState = {
   friends: [],
-  friendInvited: {},
+  //friendInvited: {},
   friendRequests: [],
   message: "",
   error: ""
@@ -10757,7 +10756,6 @@ const sendFriendRequest = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.creat
   id,
   userEmail
 }) => {
-  console.log("ID", id, "userEmail", userEmail);
   try {
     const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`/api/user/${id}/friendReq`, userEmail, {
       headers: {

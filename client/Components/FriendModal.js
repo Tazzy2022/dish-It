@@ -12,13 +12,12 @@ const FriendModal = (props) => {
   const [content, setContent] = useState("");
 
   const sendInvite = async () => {
-    console.log("friends.friendInvited", friends.friendInvited);
     props.openPopUp(false);
     await dispatch(
       sendFriendRequest({
         token: auth.token,
         id: auth.user.id,
-        userEmail: friends.friendInvited.email,
+        userEmail: props.friend.email,
       })
     );
     setContentModal(true);

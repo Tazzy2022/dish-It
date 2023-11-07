@@ -51,12 +51,12 @@ router.get("/friend/:email", async (req, res, next) => {
 //POST "/api/user/:id/friendReq send friend request to user
 router.post("/:id/friendReq", async (req, res, next) => {
   try {
-    console.log("req.body", req.body, "req.params.id", req.params.id);
-    const user = User.findOne({ where: { email: req.body.userEmail } });
+    const userEmail = Object.keys(req.body).toString();
+    const user = await User.findOne({ where: { email: userEmail } });
     //get user to follow
     await Friend.create({
-      userId: req.body.userId,
-      friendId: user.id,
+      userId: user.id,
+      friendId: req.params.id,
       pending: true,
     });
     //send back my updated pending follows array as response
