@@ -166,6 +166,25 @@ router.get("/:id/lists", async (req, res, next) => {
   }
 });
 
+//GET "/api/user/friend/:friendEmail/lists
+router.get("/friend/:friendEmail/lists", async (req, res, next) => {
+  try {
+    const friend = await User.findOne({
+      where: { email: req.params.friendEmail },
+    });
+    const lists = await List.findAll({
+      where: { userId: friend.id },
+    });
+    res.send(lists);
+  } catch (err) {
+    res.status(404).json({
+      message: "could not find lists",
+      error: err.message,
+    });
+    next(err);
+  }
+});
+
 //POST "/api/user/:id/list  create new list
 router.post("/:id/list", async (req, res, next) => {
   try {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AllFriends from "./AllFriends";
-import { getFriendsList, inviteFriends } from "../features/FriendsSlice";
+import { getFriendsList, findFriend } from "../features/FriendsSlice";
 import FriendModal from "./FriendModal";
 import ContentModal from "./ContentModal";
 
@@ -52,15 +52,15 @@ const Friends = () => {
       setErrorModal(true);
       setErrorMessage("Sorry, you can't add yourself as a friend");
     } else {
-      findFriend();
+      getFriend();
     }
     setEmail({ email: "" });
   };
 
-  const findFriend = async () => {
+  const getFriend = async () => {
     try {
       const invite = await dispatch(
-        inviteFriends({
+        findFriend({
           token: auth.token,
           email: email,
         })
@@ -88,7 +88,7 @@ const Friends = () => {
         <button type="submit">submit</button>
       </form>
       {popUpSeen && (
-        <FriendModal openPopUp={setPopUpSeen} friend={friends.friendInvited} />
+        <FriendModal openPopUp={setPopUpSeen} friend={friends.friend} />
       )}
       {error && (
         <ContentModal openErrorModal={setErrorModal} content={errorMessage} />

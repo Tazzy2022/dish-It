@@ -6,7 +6,7 @@ import singleListReducer from "./features/singleListSlice";
 import allRestaurantsReducer from "./features/allRestaurantsSlice";
 import searchReducer from "./features/searchSlice";
 import FriendsReducer from "./features/FriendsSlice";
-import singleFriendReducer from "./features/singleFriendSlice";
+//import friendsListsReducer from "./features/singleFriendSlice";
 import logger from "redux-logger";
 import thunk from "redux-thunk";
 
@@ -17,7 +17,7 @@ const store = configureStore({
     list: singleListReducer,
     search: searchReducer,
     friends: FriendsReducer,
-    singleFriend: singleFriendReducer,
+    //singleFriendLists: friendsListsReducer,
     // restaurant: singleRestaurantReducer,
     restaurants: allRestaurantsReducer,
   },

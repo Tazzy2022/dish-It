@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { inviteFriends } from "../features/FriendsSlice";
-import { getSingleFriendLists } from "../features/singleFriendSlice";
+import { findFriend, getSingleFriendsLists } from "../features/FriendsSlice";
 import ListCard from "./ListCard";
 
 const FriendHome = () => {
@@ -12,22 +11,21 @@ const FriendHome = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log("friendEmail", friendEmail);
-
   useEffect(() => {
-    dispatch(
-      inviteFriends({
-        token: auth.token,
-        email: friendEmail,
-      })
-    );
+		console.log("friendEmail.email in find friend dispatch", friendEmail.email)
+    // dispatch(
+    //   findFriend({
+    //     token: auth.token,
+    //     email: friendEmail.email,
+    //   })
+    // );
     const getList = async () => {
       try {
         setIsLoading(true);
         await dispatch(
-          getSingleFriendLists({
+          getSingleFriendsLists({
             token: auth.token,
-            friendEmail: friendEmail,
+            friendEmail: friendEmail.email,
           })
         );
       } catch (error) {
@@ -39,13 +37,36 @@ const FriendHome = () => {
     getList();
   }, []);
 
-  const friendLists = useSelector((state) => state.singleFriend);
+  const friends = useSelector((state) => state.friends);
 
   if (isLoading) {
     return <div className="loading-p">Loading...</div>;
   }
 
-  return <div></div>;
+  console.log("friends.friendsLists", friends.friendsLists);
+
+  return (
+    <div>
+      <section className="home-header-container">
+        <img
+          className="profile-img"
+          src={friends.friend.image}
+          alt="profile pic"
+        />
+        <p className="profile-name">{friends.friend.name}'s lists...</p>
+      </section>
+      {friends.friendsLists?.length === 0 ? (
+        <div>
+          <p>no saved lists yet...</p>
+        </div>
+      ) : (
+        friends.friendsLists?.length > 0 && <p>friends lists get mapped here</p>
+        // friendLists?.map((list) => {
+        //   return <ListCard key={list.id} list={list} auth={auth} />;
+        // })
+      )}
+    </div>
+  );
 };
 
 export default FriendHome;

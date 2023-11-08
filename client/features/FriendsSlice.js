@@ -4,8 +4,9 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   friends: [],
-  friendInvited: {},
+  friend: {},
   friendRequests: [],
+  friendsLists: [],
   message: "",
   error: "",
 };
@@ -27,8 +28,9 @@ export const getFriendsList = createAsyncThunk(
 );
 
 //need to add clause to handle email to get user
-export const inviteFriends = createAsyncThunk(
-  "friends/inviteFriends",
+export const findFriend = createAsyncThunk(
+  //export const inviteFriends = createAsyncThunk(
+  "friends/findFriend",
   async ({ token, email }) => {
     try {
       const response = await axios.get(`/api/user/friend/${email.email}`, {
@@ -119,6 +121,22 @@ export const deleteFriend = createAsyncThunk(
   }
 );
 
+export const getSingleFriendsLists = createAsyncThunk(
+  "singleFriend/getSingleFriendsLists",
+  async ({ token, friendEmail }) => {
+    try {
+      const response = await axios.get(`/api/user/friend/${friendEmail}/lists`, {
+        headers: {
+          authorization: token,
+        },
+      });
+      return response?.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
 const FriendsSlice = createSlice({
   name: "friends",
   initialState,
@@ -130,14 +148,14 @@ const FriendsSlice = createSlice({
     builder.addCase(getFriendsList.rejected, (state, action) => {
       state.error = action.error.message;
     });
-    builder.addCase(inviteFriends.fulfilled, (state, action) => {
-      state.friendInvited = action.payload;
+    builder.addCase(findFriend.fulfilled, (state, action) => {
+      state.friend = action.payload;
     });
-    builder.addCase(inviteFriends.rejected, (state, action) => {
+    builder.addCase(findFriend.rejected, (state, action) => {
       state.error = action.error.message;
     });
     builder.addCase(sendFriendRequest.fulfilled, (state, action) => {
-      state.friendInvited = initialState;
+      state.friend = initialState;
       state.message = "your friend request has been sent";
     });
     builder.addCase(sendFriendRequest.rejected, (state, action) => {
@@ -160,6 +178,12 @@ const FriendsSlice = createSlice({
     });
     builder.addCase(deleteFriend.rejected, (state, action) => {
       state.error = action.error.message;
+    });
+    builder.addCase(getSingleFriendsLists.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(getSingleFriendsLists.fulfilled, (state, action) => {
+      state.friendsLists = action.payload
     });
   },
 });
