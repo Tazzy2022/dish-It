@@ -17,7 +17,8 @@ const FriendModal = (props) => {
       sendFriendRequest({
         token: auth.token,
         id: auth.user.id,
-        userEmail: props.friend.email,
+        userEmail: friends.friendInvited.email,
+        //userEmail: props.friend.email,
       })
     );
     setContentModal(true);
@@ -46,7 +47,7 @@ const FriendModal = (props) => {
             </p>
           </section>
           <div>
-            <button className="modalbtn" onClick={() => sendInvite()}></button>
+            <button className="modalbtn" onClick={() => sendInvite()}>+</button>
             <label>send friend request</label>
           </div>
         </main>

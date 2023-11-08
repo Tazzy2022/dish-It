@@ -4,7 +4,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   friends: [],
-  //friendInvited: {},
+  friendInvited: {},
   friendRequests: [],
   message: "",
   error: "",
@@ -26,6 +26,7 @@ export const getFriendsList = createAsyncThunk(
   }
 );
 
+//need to add clause to handle email to get user
 export const inviteFriends = createAsyncThunk(
   "friends/inviteFriends",
   async ({ token, email }) => {
@@ -46,11 +47,15 @@ export const sendFriendRequest = createAsyncThunk(
   "friends/sendFriendRequest",
   async ({ token, id, userEmail }) => {
     try {
-      const response = await axios.post(`/api/user/${id}/friendReq`, userEmail, {
-        headers: {
-          authorization: token,
-        },
-      });
+      const response = await axios.post(
+        `/api/user/${id}/friendReq`,
+        userEmail,
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
       return response.data;
     } catch (error) {
       return error.message;
@@ -76,13 +81,17 @@ export const getPendingFriends = createAsyncThunk(
 
 export const acceptFriendRequest = createAsyncThunk(
   "friends/acceptFriendRequest",
-  async ({ token, id, friendId }) => {
+  async ({ token, id, friendEmail }) => {
     try {
-      const response = await axios.put(`/api/user/${id}/addfriend`, friendId, {
-        headers: {
-          authorization: token,
-        },
-      });
+      const response = await axios.put(
+        `/api/user/${id}/addfriend`,
+        friendEmail,
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
       return response.data;
     } catch (error) {
       return error.message;
@@ -92,11 +101,11 @@ export const acceptFriendRequest = createAsyncThunk(
 
 export const deleteFriend = createAsyncThunk(
   "friends/deleteFriend",
-  async ({ token, id, friendId }) => {
+  async ({ token, id, friendEmail }) => {
     try {
       const response = await axios.put(
         `/api/user/${id}/deleteFriend`,
-        friendId,
+        friendEmail,
         {
           headers: {
             authorization: token,
@@ -147,7 +156,7 @@ const FriendsSlice = createSlice({
       state.error = action.error.message;
     });
     builder.addCase(deleteFriend.fulfilled, (state, action) => {
-      state.message = "that friend was removed from your list";
+      state.message = "friend was deleted";
     });
     builder.addCase(deleteFriend.rejected, (state, action) => {
       state.error = action.error.message;

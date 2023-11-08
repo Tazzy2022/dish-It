@@ -10,6 +10,7 @@ import AccountHome from "./AccountHome";
 import Friends from "./Friends";
 import AccountSideNav from "./AccountSideNav";
 import AccountUpdates from "./AccountUpdates";
+import FriendHome from "./FriendHome";
 
 const App = () => {
   return (
@@ -24,6 +25,8 @@ const App = () => {
         <Route exact path="/usersearch" element={<Search />} />
         <Route exact path="/userhome" element={<UserHome />} />
         <Route exact path="/userlists/:id" element={<UserSingleList />} />
+
+        <Route exact path="/friendHome/:email" element={<FriendHome />} />
 
         <Route exact path="/account" element={<AccountSideNav />}>
           <Route exact path="/account/updates" element={<AccountUpdates />} />

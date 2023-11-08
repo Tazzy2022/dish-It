@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AllFriends from "./AllFriends";
 import { getFriendsList, inviteFriends } from "../features/FriendsSlice";
 import FriendModal from "./FriendModal";
-import ContentModal from "./ContentModal"
+import ContentModal from "./ContentModal";
 
 const Friends = () => {
   const dispatch = useDispatch();
@@ -12,8 +12,8 @@ const Friends = () => {
 
   const [email, setEmail] = useState({ email: "" });
   const [popUpSeen, setPopUpSeen] = useState(false);
-  const [error, setErrorModal] = useState(false)
-  const [errorMessage, setErrorMessage] = useState("")
+  const [error, setErrorModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   let tempEmail;
 
@@ -43,12 +43,14 @@ const Friends = () => {
     );
     if (found) {
       setEmail({ email: "" });
-      setErrorMessage("Oops. it looks like you're already friends with that user")
-      setErrorModal(true)
+      setErrorMessage(
+        "Oops. it looks like you're already friends with that user"
+      );
+      setErrorModal(true);
     } else if (email.email === auth.user.email) {
       setEmail({ email: "" });
-      setErrorModal(true)
-      setErrorMessage("Sorry, you can't add yourself as a friend")
+      setErrorModal(true);
+      setErrorMessage("Sorry, you can't add yourself as a friend");
     } else {
       findFriend();
     }
@@ -65,12 +67,9 @@ const Friends = () => {
       );
       if (invite.payload.username) {
         setPopUpSeen(true);
-        console.log("here she is! do you want to add her??");
       } else {
-        //throw this info into a modal
-        console.log(
-          `Could not find ${tempEmail}. Do you want us to send them an email invite to Dish it?`
-        );
+        setErrorModal(true);
+        setErrorMessage(`${tempEmail} is not registered on Dish it.`);
       }
     } catch (error) {}
   };
@@ -92,7 +91,7 @@ const Friends = () => {
         <FriendModal openPopUp={setPopUpSeen} friend={friends.friendInvited} />
       )}
       {error && (
-        <ContentModal openErrorModal={setErrorModal} content={errorMessage}/>
+        <ContentModal openErrorModal={setErrorModal} content={errorMessage} />
       )}
       <main>
         <h1>Friends on Dish it :</h1>
