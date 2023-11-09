@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getSingleList, renderSingleList } from "../features/singleListSlice";
-import RestaurantCard from "./RestaurantCard";
+import FriendsRestaurantCard from "./FriendsRestaurantCard";
 
-const UserSingleList = () => {
+const FriendSingleList = () => {
   const list = useSelector(renderSingleList);
   const lists = useSelector((state) => state.lists);
   const auth = useSelector((state) => state.auth);
@@ -52,13 +52,12 @@ const UserSingleList = () => {
       {list?.list?.length === 0 || Object.keys(list).length === 0 ? (
         <div>
           <p>this list is empty...</p>
-          <Link to="/usersearch">you can start your search here</Link>
         </div>
       ) : (
         list?.list?.length > 0 &&
-        list?.list?.map((restaurant, index) => {
+        list?.list?.map((restaurant) => {
           return (
-            <RestaurantCard
+            <FriendsRestaurantCard
               key={restaurant.id}
               restaurant={restaurant}
               auth={auth}
@@ -71,4 +70,4 @@ const UserSingleList = () => {
   );
 };
 
-export default UserSingleList;
+export default FriendSingleList;

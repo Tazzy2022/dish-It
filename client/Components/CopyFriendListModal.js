@@ -12,7 +12,6 @@ const CopyFriendListModal = (props) => {
 
   const handleChange = (e) => {
     setListName(e.target.value);
-    console.log("e.target.value", e.target.value);
   };
 
   const copyThisList = async (e) => {
@@ -26,7 +25,7 @@ const CopyFriendListModal = (props) => {
         restaurantIdArray: props.list.restaurantIdArray,
       })
     );
-    // if (list.payload) console.log("list.payload.id", list.payload.id);
+
     if (list.payload.id) navigate(`/userlists/${list.payload.id}`);
   };
 

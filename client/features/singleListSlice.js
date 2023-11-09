@@ -44,8 +44,6 @@ export const createList = createAsyncThunk(
 export const copyList = createAsyncThunk(
   "list/copyList",
   async ({ id, token, listName, restaurantIdArray }) => {
-    console.log("id", id, "token", token);
-    console.log("listname", listName, "restaurantIdArray", restaurantIdArray);
     try {
       const response = await axios.post(
         `/api/user/copied/${id}/${listName}`,

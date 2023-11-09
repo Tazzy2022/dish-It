@@ -11,6 +11,7 @@ import Friends from "./Friends";
 import AccountSideNav from "./AccountSideNav";
 import AccountUpdates from "./AccountUpdates";
 import FriendHome from "./FriendHome";
+import FriendSingleList from "./FriendSingleList"
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
         <Route exact path="/userlists/:id" element={<UserSingleList />} />
 
         <Route exact path="/friendHome/:email" element={<FriendHome />} />
+        <Route exact path="/friendlists/:id" element={<FriendSingleList />} />
 
         <Route exact path="/account" element={<AccountSideNav />}>
           <Route exact path="/account/updates" element={<AccountUpdates />} />

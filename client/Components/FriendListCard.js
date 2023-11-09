@@ -7,7 +7,7 @@ const FriendListCard = (props) => {
 
   return (
     <div className="home-lists-container">
-      <Link to={`/userlists/${props.list.id}`} className="list-card">
+      <Link to={`/friendlists/${props.list.id}`} className="list-card">
         <img
           className="card-img"
           src={props.list.image}
