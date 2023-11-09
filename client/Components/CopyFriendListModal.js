@@ -18,17 +18,16 @@ const CopyFriendListModal = (props) => {
   const copyThisList = async (e) => {
     e.preventDefault();
     props.openModal(false);
-    console.log("listName", listName);
     const list = await dispatch(
       copyList({
         id: auth.user.id,
         token: auth.token,
-        listName: listName,
+        listName: listName || props.list.listName,
         restaurantIdArray: props.list.restaurantIdArray,
-        //listId: props.list.id
       })
     );
-    if (list.payload) navigate(`/userlists/${list.payload.id}`);
+    // if (list.payload) console.log("list.payload.id", list.payload.id);
+    if (list.payload.id) navigate(`/userlists/${list.payload.id}`);
   };
 
   return (

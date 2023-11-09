@@ -38,11 +38,15 @@ const UserSingleList = () => {
 
   let listname;
 
-  lists.filter((list) => {
-    if (list.id === id) {
-      listname = list.listName;
-    }
-  });
+  if (lists.length > 0) {
+    lists.filter((list) => {
+      if (list.id === id) {
+        listname = list.listName;
+      }
+    });
+  }
+
+  console.log("LIST", list);
 
   return (
     <div className="single-list-container">

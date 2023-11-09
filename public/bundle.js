@@ -9316,16 +9316,14 @@ const CopyFriendListModal = props => {
   const copyThisList = async e => {
     e.preventDefault();
     props.openModal(false);
-    console.log("listName", listName);
     const list = await dispatch((0,_features_singleListSlice__WEBPACK_IMPORTED_MODULE_2__.copyList)({
       id: auth.user.id,
       token: auth.token,
-      listName: listName,
+      listName: listName || props.list.listName,
       restaurantIdArray: props.list.restaurantIdArray
-      //listId: props.list.id
     }));
-
-    if (list.payload) navigate(`/userlists/${list.payload.id}`);
+    // if (list.payload) console.log("list.payload.id", list.payload.id);
+    if (list.payload.id) navigate(`/userlists/${list.payload.id}`);
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "modalBackground"
@@ -10916,11 +10914,14 @@ const UserSingleList = () => {
     }, "Loading...");
   }
   let listname;
-  lists.filter(list => {
-    if (list.id === id) {
-      listname = list.listName;
-    }
-  });
+  if (lists.length > 0) {
+    lists.filter(list => {
+      if (list.id === id) {
+        listname = list.listName;
+      }
+    });
+  }
+  console.log("LIST", list);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "single-list-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
@@ -11832,68 +11833,6 @@ const renderSingleList = state => state.list;
 
 /***/ }),
 
-/***/ "./client/features/singleRestaurantSlice.js":
-/*!**************************************************!*\
-  !*** ./client/features/singleRestaurantSlice.js ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
-/* harmony export */   getSingleRestaurant: () => (/* binding */ getSingleRestaurant),
-/* harmony export */   renderSingleRestaurant: () => (/* binding */ renderSingleRestaurant)
-/* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js");
-
-
-const initialState = {
-  restaurant: {}
-  //   error: "",
-  //   token: "",
-};
-
-const getSingleRestaurant = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("singleRestaurant/getSingleRestaurant", async ({
-  name,
-  location,
-  token
-}) => {
-  try {
-    const nameLocation = name + "-" + location;
-    const search = nameLocation.split(" ").join("-");
-    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`/api/restaurants/${search}`, {
-      headers: {
-        authorization: token
-      }
-    });
-    return response?.data;
-  } catch (error) {
-    return error.message;
-  }
-});
-const singleRestaurantSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)({
-  name: "singleRestaurant",
-  initialState,
-  reducers: {},
-  extraReducers: builder => {
-    builder.addCase(getSingleRestaurant.rejected, (state, action) => {
-      state.error = action.error.message;
-    });
-    builder.addCase(getSingleRestaurant.fulfilled, (state, action) => {
-      return action.payload;
-      //state.restaurant = action.payload
-    });
-  }
-});
-
-const renderSingleRestaurant = state => state.restaurant;
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (singleRestaurantSlice.reducer);
-
-/***/ }),
-
 /***/ "./client/store.js":
 /*!*************************!*\
   !*** ./client/store.js ***!
@@ -11905,17 +11844,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js");
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js");
 /* harmony import */ var _features_authSlice__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./features/authSlice */ "./client/features/authSlice.js");
 /* harmony import */ var _features_listSlice__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./features/listSlice */ "./client/features/listSlice.js");
-/* harmony import */ var _features_singleRestaurantSlice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./features/singleRestaurantSlice */ "./client/features/singleRestaurantSlice.js");
-/* harmony import */ var _features_singleListSlice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./features/singleListSlice */ "./client/features/singleListSlice.js");
-/* harmony import */ var _features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./features/allRestaurantsSlice */ "./client/features/allRestaurantsSlice.js");
-/* harmony import */ var _features_searchSlice__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./features/searchSlice */ "./client/features/searchSlice.js");
-/* harmony import */ var _features_FriendsSlice__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./features/FriendsSlice */ "./client/features/FriendsSlice.js");
-/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! redux-logger */ "./node_modules/redux-logger/dist/redux-logger.js");
-/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(redux_logger__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
+/* harmony import */ var _features_singleListSlice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./features/singleListSlice */ "./client/features/singleListSlice.js");
+/* harmony import */ var _features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./features/allRestaurantsSlice */ "./client/features/allRestaurantsSlice.js");
+/* harmony import */ var _features_searchSlice__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./features/searchSlice */ "./client/features/searchSlice.js");
+/* harmony import */ var _features_FriendsSlice__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./features/FriendsSlice */ "./client/features/FriendsSlice.js");
+/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! redux-logger */ "./node_modules/redux-logger/dist/redux-logger.js");
+/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(redux_logger__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
 
 
 
@@ -11924,21 +11862,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-//import friendsListsReducer from "./features/singleFriendSlice";
 
-
-const store = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_8__.configureStore)({
+const store = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_7__.configureStore)({
   reducer: {
     auth: _features_authSlice__WEBPACK_IMPORTED_MODULE_0__["default"],
     lists: _features_listSlice__WEBPACK_IMPORTED_MODULE_1__["default"],
-    list: _features_singleListSlice__WEBPACK_IMPORTED_MODULE_3__["default"],
-    search: _features_searchSlice__WEBPACK_IMPORTED_MODULE_5__["default"],
-    friends: _features_FriendsSlice__WEBPACK_IMPORTED_MODULE_6__["default"],
-    //singleFriendLists: friendsListsReducer,
-    // restaurant: singleRestaurantReducer,
-    restaurants: _features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_4__["default"]
+    list: _features_singleListSlice__WEBPACK_IMPORTED_MODULE_2__["default"],
+    search: _features_searchSlice__WEBPACK_IMPORTED_MODULE_4__["default"],
+    friends: _features_FriendsSlice__WEBPACK_IMPORTED_MODULE_5__["default"],
+    restaurants: _features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
-  middleware: [redux_thunk__WEBPACK_IMPORTED_MODULE_9__["default"], (redux_logger__WEBPACK_IMPORTED_MODULE_7___default())]
+  middleware: [redux_thunk__WEBPACK_IMPORTED_MODULE_8__["default"], (redux_logger__WEBPACK_IMPORTED_MODULE_6___default())]
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
 
