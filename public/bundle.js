@@ -9036,8 +9036,8 @@ __webpack_require__.r(__webpack_exports__);
 const AllFriends = props => {
   const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
-  const deleteFriend = async () => {
-    await dispatch(deleteFriend({
+  const deleteAFriend = async () => {
+    await dispatch((0,_features_FriendsSlice__WEBPACK_IMPORTED_MODULE_2__.deleteFriend)({
       id: auth.user.id,
       token: auth.token,
       friendEmail: props.friend.email
@@ -9048,7 +9048,7 @@ const AllFriends = props => {
     }));
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: deleteFriend
+    onClick: deleteAFriend
   }, "X"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
     to: `/friendHome/${props.friend.email}`
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
@@ -9281,6 +9281,75 @@ const ContentModal = props => {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.content)))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ContentModal);
+
+/***/ }),
+
+/***/ "./client/Components/CopyFriendListModal.js":
+/*!**************************************************!*\
+  !*** ./client/Components/CopyFriendListModal.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _features_singleListSlice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../features/singleListSlice */ "./client/features/singleListSlice.js");
+
+
+
+
+const CopyFriendListModal = props => {
+  const [listName, setListName] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
+  const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
+  const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
+  const handleChange = e => {
+    setListName(e.target.value);
+    console.log("e.target.value", e.target.value);
+  };
+  const copyThisList = async e => {
+    e.preventDefault();
+    props.openModal(false);
+    console.log("listName", listName);
+    const list = await dispatch((0,_features_singleListSlice__WEBPACK_IMPORTED_MODULE_2__.copyList)({
+      id: auth.user.id,
+      token: auth.token,
+      listName: listName,
+      restaurantIdArray: props.list.restaurantIdArray
+      //listId: props.list.id
+    }));
+
+    if (list.payload) navigate(`/userlists/${list.payload.id}`);
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "modalBackground"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", {
+    className: "new-list-modal"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
+    className: "create-list-form",
+    onSubmit: copyThisList
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "new list name:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    id: "line-input",
+    type: "text",
+    name: "listName",
+    placeholder: props.list.listName,
+    value: listName.value,
+    onChange: handleChange
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "modalbtn",
+    type: "submit"
+  }, "create"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "modalbtn",
+    onClick: () => props.openModal(false)
+  }, "cancel")))));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CopyFriendListModal);
 
 /***/ }),
 
@@ -9630,7 +9699,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _features_FriendsSlice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../features/FriendsSlice */ "./client/features/FriendsSlice.js");
-/* harmony import */ var _ListCard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ListCard */ "./client/Components/ListCard.js");
+/* harmony import */ var _FriendListCard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./FriendListCard */ "./client/Components/FriendListCard.js");
 
 
 
@@ -9642,13 +9711,10 @@ const FriendHome = () => {
   const friendEmail = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useParams)();
   const [isLoading, setIsLoading] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    console.log("friendEmail.email in find friend dispatch", friendEmail.email);
-    // dispatch(
-    //   findFriend({
-    //     token: auth.token,
-    //     email: friendEmail.email,
-    //   })
-    // );
+    dispatch((0,_features_FriendsSlice__WEBPACK_IMPORTED_MODULE_2__.findFriend)({
+      token: auth.token,
+      email: friendEmail.email
+    }));
     const getList = async () => {
       try {
         setIsLoading(true);
@@ -9670,23 +9736,62 @@ const FriendHome = () => {
       className: "loading-p"
     }, "Loading...");
   }
-  console.log("friends.friendsLists", friends.friendsLists);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, friends.friends.length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
     className: "home-header-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: "profile-img",
-    src: friends.friend.image,
+    src: friends.friends[0].image,
     alt: "profile pic"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
     className: "profile-name"
-  }, friends.friend.name, "'s lists...")), friends.friendsLists?.length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "no saved lists yet...")) : friends.friendsLists?.length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "friends lists get mapped here")
-  // friendLists?.map((list) => {
-  //   return <ListCard key={list.id} list={list} auth={auth} />;
-  // })
-  );
+  }, friends.friends[0].username, "'s lists...")), friends.friendsLists?.length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "no saved lists yet...")) : friends.friendsLists?.length > 0 && friends.friendsLists?.map(list => {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_FriendListCard__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      key: list.id,
+      list: list
+    });
+  }));
 };
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FriendHome);
+
+/***/ }),
+
+/***/ "./client/Components/FriendListCard.js":
+/*!*********************************************!*\
+  !*** ./client/Components/FriendListCard.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+/* harmony import */ var _CopyFriendListModal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CopyFriendListModal */ "./client/Components/CopyFriendListModal.js");
+
+
+
+const FriendListCard = props => {
+  const [modalOpen, setModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "home-lists-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+    to: `/userlists/${props.list.id}`,
+    className: "list-card"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    className: "card-img",
+    src: props.list.image,
+    alt: "list background image"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.list.listName)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: () => setModalOpen(true)
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "add to my lists")), modalOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_CopyFriendListModal__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    list: props.list,
+    openModal: setModalOpen
+  }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FriendListCard);
 
 /***/ }),
 
@@ -10046,7 +10151,7 @@ const ListCard = props => {
     alt: "list background image"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, props.list.listName)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: () => removeList(props.list.id)
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "delete list")));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, "delete list")));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ListCard);
 
@@ -10883,9 +10988,7 @@ const getFriendsList = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAs
 });
 
 //need to add clause to handle email to get user
-const findFriend = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)(
-//export const inviteFriends = createAsyncThunk(
-"friends/findFriend", async ({
+const findFriend = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("friends/findFriend", async ({
   token,
   email
 }) => {
@@ -11549,6 +11652,7 @@ const searchState = state => state.search;
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   addRestoToList: () => (/* binding */ addRestoToList),
+/* harmony export */   copyList: () => (/* binding */ copyList),
 /* harmony export */   createList: () => (/* binding */ createList),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
 /* harmony export */   getSingleList: () => (/* binding */ getSingleList),
@@ -11590,6 +11694,25 @@ const createList = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncT
 }) => {
   try {
     const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`/api/user/${id}/list`, listName, {
+      headers: {
+        authorization: token
+      }
+    });
+    return response?.data;
+  } catch (error) {
+    return error.message;
+  }
+});
+const copyList = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("list/copyList", async ({
+  id,
+  token,
+  listName,
+  restaurantIdArray
+}) => {
+  console.log("id", id, "token", token);
+  console.log("listname", listName, "restaurantIdArray", restaurantIdArray);
+  try {
+    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`/api/user/copied/${id}/${listName}`, restaurantIdArray, {
       headers: {
         authorization: token
       }
@@ -11692,6 +11815,12 @@ const singleListSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createS
     });
     builder.addCase(removeRestaurantFromList.fulfilled, (state, action) => {
       return action.payload;
+    });
+    builder.addCase(copyList.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(copyList.fulfilled, (state, action) => {
+      state.singlelist = action.payload;
     });
   }
 });

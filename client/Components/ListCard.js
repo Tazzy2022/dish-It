@@ -38,9 +38,8 @@ const ListCard = (props) => {
         <p>{props.list.listName}</p>
       </Link>
       <span>
-        {/* {auth.user.username === props.} */}
         <button onClick={() => removeList(props.list.id)}></button>
-        <p>delete list</p>
+        <label>delete list</label>
       </span>
     </div>
   );

@@ -7,7 +7,7 @@ const AllFriends = (props) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
-  const deleteFriend = async () => {
+  const deleteAFriend = async () => {
     await dispatch(
       deleteFriend({
         id: auth.user.id,
@@ -25,18 +25,18 @@ const AllFriends = (props) => {
 
   return (
     <div>
-      <button onClick={deleteFriend}>X</button>
+      <button onClick={deleteAFriend}>X</button>
       <Link to={`/friendHome/${props.friend.email}`}>
-      <img
-        className="profile-img"
-        src={props.friend.imageData}
-        alt="friend's image"
-      />
-      <p>{props.friend.username}</p>
-      <p>
-        {props.friend.city}, {props.friend.state}
-      </p>
-     </Link>
+        <img
+          className="profile-img"
+          src={props.friend.imageData}
+          alt="friend's image"
+        />
+        <p>{props.friend.username}</p>
+        <p>
+          {props.friend.city}, {props.friend.state}
+        </p>
+      </Link>
     </div>
   );
 };

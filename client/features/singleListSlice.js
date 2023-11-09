@@ -41,6 +41,28 @@ export const createList = createAsyncThunk(
   }
 );
 
+export const copyList = createAsyncThunk(
+  "list/copyList",
+  async ({ id, token, listName, restaurantIdArray }) => {
+    console.log("id", id, "token", token);
+    console.log("listname", listName, "restaurantIdArray", restaurantIdArray);
+    try {
+      const response = await axios.post(
+        `/api/user/copied/${id}/${listName}`,
+        restaurantIdArray,
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+      return response?.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
 export const addRestoToList = createAsyncThunk(
   "list/addRestoToList",
   async ({ userId, token, listName, restaurantId }) => {
@@ -141,6 +163,12 @@ const singleListSlice = createSlice({
     });
     builder.addCase(removeRestaurantFromList.fulfilled, (state, action) => {
       return action.payload;
+    });
+    builder.addCase(copyList.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(copyList.fulfilled, (state, action) => {
+      state.singlelist = action.payload;
     });
   },
 });

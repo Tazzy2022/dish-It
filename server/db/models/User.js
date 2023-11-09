@@ -51,7 +51,7 @@ const User = db.define(
     },
     image: {
       type: STRING,
-    }
+    },
   },
   {
     hooks: {

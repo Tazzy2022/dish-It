@@ -202,6 +202,24 @@ router.post("/:id/list", async (req, res, next) => {
   }
 });
 
+//POST "/api/user/copied/:id/list  create new list
+router.post("/copied/:id/:listName", async (req, res, next) => {
+  try {
+    const newList = await List.create({
+      userId: req.params.id,
+      listName: req.params.listName,
+      restaurantIdArray: req.body,
+    });
+    res.send(newList);
+  } catch (err) {
+    res.status(500).json({
+      message: "could not create new list",
+      error: err.message,
+    });
+    next(err);
+  }
+});
+
 //PUT "/api/user/:id/:listName add restaurant to a newly created list or existing list
 router.put("/:id/:listName", async (req, res, next) => {
   try {

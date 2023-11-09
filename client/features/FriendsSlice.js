@@ -29,7 +29,6 @@ export const getFriendsList = createAsyncThunk(
 
 //need to add clause to handle email to get user
 export const findFriend = createAsyncThunk(
-  //export const inviteFriends = createAsyncThunk(
   "friends/findFriend",
   async ({ token, email }) => {
     try {
@@ -125,11 +124,14 @@ export const getSingleFriendsLists = createAsyncThunk(
   "singleFriend/getSingleFriendsLists",
   async ({ token, friendEmail }) => {
     try {
-      const response = await axios.get(`/api/user/friend/${friendEmail}/lists`, {
-        headers: {
-          authorization: token,
-        },
-      });
+      const response = await axios.get(
+        `/api/user/friend/${friendEmail}/lists`,
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
       return response?.data;
     } catch (error) {
       return error.message;
@@ -183,7 +185,7 @@ const FriendsSlice = createSlice({
       state.error = action.error.message;
     });
     builder.addCase(getSingleFriendsLists.fulfilled, (state, action) => {
-      state.friendsLists = action.payload
+      state.friendsLists = action.payload;
     });
   },
 });
