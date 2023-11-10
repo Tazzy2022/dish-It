@@ -13,12 +13,6 @@ const FilterPriceSearch = () => {
 
   const [pricing, updatePricing] = useState([]);
 
-  // useEffect(() => {
-  //   if(searchInfo.resetAll === true) {
-
-  //   }
-  // })
-
   const getPriceSearch = async (e) => {
     e.preventDefault();
     try {
@@ -47,7 +41,7 @@ const FilterPriceSearch = () => {
     // e.target.reset();
   };
 
-  const handleChange = (e) => {
+  const handlePriceChange = (e) => {
     const { value, checked } = e.target;
 
     if (checked) {
@@ -58,7 +52,7 @@ const FilterPriceSearch = () => {
   };
 
   return (
-    <form id="price-form" onSubmit={getPriceSearch}>
+    <main id="price-form">
       <p>Filter by price:</p>
       {["$", "$$", "$$$"].map((price, index) => {
         return (
@@ -68,14 +62,14 @@ const FilterPriceSearch = () => {
               name="price"
               value={price.length}
               className="filter-price-checkbox"
-              onChange={handleChange}
+              onChange={handlePriceChange}
             />
             <label>{price}</label>
           </div>
         );
       })}
-      <button type="submit">update</button>
-    </form>
+      <button  onClick={() => getPriceSearch()}>update</button>
+    </main>
   );
 };
 

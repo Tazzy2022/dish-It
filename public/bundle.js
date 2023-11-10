@@ -9571,13 +9571,6 @@ const FilterPriceSearch = () => {
   const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
   const searchInfo = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(_features_searchSlice__WEBPACK_IMPORTED_MODULE_3__.searchState);
   const [pricing, updatePricing] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
-
-  // useEffect(() => {
-  //   if(searchInfo.resetAll === true) {
-
-  //   }
-  // })
-
   const getPriceSearch = async e => {
     e.preventDefault();
     try {
@@ -9602,7 +9595,7 @@ const FilterPriceSearch = () => {
     // e.target.reset();
   };
 
-  const handleChange = e => {
+  const handlePriceChange = e => {
     const {
       value,
       checked
@@ -9613,9 +9606,8 @@ const FilterPriceSearch = () => {
       updatePricing(pricing.filter(e => e !== value));
     }
   };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
-    id: "price-form",
-    onSubmit: getPriceSearch
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", {
+    id: "price-form"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Filter by price:"), ["$", "$$", "$$$"].map((price, index) => {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       key: index,
@@ -9625,10 +9617,10 @@ const FilterPriceSearch = () => {
       name: "price",
       value: price.length,
       className: "filter-price-checkbox",
-      onChange: handleChange
+      onChange: handlePriceChange
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, price));
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    type: "submit"
+    onClick: () => getPriceSearch()
   }, "update"));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FilterPriceSearch);
@@ -10674,6 +10666,7 @@ const Search = () => {
     location: ""
   });
   const [modalOpen, setModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [pricing, updatePricing] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (search.location.length === 0) {
       const setRestaurants = async () => {
@@ -10718,16 +10711,52 @@ const Search = () => {
     }));
   };
   const resetFilters = async () => {
-    setSearch(prevState => ({
-      ...prevState,
+    setSearch({
       restaurant: "",
       location: ""
-    }));
+    });
     dispatch((0,_features_searchSlice__WEBPACK_IMPORTED_MODULE_6__.resetAll)(true));
     await dispatch((0,_features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_3__.getAllRestaurants)({
       token: auth.token,
       location: auth.user.city
     }));
+  };
+
+  //grab all checked and mark unchecked
+
+  const getPriceSearch = async () => {
+    try {
+      if (searchInfo.categories.length === 0) {
+        await dispatch((0,_features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_3__.getRestaurantsLocationPrice)({
+          token: auth.token,
+          location: searchInfo.location,
+          price: pricing
+        }));
+      } else {
+        await dispatch((0,_features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_3__.getRestLocationPriceCat)({
+          token: auth.token,
+          location: searchInfo.location,
+          categories: searchInfo.categories,
+          price: pricing
+        }));
+      }
+      dispatch((0,_features_searchSlice__WEBPACK_IMPORTED_MODULE_6__.setPrice)(pricing));
+    } catch (error) {
+      console.log(error);
+    }
+    // e.target.reset();
+  };
+
+  const handlePriceChange = e => {
+    const {
+      value,
+      checked
+    } = e.target;
+    if (checked) {
+      updatePricing([...pricing, value]);
+    } else {
+      updatePricing(pricing.filter(e => e !== value));
+    }
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "search-container"
@@ -10755,7 +10784,22 @@ const Search = () => {
     className: "button"
   }, "search"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
     id: "search-filter-containers"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_FilterPriceSearch__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Filter by category"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", {
+    id: "price-form"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Filter by price:"), ["$", "$$", "$$$"].map((price, index) => {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      key: index,
+      className: "checkbox-container"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+      type: "checkbox",
+      name: "price",
+      value: price.length,
+      className: "filter-price-checkbox",
+      onChange: handlePriceChange
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, price));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: () => getPriceSearch()
+  }, "update")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Filter by category"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: "openModalBtn",
     onClick: () => setModalOpen(true)
   }, "show all"), modalOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_FilterCategorySearch__WEBPACK_IMPORTED_MODULE_5__["default"], {

@@ -5,10 +5,13 @@ import {
   renderAllRestaurants,
   getSingleRestaurant,
   getAllRestaurants,
+  getRestaurantsLocationPrice,
+  getRestLocationPriceCat,
 } from "../features/allRestaurantsSlice";
 import AllRestaurants from "./AllRestaurants";
 import FilterCategorySearch from "./FilterCategorySearch";
 import {
+  setPrice,
   setRestaurant,
   setLocation,
   searchState,
@@ -22,8 +25,12 @@ const Search = () => {
   const auth = useSelector((state) => state.auth);
   const restaurants = useSelector(renderAllRestaurants);
 
-  const [search, setSearch] = useState({ restaurant: "", location: "" });
+  const [search, setSearch] = useState({
+    restaurant: "",
+    location: "",
+  });
   const [modalOpen, setModalOpen] = useState(false);
+  const [pricing, updatePricing] = useState([]);
 
   useEffect(() => {
     if (search.location.length === 0) {
@@ -77,12 +84,11 @@ const Search = () => {
     }));
   };
 
-  const resetFilters = async() => {
-    setSearch((prevState) => ({
-      ...prevState,
+  const resetFilters = async () => {
+    setSearch({
       restaurant: "",
       location: "",
-    }));
+    });
     dispatch(resetAll(true));
     await dispatch(
       getAllRestaurants({
@@ -90,6 +96,45 @@ const Search = () => {
         location: auth.user.city,
       })
     );
+  };
+
+  //map through checkboxes and grab all checked and mark unchecked
+
+  const getPriceSearch = async () => {
+    try {
+      if (searchInfo.categories.length === 0) {
+        await dispatch(
+          getRestaurantsLocationPrice({
+            token: auth.token,
+            location: searchInfo.location,
+            price: pricing,
+          })
+        );
+      } else {
+        await dispatch(
+          getRestLocationPriceCat({
+            token: auth.token,
+            location: searchInfo.location,
+            categories: searchInfo.categories,
+            price: pricing,
+          })
+        );
+      }
+      dispatch(setPrice(pricing));
+    } catch (error) {
+      console.log(error);
+    }
+    // e.target.reset();
+  };
+
+  const handlePriceChange = (e) => {
+    const { value, checked } = e.target;
+
+    if (checked) {
+      updatePricing([...pricing, value]);
+    } else {
+      updatePricing(pricing.filter((e) => e !== value));
+    }
   };
 
   return (
@@ -120,7 +165,27 @@ const Search = () => {
         </form>
       </section>
       <section id="search-filter-containers">
-        <FilterPriceSearch />
+        {/* <FilterPriceSearch /> */}
+
+        <main id="price-form">
+          <p>Filter by price:</p>
+          {["$", "$$", "$$$"].map((price, index) => {
+            return (
+              <div key={index} className="checkbox-container">
+                <input
+                  type="checkbox"
+                  name="price"
+                  value={price.length}
+                  className="filter-price-checkbox"
+                  onChange={handlePriceChange}
+                />
+                <label>{price}</label>
+              </div>
+            );
+          })}
+          <button onClick={() => getPriceSearch()}>update</button>
+        </main>
+
         <div></div>
         <p>Filter by category</p>
         <button className="openModalBtn" onClick={() => setModalOpen(true)}>
