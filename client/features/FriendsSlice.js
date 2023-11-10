@@ -32,7 +32,7 @@ export const findFriend = createAsyncThunk(
   "friends/findFriend",
   async ({ token, email }) => {
     try {
-      const response = await axios.get(`/api/user/friend/${email.email}`, {
+      const response = await axios.get(`/api/user/friend/${email}`, {
         headers: {
           authorization: token,
         },

@@ -9979,9 +9979,7 @@ const Friends = () => {
   const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   const friends = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.friends);
   const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
-  const [email, setEmail] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-    email: ""
-  });
+  const [email, setEmail] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
   const [popUpSeen, setPopUpSeen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [error, setErrorModal] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [errorMessage, setErrorMessage] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
@@ -9993,33 +9991,22 @@ const Friends = () => {
     }));
   }, []);
   const handleChange = e => {
-    setEmail(prevState => ({
-      ...prevState,
-      [e.target.name]: e.target.value
-    }));
+    setEmail(e.target.value);
   };
   const handleSubmit = async e => {
     e.preventDefault();
-    tempEmail = email.email;
-    const found = friends.friends.find(friend => friend.email === email.email);
+    tempEmail = email;
+    const found = friends.friends.find(friend => friend.email === email);
     if (found) {
-      setEmail({
-        email: ""
-      });
       setErrorMessage("Oops. it looks like you're already friends with that user");
       setErrorModal(true);
-    } else if (email.email === auth.user.email) {
-      setEmail({
-        email: ""
-      });
+    } else if (email === auth.user.email) {
       setErrorModal(true);
       setErrorMessage("Sorry, you can't add yourself as a friend");
     } else {
       getFriend();
     }
-    setEmail({
-      email: ""
-    });
+    e.target.reset();
   };
   const getFriend = async () => {
     try {
@@ -11132,7 +11119,7 @@ const findFriend = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncT
   email
 }) => {
   try {
-    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`/api/user/friend/${email.email}`, {
+    const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`/api/user/friend/${email}`, {
       headers: {
         authorization: token
       }

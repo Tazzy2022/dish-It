@@ -10,7 +10,7 @@ const Friends = () => {
   const friends = useSelector((state) => state.friends);
   const auth = useSelector((state) => state.auth);
 
-  const [email, setEmail] = useState({ email: "" });
+  const [email, setEmail] = useState("");
   const [popUpSeen, setPopUpSeen] = useState(false);
   const [error, setErrorModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -27,33 +27,26 @@ const Friends = () => {
   }, []);
 
   const handleChange = (e) => {
-    setEmail((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
+    setEmail(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    tempEmail = email.email;
+    tempEmail = email;
 
-    const found = friends.friends.find(
-      (friend) => friend.email === email.email
-    );
+    const found = friends.friends.find((friend) => friend.email === email);
     if (found) {
-      setEmail({ email: "" });
       setErrorMessage(
         "Oops. it looks like you're already friends with that user"
       );
       setErrorModal(true);
-    } else if (email.email === auth.user.email) {
-      setEmail({ email: "" });
+    } else if (email === auth.user.email) {
       setErrorModal(true);
       setErrorMessage("Sorry, you can't add yourself as a friend");
     } else {
       getFriend();
     }
-    setEmail({ email: "" });
+    e.target.reset();
   };
 
   const getFriend = async () => {
