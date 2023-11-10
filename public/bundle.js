@@ -9550,80 +9550,84 @@ const FilterCategorySearch = ({
 /*!************************************************!*\
   !*** ./client/Components/FilterPriceSearch.js ***!
   \************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ (() => {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../features/allRestaurantsSlice */ "./client/features/allRestaurantsSlice.js");
-/* harmony import */ var _features_searchSlice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../features/searchSlice */ "./client/features/searchSlice.js");
+// import React, { useEffect, useState } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import {
+//   getRestaurantsLocationPrice,
+//   getRestLocationPriceCat,
+// } from "../features/allRestaurantsSlice";
+// import { resetAll, setPrice, searchState } from "../features/searchSlice";
 
+// const FilterPriceSearch = () => {
+//   const dispatch = useDispatch();
+//   const auth = useSelector((state) => state.auth);
+//   const searchInfo = useSelector(searchState);
 
+//   const [pricing, updatePricing] = useState([]);
 
+//   const getPriceSearch = async (e) => {
+//     e.preventDefault();
+//     try {
+//       if (searchInfo.categories.length === 0) {
+//         await dispatch(
+//           getRestaurantsLocationPrice({
+//             token: auth.token,
+//             location: searchInfo.location,
+//             price: pricing,
+//           })
+//         );
+//       } else {
+//         await dispatch(
+//           getRestLocationPriceCat({
+//             token: auth.token,
+//             location: searchInfo.location,
+//             categories: searchInfo.categories,
+//             price: pricing,
+//           })
+//         );
+//       }
+//       dispatch(setPrice(pricing));
+//     } catch (error) {
+//       console.log(error);
+//     }
+//     // e.target.reset();
+//   };
 
-const FilterPriceSearch = () => {
-  const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
-  const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
-  const searchInfo = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(_features_searchSlice__WEBPACK_IMPORTED_MODULE_3__.searchState);
-  const [pricing, updatePricing] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
-  const getPriceSearch = async e => {
-    e.preventDefault();
-    try {
-      if (searchInfo.categories.length === 0) {
-        await dispatch((0,_features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_2__.getRestaurantsLocationPrice)({
-          token: auth.token,
-          location: searchInfo.location,
-          price: pricing
-        }));
-      } else {
-        await dispatch((0,_features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_2__.getRestLocationPriceCat)({
-          token: auth.token,
-          location: searchInfo.location,
-          categories: searchInfo.categories,
-          price: pricing
-        }));
-      }
-      dispatch((0,_features_searchSlice__WEBPACK_IMPORTED_MODULE_3__.setPrice)(pricing));
-    } catch (error) {
-      console.log(error);
-    }
-    // e.target.reset();
-  };
+//   const handlePriceChange = (e) => {
+//     const { value, checked } = e.target;
 
-  const handlePriceChange = e => {
-    const {
-      value,
-      checked
-    } = e.target;
-    if (checked) {
-      updatePricing([...pricing, value]);
-    } else {
-      updatePricing(pricing.filter(e => e !== value));
-    }
-  };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", {
-    id: "price-form"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Filter by price:"), ["$", "$$", "$$$"].map((price, index) => {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-      key: index,
-      className: "checkbox-container"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-      type: "checkbox",
-      name: "price",
-      value: price.length,
-      className: "filter-price-checkbox",
-      onChange: handlePriceChange
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, price));
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: () => getPriceSearch()
-  }, "update"));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FilterPriceSearch);
+//     if (checked) {
+//       updatePricing([...pricing, value]);
+//     } else {
+//       updatePricing(pricing.filter((e) => e !== value));
+//     }
+//   };
+
+//   return (
+//     <main id="price-form">
+//       <p>Filter by price:</p>
+//       {["$", "$$", "$$$"].map((price, index) => {
+//         return (
+//           <div key={index} className="checkbox-container">
+//             <input
+//               type="checkbox"
+//               name="price"
+//               value={price.length}
+//               className="filter-price-checkbox"
+//               onChange={handlePriceChange}
+//             />
+//             <label>{price}</label>
+//           </div>
+//         );
+//       })}
+//       <button  onClick={() => getPriceSearch()}>update</button>
+//     </main>
+//   );
+// };
+
+// export default FilterPriceSearch;
 
 // import React, { useState } from "react";
 // import { useDispatch, useSelector } from "react-redux";
@@ -10645,6 +10649,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _FilterPriceSearch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./FilterPriceSearch */ "./client/Components/FilterPriceSearch.js");
+/* harmony import */ var _FilterPriceSearch__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_FilterPriceSearch__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../features/allRestaurantsSlice */ "./client/features/allRestaurantsSlice.js");
 /* harmony import */ var _AllRestaurants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AllRestaurants */ "./client/Components/AllRestaurants.js");
 /* harmony import */ var _FilterCategorySearch__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./FilterCategorySearch */ "./client/Components/FilterCategorySearch.js");
@@ -10715,15 +10720,13 @@ const Search = () => {
       restaurant: "",
       location: ""
     });
+    updatePricing([]);
     dispatch((0,_features_searchSlice__WEBPACK_IMPORTED_MODULE_6__.resetAll)(true));
     await dispatch((0,_features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_3__.getAllRestaurants)({
       token: auth.token,
       location: auth.user.city
     }));
   };
-
-  //grab all checked and mark unchecked
-
   const getPriceSearch = async () => {
     try {
       if (searchInfo.categories.length === 0) {
@@ -10786,13 +10789,13 @@ const Search = () => {
     id: "search-filter-containers"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", {
     id: "price-form"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Filter by price:"), ["$", "$$", "$$$"].map((price, index) => {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Filter by price:"), ["$", "$$", "$$$", "$$$$"].map((price, index) => {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       key: index,
       className: "checkbox-container"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
       type: "checkbox",
-      name: "price",
+      name: price,
       value: price.length,
       className: "filter-price-checkbox",
       onChange: handlePriceChange
@@ -10806,7 +10809,15 @@ const Search = () => {
     openModal: setModalOpen
   })), searchInfo.categories.length > 0 || searchInfo.price.length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
     id: "searched-filters"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "current filters: "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, " filter container here"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "current filters: "), searchInfo.categories && searchInfo.categories.map((category, index) => {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+      key: index
+    }, category, ", ");
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "location: ", searchInfo.location), searchInfo.price && searchInfo.price.map((price, index) => {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      key: index
+    }, price, ", ");
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: resetFilters
   }, "clear all")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null), restaurants?.businesses?.length > 1 ? restaurants?.businesses?.map(restaurant => {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_AllRestaurants__WEBPACK_IMPORTED_MODULE_4__["default"], {

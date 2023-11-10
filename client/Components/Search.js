@@ -89,6 +89,7 @@ const Search = () => {
       restaurant: "",
       location: "",
     });
+    updatePricing([]);
     dispatch(resetAll(true));
     await dispatch(
       getAllRestaurants({
@@ -97,8 +98,6 @@ const Search = () => {
       })
     );
   };
-
-  //map through checkboxes and grab all checked and mark unchecked
 
   const getPriceSearch = async () => {
     try {
@@ -169,12 +168,12 @@ const Search = () => {
 
         <main id="price-form">
           <p>Filter by price:</p>
-          {["$", "$$", "$$$"].map((price, index) => {
+          {["$", "$$", "$$$", "$$$$"].map((price, index) => {
             return (
               <div key={index} className="checkbox-container">
                 <input
                   type="checkbox"
-                  name="price"
+                  name={price}
                   value={price.length}
                   className="filter-price-checkbox"
                   onChange={handlePriceChange}
@@ -196,7 +195,15 @@ const Search = () => {
       {searchInfo.categories.length > 0 || searchInfo.price.length > 0 ? (
         <section id="searched-filters">
           <p>current filters: </p>
-          <p> filter container here</p>
+          {searchInfo.categories &&
+            searchInfo.categories.map((category, index) => {
+              return <p key={index}>{category}, </p>;
+            })}
+          <p>location: {searchInfo.location}</p>
+          {searchInfo.price &&
+            searchInfo.price.map((price, index) => {
+              return <span key={index}>{price}, </span>;
+            })}
           <button onClick={resetFilters}>clear all</button>
         </section>
       ) : (
