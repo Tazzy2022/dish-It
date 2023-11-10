@@ -77,9 +77,19 @@ const Search = () => {
     }));
   };
 
-  const resetFilters = () => {
+  const resetFilters = async() => {
+    setSearch((prevState) => ({
+      ...prevState,
+      restaurant: "",
+      location: "",
+    }));
     dispatch(resetAll(true));
-    // e.target.reset();
+    await dispatch(
+      getAllRestaurants({
+        token: auth.token,
+        location: auth.user.city,
+      })
+    );
   };
 
   return (

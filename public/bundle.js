@@ -10717,11 +10717,18 @@ const Search = () => {
       [event.target.name]: event.target.value
     }));
   };
-  const resetFilters = () => {
+  const resetFilters = async () => {
+    setSearch(prevState => ({
+      ...prevState,
+      restaurant: "",
+      location: ""
+    }));
     dispatch((0,_features_searchSlice__WEBPACK_IMPORTED_MODULE_6__.resetAll)(true));
-    // e.target.reset();
+    await dispatch((0,_features_allRestaurantsSlice__WEBPACK_IMPORTED_MODULE_3__.getAllRestaurants)({
+      token: auth.token,
+      location: auth.user.city
+    }));
   };
-
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "search-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
