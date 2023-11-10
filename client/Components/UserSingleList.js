@@ -56,7 +56,7 @@ const UserSingleList = () => {
         </div>
       ) : (
         list?.list?.length > 0 &&
-        list?.list?.map((restaurant, index) => {
+        list?.list?.map((restaurant) => {
           return (
             <RestaurantCard
               key={restaurant.id}

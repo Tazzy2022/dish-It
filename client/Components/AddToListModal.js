@@ -1,16 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { addRestoToList } from "../features/singleListSlice";
+import { getAllLists } from "../features/listSlice";
 
 const AddToListModal = ({ openModal, restaurantId }) => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const navigate = useNavigate();
 
   const auth = useSelector((state) => state.auth);
   const lists = useSelector((state) => state.lists);
 
   const [listName, setListName] = useState("");
+
+  useEffect(() => {
+    dispatch(
+      getAllLists({
+        id: auth.user.id,
+        token: auth.token,
+      })
+    );
+  }, []);
 
   const newAdd = async (restId, listName) => {
     try {
@@ -23,6 +34,9 @@ const AddToListModal = ({ openModal, restaurantId }) => {
           restaurantId: restId,
         })
       );
+      if (location.pathname.includes("friendlists")) {
+        navigate(-1);
+      }
     } catch (error) {
       console.log(error);
     }

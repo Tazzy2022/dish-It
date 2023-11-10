@@ -8929,8 +8929,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _features_singleListSlice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../features/singleListSlice */ "./client/features/singleListSlice.js");
+/* harmony import */ var _features_listSlice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../features/listSlice */ "./client/features/listSlice.js");
+
 
 
 
@@ -8940,10 +8942,17 @@ const AddToListModal = ({
   restaurantId
 }) => {
   const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
-  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
+  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useLocation)();
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
   const auth = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.auth);
   const lists = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.lists);
   const [listName, setListName] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    dispatch((0,_features_listSlice__WEBPACK_IMPORTED_MODULE_3__.getAllLists)({
+      id: auth.user.id,
+      token: auth.token
+    }));
+  }, []);
   const newAdd = async (restId, listName) => {
     try {
       openModal(false);
@@ -8953,6 +8962,9 @@ const AddToListModal = ({
         listName: listName,
         restaurantId: restId
       }));
+      if (location.pathname.includes("friendlists")) {
+        navigate(-1);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -9988,7 +10000,6 @@ const Friends = () => {
   };
   const handleSubmit = async e => {
     e.preventDefault();
-    console.log("email.email", email.email, "auth.user.email", auth.user.email);
     tempEmail = email.email;
     const found = friends.friends.find(friend => friend.email === email.email);
     if (found) {
@@ -11055,7 +11066,7 @@ const UserSingleList = () => {
     className: "list-name"
   }, listname), list?.list?.length === 0 || Object.keys(list).length === 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "this list is empty..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
     to: "/usersearch"
-  }, "you can start your search here")) : list?.list?.length > 0 && list?.list?.map((restaurant, index) => {
+  }, "you can start your search here")) : list?.list?.length > 0 && list?.list?.map(restaurant => {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_RestaurantCard__WEBPACK_IMPORTED_MODULE_3__["default"], {
       key: restaurant.id,
       restaurant: restaurant,

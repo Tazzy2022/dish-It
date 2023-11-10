@@ -35,7 +35,6 @@ const Friends = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("email.email", email.email, "auth.user.email", auth.user.email);
     tempEmail = email.email;
 
     const found = friends.friends.find(
