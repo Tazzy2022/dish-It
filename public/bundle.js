@@ -9114,7 +9114,11 @@ const AllRestaurants = props => {
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", {
     className: "restaurant-list-card"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("hr", {
+    className: "restaurant-cards"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
+    className: "rest-card-img"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: "restaurant-card-img",
     src: props.restaurant.image_url,
     alt: "restaurant image"
@@ -10608,7 +10612,7 @@ const RestaurantCard = props => {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "restaurant-list-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
-    className: "list-card"
+    className: "singlelist-card"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: "card-img",
     src: props.restaurant.image_url,
@@ -10672,6 +10676,7 @@ const Search = () => {
   });
   const [modalOpen, setModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [pricing, updatePricing] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const [searchPrice, setSearchPrice] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (search.location.length === 0) {
       const setRestaurants = async () => {
@@ -10753,12 +10758,15 @@ const Search = () => {
   const handlePriceChange = e => {
     const {
       value,
-      checked
+      checked,
+      name
     } = e.target;
     if (checked) {
       updatePricing([...pricing, value]);
+      setSearchPrice([...searchPrice, name]);
     } else {
-      updatePricing(pricing.filter(e => e !== value));
+      updatePricing(pricing.filter(ele => ele !== value));
+      setSearchPrice(searchPrice.filter(ele => ele !== name));
     }
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -10802,10 +10810,12 @@ const Search = () => {
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, price));
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: () => getPriceSearch()
-  }, "update")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Filter by category"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  }, "update")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    id: "category-form"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Filter by category"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: "openModalBtn",
     onClick: () => setModalOpen(true)
-  }, "show all"), modalOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_FilterCategorySearch__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }, "show all")), modalOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_FilterCategorySearch__WEBPACK_IMPORTED_MODULE_5__["default"], {
     openModal: setModalOpen
   })), searchInfo.categories.length > 0 || searchInfo.price.length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("section", {
     id: "searched-filters"
@@ -10813,7 +10823,7 @@ const Search = () => {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
       key: index
     }, category, ", ");
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "location: ", searchInfo.location), searchInfo.price && searchInfo.price.map((price, index) => {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "location: ", searchInfo.location), searchInfo.price && searchPrice.map((price, index) => {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
       key: index
     }, price, ", ");
@@ -11612,6 +11622,7 @@ const updatePhoto = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsync
   }
 });
 const registerUser = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("auth/registerUser", async userInfo => {
+  console.log("USERINFO", userInfo);
   try {
     const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().post("/auth/signup", userInfo);
     return response.data;
@@ -11658,7 +11669,7 @@ const authSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)(
       state.error = action.error.message;
     });
     builder.addCase(registerUser.fulfilled, (state, action) => {
-      state.user = action.payload;
+      return action.payload;
     });
     builder.addCase(registerUser.rejected, (state, action) => {
       state.error = action.error.message;

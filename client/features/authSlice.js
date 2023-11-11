@@ -74,10 +74,10 @@ export const updateUserInfo = createAsyncThunk(
 //       );
 //       console.log("response.data", response.data);
 
-      // const split = response.data.file_path.split('/');
-      // const filename = split[split.length - 1];
-      // response.send(download(response.data, filename, response.data.file_mimetype));
-      //return response.data;
+// const split = response.data.file_path.split('/');
+// const filename = split[split.length - 1];
+// response.send(download(response.data, filename, response.data.file_mimetype));
+//return response.data;
 //     } catch (error) {
 //       return error.message;
 //     }
@@ -113,6 +113,7 @@ export const updatePhoto = createAsyncThunk(
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
   async (userInfo) => {
+    console.log("USERINFO", userInfo);
     try {
       const response = await axios.post("/auth/signup", userInfo);
       return response.data;
@@ -160,7 +161,7 @@ const authSlice = createSlice({
       state.error = action.error.message;
     });
     builder.addCase(registerUser.fulfilled, (state, action) => {
-      state.user = action.payload;
+      return action.payload;
     });
     builder.addCase(registerUser.rejected, (state, action) => {
       state.error = action.error.message;

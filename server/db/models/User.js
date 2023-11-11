@@ -83,16 +83,15 @@ User.generateToken = (user) => {
 User.encryptUser = async (user) => {
   const { dataValues } = await User.create(user);
   //return the jwt and the newly created user
+  console.log("USER IN model before token generation", user);
+
+  const newToken = User.generateToken(dataValues);
+  console.log("token IN model encryption", newToken);
   return {
     user: dataValues,
-    token: User.generateToken(dataValues),
+    token: newToken,
   };
 };
-
-// User.prototype.correctPassword = function (candidatePwd) {
-//   //we need to compare the plain version to an encrypted version of the password
-//   return bcrypt.compare(candidatePwd, this.password);
-// };
 
 User.authenticate = async function ({ email, password }) {
   const user = await User.findOne({ where: { email: email } });
@@ -126,25 +125,5 @@ User.validate = async (token) => {
     throw (error, err);
   }
 };
-
-// User.addHook("beforeSave", async (user) => {
-//   if (user.changed("password")) {
-//     user.password = await bcrypt.hash(user.password, 5);
-//   }
-// });
-
-/**
- * hooks
- */
-// const hashPassword = async (user) => {
-//   //in case the password has been changed, we want to encrypt it with bcrypt
-//   if (user.changed("password")) {
-//     user.password = await bcrypt.hash(user.password, parseInt(process.env.ROUNDS));
-//   }
-// };
-
-// User.beforeCreate(hashPassword);
-// User.beforeUpdate(hashPassword);
-// User.beforeBulkCreate((users) => Promise.all(users.map(hashPassword)));
 
 module.exports = User;

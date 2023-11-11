@@ -31,6 +31,7 @@ const Search = () => {
   });
   const [modalOpen, setModalOpen] = useState(false);
   const [pricing, updatePricing] = useState([]);
+  const [searchPrice, setSearchPrice] = useState([]);
 
   useEffect(() => {
     if (search.location.length === 0) {
@@ -127,12 +128,14 @@ const Search = () => {
   };
 
   const handlePriceChange = (e) => {
-    const { value, checked } = e.target;
+    const { value, checked, name } = e.target;
 
     if (checked) {
       updatePricing([...pricing, value]);
+      setSearchPrice([...searchPrice, name]);
     } else {
-      updatePricing(pricing.filter((e) => e !== value));
+      updatePricing(pricing.filter((ele) => ele !== value));
+      setSearchPrice(searchPrice.filter((ele) => ele !== name));
     }
   };
 
@@ -164,8 +167,6 @@ const Search = () => {
         </form>
       </section>
       <section id="search-filter-containers">
-        {/* <FilterPriceSearch /> */}
-
         <main id="price-form">
           <p>Filter by price:</p>
           {["$", "$$", "$$$", "$$$$"].map((price, index) => {
@@ -184,12 +185,13 @@ const Search = () => {
           })}
           <button onClick={() => getPriceSearch()}>update</button>
         </main>
-
         <div></div>
-        <p>Filter by category</p>
-        <button className="openModalBtn" onClick={() => setModalOpen(true)}>
-          show all
-        </button>
+        <div id="category-form">
+          <p>Filter by category</p>
+          <button className="openModalBtn" onClick={() => setModalOpen(true)}>
+            show all
+          </button>
+        </div>
         {modalOpen && <FilterCategorySearch openModal={setModalOpen} />}
       </section>
       {searchInfo.categories.length > 0 || searchInfo.price.length > 0 ? (
@@ -201,7 +203,7 @@ const Search = () => {
             })}
           <p>location: {searchInfo.location}</p>
           {searchInfo.price &&
-            searchInfo.price.map((price, index) => {
+            searchPrice.map((price, index) => {
               return <span key={index}>{price}, </span>;
             })}
           <button onClick={resetFilters}>clear all</button>

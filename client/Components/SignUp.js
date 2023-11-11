@@ -25,7 +25,7 @@ const SignUp = () => {
     }
     setUser({ username: "", email: "", password: "", city: "", state: "" });
   };
-
+  
   const handleChange = (event) => {
     setUser((prevState) => ({
       ...prevState,

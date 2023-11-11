@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getAllLists } from "../features/listSlice";
 import StarRating from "./StarRating";
-import AddToListModal from "./AddToListModal"
+import AddToListModal from "./AddToListModal";
 
 const AllRestaurants = (props) => {
   const dispatch = useDispatch();
@@ -28,7 +28,8 @@ const AllRestaurants = (props) => {
 
   return (
     <main className="restaurant-list-card">
-      <section>
+       <hr className="restaurant-cards"/>
+      <section className="rest-card-img">
         <img
           className="restaurant-card-img"
           src={props.restaurant.image_url}
@@ -59,7 +60,9 @@ const AllRestaurants = (props) => {
             {props.restaurant.review_count}
             reviews)
           </p>
-          <p className="add-to-list-click" onClick={() => handleModalClick()}>+ add to list</p>
+          <p className="add-to-list-click" onClick={() => handleModalClick()}>
+            + add to list
+          </p>
           {modalOpen && (
             <AddToListModal
               openModal={setModalOpen}
