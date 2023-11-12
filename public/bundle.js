@@ -10295,25 +10295,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _features_authSlice__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../features/authSlice */ "./client/features/authSlice.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _ContentModal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ContentModal */ "./client/Components/ContentModal.js");
+
 
 
 
 
 const Login = () => {
   const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
   const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     email: "",
     password: ""
   });
-  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
+  const [error, setErrorModal] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [errorMessage, setErrorMessage] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
   const login = async event => {
     event.preventDefault();
     try {
       const loggedUser = await dispatch((0,_features_authSlice__WEBPACK_IMPORTED_MODULE_1__.loginUser)(user));
+      console.log("USER", user);
       //navigate only when user is accurate
-      if (loggedUser.payload.user) navigate("/usersearch");
+      console.log("loggedUser.payload.user", loggedUser.payload.user);
+      if (loggedUser.payload.user === undefined) {
+        setErrorMessage("incorrect email or password");
+        setErrorModal(true);
+      } else {
+        navigate("/usersearch");
+      }
     } catch (err) {
       console.log(err);
     }
@@ -10349,7 +10360,10 @@ const Login = () => {
     onChange: handleChange
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: "button"
-  }, "Login")));
+  }, "Login")), error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ContentModal__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    openErrorModal: setErrorModal,
+    content: errorMessage
+  }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Login);
 
@@ -11531,12 +11545,11 @@ const initialState = {
   user: {},
   // image: {},
   error: "",
-  token: "",
-  pendingFollows: [],
-  pendingFollowers: []
+  token: ""
 };
 const loginUser = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("auth/loginUser", async user => {
   try {
+    console.log("USER in thunk params", user);
     const response = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`/auth/login`, user);
     return response.data;
   } catch (err) {
@@ -11555,11 +11568,11 @@ const getUser = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThun
     });
     return response.data;
   } catch (error) {
+    console.log(error);
     return error.message;
   }
 });
 const updateUserInfo = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("auth/updateUserInfo", async userInfo => {
-  console.log("userInfo", userInfo);
   try {
     const {
       data: updated
@@ -11603,19 +11616,13 @@ const updateUserInfo = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAs
 const updatePhoto = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createAsyncThunk)("auth/updatePhoto", async userInfo => {
   try {
     console.log("userInfo", userInfo);
-
-    //   const formData = new FormData();
-    // formData.append("avatar", userInfo.avatar);
-
     const {
       data: updated
     } = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(`/api/users/${userInfo.userId}/avatar`, userInfo.avatar, {
       headers: {
         authorization: userInfo.token
-        // "Content-Type": "multipart/form-data",
       }
     });
-
     return updated;
   } catch (error) {
     return error.message;
@@ -11666,23 +11673,16 @@ const authSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_1__.createSlice)(
       return action.payload;
     });
     builder.addCase(loginUser.rejected, (state, action) => {
-      state.error = action.error.message;
+      state.error = action.payload;
     });
     builder.addCase(registerUser.fulfilled, (state, action) => {
-      return action.payload;
+      return action.error.message;
     });
     builder.addCase(registerUser.rejected, (state, action) => {
       state.error = action.error.message;
     });
-    // builder.addCase(getUserImage.fulfilled, (state, action) => {
-    //   state.image = action.payload;
-    // });
-    // builder.addCase(getUserImage.rejected, (state, action) => {
-    //   state.error = action.error.message;
-    // });
   }
 });
-
 const {
   loggedoutUser
 } = authSlice.actions;

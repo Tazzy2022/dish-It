@@ -5,6 +5,7 @@ const Image = require("../db/models/Image");
 //POST '/auth/login'
 authRouter.post("/login", async (req, res, next) => {
   try {
+    console.log("req.body", req.body)
     const user = await User.authenticate(
       req.body
       //   , {

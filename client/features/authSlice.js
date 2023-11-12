@@ -8,12 +8,11 @@ const initialState = {
   // image: {},
   error: "",
   token: "",
-  pendingFollows: [],
-  pendingFollowers: [],
 };
 
 export const loginUser = createAsyncThunk("auth/loginUser", async (user) => {
   try {
+    console.log("USER in thunk params", user)
     const response = await axios.post(`/auth/login`, user);
     return response.data;
   } catch (err) {
@@ -32,6 +31,7 @@ export const getUser = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
+      console.log(error);
       return error.message;
     }
   }
@@ -40,7 +40,6 @@ export const getUser = createAsyncThunk(
 export const updateUserInfo = createAsyncThunk(
   "auth/updateUserInfo",
   async (userInfo) => {
-    console.log("userInfo", userInfo);
     try {
       const { data: updated } = await axios.put(
         `/api/users/${userInfo.id}`,
@@ -89,17 +88,12 @@ export const updatePhoto = createAsyncThunk(
   async (userInfo) => {
     try {
       console.log("userInfo", userInfo);
-
-      //   const formData = new FormData();
-      // formData.append("avatar", userInfo.avatar);
-
       const { data: updated } = await axios.post(
         `/api/users/${userInfo.userId}/avatar`,
         userInfo.avatar,
         {
           headers: {
             authorization: userInfo.token,
-            // "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -158,20 +152,14 @@ const authSlice = createSlice({
       return action.payload;
     });
     builder.addCase(loginUser.rejected, (state, action) => {
-      state.error = action.error.message;
+      state.error = action.payload;
     });
     builder.addCase(registerUser.fulfilled, (state, action) => {
-      return action.payload;
+      return action.error.message;
     });
     builder.addCase(registerUser.rejected, (state, action) => {
       state.error = action.error.message;
     });
-    // builder.addCase(getUserImage.fulfilled, (state, action) => {
-    //   state.image = action.payload;
-    // });
-    // builder.addCase(getUserImage.rejected, (state, action) => {
-    //   state.error = action.error.message;
-    // });
   },
 });
 
