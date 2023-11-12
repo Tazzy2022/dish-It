@@ -49,7 +49,7 @@ const RestaurantCard = (props) => {
 
   return (
     <div className="restaurant-list-container">
-      <section className="singlelist-card">
+      <section className="list-card">
         <img
           className="card-img"
           src={props.restaurant.image_url}

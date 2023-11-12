@@ -12,7 +12,7 @@ const initialState = {
 
 export const loginUser = createAsyncThunk("auth/loginUser", async (user) => {
   try {
-    console.log("USER in thunk params", user)
+    console.log("USER in thunk params", user);
     const response = await axios.post(`/auth/login`, user);
     return response.data;
   } catch (err) {
@@ -107,7 +107,6 @@ export const updatePhoto = createAsyncThunk(
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
   async (userInfo) => {
-    console.log("USERINFO", userInfo);
     try {
       const response = await axios.post("/auth/signup", userInfo);
       return response.data;

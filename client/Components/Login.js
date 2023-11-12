@@ -16,7 +16,7 @@ const Login = () => {
     event.preventDefault();
     try {
       const loggedUser = await dispatch(loginUser(user));
-      console.log("USER", user)
+      console.log("USER", user);
       //navigate only when user is accurate
       console.log("loggedUser.payload.user", loggedUser.payload.user);
       if (loggedUser.payload.user === undefined) {

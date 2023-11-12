@@ -132,6 +132,42 @@ a {
   margin: 20px;
 }
 
+.restaurant-list-card {
+  display: flex;
+  border: solid 1px rgb(214, 213, 213);
+  box-shadow: 1px 1px rgb(244, 239, 239);
+  border-radius: 15px;
+  width: 70vw;
+  height: 20vh;
+  margin-bottom: 40px;
+}
+
+.restaurant-list-card p,
+.restaurant-list-card a {
+  margin: 10px 0px;
+}
+
+.restaurant-card-img {
+  width: 15vw;
+  height: 20vh;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.restaurant-card-info {
+  display: relative;
+}
+
+#rest-card-info {
+  position: absolute;
+  left: 33%;
+}
+
+#rest-card-cat {
+  position: absolute;
+  left: 63%;
+}
+
 .list-card p {
   text-align: center;
   padding-top: 0px;
@@ -353,48 +389,6 @@ a {
   left: 80%;
 }
 
-@media only screen and (min-width: 769px) {
-  .restaurant-list-card {
-    display: flex;
-    border: solid 1px rgb(214, 213, 213);
-    box-shadow: 1px 1px rgb(244, 239, 239);
-    border-radius: 15px;
-    width: 70vw;
-    height: 20vh;
-    margin-bottom: 40px;
-  }
-
-  .restaurant-cards {
-    display: none;
-  }
-
-  .restaurant-list-card p,
-  .restaurant-list-card a {
-    margin: 10px 0px;
-  }
-
-  .restaurant-card-img {
-    width: 15vw;
-    height: 20vh;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
-  }
-
-  .restaurant-card-info {
-    display: relative;
-  }
-
-  #rest-card-info {
-    position: absolute;
-    left: 33%;
-  }
-
-  #rest-card-cat {
-    position: absolute;
-    left: 63%;
-  }
-}
-
 @media only screen and (max-width: 768px) {
   /* For mobile phones: */
   p,
@@ -488,53 +482,15 @@ a {
     margin-right: 40px;
   }
 
-  .restaurant-card-img {
-    width: 25vw;
-    height: 15vh;
-  }
-
-  .rest-card-img {
-    text-align: center;
-  }
-
-  .restaurant-card-info {
-    display: relative;
-  }
-
-  #rest-card-info {
-    position: absolute;
-    left: 5%;
-    width: 45%;
-  }
-
-  .restaurant-cards {
-    border: 0.5px solid rgb(214, 213, 213);
-    width: 95vw;
-  }
-
-  #rest-card-cat {
-    position: absolute;
-    left: 52%;
-  }
-
-  .restaurant-list-card {
-    margin-bottom: 30vh;
-  }
-
-  .restaurant-list-card p,
-  .restaurant-list-card a {
-    margin: 10px 0px;
-    font-size: 14px;
-  }
-
-  .singlelist-card {
-    width: 95vw;
-    margin: auto;
-  }
-  /* #price-form {
-    flex-direction: row;
+  /* .restaurant-list-card {
+    border: none;
+    border-radius: none;
+    width: 50vw;
+    margin: 0px;
   } */
-  /* .checkbox-container {
-    display: flex;
+
+  /* .card-img {
+    width: 40vw;
+    border-radius: none;
   } */
 }
