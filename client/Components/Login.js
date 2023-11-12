@@ -16,14 +16,11 @@ const Login = () => {
     event.preventDefault();
     try {
       const loggedUser = await dispatch(loginUser(user));
-      console.log("USER", user);
-      //navigate only when user is accurate
-      console.log("loggedUser.payload.user", loggedUser.payload.user);
-      if (loggedUser.payload.user === undefined) {
+      if (loggedUser.payload.user) {
+        navigate("/usersearch");
+      } else {
         setErrorMessage("incorrect email or password");
         setErrorModal(true);
-      } else {
-        navigate("/usersearch");
       }
     } catch (err) {
       console.log(err);
@@ -44,6 +41,7 @@ const Login = () => {
       <form id="login-form" onSubmit={login}>
         <label>email:</label>
         <input
+        required
           type="email"
           placeholder="enter your email"
           value={user.email}
@@ -52,6 +50,7 @@ const Login = () => {
         />
         <label>password:</label>
         <input
+        required
           type="password"
           placeholder="enter your password"
           name="password"

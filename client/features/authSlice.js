@@ -12,7 +12,6 @@ const initialState = {
 
 export const loginUser = createAsyncThunk("auth/loginUser", async (user) => {
   try {
-    console.log("USER in thunk params", user);
     const response = await axios.post(`/auth/login`, user);
     return response.data;
   } catch (err) {
@@ -87,7 +86,6 @@ export const updatePhoto = createAsyncThunk(
   "auth/updatePhoto",
   async (userInfo) => {
     try {
-      console.log("userInfo", userInfo);
       const { data: updated } = await axios.post(
         `/api/users/${userInfo.userId}/avatar`,
         userInfo.avatar,
@@ -109,6 +107,7 @@ export const registerUser = createAsyncThunk(
   async (userInfo) => {
     try {
       const response = await axios.post("/auth/signup", userInfo);
+      console.log("response.data", response.data);
       return response.data;
     } catch (error) {
       return error.message;
@@ -154,7 +153,7 @@ const authSlice = createSlice({
       state.error = action.payload;
     });
     builder.addCase(registerUser.fulfilled, (state, action) => {
-      return action.error.message;
+      return action.payload;
     });
     builder.addCase(registerUser.rejected, (state, action) => {
       state.error = action.error.message;

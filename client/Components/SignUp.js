@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { registerUser } from "../features/authSlice";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import ContentModal from "./ContentModal";
 
 const SignUp = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [user, setUser] = useState({
     username: "",
     email: "",
@@ -12,14 +15,21 @@ const SignUp = () => {
     city: "",
     state: "",
   });
-  const navigate = useNavigate();
+  const [error, setErrorModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const signUp = async (event) => {
     event.preventDefault();
     try {
       const loggedUser = await dispatch(registerUser(user));
-      //navigate only when user is accurate
-      if (loggedUser.payload.user) navigate("/usersearch");
+      if (loggedUser.payload.user) {
+        navigate("/usersearch");
+      } else {
+        setErrorMessage(
+          "That user already exists. Please use a different email or sign in above"
+        );
+        setErrorModal(true);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -39,6 +49,7 @@ const SignUp = () => {
       <form id="signup-form" onSubmit={signUp}>
         <label>username:</label>
         <input
+          required
           placeholder="enter your username"
           value={user.username}
           name="username"
@@ -46,6 +57,7 @@ const SignUp = () => {
         />
         <label>email:</label>
         <input
+          required
           type="email"
           placeholder="enter your email"
           value={user.email}
@@ -54,6 +66,7 @@ const SignUp = () => {
         />
         <label>password:</label>
         <input
+          required
           type="password"
           placeholder="enter your  password"
           name="password"
@@ -62,6 +75,7 @@ const SignUp = () => {
         />
         <label>city:</label>
         <input
+          required
           placeholder="enter your city"
           name="city"
           value={user.city}
@@ -69,6 +83,7 @@ const SignUp = () => {
         />
         <label>state:</label>
         <input
+          required
           placeholder="enter your state"
           name="state"
           value={user.state}
@@ -76,6 +91,9 @@ const SignUp = () => {
         />
         <button className="button">Sign Up</button>
       </form>
+      {error && (
+        <ContentModal openErrorModal={setErrorModal} content={errorMessage} />
+      )}
     </div>
   );
 };

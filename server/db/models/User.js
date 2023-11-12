@@ -95,9 +95,7 @@ User.encryptUser = async (user) => {
 // };
 
 User.authenticate = async function ({ email, password }) {
-  console.log("email", email, "password", password);
   const user = await User.findOne({ where: { email: email } });
-  console.log("user in MODEL", user);
   if (user && (await bcrypt.compare(password, user.dataValues.password))) {
     return {
       user,
@@ -114,7 +112,6 @@ User.validate = async (token) => {
   try {
     const { userId } = await jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findByPk(userId);
-
     if (user) {
       return user;
     }
