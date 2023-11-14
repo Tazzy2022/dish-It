@@ -8,7 +8,9 @@ const app = express();
 // logging middleware
 app.use(morgan("dev"));
 
-app.use(cors());
+app.use(cors({
+  credentials: true
+}));
 
 // body parsing middleware
 app.use(express.urlencoded({ extended: true }));

@@ -24,7 +24,6 @@ authRouter.post("/login", async (req, res, next) => {
 //POST '/auth/signup'
 authRouter.post("/signup", async (req, res, next) => {
   try {
-    console.log("req.body.email", req.body.email)
     const checkUser = await User.findOne({ where: { email: req.body.email } });
     if (checkUser) {
       res.status(409).json({

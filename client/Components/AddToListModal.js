@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { addRestoToList } from "../features/singleListSlice";
 import { getAllLists } from "../features/listSlice";
+import ContentModal from "./ContentModal";
 
 const AddToListModal = ({ openModal, restaurantId }) => {
   const dispatch = useDispatch();
@@ -13,6 +14,8 @@ const AddToListModal = ({ openModal, restaurantId }) => {
   const lists = useSelector((state) => state.lists);
 
   const [listName, setListName] = useState("");
+  const [error, setErrorModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     dispatch(
@@ -26,7 +29,7 @@ const AddToListModal = ({ openModal, restaurantId }) => {
   const newAdd = async (restId, listName) => {
     try {
       openModal(false);
-      await dispatch(
+      const newAdd = await dispatch(
         addRestoToList({
           userId: auth.user.id,
           token: auth.token,
@@ -34,6 +37,11 @@ const AddToListModal = ({ openModal, restaurantId }) => {
           restaurantId: restId,
         })
       );
+      //modal not opening for below
+      if (newAdd.payload.id === undefined) {
+        setErrorMessage("that restaurant is already on that list");
+        setErrorModal(true);
+      }
       if (location.pathname.includes("friendlists")) {
         navigate(-1);
       }
@@ -105,6 +113,9 @@ const AddToListModal = ({ openModal, restaurantId }) => {
             })}
         </section>
       </main>
+      {error && (
+        <ContentModal openErrorModal={setErrorModal} content={errorMessage} />
+      )}
     </div>
   );
 };

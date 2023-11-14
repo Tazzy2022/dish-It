@@ -164,8 +164,6 @@ const Search = () => {
         </form>
       </section>
       <section id="search-filter-containers">
-        {/* <FilterPriceSearch /> */}
-
         <main id="price-form">
           <p>Filter by price:</p>
           {["$", "$$", "$$$", "$$$$"].map((price, index) => {
@@ -184,7 +182,6 @@ const Search = () => {
           })}
           <button onClick={() => getPriceSearch()}>update</button>
         </main>
-
         <div></div>
         <p>Filter by category</p>
         <button className="openModalBtn" onClick={() => setModalOpen(true)}>

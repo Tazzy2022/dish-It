@@ -107,7 +107,6 @@ export const registerUser = createAsyncThunk(
   async (userInfo) => {
     try {
       const response = await axios.post("/auth/signup", userInfo);
-      console.log("response.data", response.data);
       return response.data;
     } catch (error) {
       return error.message;
