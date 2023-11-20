@@ -204,22 +204,15 @@ router.post("/:id/list", async (req, res, next) => {
     } else {
       listName = req.body.listName;
     }
-    console.log("listName", listName);
-
-    const image = await needle(
-      "get",
-      `https://api.unsplash.com/search/photos?per=1&per_page=1&orientation=landscape&query=${listName}&client_id=${process.env.UNSPLASH_KEY}`
+    const image = await getImage(listName).then(
+      res.send(
+        await List.create({
+          userId: req.params.id,
+          listName: req.body.listName,
+          image: image,
+        })
+      )
     );
-    //console.log("image.body", image.body.results[0].links.download_location);
-    const imageDl = image.body.results[0].links.download_location
-    if(imageDl) {
-      const newList = await List.create({
-        userId: req.params.id,
-        listName: req.body.listName,
-        image: imageDl,
-      })
-      res.send(newList)
-    }
   } catch (err) {
     res.status(500).json({
       message: "could not create new list",
@@ -228,6 +221,18 @@ router.post("/:id/list", async (req, res, next) => {
     next(err);
   }
 });
+
+const getImage = async (listName) => {
+  try {
+    const image = await needle(
+      "get",
+      `https://api.unsplash.com/search/photos?per=1&per_page=1&orientation=landscape&query=${listName}&client_id=${process.env.UNSPLASH_KEY}`
+    );
+    return image.body.results[0].links.download_location;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 //below is unsplash call - returning undefined
 // console.log(
