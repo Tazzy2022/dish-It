@@ -29,7 +29,16 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 20px;
+}
+
+#cat-filter-h2 {
+  margin-top: 25px;
+}
+
+.catContainer h2 {
+  font-size: 20px;
+  font-weight: normal;
+  margin: 0px 0px 0px 20px;
 }
 
 .each-checkbox {
@@ -39,22 +48,14 @@
   align-items: center;
 }
 
-.cat-title h1 {
-  margin: 0px;
-  padding: 10px 20px 0px;
-}
-
 .each-checkbox label {
   font-size: 14px;
 }
 
-.cat-header {
+.cat-buttons {
   display: flex;
   justify-content: space-between;
-}
-
-.cat-buttons {
-  margin-top: 20px;
+  margin: 20px;
 }
 
 .cat-buttons button {
@@ -126,8 +127,14 @@
 }
 
 #addToList-section,
-.modal-lists {
+.modal-lists,
+.checkbox-container,
+#price-filter {
   display: flex;
+}
+
+.checkbox-container {
+  margin-top: 5px;
 }
 
 #all-lists-container {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCategories, searchState } from "../features/searchSlice";
+import { setCategories, searchState, setPrice } from "../features/searchSlice";
 import {
   getRestaurantLocationCat,
   getRestLocationPriceCat,
@@ -146,6 +146,44 @@ const FilterCategorySearch = ({ openModal }) => {
   const searchInfo = useSelector(searchState);
 
   const [category, updateCategory] = useState([]);
+  const [pricing, updatePricing] = useState([]);
+
+  const handlePriceChange = (e) => {
+    const { value, checked } = e.target;
+
+    if (checked) {
+      updatePricing([...pricing, value]);
+    } else {
+      updatePricing(pricing.filter((e) => e !== value));
+    }
+  };
+
+  // const getPriceSearch = async () => {
+  //   try {
+  //     if (searchInfo.categories.length === 0) {
+  //       await dispatch(
+  //         getRestaurantsLocationPrice({
+  //           token: auth.token,
+  //           location: searchInfo.location,
+  //           price: pricing,
+  //         })
+  //       );
+  //     } else {
+  //       await dispatch(
+  //         getRestLocationPriceCat({
+  //           token: auth.token,
+  //           location: searchInfo.location,
+  //           categories: searchInfo.categories,
+  //           price: pricing,
+  //         })
+  //       );
+  //     }
+  //     dispatch(setPrice(pricing));
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  //   // e.target.reset();
+  // };
 
   const handleChange = (e) => {
     const { value, checked } = e.target;
@@ -176,7 +214,8 @@ const FilterCategorySearch = ({ openModal }) => {
     openModal(false);
     let updatedCat = refactorCategories(category);
     try {
-      if (searchInfo.price.length === 0) {
+      //if (searchInfo.price.length === 0) {
+      if (pricing.length === 0) {
         console.log("updatedCat", updatedCat);
         await dispatch(
           getRestaurantLocationCat({
@@ -191,11 +230,12 @@ const FilterCategorySearch = ({ openModal }) => {
             token: auth.token,
             location: searchInfo.location,
             categories: updatedCat,
-            price: searchInfo.price,
+            price: pricing,
           })
         );
       }
       dispatch(setCategories(updatedCat));
+      dispatch(setPrice(pricing));
     } catch (error) {
       console.log(error);
     }
@@ -204,17 +244,28 @@ const FilterCategorySearch = ({ openModal }) => {
   return (
     <div className="modalBackground">
       <form onSubmit={getCategorySearch} className="catContainer">
-        <div className="cat-title">
-          <div className="cat-header">
-            <div>
-              <h1>Categories:</h1>
-            </div>
-            <div className="cat-buttons">
-              <button onClick={() => openModal(false)}>cancel</button>
-              <button type="submit">update search</button>
-            </div>
-          </div>
+        <div className="cat-buttons">
+          <button type="submit">update</button>
+          <button onClick={() => openModal(false)}>X</button>
         </div>
+        <section id="price-filter">
+          <h2>Filter by price:</h2>
+          {["$", "$$", "$$$", "$$$$"].map((price, index) => {
+            return (
+              <div key={index} className="checkbox-container">
+                <input
+                  type="checkbox"
+                  name={price}
+                  value={price.length}
+                  className="filter-price-checkbox"
+                  onChange={handlePriceChange}
+                />
+                <label>{price}</label>
+              </div>
+            );
+          })}
+        </section>
+        <h2 id="cat-filter-h2">Filter by food category:</h2>
         <main className="cat-body">
           {categories.map((category, index) => {
             return (

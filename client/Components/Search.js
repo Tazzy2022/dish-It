@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import FilterPriceSearch from "./FilterPriceSearch";
 import {
   renderAllRestaurants,
   getSingleRestaurant,
   getAllRestaurants,
-  getRestaurantsLocationPrice,
-  getRestLocationPriceCat,
+  // getRestaurantsLocationPrice,
+  // getRestLocationPriceCat,
 } from "../features/allRestaurantsSlice";
 import AllRestaurants from "./AllRestaurants";
 import FilterCategorySearch from "./FilterCategorySearch";
 import {
-  setPrice,
+  //setPrice,
   setRestaurant,
   setLocation,
   searchState,
@@ -30,7 +29,7 @@ const Search = () => {
     location: "",
   });
   const [modalOpen, setModalOpen] = useState(false);
-  const [pricing, updatePricing] = useState([]);
+  // const [pricing, updatePricing] = useState([]);
 
   useEffect(() => {
     if (search.location.length === 0) {
@@ -99,42 +98,42 @@ const Search = () => {
     );
   };
 
-  const getPriceSearch = async () => {
-    try {
-      if (searchInfo.categories.length === 0) {
-        await dispatch(
-          getRestaurantsLocationPrice({
-            token: auth.token,
-            location: searchInfo.location,
-            price: pricing,
-          })
-        );
-      } else {
-        await dispatch(
-          getRestLocationPriceCat({
-            token: auth.token,
-            location: searchInfo.location,
-            categories: searchInfo.categories,
-            price: pricing,
-          })
-        );
-      }
-      dispatch(setPrice(pricing));
-    } catch (error) {
-      console.log(error);
-    }
-    // e.target.reset();
-  };
+  // const getPriceSearch = async () => {
+  //   try {
+  //     if (searchInfo.categories.length === 0) {
+  //       await dispatch(
+  //         getRestaurantsLocationPrice({
+  //           token: auth.token,
+  //           location: searchInfo.location,
+  //           price: pricing,
+  //         })
+  //       );
+  //     } else {
+  //       await dispatch(
+  //         getRestLocationPriceCat({
+  //           token: auth.token,
+  //           location: searchInfo.location,
+  //           categories: searchInfo.categories,
+  //           price: pricing,
+  //         })
+  //       );
+  //     }
+  //     dispatch(setPrice(pricing));
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  //   // e.target.reset();
+  // };
 
-  const handlePriceChange = (e) => {
-    const { value, checked } = e.target;
+  // const handlePriceChange = (e) => {
+  //   const { value, checked } = e.target;
 
-    if (checked) {
-      updatePricing([...pricing, value]);
-    } else {
-      updatePricing(pricing.filter((e) => e !== value));
-    }
-  };
+  //   if (checked) {
+  //     updatePricing([...pricing, value]);
+  //   } else {
+  //     updatePricing(pricing.filter((e) => e !== value));
+  //   }
+  // };
 
   return (
     <div className="search-container">
@@ -164,9 +163,8 @@ const Search = () => {
         </form>
       </section>
       <section id="search-filter-containers">
-        <main id="price-form">
-          <p>Filter by price:</p>
-          {["$", "$$", "$$$", "$$$$"].map((price, index) => {
+        {/* <main id="price-form"> */}
+          {/* {["$", "$$", "$$$", "$$$$"].map((price, index) => {
             return (
               <div key={index} className="checkbox-container">
                 <input
@@ -180,10 +178,10 @@ const Search = () => {
               </div>
             );
           })}
-          <button onClick={() => getPriceSearch()}>update</button>
-        </main>
-        <div></div>
-        <p>Filter by category</p>
+          <button onClick={() => getPriceSearch()}>update</button> */}
+        {/* </main> */}
+        {/* <div></div> */}
+        <p>Filters</p>
         <button className="openModalBtn" onClick={() => setModalOpen(true)}>
           show all
         </button>
