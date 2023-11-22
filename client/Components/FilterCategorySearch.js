@@ -213,6 +213,7 @@ const FilterCategorySearch = ({ openModal }) => {
     e.preventDefault();
     openModal(false);
     let updatedCat = refactorCategories(category);
+    console.log("searchInfo in get search", searchInfo)
     try {
       //if (searchInfo.price.length === 0) {
       if (pricing.length === 0) {
@@ -249,7 +250,7 @@ const FilterCategorySearch = ({ openModal }) => {
           <button onClick={() => openModal(false)}>X</button>
         </div>
         <section id="price-filter">
-          <h2>Filter by price:</h2>
+          <h2>price:</h2>
           {["$", "$$", "$$$", "$$$$"].map((price, index) => {
             return (
               <div key={index} className="checkbox-container">
@@ -265,7 +266,7 @@ const FilterCategorySearch = ({ openModal }) => {
             );
           })}
         </section>
-        <h2 id="cat-filter-h2">Filter by food category:</h2>
+        <div></div>
         <main className="cat-body">
           {categories.map((category, index) => {
             return (

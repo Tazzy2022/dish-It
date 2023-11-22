@@ -25,6 +25,10 @@
   z-index: 2;
 }
 
+.checkbox-container label {
+  font-size: 16px;
+}
+
 .cat-body {
   display: flex;
   flex-wrap: wrap;
@@ -36,9 +40,9 @@
 }
 
 .catContainer h2 {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: normal;
-  margin: 0px 0px 0px 20px;
+  margin: 0px 0px 0px 23px;
 }
 
 .each-checkbox {
@@ -49,7 +53,7 @@
 }
 
 .each-checkbox label {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .cat-buttons {

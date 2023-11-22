@@ -4,13 +4,10 @@ import {
   renderAllRestaurants,
   getSingleRestaurant,
   getAllRestaurants,
-  // getRestaurantsLocationPrice,
-  // getRestLocationPriceCat,
 } from "../features/allRestaurantsSlice";
 import AllRestaurants from "./AllRestaurants";
 import FilterCategorySearch from "./FilterCategorySearch";
 import {
-  //setPrice,
   setRestaurant,
   setLocation,
   searchState,
@@ -20,7 +17,7 @@ import {
 const Search = () => {
   const dispatch = useDispatch();
 
-  const searchInfo = useSelector(searchState);
+  const searchInfo = useSelector((state) => state.search);
   const auth = useSelector((state) => state.auth);
   const restaurants = useSelector(renderAllRestaurants);
 
@@ -29,24 +26,41 @@ const Search = () => {
     location: "",
   });
   const [modalOpen, setModalOpen] = useState(false);
-  // const [pricing, updatePricing] = useState([]);
+
+  // useEffect(() => {
+  //   if (search.location.length === 0) {
+  //     const setRestaurants = async () => {
+  //       try {
+  //         await dispatch(
+  //           getAllRestaurants({
+  //             token: auth.token,
+  //             location: auth.user.city,
+  //           })
+  //         );
+  //         console.log("searchInfo in use effect", searchInfo);
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //     };
+  //     setRestaurants();
+  //     dispatch(setLocation(auth.user.city));
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (search.location.length === 0) {
-      const setRestaurants = async () => {
-        try {
-          await dispatch(
-            getAllRestaurants({
-              token: auth.token,
-              location: auth.user.city,
-            })
-          );
-          dispatch(setLocation(auth.user.city));
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      setRestaurants();
+      dispatch(setLocation(auth.user.city));
+      console.log("searchInfo in use effect", searchInfo);
+      try {
+        dispatch(
+          getAllRestaurants({
+            token: auth.token,
+            location: auth.user.city,
+          })
+        );
+      } catch (error) {
+        console.log(error);
+      }
     }
   }, []);
 
@@ -88,7 +102,6 @@ const Search = () => {
       restaurant: "",
       location: "",
     });
-    updatePricing([]);
     dispatch(resetAll(true));
     await dispatch(
       getAllRestaurants({
@@ -97,43 +110,6 @@ const Search = () => {
       })
     );
   };
-
-  // const getPriceSearch = async () => {
-  //   try {
-  //     if (searchInfo.categories.length === 0) {
-  //       await dispatch(
-  //         getRestaurantsLocationPrice({
-  //           token: auth.token,
-  //           location: searchInfo.location,
-  //           price: pricing,
-  //         })
-  //       );
-  //     } else {
-  //       await dispatch(
-  //         getRestLocationPriceCat({
-  //           token: auth.token,
-  //           location: searchInfo.location,
-  //           categories: searchInfo.categories,
-  //           price: pricing,
-  //         })
-  //       );
-  //     }
-  //     dispatch(setPrice(pricing));
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  //   // e.target.reset();
-  // };
-
-  // const handlePriceChange = (e) => {
-  //   const { value, checked } = e.target;
-
-  //   if (checked) {
-  //     updatePricing([...pricing, value]);
-  //   } else {
-  //     updatePricing(pricing.filter((e) => e !== value));
-  //   }
-  // };
 
   return (
     <div className="search-container">
@@ -157,34 +133,15 @@ const Search = () => {
               onChange={handleChange}
             />
           </div>
-          <button type="submit" className="button">
+          <button type="submit" className="button search">
             search
+          </button>
+          <button className="openModalBtn" onClick={() => setModalOpen(true)}>
+            Add filters
           </button>
         </form>
       </section>
       <section id="search-filter-containers">
-        {/* <main id="price-form"> */}
-          {/* {["$", "$$", "$$$", "$$$$"].map((price, index) => {
-            return (
-              <div key={index} className="checkbox-container">
-                <input
-                  type="checkbox"
-                  name={price}
-                  value={price.length}
-                  className="filter-price-checkbox"
-                  onChange={handlePriceChange}
-                />
-                <label>{price}</label>
-              </div>
-            );
-          })}
-          <button onClick={() => getPriceSearch()}>update</button> */}
-        {/* </main> */}
-        {/* <div></div> */}
-        <p>Filters</p>
-        <button className="openModalBtn" onClick={() => setModalOpen(true)}>
-          show all
-        </button>
         {modalOpen && <FilterCategorySearch openModal={setModalOpen} />}
       </section>
       {searchInfo.categories.length > 0 || searchInfo.price.length > 0 ? (
@@ -192,12 +149,12 @@ const Search = () => {
           <p>current filters: </p>
           {searchInfo.categories &&
             searchInfo.categories.map((category, index) => {
-              return <p key={index}>{category}, </p>;
+              return <p key={index}> {category}, </p>;
             })}
-          <p>location: {searchInfo.location}</p>
+          <p> location: {searchInfo.location}</p>
           {searchInfo.price &&
             searchInfo.price.map((price, index) => {
-              return <span key={index}>{price}, </span>;
+              return <p key={index}> {price}, </p>;
             })}
           <button onClick={resetFilters}>clear all</button>
         </section>

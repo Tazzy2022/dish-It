@@ -16,10 +16,6 @@ body {
   font-size: 25px;
 }
 
-.header:hover {
-  color: #333333;
-}
-
 a {
   text-decoration: none;
 }
@@ -52,7 +48,6 @@ a {
 }
 
 #price-form button,
-.openModalBtn,
 #searched-filters button {
   margin: 0vw 10vw 0vw 1vw;
   height: 20px;
@@ -61,13 +56,6 @@ a {
   color: #e00707;
   padding-bottom: 5px;
   background-color: white;
-}
-
-#price-form button:hover,
-.openModalBtn:hover,
-.add-to-list-click:hover {
-  background-color: #e00707;
-  color: white;
 }
 
 #search-filter-containers {
@@ -94,7 +82,19 @@ a {
 
 #search-form button {
   margin-top: 19px;
-  width: 10vw;
+  width: 70px;
+}
+
+.yelp-link {
+  color: #333333;
+}
+
+.openModalBtn {
+  border: none;
+  font-size: 16px;
+  background-color: white;
+  margin: 0px 0px 0px 50px;
+  padding: 0;
 }
 
 .search-label-input input {
@@ -257,15 +257,14 @@ a {
   color: white;
   background-color: #e00707;
   align-self: center;
-  width: 15vw;
   border-radius: 5px;
   border: #e00707;
   margin-bottom: 10px;
   height: 25px;
 }
 
-.button:hover {
-  color: black;
+.search {
+  width: 30px;
 }
 
 .nav-dropdown-container a {
@@ -286,11 +285,6 @@ a {
   margin: 0;
 }
 
-.nav-dropdown-container:hover .dropbtn {
-  background-color: #e00707;
-  color: white;
-}
-
 .dropdown-content {
   display: none;
   position: absolute;
@@ -307,14 +301,6 @@ a {
   text-decoration: none;
   display: block;
   text-align: left;
-}
-
-.dropdown-content a:hover {
-  background-color: #ddd;
-}
-
-.nav-dropdown-container:hover .dropdown-content {
-  display: block;
 }
 
 #home-main-container {
@@ -336,10 +322,6 @@ a {
 #login-signup-link a {
   color: #e00707;
   font-weight: bolder;
-}
-
-#login-signup-link a:hover {
-  color: #333333;
 }
 
 .user-account-container {
@@ -367,10 +349,6 @@ a {
   color: #333333;
 }
 
-.useracc-left-nav a:hover {
-  color: #e00707;
-}
-
 .user-section {
   background-color: #f4f4f4;
   border-radius: 0.3571428571rem;
@@ -387,6 +365,40 @@ a {
 .account-Btn-container {
   position: absolute;
   left: 80%;
+}
+
+.dropdown-content a:hover,
+.catContainer input:hover,
+.search-label-input input:hover,
+#login-form input:hover,
+#signup-form input:hover {
+  background-color: #ddd;
+}
+
+.nav-dropdown-container:hover .dropdown-content {
+  display: block;
+}
+
+#price-form button:hover,
+.add-to-list-click:hover,
+.nav-dropdown-container:hover .dropbtn {
+  background-color: #e00707;
+  color: white;
+}
+
+#login-signup-link a:hover,
+.header:hover {
+  color: #333333;
+}
+
+.useracc-left-nav a:hover,
+.openModalBtn:hover,
+.yelp-link:hover {
+  color: #e00707;
+}
+
+.button:hover {
+  color: black;
 }
 
 @media only screen and (max-width: 768px) {
