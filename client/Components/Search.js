@@ -16,7 +16,6 @@ import {
 
 const Search = () => {
   const dispatch = useDispatch();
-
   const searchInfo = useSelector((state) => state.search);
   const auth = useSelector((state) => state.auth);
   const restaurants = useSelector(renderAllRestaurants);
@@ -48,19 +47,16 @@ const Search = () => {
   // }, []);
 
   useEffect(() => {
-    if (search.location.length === 0) {
-      dispatch(setLocation(auth.user.city));
-      console.log("searchInfo in use effect", searchInfo);
-      try {
-        dispatch(
-          getAllRestaurants({
-            token: auth.token,
-            location: auth.user.city,
-          })
-        );
-      } catch (error) {
-        console.log(error);
-      }
+    console.log("searchInfo in useEffect", searchInfo);
+    try {
+      dispatch(
+        getAllRestaurants({
+          token: auth.token,
+          location: searchInfo.location,
+        })
+      );
+    } catch (error) {
+      console.log(error);
     }
   }, []);
 

@@ -3,6 +3,7 @@ import { loginUser } from "../features/authSlice";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import ContentModal from "./ContentModal";
+import { setLocation } from "../features/searchSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,8 @@ const Login = () => {
     try {
       const loggedUser = await dispatch(loginUser(user));
       if (loggedUser.payload.user) {
+        dispatch(setLocation(loggedUser.payload.user.city))
+        //console.log("loggedUser.payload.user", loggedUser.payload.user);
         navigate("/usersearch");
       } else {
         setErrorMessage("incorrect email or password");
@@ -41,7 +44,7 @@ const Login = () => {
       <form id="login-form" onSubmit={login}>
         <label>email:</label>
         <input
-        required
+          required
           type="email"
           placeholder="enter your email"
           value={user.email}
@@ -50,7 +53,7 @@ const Login = () => {
         />
         <label>password:</label>
         <input
-        required
+          required
           type="password"
           placeholder="enter your password"
           name="password"

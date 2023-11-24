@@ -18,6 +18,7 @@ const searchSlice = createSlice({
       state.price = [];
     },
     setLocation: (state, input) => {
+      console.log("input", input);
       state.location = input.payload;
     },
     setPrice: (state, input) => {
