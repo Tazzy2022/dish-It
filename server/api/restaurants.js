@@ -53,6 +53,8 @@ router.get("/:location/:price", async (req, res, next) => {
 //GET /api/restaurants/:categories/:location
 router.get("/:allCategories/:location", async (req, res, next) => {
   try {
+    console.log("req.params.location", req.params.location);
+    console.log("allCategories", allCategories);
     const restaurants = await needle(
       "get",
       `${BASE_URL}search?location=${req.params.location}${allCategories}`,

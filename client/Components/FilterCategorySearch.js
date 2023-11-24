@@ -213,7 +213,7 @@ const FilterCategorySearch = ({ openModal }) => {
     e.preventDefault();
     openModal(false);
     let updatedCat = refactorCategories(category);
-    console.log("searchInfo in get search", searchInfo)
+    console.log("searchInfo in get search", searchInfo);
     try {
       //if (searchInfo.price.length === 0) {
       if (pricing.length === 0) {

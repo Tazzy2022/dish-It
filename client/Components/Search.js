@@ -10,7 +10,6 @@ import FilterCategorySearch from "./FilterCategorySearch";
 import {
   setRestaurant,
   setLocation,
-  searchState,
   resetAll,
 } from "../features/searchSlice";
 
@@ -22,32 +21,11 @@ const Search = () => {
 
   const [search, setSearch] = useState({
     restaurant: "",
-    location: "",
+    location: searchInfo.location,
   });
   const [modalOpen, setModalOpen] = useState(false);
 
-  // useEffect(() => {
-  //   if (search.location.length === 0) {
-  //     const setRestaurants = async () => {
-  //       try {
-  //         await dispatch(
-  //           getAllRestaurants({
-  //             token: auth.token,
-  //             location: auth.user.city,
-  //           })
-  //         );
-  //         console.log("searchInfo in use effect", searchInfo);
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     };
-  //     setRestaurants();
-  //     dispatch(setLocation(auth.user.city));
-  //   }
-  // }, []);
-
   useEffect(() => {
-    console.log("searchInfo in useEffect", searchInfo);
     try {
       dispatch(
         getAllRestaurants({
@@ -64,6 +42,7 @@ const Search = () => {
     event.preventDefault();
     try {
       if (search.restaurant.length === 0) {
+        dispatch(resetAll(true))
         await dispatch(
           getAllRestaurants({
             token: auth.token,
