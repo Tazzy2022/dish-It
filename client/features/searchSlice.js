@@ -28,7 +28,6 @@ const searchSlice = createSlice({
       state.categories = input.payload;
     },
     resetAll: (state, bool) => {
-      console.log("HI");
       state.resetAll = bool.payload;
       if (bool.payload === true) {
         (state.categories = []), (state.restaurant = ""), (state.price = []);

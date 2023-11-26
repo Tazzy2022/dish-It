@@ -12,14 +12,11 @@ export const getAllRestaurants = createAsyncThunk(
   "allRestaurants/getAllRestaurants",
   async ({ token, location }) => {
     try {
-      const response = await axios.get(
-        `/api/restaurants/location/${location}`,
-        {
-          headers: {
-            authorization: token,
-          },
-        }
-      );
+      const response = await axios.get(`/api/restaurants/city/${location}`, {
+        headers: {
+          authorization: token,
+        },
+      });
       return response?.data;
     } catch (error) {
       return error.message;
@@ -33,28 +30,7 @@ export const getRestaurantsLocationPrice = createAsyncThunk(
     try {
       const pricing = "&price=" + price.join("&price=");
       const response = await axios.get(
-        `/api/restaurants/${location}/${pricing}`,
-        {
-          headers: {
-            authorization: token,
-          },
-        }
-      );
-      return response?.data;
-    } catch (error) {
-      return error.message;
-    }
-  }
-);
-
-export const getRestLocationPriceCat = createAsyncThunk(
-  "allRestaurants/getRestLocationPriceCat",
-  async ({ token, location, price, categories }) => {
-    try {
-      const pricing = "&price=" + price.join("&price=");
-      const allCategories = "&categories=" + categories.join("&categories=");
-      const response = await axios.get(
-        `/api/restaurants/${location}/${allCategories}${pricing}`,
+        `/api/restaurants/price/${pricing}/${location}`,
         {
           headers: {
             authorization: token,
@@ -73,11 +49,54 @@ export const getRestaurantLocationCat = createAsyncThunk(
   async ({ token, location, categories }) => {
     console.log("categories", categories);
     console.log("location", location);
+    const category = "&categories=" + req.body.categories.join("&categories=");
     try {
-      const allCategories = "&categories=" + categories.join("&categories=");
-      console.log("!!!!", `/api/restaurants/${allCategories}/${location}`);
       const response = await axios.get(
-        `/api/restaurants/${allCategories}/${location}`,
+        `/api/restaurants/catPrice/${category}/${location}`,
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+      return response?.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
+// export const getRestaurantLocationCat = createAsyncThunk(
+//   "allRestaurants/getRestaurantLocationCat",
+//   async ({ token, location, categories }) => {
+//     console.log("categories", categories);
+//     console.log("location", location);
+//     try {
+//       const allCategories = "&categories=" + categories.join("&categories=");
+//       console.log("!!!!", `/api/restaurants/${allCategories}/${location}`);
+//       const response = await axios.get(
+//         `/api/restaurants/${allCategories}/${location}`,
+//         {
+//           headers: {
+//             authorization: token,
+//           },
+//         }
+//       );
+//       return response?.data;
+//     } catch (error) {
+//       return error.message;
+//     }
+//   }
+// );
+
+export const getRestLocationPriceCat = createAsyncThunk(
+  "allRestaurants/getRestLocationPriceCat",
+  async ({ token, location, price, categories }) => {
+    try {
+      const pricing = "&price=" + price.join("&price=");
+      const allCategories = "&categories=" + categories.join("&categories=");
+      const response = await axios.get(
+        `/api/restaurants/allFilters/${location}/${allCategories}/${pricing}`,
         {
           headers: {
             authorization: token,

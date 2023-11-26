@@ -158,33 +158,6 @@ const FilterCategorySearch = ({ openModal }) => {
     }
   };
 
-  // const getPriceSearch = async () => {
-  //   try {
-  //     if (searchInfo.categories.length === 0) {
-  //       await dispatch(
-  //         getRestaurantsLocationPrice({
-  //           token: auth.token,
-  //           location: searchInfo.location,
-  //           price: pricing,
-  //         })
-  //       );
-  //     } else {
-  //       await dispatch(
-  //         getRestLocationPriceCat({
-  //           token: auth.token,
-  //           location: searchInfo.location,
-  //           categories: searchInfo.categories,
-  //           price: pricing,
-  //         })
-  //       );
-  //     }
-  //     dispatch(setPrice(pricing));
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  //   // e.target.reset();
-  // };
-
   const handleChange = (e) => {
     const { value, checked } = e.target;
 
