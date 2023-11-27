@@ -81,10 +81,6 @@ a {
   width: 70px;
 }
 
-.yelp-link {
-  color: #333333;
-}
-
 .openModalBtn {
   border: none;
   font-size: 16px;
@@ -133,7 +129,7 @@ a {
   box-shadow: 1px 1px rgb(244, 239, 239);
   border-radius: 15px;
   width: 70vw;
-  height: 20vh;
+  height: 15vh;
   margin: 20px 0px 40px;
 }
 
@@ -142,9 +138,14 @@ a {
   margin: 10px 0px;
 }
 
+.yelp-link {
+  margin-left: 20px;
+  color: #e00707;
+}
+
 .restaurant-card-img {
-  width: 15vw;
-  height: 20vh;
+  width: 13vw;
+  height: 15vh;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
 }
@@ -160,7 +161,11 @@ a {
 
 #rest-card-cat {
   position: absolute;
-  left: 63%;
+  left: 58%;
+}
+
+#restaurantCard-rating-link {
+  margin-top: 10px;
 }
 
 .list-card p {
@@ -374,7 +379,6 @@ a {
   display: block;
 }
 
-.add-to-list-click:hover,
 .nav-dropdown-container:hover .dropbtn {
   background-color: #e00707;
   color: white;
@@ -387,12 +391,13 @@ a {
 
 .useracc-left-nav a:hover,
 #searched-filters button:hover,
-.openModalBtn:hover,
-.yelp-link:hover {
+.openModalBtn:hover {
   color: #e00707;
 }
 
-.button:hover {
+.add-to-list-click:hover,
+.button:hover,
+.yelp-link:hover {
   color: black;
 }
 
@@ -495,17 +500,22 @@ a {
   }
 
   .restaurant-list-card {
-    border: none;
+    border: white;
+    border-radius: 0px;
     width: 80vw;
     margin: 20px 0px 40px;
   }
 
-  .restaurant-list-card p {
+  .restaurant-list-card p,
+  .yelp-link {
     font-size: 14px;
+    margin: 5px 0px;
   }
 
   .restaurant-card-img {
-    width: 25vw;
+    width: 20vw;
+    height: 15vh;
+    border-radius: 0px;
     border: none;
   }
 }

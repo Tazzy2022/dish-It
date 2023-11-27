@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getAllLists } from "../features/listSlice";
 import StarRating from "./StarRating";
-import AddToListModal from "./AddToListModal"
+import AddToListModal from "./AddToListModal";
 
 const AllRestaurants = (props) => {
   const dispatch = useDispatch();
@@ -44,22 +44,24 @@ const AllRestaurants = (props) => {
             {props.restaurant.location.zip_code}
           </p>
           <p>phone: {props.restaurant.display_phone}</p>
-          <p>price: {props.restaurant.price}</p>
-          <Link className="yelp-link" to={props.restaurant.url}>
-            yelp link
-          </Link>
         </div>
         <div id="rest-card-cat">
-          <p>food category:</p>
-          {props.restaurant.categories.map((cat, index) => {
-            return <p key={index}>{cat.title},</p>;
-          })}
-          <p>
+          <span id="restaurantCard-rating-link">
             <StarRating rating={props.restaurant.rating} />(
             {props.restaurant.review_count}
             reviews)
+            <Link className="yelp-link" to={props.restaurant.url}>
+              yelp link
+            </Link>
+            <div></div>
+          </span>
+          {props.restaurant.categories.map((cat, index) => {
+            return <span key={index}>{cat.title},</span>;
+          })}
+          <p>price: {props.restaurant.price}</p>
+          <p className="add-to-list-click" onClick={() => handleModalClick()}>
+            + add to list
           </p>
-          <p className="add-to-list-click" onClick={() => handleModalClick()}>+ add to list</p>
           {modalOpen && (
             <AddToListModal
               openModal={setModalOpen}
