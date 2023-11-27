@@ -47,15 +47,11 @@ a {
   display: flex;
 }
 
-#price-form button,
 #searched-filters button {
-  margin: 0vw 10vw 0vw 1vw;
-  height: 20px;
-  border: 1px solid #e00707;
-  border-radius: 5px;
-  color: #e00707;
-  padding-bottom: 5px;
+  margin-left: 20px;
+  color: #333333;
   background-color: white;
+  border: none;
 }
 
 #search-filter-containers {
@@ -103,12 +99,11 @@ a {
 }
 
 #search-form {
-  margin: 20px;
+  margin-top: 20px;
 }
 
 #searched-filters {
   display: flex;
-  margin-top: 20px;
 }
 
 #searched-filters p,
@@ -139,7 +134,7 @@ a {
   border-radius: 15px;
   width: 70vw;
   height: 20vh;
-  margin-bottom: 40px;
+  margin: 20px 0px 40px;
 }
 
 .restaurant-list-card p,
@@ -379,7 +374,6 @@ a {
   display: block;
 }
 
-#price-form button:hover,
 .add-to-list-click:hover,
 .nav-dropdown-container:hover .dropbtn {
   background-color: #e00707;
@@ -392,6 +386,7 @@ a {
 }
 
 .useracc-left-nav a:hover,
+#searched-filters button:hover,
 .openModalBtn:hover,
 .yelp-link:hover {
   color: #e00707;
@@ -416,6 +411,11 @@ a {
   #signup-form button,
   #login-form button {
     font-size: 16px;
+  }
+
+  #searched-filters {
+    display: flex;
+    flex-direction: column;
   }
 
   .form-headings {
@@ -494,15 +494,18 @@ a {
     margin-right: 40px;
   }
 
-  /* .restaurant-list-card {
+  .restaurant-list-card {
     border: none;
-    border-radius: none;
-    width: 50vw;
-    margin: 0px;
-  } */
+    width: 80vw;
+    margin: 20px 0px 40px;
+  }
 
-  /* .card-img {
-    width: 40vw;
-    border-radius: none;
-  } */
+  .restaurant-list-card p {
+    font-size: 14px;
+  }
+
+  .restaurant-card-img {
+    width: 25vw;
+    border: none;
+  }
 }

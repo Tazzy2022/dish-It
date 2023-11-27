@@ -7,11 +7,7 @@ import {
 } from "../features/allRestaurantsSlice";
 import AllRestaurants from "./AllRestaurants";
 import FilterCategorySearch from "./FilterCategorySearch";
-import {
-  setRestaurant,
-  setLocation,
-  resetAll,
-} from "../features/searchSlice";
+import { setRestaurant, setLocation, resetAll } from "../features/searchSlice";
 
 const Search = () => {
   const dispatch = useDispatch();
@@ -42,7 +38,7 @@ const Search = () => {
     event.preventDefault();
     try {
       if (search.restaurant.length === 0) {
-        dispatch(resetAll(true))
+        dispatch(resetAll(true));
         await dispatch(
           getAllRestaurants({
             token: auth.token,
@@ -75,7 +71,7 @@ const Search = () => {
   const resetFilters = async () => {
     setSearch({
       restaurant: "",
-      location: "",
+      location: auth.user.city,
     });
     dispatch(resetAll(true));
     await dispatch(
@@ -85,6 +81,28 @@ const Search = () => {
       })
     );
   };
+
+  let searchCategories;
+  let priceArray = [];
+  let priceFilters;
+
+  if (searchInfo.categories.length > 1) {
+    searchCategories = searchInfo.categories.join(", ").toString();
+  } else if (searchInfo.categories.length > 0) {
+    searchCategories = searchInfo.categories.join(" ").toString();
+  }
+
+  if (searchInfo.price.length > 0) {
+    searchInfo.price.forEach((p) => {
+      let newP = "";
+      let numP = p * 1;
+      for (let i = 0; i < numP; i++) {
+        newP += "$";
+      }
+      priceArray.push(newP);
+    });
+    priceFilters = priceArray.join(", ").toString();
+  }
 
   return (
     <div className="search-container">
@@ -119,22 +137,30 @@ const Search = () => {
       <section id="search-filter-containers">
         {modalOpen && <FilterCategorySearch openModal={setModalOpen} />}
       </section>
-      {searchInfo.categories.length > 0 || searchInfo.price.length > 0 ? (
+      {searchInfo.categories.length > 0 && searchInfo.price.length > 0 && (
         <section id="searched-filters">
-          <p>current filters: </p>
-          {searchInfo.categories &&
-            searchInfo.categories.map((category, index) => {
-              return <p key={index}> {category}, </p>;
-            })}
-          <p> location: {searchInfo.location}</p>
-          {searchInfo.price &&
-            searchInfo.price.map((price, index) => {
-              return <p key={index}> {price}, </p>;
-            })}
+          <p>
+            Current filters: {searchCategories + " "}, {priceFilters} in{" "}
+            {searchInfo.location}{" "}
+          </p>
           <button onClick={resetFilters}>clear all</button>
         </section>
-      ) : (
-        <p></p>
+      )}
+      {searchInfo.categories.length > 0 && !searchInfo.price.length > 0 && (
+        <section id="searched-filters">
+          <p>
+            Current filters: {searchCategories} in {searchInfo.location}{" "}
+          </p>
+          <button onClick={resetFilters}>clear all</button>
+        </section>
+      )}
+      {searchInfo.price.length > 0 && !searchInfo.categories.length > 0 && (
+        <section id="searched-filters">
+          <p>
+            Current filters: {priceFilters} in {searchInfo.location}{" "}
+          </p>
+          <button onClick={resetFilters}>clear all</button>
+        </section>
       )}
       {restaurants?.businesses?.length > 1 ? (
         restaurants?.businesses?.map((restaurant) => {

@@ -186,11 +186,8 @@ const FilterCategorySearch = ({ openModal }) => {
     e.preventDefault();
     openModal(false);
     let updatedCat = refactorCategories(category);
-    console.log("searchInfo in get search", searchInfo);
     try {
-      //if (searchInfo.price.length === 0) {
       if (pricing.length === 0) {
-        console.log("updatedCat", updatedCat);
         await dispatch(
           getRestaurantLocationCat({
             token: auth.token,

@@ -4,8 +4,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   restaurants: [],
-  //   error: "",
-  //   token: "",
 };
 
 export const getAllRestaurants = createAsyncThunk(
@@ -47,9 +45,7 @@ export const getRestaurantsLocationPrice = createAsyncThunk(
 export const getRestaurantLocationCat = createAsyncThunk(
   "allRestaurants/getRestaurantLocationCat",
   async ({ token, location, categories }) => {
-    console.log("categories", categories);
-    console.log("location", location);
-    const category = "&categories=" + req.body.categories.join("&categories=");
+    const category = "&categories=" + categories.join("&categories=");
     try {
       const response = await axios.get(
         `/api/restaurants/catPrice/${category}/${location}`,
@@ -65,29 +61,6 @@ export const getRestaurantLocationCat = createAsyncThunk(
     }
   }
 );
-
-// export const getRestaurantLocationCat = createAsyncThunk(
-//   "allRestaurants/getRestaurantLocationCat",
-//   async ({ token, location, categories }) => {
-//     console.log("categories", categories);
-//     console.log("location", location);
-//     try {
-//       const allCategories = "&categories=" + categories.join("&categories=");
-//       console.log("!!!!", `/api/restaurants/${allCategories}/${location}`);
-//       const response = await axios.get(
-//         `/api/restaurants/${allCategories}/${location}`,
-//         {
-//           headers: {
-//             authorization: token,
-//           },
-//         }
-//       );
-//       return response?.data;
-//     } catch (error) {
-//       return error.message;
-//     }
-//   }
-// );
 
 export const getRestLocationPriceCat = createAsyncThunk(
   "allRestaurants/getRestLocationPriceCat",
@@ -138,28 +111,24 @@ const allRestaurantsSlice = createSlice({
     });
     builder.addCase(getAllRestaurants.fulfilled, (state, action) => {
       return action.payload;
-      //state.restaurants = action.payload;
     });
     builder.addCase(getSingleRestaurant.rejected, (state, action) => {
       state.error = action.error.message;
     });
     builder.addCase(getSingleRestaurant.fulfilled, (state, action) => {
       return action.payload;
-      //state.restaurant = action.payload
     });
     builder.addCase(getRestaurantsLocationPrice.rejected, (state, action) => {
       state.error = action.error.message;
     });
     builder.addCase(getRestaurantsLocationPrice.fulfilled, (state, action) => {
       return action.payload;
-      //state.restaurants = action.payload;
     });
     builder.addCase(getRestLocationPriceCat.rejected, (state, action) => {
       state.error = action.error.message;
     });
     builder.addCase(getRestLocationPriceCat.fulfilled, (state, action) => {
       return action.payload;
-      //state.restaurants = action.payload;
     });
     builder.addCase(getRestaurantLocationCat.rejected, (state, action) => {
       state.error = action.error.message;
