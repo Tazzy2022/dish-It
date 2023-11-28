@@ -130,7 +130,7 @@ a {
   border-radius: 15px;
   width: 70vw;
   height: 15vh;
-  margin: 20px 0px 40px;
+  margin: 20px 0px 30px;
 }
 
 .restaurant-list-card p,
@@ -150,7 +150,21 @@ a {
   border-bottom-left-radius: 15px;
 }
 
-.restaurant-card-info {
+#rest-list-card1 {
+  flex: 5 5 auto;
+}
+
+#rest-list-card2 {
+  flex: 1 1 auto;
+  width: 25vw;
+}
+
+#rest-list-card3 {
+  flex: 1 1 auto;
+  width: 25vw;
+}
+
+/* .restaurant-card-info {
   display: relative;
 }
 
@@ -162,7 +176,7 @@ a {
 #rest-card-cat {
   position: absolute;
   left: 58%;
-}
+} */
 
 #restaurantCard-rating-link {
   margin-top: 10px;
@@ -500,16 +514,21 @@ a {
   }
 
   .restaurant-list-card {
-    border: white;
+    border: none;
     border-radius: 0px;
     width: 80vw;
     margin: 20px 0px 40px;
+    box-shadow: none;
   }
 
   .restaurant-list-card p,
   .yelp-link {
     font-size: 14px;
     margin: 5px 0px;
+  }
+
+  .stars {
+    font-size: 14px;
   }
 
   .restaurant-card-img {

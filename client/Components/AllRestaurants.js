@@ -28,14 +28,17 @@ const AllRestaurants = (props) => {
 
   return (
     <main className="restaurant-list-card">
-      <section>
+      <section id="rest-list-card1">
         <img
           className="restaurant-card-img"
           src={props.restaurant.image_url}
           alt="restaurant image"
         />
       </section>
-      <section className="restaurant-card-info">
+      <section
+        id="rest-list-card2"
+        // className="restaurant-card-info"
+      >
         <div id="rest-card-info">
           <p>{props.restaurant.name}</p>
           <p>{props.restaurant.location.address1}</p>
@@ -45,9 +48,11 @@ const AllRestaurants = (props) => {
           </p>
           <p>phone: {props.restaurant.display_phone}</p>
         </div>
+      </section>
+      <section id="rest-list-card3">
         <div id="rest-card-cat">
           <span id="restaurantCard-rating-link">
-            <StarRating rating={props.restaurant.rating} />(
+            <StarRating id="stars" rating={props.restaurant.rating} />(
             {props.restaurant.review_count}
             reviews)
             <Link className="yelp-link" to={props.restaurant.url}>

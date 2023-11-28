@@ -11,7 +11,7 @@ const StarRating = (ratings) => {
       fillColor="red"
       iconsCount={5}
       name="rating"
-      size="15px"
+      size="14px"
     />
   );
 };
