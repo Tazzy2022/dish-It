@@ -135,11 +135,14 @@ a {
 
 .restaurant-list-card p,
 .restaurant-list-card a {
-  margin: 10px 0px;
+  margin: 8px 0px;
+}
+
+#rest-card-cat {
+  margin-top: 8px;
 }
 
 .yelp-link {
-  margin-left: 20px;
   color: #e00707;
 }
 
@@ -151,35 +154,13 @@ a {
 }
 
 #rest-list-card1 {
-  flex: 5 5 auto;
+  flex: 5 5 0;
 }
 
-#rest-list-card2 {
-  flex: 1 1 auto;
-  width: 25vw;
-}
-
+#rest-list-card2,
 #rest-list-card3 {
   flex: 1 1 auto;
   width: 25vw;
-}
-
-/* .restaurant-card-info {
-  display: relative;
-}
-
-#rest-card-info {
-  position: absolute;
-  left: 33%;
-}
-
-#rest-card-cat {
-  position: absolute;
-  left: 58%;
-} */
-
-#restaurantCard-rating-link {
-  margin-top: 10px;
 }
 
 .list-card p {
@@ -418,6 +399,10 @@ a {
 @media only screen and (max-width: 768px) {
   /* For mobile phones: */
   p,
+  label,
+  input,
+  .button,
+  a,
   #login-signup-link,
   .profile-name,
   .profile-add-list,
@@ -428,8 +413,13 @@ a {
   #signup-form label,
   #signup-form input,
   #signup-form button,
-  #login-form button {
-    font-size: 16px;
+  #login-form button,
+  #stars,
+  .restaurant-list-card p,
+  .yelp-link,
+  .nav-dropdown-container .dropbtn,
+  #restaurantCard-rating-link {
+    font-size: 14px;
   }
 
   #searched-filters {
@@ -516,25 +506,39 @@ a {
   .restaurant-list-card {
     border: none;
     border-radius: 0px;
-    width: 80vw;
-    margin: 20px 0px 40px;
+    width: 90vw;
+    height: 20vh;
+    margin: 20px 5vw 40px;
     box-shadow: none;
   }
 
   .restaurant-list-card p,
-  .yelp-link {
-    font-size: 14px;
+  .yelp-link,
+  #rest-card-cat {
     margin: 5px 0px;
-  }
-
-  .stars {
-    font-size: 14px;
   }
 
   .restaurant-card-img {
     width: 20vw;
-    height: 15vh;
-    border-radius: 0px;
+    height: 13vh;
+    border-radius: 5px;
     border: none;
+    margin-top: 10px;
+  }
+
+  .nav-dropdown-container .dropbtn {
+    padding: 10px 10px;
+  }
+
+  #rest-list-card1 {
+    flex: 5 5 0;
+    width: 20vw;
+  }
+  #rest-list-card2,
+  #rest-list-card3 {
+    flex: 1 1 auto;
+    width: 35vw;
+    margin-top: 0px;
+    padding-left: 5px;
   }
 }

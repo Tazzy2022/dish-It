@@ -35,11 +35,8 @@ const AllRestaurants = (props) => {
           alt="restaurant image"
         />
       </section>
-      <section
-        id="rest-list-card2"
-        // className="restaurant-card-info"
-      >
-        <div id="rest-card-info">
+      <section id="rest-list-card2">
+        <div>
           <p>{props.restaurant.name}</p>
           <p>{props.restaurant.location.address1}</p>
           <p>
@@ -47,22 +44,24 @@ const AllRestaurants = (props) => {
             {props.restaurant.location.zip_code}
           </p>
           <p>phone: {props.restaurant.display_phone}</p>
+          <Link className="yelp-link" to={props.restaurant.url}>
+            yelp link
+          </Link>
         </div>
       </section>
       <section id="rest-list-card3">
         <div id="rest-card-cat">
           <span id="restaurantCard-rating-link">
             <StarRating id="stars" rating={props.restaurant.rating} />(
-            {props.restaurant.review_count}
+            {props.restaurant.review_count + " "}
             reviews)
-            <Link className="yelp-link" to={props.restaurant.url}>
-              yelp link
-            </Link>
-            <div></div>
           </span>
-          {props.restaurant.categories.map((cat, index) => {
-            return <span key={index}>{cat.title},</span>;
-          })}
+          <div></div>
+          <p>
+            {props.restaurant.categories.map((cat, index) => {
+              return <span key={index}>{cat.title},</span>;
+            })}
+          </p>
           <p>price: {props.restaurant.price}</p>
           <p className="add-to-list-click" onClick={() => handleModalClick()}>
             + add to list
