@@ -54,10 +54,16 @@ a {
   border: none;
 }
 
-#search-filter-containers {
+#search-filter-containers,
+.searchcard-link-addbttn {
   display: flex;
   justify-content: space-between;
 }
+
+.searchcard-link-addbttn {
+  margin-right: 5vw;
+}
+
 .filter-price-checkbox {
   margin: 0px 3px 5px 10px;
 }
@@ -103,7 +109,8 @@ a {
 }
 
 #searched-filters p,
-.add-to-list-click {
+#add-to-list-click,
+.yelp-link {
   font-size: 14px;
   color: #e00707;
 }
@@ -133,8 +140,7 @@ a {
   margin: 3vh 0vh 3vh;
 }
 
-.restaurant-list-card p,
-.restaurant-list-card a {
+.restaurant-list-card p {
   margin: 8px 0px;
 }
 
@@ -142,8 +148,8 @@ a {
   margin-top: 8px;
 }
 
-.yelp-link {
-  color: #e00707;
+#add-to-list-click {
+  margin: 0px;
 }
 
 .restaurant-card-img {
@@ -394,7 +400,7 @@ a {
   color: #e00707;
 }
 
-.add-to-list-click:hover,
+#add-to-list-click:hover,
 .button:hover,
 .yelp-link:hover {
   color: black;
@@ -418,12 +424,16 @@ a {
   #signup-form input,
   #signup-form button,
   #login-form button,
+  .nav-dropdown-container .dropbtn {
+    font-size: 14px;
+  }
+
   #stars,
   .restaurant-list-card p,
   .yelp-link,
-  .nav-dropdown-container .dropbtn,
-  #restaurantCard-rating-link {
-    font-size: 14px;
+  #restaurantCard-rating-link,
+  #add-to-list-click {
+    font-size: 12px;
   }
 
   #searched-filters {
@@ -486,7 +496,9 @@ a {
   #login-form button {
     width: 200px;
   }
-  #search-form {
+  #search-form,
+  #price-form,
+  #category-form {
     flex-direction: column;
   }
   #search-form input {
@@ -498,10 +510,6 @@ a {
     margin-top: 0px;
     width: 100px;
   }
-  #price-form,
-  #category-form {
-    flex-direction: column;
-  }
 
   #price-form {
     margin-right: 40px;
@@ -512,12 +520,11 @@ a {
     border-radius: 0px;
     width: 90vw;
     height: 20vh;
-    margin: 5vh 5vw 5vh;
+    margin: 2vh 5vw 2vh;
     box-shadow: none;
   }
 
   .restaurant-list-card p,
-  .yelp-link,
   #rest-card-cat {
     margin: 5px 0px;
   }
@@ -544,5 +551,13 @@ a {
     width: 35vw;
     margin-top: 0px;
     padding-left: 5px;
+  }
+
+  .searchcard-link-addbttn {
+    margin-right: 0vw;
+  }
+
+  #add-to-list-click {
+    margin: 0px;
   }
 }

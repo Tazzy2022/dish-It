@@ -44,7 +44,7 @@ const AllRestaurants = (props) => {
             {props.restaurant.location.city}, {props.restaurant.location.state},{" "}
             {props.restaurant.location.zip_code}
           </p>
-          <p>phone: {props.restaurant.display_phone}</p>
+          <p>{props.restaurant.display_phone}</p>
         </div>
       </section>
       <section id="rest-list-card3">
@@ -57,14 +57,14 @@ const AllRestaurants = (props) => {
           <div></div>
           <CategoriesCard category={props.restaurant.categories} />
           <p>price: {props.restaurant.price}</p>
-          <span>
+          <div className="searchcard-link-addbttn">
             <Link className="yelp-link" to={props.restaurant.url}>
               yelp link
             </Link>
-            <p className="add-to-list-click" onClick={() => handleModalClick()}>
+            <p id="add-to-list-click" onClick={() => handleModalClick()}>
               add to list
             </p>
-          </span>
+          </div>
           {modalOpen && (
             <AddToListModal
               openModal={setModalOpen}
