@@ -130,7 +130,7 @@ a {
   border-radius: 15px;
   width: 70vw;
   height: 15vh;
-  margin: 20px 0px 30px;
+  margin: 3vh 0vh 3vh;
 }
 
 .restaurant-list-card p,
@@ -157,10 +157,14 @@ a {
   flex: 5 5 0;
 }
 
-#rest-list-card2,
+#rest-list-card2 {
+  flex: 1 1 auto;
+  width: 30vw;
+}
+
 #rest-list-card3 {
   flex: 1 1 auto;
-  width: 25vw;
+  width: 20vw;
 }
 
 .list-card p {
@@ -508,7 +512,7 @@ a {
     border-radius: 0px;
     width: 90vw;
     height: 20vh;
-    margin: 20px 5vw 40px;
+    margin: 5vh 5vw 5vh;
     box-shadow: none;
   }
 

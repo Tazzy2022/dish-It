@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { getAllLists } from "../features/listSlice";
 import StarRating from "./StarRating";
 import AddToListModal from "./AddToListModal";
+import CategoriesCard from "./CategoriesCard";
 
 const AllRestaurants = (props) => {
   const dispatch = useDispatch();
@@ -44,9 +45,6 @@ const AllRestaurants = (props) => {
             {props.restaurant.location.zip_code}
           </p>
           <p>phone: {props.restaurant.display_phone}</p>
-          <Link className="yelp-link" to={props.restaurant.url}>
-            yelp link
-          </Link>
         </div>
       </section>
       <section id="rest-list-card3">
@@ -57,15 +55,16 @@ const AllRestaurants = (props) => {
             reviews)
           </span>
           <div></div>
-          <p>
-            {props.restaurant.categories.map((cat, index) => {
-              return <span key={index}>{cat.title},</span>;
-            })}
-          </p>
+          <CategoriesCard category={props.restaurant.categories} />
           <p>price: {props.restaurant.price}</p>
-          <p className="add-to-list-click" onClick={() => handleModalClick()}>
-            + add to list
-          </p>
+          <span>
+            <Link className="yelp-link" to={props.restaurant.url}>
+              yelp link
+            </Link>
+            <p className="add-to-list-click" onClick={() => handleModalClick()}>
+              add to list
+            </p>
+          </span>
           {modalOpen && (
             <AddToListModal
               openModal={setModalOpen}
