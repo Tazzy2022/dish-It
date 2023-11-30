@@ -88,7 +88,7 @@ const categories = [
   "burgers",
   "burmese",
   "cafes",
-  "cajun/creole",
+  "cajun & creole",
   "caribbean",
   "chicken wings",
   "chinese",
@@ -110,7 +110,7 @@ const categories = [
   "gluten-free",
   "greek",
   "halal",
-  "himalayan/nepalese",
+  "himalayan & nepalese",
   "ice cream & frozen yogurt",
   "indian",
   "irish",
@@ -237,22 +237,21 @@ const FilterCategorySearch = ({ openModal }) => {
           })}
         </section>
         <div></div>
-        <main className="cat-body">
+        <div className="cat-body">
           {categories.map((category, index) => {
             return (
-              <div key={index} className="each-checkbox">
+              <section key={index} className="each-checkbox">
                 <input
                   type="checkbox"
                   name={category}
                   value={category}
-                  className="filter-category-checkbox"
                   onChange={handleChange}
                 />
                 <label>{category}</label>
-              </div>
+              </section>
             );
           })}
-        </main>
+        </div>
       </form>
     </div>
   );

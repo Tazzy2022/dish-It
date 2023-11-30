@@ -126,12 +126,14 @@ const Search = () => {
               onChange={handleChange}
             />
           </div>
-          <button type="submit" className="button search">
-            search
-          </button>
-          <button className="openModalBtn" onClick={() => setModalOpen(true)}>
-            Add filters
-          </button>
+          <div className="search-buttons">
+            <button type="submit" className="search">
+              search
+            </button>
+            <button className="openModalBtn" onClick={() => setModalOpen(true)}>
+              Add filters
+            </button>
+          </div>
         </form>
       </section>
       <section id="search-filter-containers">

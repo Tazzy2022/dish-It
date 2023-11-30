@@ -82,10 +82,10 @@ a {
   margin-right: 10px;
 }
 
-#search-form button {
+/* #search-form button {
   margin-top: 19px;
   width: 70px;
-}
+} */
 
 .openModalBtn {
   border: none;
@@ -269,7 +269,15 @@ a {
 }
 
 .search {
-  width: 30px;
+  font-size: 16px;
+  color: white;
+  background-color: #e00707;
+  border-radius: 5px;
+  border: #e00707;
+}
+
+.search {
+  margin-top: 20px;
 }
 
 .nav-dropdown-container a {
@@ -390,7 +398,8 @@ a {
 }
 
 #login-signup-link a:hover,
-.header:hover {
+.header:hover,
+.search:hover {
   color: #333333;
 }
 
@@ -424,6 +433,8 @@ a {
   #signup-form input,
   #signup-form button,
   #login-form button,
+  .openModalBtn,
+  .search,
   .nav-dropdown-container .dropbtn {
     font-size: 14px;
   }
@@ -506,10 +517,26 @@ a {
     margin-bottom: 10px;
   }
 
-  #search-form button {
-    margin-top: 0px;
-    width: 100px;
+  .search-buttons {
+    display: flex;
+    flex-direction: column;
   }
+
+  .openModalBtn,
+  .search {
+    margin: 5px 0px;
+  }
+
+  .search {
+    width: 70px;
+    align-self: center;
+  }
+
+  /* #search-form button {
+    margin-top: 0px;
+    width: 60px;
+    height: 16px;
+  } */
 
   #price-form {
     margin-right: 40px;

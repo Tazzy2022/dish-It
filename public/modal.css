@@ -17,8 +17,7 @@
   border-radius: 12px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  width: 70vw;
-  height: 70vh;
+  width: 75%;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -33,6 +32,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  padding-bottom: 20px;
 }
 
 #cat-filter-h2 {
@@ -46,9 +46,10 @@
 }
 
 .each-checkbox {
-  width: 10vw;
   display: flex;
-  margin: 10px;
+  flex: 1 1 auto;
+  width: 12vw;
+  padding: 10px;
   align-items: center;
 }
 
@@ -137,8 +138,16 @@
   display: flex;
 }
 
+#price-filter h2 {
+  padding-top: 3px;
+}
+
 .checkbox-container {
   margin-top: 5px;
+}
+
+.checkbox-container label {
+  padding-bottom: 3px;
 }
 
 #all-lists-container {
@@ -174,6 +183,25 @@
   justify-content: flex-end;
 }
 
+@media only screen and (max-width: 1100px) {
+  /* mid-break-point: */
+  .catContainer {
+    width: 90vw;
+    height: 95vh;
+    margin: 0vw 0vw;
+  }
+
+  .each-checkbox {
+    flex: 1 1 23%;
+    padding: 8px;
+  }
+  .each-checkbox label,
+  .checkbox-container label,
+  #price-filter h2 {
+    font-size: 14px;
+  }
+}
+
 @media only screen and (max-width: 768px) {
   /* For mobile phones: */
   .catContainer {
@@ -181,10 +209,20 @@
     border: none;
     width: 100vw;
     height: 100vh;
-    display: flex;
-    flex-direction: column;
-    z-index: 2;
+    margin: 0vw 0vw;
   }
-  
 
+  .cat-buttons button {
+    font-size: 14px;
+  }
+
+  .each-checkbox label,
+  .checkbox-container label,
+  #price-filter h2 {
+    font-size: 12px;
+  }
+  .each-checkbox {
+    flex: 1 1 20%;
+    padding: 8px;
+  }
 }
