@@ -46,18 +46,18 @@ const UserHome = () => {
           alt="profile pic"
         />
         <p className="profile-name">{auth.user.username}'s lists...</p>
-        <button className="button" onClick={() => setModalOpen(true)}>
+        <button className="home-button" onClick={() => setModalOpen(true)}>
           + new list
         </button>
         {modalOpen && <NewListModal openModal={setModalOpen} />}
       </section>
-      <section className="home-filter-container">
+      {/* <section className="home-filter-container">
         <label>filter by:</label>
         <input type="checkbox" className="filter-personal-checkbox" />
         <label>personal</label>
         <input type="checkbox" className="filter-following-checkbox" />
         <label>following</label>
-      </section>
+      </section> */}
       {lists?.length === 0 ? (
         <div>
           <p>no saved lists yet...</p>

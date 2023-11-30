@@ -31,14 +31,14 @@ const Home = () => {
           <p className="profile-name">Michele's Lists...</p>
           <p className="profile-add-list">+ new list</p>
         </section>
-        <section className="home-filter-container">
+        {/* <section className="home-filter-container">
           <label>filter by:</label>
           <input type="checkbox" className="filter-personal-checkbox" />
           <label>personal</label>
           <input type="checkbox" className="filter-following-checkbox" />
           <label>following</label>
-        </section>
-        <section className="home-lists-container">
+        </section> */}
+        <section className="home-lists">
           <div className="list-card">
             <img
               className="card-img"

@@ -103,18 +103,18 @@
 }
 
 .create-list-form input,
-.modalbtn {
+.addTo-list-modal button {
   margin: 10px;
 }
 
-.modalbtn {
+.addTo-list-modal button {
   color: white;
   background-color: #e00707;
   border-radius: 5px;
   border: #e00707;
 }
 
-.modalbtn:hover {
+.addTo-list-modal button:hover {
   color: black;
 }
 
@@ -122,20 +122,23 @@
   border-radius: 12px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  width: 60vw;
-  height: 50vh;
   margin: auto;
   z-index: 2;
   justify-content: center;
   display: flex;
   flex-direction: column;
+  padding: 0px 20px;
 }
 
 #addToList-section,
-.modal-lists,
+#modal-lists,
 .checkbox-container,
 #price-filter {
   display: flex;
+}
+
+#modal-lists {
+  align-items: center;
 }
 
 #price-filter h2 {
@@ -157,6 +160,7 @@
 
 #line-input {
   width: 70%;
+  padding: 0px;
 }
 
 .addTo-list-form {
@@ -166,9 +170,8 @@
 }
 
 .modalX {
-  width: 20px;
   color: #e00707;
-  font-size: 20px;
+  font-size: 16px;
   background-color: white;
   border: none;
   margin: 10px;
@@ -224,5 +227,8 @@
   .each-checkbox {
     flex: 1 1 20%;
     padding: 8px;
+  }
+  #all-lists-container p {
+    font-size: 14px;
   }
 }

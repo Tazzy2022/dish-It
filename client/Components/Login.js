@@ -19,7 +19,6 @@ const Login = () => {
       const loggedUser = await dispatch(loginUser(user));
       if (loggedUser.payload.user) {
         dispatch(setLocation(loggedUser.payload.user.city))
-        //console.log("loggedUser.payload.user", loggedUser.payload.user);
         navigate("/usersearch");
       } else {
         setErrorMessage("incorrect email or password");

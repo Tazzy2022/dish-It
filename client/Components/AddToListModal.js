@@ -88,18 +88,18 @@ const AddToListModal = ({ openModal, restaurantId }) => {
               value={listName.listname}
               onChange={handleChange}
             />
-            <button className="modalbtn" type="submit">
+            <button type="submit">
               create
             </button>
           </section>
         </form>
         <section id="all-lists-container">
-          {lists?.length > 0 && <p>or add to existing list:</p>}
+          {lists?.length > 0 && <p>OR add to existing list:</p>}
           {lists?.length > 0 &&
             lists?.map((list) => {
               return (
                 <div key={list.id}>
-                  <section className="modal-lists">
+                  <section id="modal-lists">
                     <p>{list.listName}</p>
                     <button
                       onClick={() => newAdd(restaurantId, list.listName)}
