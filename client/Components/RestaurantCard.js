@@ -43,44 +43,52 @@ const RestaurantCard = (props) => {
     (note) => note.restaurantId === props.restaurant.id
   );
 
-	if (isLoading) {
+  if (isLoading) {
     return <div className="loading-p">Loading...</div>;
   }
 
   return (
     <div className="restaurant-list-container">
-      <section className="list-card">
-        <img
-          className="card-img"
-          src={props.restaurant.image_url}
-          alt="restaurant image"
-        />
-        <p>{props.restaurant.name}</p>
-        <p>{props.restaurant.address1}</p>
-        <p>
-          {props.restaurant.location.city}, {props.restaurant.location.state},{" "}
-          {props.restaurant.location.zip_code}
-        </p>
-        <p>phone: {props.restaurant.display_phone}</p>
-        <p>price: {props.restaurant.price}</p>
-        <Link className="yelp-link" to={props.restaurant.url}>
-          yelp link
-        </Link>
-        <p>Food category:</p>
-        {props.restaurant.categories.map((cat, index) => {
-          return <p key={index}>{cat.title},</p>;
-        })}
-        <button onClick={() => setModalOpen(true)}>+</button>
-        <label>add notes</label>
-        {modalOpen && (
-          <NotesModal
-            openModal={setModalOpen}
-            notes={note?.personalNotes || ""}
-            restaurantId={props.restaurant.id}
+      <main className="list-card">
+        <section className="list-card1">
+          <img
+            className="card-img"
+            src={props.restaurant.image_url}
+            alt="restaurant image"
           />
-        )}
-        <button onClick={() => deleteFromList(props.restaurant.id)}>x</button>
-        <label>remove from list</label>
+        </section>
+        <section className="list-card2">
+          <p>{props.restaurant.name}</p>
+          <p>{props.restaurant.address1}</p>
+          <p>
+            {props.restaurant.location.city}, {props.restaurant.location.state},{" "}
+            {props.restaurant.location.zip_code}
+          </p>
+          <p>{props.restaurant.display_phone}</p>
+          <p>price: {props.restaurant.price}</p>
+        </section>
+        <section className="list-card3">
+          <Link className="yelp-link" to={props.restaurant.url}>
+            yelp link
+          </Link>
+          <p>Food category:</p>
+          {props.restaurant.categories.map((cat, index) => {
+            return <p key={index}>{cat.title},</p>;
+          })}
+          <button onClick={() => setModalOpen(true)}>+</button>
+          <label>add notes</label>
+          {modalOpen && (
+            <NotesModal
+              openModal={setModalOpen}
+              notes={note?.personalNotes || ""}
+              restaurantId={props.restaurant.id}
+            />
+          )}
+          <button onClick={() => deleteFromList(props.restaurant.id)}>x</button>
+          <label>remove from list</label>
+        </section>
+      </main>
+      <section className="list-card-notes">
         <p>Notes:</p>
         {note?.personalNotes?.length > 0 ? (
           <p>{note.personalNotes}</p>

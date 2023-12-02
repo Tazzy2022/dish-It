@@ -40,6 +40,9 @@ const Login = () => {
   return (
     <div id="login-container">
       <h2 className="form-headings">Login</h2>
+      {error && (
+        <ContentModal openErrorModal={setErrorModal} content={errorMessage} />
+      )}
       <form id="login-form" onSubmit={login}>
         <label>email:</label>
         <input
@@ -61,9 +64,6 @@ const Login = () => {
         />
         <button className="button">Login</button>
       </form>
-      {error && (
-        <ContentModal openErrorModal={setErrorModal} content={errorMessage} />
-      )}
     </div>
   );
 };

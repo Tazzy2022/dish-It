@@ -169,21 +169,39 @@
   margin-left: 5%;
 }
 
-.modalX {
+.modalX,
+.closeX {
   color: #e00707;
   font-size: 16px;
   background-color: white;
   border: none;
+}
+
+.modalX {
   margin: 10px;
 }
 
-.modalX:hover {
+.modalX:hover,
+.closeX:hover {
   color: #333333;
 }
 
 #close-modal {
   display: flex;
   justify-content: flex-end;
+}
+
+.modal-content,
+.closeX {
+  margin: 5px;
+}
+
+.error-modal {
+  border: 1px solid #e00707;
+  background-color: white;
+  color: #e00707;
+  border-radius: 5px;
+  margin: 5px 0px;
 }
 
 @media only screen and (max-width: 1100px) {

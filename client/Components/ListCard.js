@@ -28,24 +28,22 @@ const ListCard = (props) => {
   };
 
   return (
-    <main className="user-home-list">
-      <section className="list-card-container">
-        <div>
-          <Link to={`/userlists/${props.list.id}`}>
-            <img
-              className="card-img"
-              src={props.list.image}
-              alt="list background image"
-            />
-            <p>{props.list.listName}</p>
-          </Link>
-        </div>
-        <span className="list-card-btn">
-          <button onClick={() => removeList(props.list.id)}></button>
-          <label>delete list</label>
-        </span>
-      </section>
-    </main>
+    <section className="list-card-container">
+      <main>
+        <Link to={`/userlists/${props.list.id}`}>
+          <img
+            className="card-img"
+            src={props.list.image}
+            alt="list background image"
+          />
+          <p>{props.list.listName}</p>
+        </Link>
+      </main>
+      <div className="list-card-btn">
+        <button onClick={() => removeList(props.list.id)}>X</button>
+        <label>delete list</label>
+      </div>
+    </section>
   );
 };
 

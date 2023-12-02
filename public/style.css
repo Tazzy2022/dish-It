@@ -34,8 +34,9 @@ a {
 
 .user-home-list {
   display: flex;
-  flex-direction: row;
-  border: 5px solid black;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0vh 2vw 2vh 2vw;
 }
 
 .signup-link {
@@ -127,16 +128,16 @@ a {
 }
 
 .list-card,
-.list-card-container div {
+.list-card-container main {
   border: solid 1px rgb(214, 213, 213);
   box-shadow: 1px 1px rgb(244, 239, 239);
   border-radius: 15px;
   width: 18vw;
 }
 
-/* .list-card-container {
-  flex: 1 1 20%;
-} */
+.list-card-container {
+  margin: 0px 20px;
+}
 
 .list-card {
   margin: 20px;
@@ -185,12 +186,29 @@ a {
   width: 20vw;
 }
 
-.list-card p,
-.list-card-container p,
 .list-card-btn {
+  display: flex;
+  margin: 5px;
+  justify-content: center;
+}
+
+.list-card-btn button {
+  margin-right: 5px;
+  background-color: #e00707;
+  border: #e00707;
+  border-radius: 5px;
+  color: white;
+}
+
+.list-card p,
+.list-card-container p {
   text-align: center;
   padding-top: 0px;
   padding-bottom: 0px;
+}
+
+.list-card-container p {
+  color: #333333;
 }
 
 .home-header-container,
@@ -276,7 +294,7 @@ a {
 }
 
 .button {
-  font-size: 17px;
+  font-size: 16px;
   color: white;
   background-color: #e00707;
   align-self: center;
@@ -411,23 +429,22 @@ a {
   color: white;
 }
 
-#login-signup-link a:hover,
-.header:hover,
-.search:hover {
-  color: #333333;
-}
-
-.useracc-left-nav a:hover,
-#searched-filters button:hover,
-.openModalBtn:hover {
+.list-card-container p:hover {
   color: #e00707;
 }
 
+#login-signup-link a:hover,
+.header:hover,
+.search:hover,
+.list-card-btn button:hover,
+.useracc-left-nav a:hover,
+#searched-filters button:hover,
+.openModalBtn:hover,
 #add-to-list-click:hover,
 .button:hover,
 .yelp-link:hover,
 .home-button:hover {
-  color: black;
+  color: #333333;
 }
 
 @media only screen and (max-width: 768px) {
@@ -504,6 +521,18 @@ a {
   .list-card-container,
   .card-img {
     width: 50vw;
+  }
+
+  .list-card-container main {
+    width: 50vw;
+  }
+
+  .list-card-container p {
+    margin: 5px 0px;
+  }
+
+  .list-card-container {
+    margin-bottom: 20px;
   }
 
   #home-main-container {

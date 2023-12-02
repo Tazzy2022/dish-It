@@ -40,11 +40,7 @@ const UserHome = () => {
   return (
     <div>
       <section className="home-header-container">
-        <img
-          className="profile-img"
-          src={auth.user.image}
-          alt="profile pic"
-        />
+        <img className="profile-img" src={auth.user.image} alt="profile pic" />
         <p className="profile-name">{auth.user.username}'s lists...</p>
         <button className="home-button" onClick={() => setModalOpen(true)}>
           + new list
@@ -58,17 +54,19 @@ const UserHome = () => {
         <input type="checkbox" className="filter-following-checkbox" />
         <label>following</label>
       </section> */}
-      {lists?.length === 0 ? (
-        <div>
-          <p>no saved lists yet...</p>
-          <Link to="/usersearch">start your search here</Link>
-        </div>
-      ) : (
-        lists?.length > 0 &&
-        lists?.map((list) => {
-          return <ListCard key={list.id} list={list} auth={auth} />;
-        })
-      )}
+      <main className="user-home-list">
+        {lists?.length === 0 ? (
+          <div>
+            <p>no saved lists yet...</p>
+            <Link to="/usersearch">start your search here</Link>
+          </div>
+        ) : (
+          lists?.length > 0 &&
+          lists?.map((list) => {
+            return <ListCard key={list.id} list={list} auth={auth} />;
+          })
+        )}
+      </main>
     </div>
   );
 };

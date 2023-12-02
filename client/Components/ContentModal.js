@@ -1,22 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 
 const ContentModal = (props) => {
 
 	return (
-		<div>
-<div className="modalBackground">
-        <main className="new-list-modal">
+        <main className="error-modal">
           <div id="close-modal">
-            <button className="modalX" onClick={() => props.openErrorModal(false)}>
+            <button className="closeX" onClick={() => props.openErrorModal(false)}>
               X
             </button>
           </div>
-          <section className="modal-content">
-            <p>{props.content}</p>
+          <section>
+            <p className="modal-content">{props.content}</p>
           </section>
         </main>
-      </div>
-		</div>
 	)
 }
 
