@@ -24,6 +24,7 @@ const SignUp = () => {
       const loggedUser = await dispatch(registerUser(user));
       if (loggedUser.payload.user) {
         navigate("/usersearch");
+        setUser({ username: "", email: "", password: "", city: "", state: "" });
       } else {
         setErrorMessage(
           "That user already exists. Please use a different email or sign in above"
@@ -33,7 +34,6 @@ const SignUp = () => {
     } catch (err) {
       console.log(err);
     }
-    setUser({ username: "", email: "", password: "", city: "", state: "" });
   };
 
   const handleChange = (event) => {

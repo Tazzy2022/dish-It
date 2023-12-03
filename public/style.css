@@ -24,7 +24,8 @@ a {
 #category-form,
 #price-form,
 #searched-filters,
-.home-lists {
+.home-lists,
+.list-content {
   display: flex;
 }
 
@@ -127,7 +128,6 @@ a {
   border-top-right-radius: 15px;
 }
 
-.list-card,
 .list-card-container main {
   border: solid 1px rgb(214, 213, 213);
   box-shadow: 1px 1px rgb(244, 239, 239);
@@ -143,6 +143,16 @@ a {
   margin: 20px;
 }
 
+.restaurantCard-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.single-list-container {
+  margin-left: 15vw;
+}
+
 .restaurant-list-card {
   display: flex;
   border: solid 1px rgb(214, 213, 213);
@@ -153,8 +163,36 @@ a {
   margin: 3vh 0vh 3vh;
 }
 
-.restaurant-list-card p {
+.restaurant-list-container {
+  display: flex;
+  border: solid 1px rgb(214, 213, 213);
+  box-shadow: 1px 1px rgb(244, 239, 239);
+  border-radius: 10px;
+  width: 70vw;
+  margin: 3vh 0vh 3vh;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.restaurant-list-card p,
+.restaurant-list-container p,
+.restaurant-list-container a {
   margin: 8px 0px;
+}
+
+.restaurant-list-container label {
+  font-size: 14px;
+  margin-right: 25px;
+}
+
+.list-content2 {
+  margin-left: 10px;
+  width: 28vw;
+}
+
+.list-content3 {
+  margin-right: 10px;
+  width: 28vw;
 }
 
 #rest-card-cat {
@@ -170,6 +208,12 @@ a {
   height: 15vh;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
+}
+
+.listcard-img {
+  width: 12vw;
+  height: 15vh;
+  border-radius: 10px;
 }
 
 #rest-list-card1 {
@@ -228,6 +272,11 @@ a {
 .loading-p {
   font-size: 2rem;
   padding: 20px;
+}
+
+.list-h1 {
+  font-size: 2rem;
+  font-weight: lighter;
 }
 
 .profile-add-list {
@@ -468,15 +517,24 @@ a {
   .openModalBtn,
   .search,
   #rest-list-card2 p,
-  .nav-dropdown-container .dropbtn {
+  .nav-dropdown-container .dropbtn,
+  .restaurant-list-card p,
+  .restaurant-list-container p,
+  .restaurant-list-container a,
+  .loading-p {
     font-size: 14px;
+  }
+
+  .list-h1 {
+    font-size: 18px;
   }
 
   #stars,
   .yelp-link,
   #rest-list-card3 p,
   #restaurantCard-rating-link,
-  #add-to-list-click {
+  #add-to-list-click,
+  .restaurant-list-container label {
     font-size: 12px;
   }
 
@@ -527,7 +585,13 @@ a {
     width: 50vw;
   }
 
-  .list-card-container p {
+  .restaurant-list-card p,
+  .restaurant-list-container p,
+  .restaurant-list-container a,
+  .list-card-container p,
+  #rest-card-cat,
+  .openModalBtn,
+  .search {
     margin: 5px 0px;
   }
 
@@ -566,11 +630,6 @@ a {
     flex-direction: column;
   }
 
-  .openModalBtn,
-  .search {
-    margin: 5px 0px;
-  }
-
   .search {
     width: 70px;
     align-self: center;
@@ -592,12 +651,20 @@ a {
     box-shadow: none;
   }
 
-  .restaurant-list-card p,
-  #rest-card-cat {
-    margin: 5px 0px;
+  .single-list-container {
+    margin-left: 2.5vw;
   }
 
-  .restaurant-card-img {
+  .restaurant-list-container {
+    border: none;
+    border-radius: 0px;
+    width: 95vw;
+    /* margin: 2vh 5vw 2vh; */
+    box-shadow: none;
+  }
+
+  .restaurant-card-img,
+  .listcard-img {
     width: 18vw;
     height: 10vh;
     border-radius: 5px;
@@ -623,6 +690,12 @@ a {
 
   #rest-list-card2 {
     padding-top: 3px;
+  }
+
+  .list-content2,
+  .list-content3 {
+    flex: 1 1 auto;
+    width: 30vw;
   }
 
   .searchcard-link-addbttn {

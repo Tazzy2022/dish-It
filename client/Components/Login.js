@@ -18,8 +18,9 @@ const Login = () => {
     try {
       const loggedUser = await dispatch(loginUser(user));
       if (loggedUser.payload.user) {
-        dispatch(setLocation(loggedUser.payload.user.city))
+        dispatch(setLocation(loggedUser.payload.user.city));
         navigate("/usersearch");
+        setUser({ email: "", password: "" });
       } else {
         setErrorMessage("incorrect email or password");
         setErrorModal(true);
@@ -27,7 +28,6 @@ const Login = () => {
     } catch (err) {
       console.log(err);
     }
-    setUser({ email: "", password: "" });
   };
 
   const handleChange = (event) => {

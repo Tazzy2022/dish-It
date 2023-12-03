@@ -7,6 +7,7 @@ import {
   getSingleList,
   renderSingleList,
 } from "../features/singleListSlice";
+import CategoriesCard from "./CategoriesCard";
 
 const RestaurantCard = (props) => {
   const dispatch = useDispatch();
@@ -49,15 +50,15 @@ const RestaurantCard = (props) => {
 
   return (
     <div className="restaurant-list-container">
-      <main className="list-card">
-        <section className="list-card1">
+      <main className="list-content">
+        <section className="list-content1">
           <img
-            className="card-img"
+            className="listcard-img"
             src={props.restaurant.image_url}
             alt="restaurant image"
           />
         </section>
-        <section className="list-card2">
+        <section className="list-content2">
           <p>{props.restaurant.name}</p>
           <p>{props.restaurant.address1}</p>
           <p>
@@ -65,18 +66,17 @@ const RestaurantCard = (props) => {
             {props.restaurant.location.zip_code}
           </p>
           <p>{props.restaurant.display_phone}</p>
-          <p>price: {props.restaurant.price}</p>
-        </section>
-        <section className="list-card3">
           <Link className="yelp-link" to={props.restaurant.url}>
             yelp link
           </Link>
-          <p>Food category:</p>
-          {props.restaurant.categories.map((cat, index) => {
-            return <p key={index}>{cat.title},</p>;
-          })}
-          <button onClick={() => setModalOpen(true)}>+</button>
-          <label>add notes</label>
+        </section>
+        <section className="list-content3">
+          <CategoriesCard category={props.restaurant.categories} />
+          <p>price: {props.restaurant.price}</p>
+          <p>
+            <button onClick={() => setModalOpen(true)}>+</button>
+            <label>notes</label>
+          </p>
           {modalOpen && (
             <NotesModal
               openModal={setModalOpen}
@@ -84,8 +84,12 @@ const RestaurantCard = (props) => {
               restaurantId={props.restaurant.id}
             />
           )}
-          <button onClick={() => deleteFromList(props.restaurant.id)}>x</button>
-          <label>remove from list</label>
+          <p>
+            <button onClick={() => deleteFromList(props.restaurant.id)}>
+              x
+            </button>
+            <label>delete restaurant</label>
+          </p>
         </section>
       </main>
       <section className="list-card-notes">

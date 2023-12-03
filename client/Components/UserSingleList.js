@@ -48,7 +48,7 @@ const UserSingleList = () => {
 
   return (
     <div className="single-list-container">
-      <p className="list-name">{listname}</p>
+      <h1 className="list-h1">{listname}</h1>
       {list?.list?.length === 0 || Object.keys(list).length === 0 ? (
         <div>
           <p>this list is empty...</p>

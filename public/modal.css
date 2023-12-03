@@ -170,11 +170,17 @@
 }
 
 .modalX,
-.closeX {
+.closeX,
+.list-content3 button {
   color: #e00707;
   font-size: 16px;
   background-color: white;
   border: none;
+}
+
+.list-content3 button {
+  font-size: 18px;
+  margin-top: 2px;
 }
 
 .modalX {
@@ -184,6 +190,13 @@
 .modalX:hover,
 .closeX:hover {
   color: #333333;
+}
+
+.list-content3 button:hover {
+  border: 1px solid #e00707;
+  background-color: white;
+  border-radius: 5px;
+  padding: 1px 2px;
 }
 
 #close-modal {
