@@ -29,7 +29,7 @@ const FriendModal = (props) => {
     <div>
       <div className="modalBackground">
         <main className="new-list-modal">
-          <div id="close-modal">
+          <div className="close-modal">
             <button className="modalX" onClick={() => props.openPopUp(false)}>
               X
             </button>

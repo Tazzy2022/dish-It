@@ -73,8 +73,8 @@ const AddToListModal = ({ openModal, restaurantId }) => {
   return (
     <div className="modalBackground">
       <main className="addTo-list-modal">
-        <div id="close-modal">
-          <button className="modalX" onClick={() => openModal(false)}>
+        <div className="close-modal">
+          <button className="modalbutt" onClick={() => openModal(false)}>
             X
           </button>
         </div>
@@ -88,7 +88,7 @@ const AddToListModal = ({ openModal, restaurantId }) => {
               value={listName.listname}
               onChange={handleChange}
             />
-            <button type="submit">
+            <button className="modalbutton" type="submit">
               create
             </button>
           </section>
@@ -103,7 +103,7 @@ const AddToListModal = ({ openModal, restaurantId }) => {
                     <p>{list.listName}</p>
                     <button
                       onClick={() => newAdd(restaurantId, list.listName)}
-                      className="modalbtn"
+                      className="modalbutton"
                     >
                       +
                     </button>

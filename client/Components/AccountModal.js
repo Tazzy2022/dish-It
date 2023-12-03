@@ -45,7 +45,7 @@ const AccountModal = (props) => {
       {modalOpen && (
         <div className="modalBackground">
           <main className="new-list-modal">
-            <div id="close-modal">
+            <div className="close-modal">
               <button className="modalX" onClick={() => setModalOpen(false)}>
                 X
               </button>

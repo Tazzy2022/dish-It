@@ -199,6 +199,15 @@ a {
   margin-top: 8px;
 }
 
+.list-content3 button {
+  font-size: 18px;
+  margin-top: 2px;
+  background-color: white;
+  border: none;
+  padding: 2px;
+  color: #e00707;
+}
+
 #add-to-list-click {
   margin: 0px;
 }
@@ -379,7 +388,7 @@ a {
   border: none;
   outline: none;
   color: #333333;
-  padding: 14px 16px;
+  padding: 10px 10px;
   background-color: inherit;
   margin: 0;
 }
@@ -396,7 +405,7 @@ a {
 .dropdown-content a {
   float: none;
   color: black;
-  padding: 12px 16px;
+  padding: 10px 14px;
   text-decoration: none;
   display: block;
   text-align: left;
@@ -482,17 +491,21 @@ a {
   color: #e00707;
 }
 
+#searched-filters button:hover {
+  font-weight: bold;
+}
+
 #login-signup-link a:hover,
 .header:hover,
 .search:hover,
 .list-card-btn button:hover,
 .useracc-left-nav a:hover,
-#searched-filters button:hover,
 .openModalBtn:hover,
 #add-to-list-click:hover,
 .button:hover,
 .yelp-link:hover,
-.home-button:hover {
+.home-button:hover,
+.list-content3 button:hover {
   color: #333333;
 }
 
@@ -521,12 +534,17 @@ a {
   .restaurant-list-card p,
   .restaurant-list-container p,
   .restaurant-list-container a,
-  .loading-p {
+  .loading-p,
+  .modalbtn {
     font-size: 14px;
   }
 
   .list-h1 {
     font-size: 18px;
+  }
+
+  .header-container {
+    padding: 15px 15px 5px;
   }
 
   #stars,
@@ -608,7 +626,7 @@ a {
   }
 
   #login-container {
-    margin-top: 10px;
+    margin-top: 20px;
   }
 
   #signUp-container {
@@ -652,14 +670,14 @@ a {
   }
 
   .single-list-container {
-    margin-left: 2.5vw;
+    margin: 0vw 2.5vw;
   }
 
   .restaurant-list-container {
     border: none;
+    border-top: 1px solid rgb(214, 213, 213);
     border-radius: 0px;
     width: 95vw;
-    /* margin: 2vh 5vw 2vh; */
     box-shadow: none;
   }
 
@@ -673,7 +691,11 @@ a {
   }
 
   .nav-dropdown-container .dropbtn {
-    padding: 10px 10px;
+    padding: 8px 8px;
+  }
+
+  .dropdown-content a {
+    padding: 8px 12px;
   }
 
   #rest-list-card1 {

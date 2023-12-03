@@ -32,7 +32,12 @@ const NewListModal = ({ openModal }) => {
 
   return (
     <div className="modalBackground">
-      <main className="new-list-modal">
+      <main className="create-list-modal">
+        <div className="close-modal">
+          <button className="modalbutt" onClick={() => openModal(false)}>
+            X
+          </button>
+        </div>
         <form className="create-list-form" onSubmit={createNewList}>
           <label>new list name:</label>
           <input
@@ -43,11 +48,8 @@ const NewListModal = ({ openModal }) => {
             onChange={handleChange}
           />
           <div>
-            <button className="modalbtn" type="submit">
+            <button className="modalbutton" type="submit">
               create
-            </button>
-            <button className="modalbtn" onClick={() => openModal(false)}>
-              cancel
             </button>
           </div>
         </form>

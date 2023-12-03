@@ -4,7 +4,7 @@ const ContentModal = (props) => {
 
 	return (
         <main className="error-modal">
-          <div id="close-modal">
+          <div className="close-modal">
             <button className="closeX" onClick={() => props.openErrorModal(false)}>
               X
             </button>

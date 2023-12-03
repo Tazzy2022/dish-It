@@ -41,8 +41,8 @@ const NotesModal = (props) => {
 
   return (
     <div className="modalBackground">
-      <main className="new-list-modal">
-        <div id="close-modal">
+      <main className="new-note-modal">
+        <div className="close-modal">
           <button className="modalX" onClick={() => props.openModal(false)}>
             X
           </button>
