@@ -24,14 +24,14 @@ const AllFriends = (props) => {
   };
 
   return (
-    <div>
-      <button onClick={deleteAFriend}>X</button>
-      <Link to={`/friendHome/${props.friend.email}`}>
-        <img
-          className="profile-img"
-          src={props.friend.imageData}
-          alt="friend's image"
-        />
+    <div className="friend-card">
+      <button onClick={deleteAFriend}>delete</button>
+      <img
+        className="profile-img"
+        src={props.friend.imageData}
+        alt="friend's image"
+      />
+      <Link className="friend-link" to={`/friendHome/${props.friend.email}`}>
         <p>{props.friend.username}</p>
         <p>
           {props.friend.city}, {props.friend.state}

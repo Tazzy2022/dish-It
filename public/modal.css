@@ -96,7 +96,9 @@
 }
 
 .new-note-modal,
-.create-list-modal {
+.create-list-modal,
+.update-acc-modal,
+.addFriend-modal {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -107,7 +109,9 @@
   padding: 20px;
 }
 
-.create-list-modal {
+.create-list-modal,
+.update-acc-modal,
+.addFriend-modal {
   min-width: 35vw;
 }
 
@@ -189,6 +193,14 @@
 .modal-content,
 .closeX {
   margin: 5px;
+}
+
+.friendModal-content {
+ display: flex;
+}
+
+.friend-modal-p {
+  margin-top: 5px;
 }
 
 .error-modal {

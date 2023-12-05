@@ -14,7 +14,7 @@ const AccountSideNav = () => {
               Account home
             </Link>
             <Link className="account-link" to="/account/updates">
-              Update Account info
+              Update Account
             </Link>
             <Link className="account-link" to="/account/friends">
               Friends

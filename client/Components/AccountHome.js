@@ -50,15 +50,21 @@ const AccountHome = () => {
   };
 
   return (
-    <div>
-      <h1 className="user-account-h1">{auth.user.username}'s account</h1>
-      <img className="profile-img" src={auth.user.image} alt="personal image" />
-      {/* <img
+    <div className="account-home-container">
+      <section className="user-account-home">
+          <h1 className="user-account-h1">{auth.user.username}</h1>
+          <img
+            className="account-img"
+            src={auth.user.image}
+            alt="personal image"
+          />
+          <p>+ update image</p>
+        {/* <img
         className="profile-img"
         src={auth.image.title}
         alt="personal image"
       /> */}
-      <form onSubmit={handleSubmit} method="POST" encType="multipart/form-data">
+        {/* <form onSubmit={handleSubmit} method="POST" encType="multipart/form-data">
         <input
           type="file"
           name="file"
@@ -67,9 +73,10 @@ const AccountHome = () => {
         />
         <label>update image</label>
         <button type="submit">submit</button>
-      </form>
-      <p>pending follow requests:</p>
+      </form> */}
+      </section>
       <section className="follow-req-container">
+        <h2>Pending follow requests:</h2>
         {friends?.friendRequests?.length > 0 &&
           friends?.friendRequests.map((friend, index) => {
             return <PendingCard key={index} friend={friend} />;

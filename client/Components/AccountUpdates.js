@@ -32,7 +32,7 @@ const AccountUpdates = () => {
           <p>*******</p>
         </div>
         <div className="account-Btn-container">
-                      <AccountModal name="password" />
+          <AccountModal name="password" />
         </div>
       </section>
       <section className="user-section">

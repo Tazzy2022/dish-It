@@ -245,12 +245,20 @@ a {
   justify-content: center;
 }
 
-.list-card-btn button {
+.list-card-btn button,
+#find-friend button {
   margin-right: 5px;
   background-color: #e00707;
   border: #e00707;
   border-radius: 5px;
   color: white;
+}
+
+.edit-acc-btn {
+  border: 1px solid #e00707;
+  border-radius: 5px;
+  color: #e00707;
+  background-color: white;
 }
 
 .list-card p,
@@ -283,7 +291,10 @@ a {
   padding: 20px;
 }
 
-.list-h1 {
+.list-h1,
+#friend-h1,
+.user-account-h1,
+.follow-req-container h2 {
   font-size: 2rem;
   font-weight: lighter;
 }
@@ -432,19 +443,74 @@ a {
   flex-direction: row;
 }
 
+.account-home-container {
+  width: 80vw;
+}
+
+.user-account-home {
+  text-align: center;
+}
+
+.follow-req-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.follow-req-container h2 {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pending-btns button {
+  color: #e00707;
+  font-size: 16px;
+  background-color: white;
+  border: none;
+}
+
+.pending-friend-contnr,
+.pending-card,
+.pending-btns,
+.pending-details {
+  display: flex;
+}
+
+.pending-friend-contnr {
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.pending-btns,
+.pending-details {
+  flex-direction: column;
+}
+
+.pending-details p,
+.friend-link p {
+  margin: 5px 10px 5px 10px;
+}
+
+.pending-btns div {
+  margin: 5px 20px;
+}
+
 .useracc-left-nav {
   display: flex;
   flex-direction: column;
-  margin: 20px 30px;
+  width: 15vw;
+  padding: 20px;
 }
 
 .user-account-h1 {
-  margin: 20px 30px;
+  margin: 20px 0px;
   font-size: 2rem;
 }
 
-.useracc-right-main {
-  margin-left: 5vw;
+.account-img,
+.friend-img {
+  width: 10vw;
+  border-radius: 30px;
 }
 
 .useracc-left-nav a {
@@ -456,7 +522,7 @@ a {
   background-color: #f4f4f4;
   border-radius: 0.3571428571rem;
   padding: 20px 10px 10px;
-  margin-bottom: 10px;
+  margin: 0px 10px 10px 0px;
   width: 70vw;
   display: flex;
 }
@@ -468,6 +534,30 @@ a {
 .account-Btn-container {
   position: absolute;
   left: 80%;
+}
+
+#find-friend,
+.email-input {
+  display: flex;
+  flex-direction: column;
+}
+
+#find-friend {
+  margin: 20px 0px;
+}
+
+#find-friend input {
+  margin: 5px 5px 0px 0px;
+}
+
+.friend-card {
+  display: flex;
+}
+
+.friend-card button {
+  background-color: white;
+  color: #e00707;
+  border: none;
 }
 
 .dropdown-content a:hover,
@@ -487,7 +577,8 @@ a {
   color: white;
 }
 
-.list-card-container p:hover {
+.list-card-container p:hover,
+.useracc-left-nav a:hover {
   color: #e00707;
 }
 
@@ -495,17 +586,24 @@ a {
   font-weight: bold;
 }
 
+.friend-link p:hover,
+.pending-details p:hover {
+  text-decoration: underline;
+}
+
 #login-signup-link a:hover,
 .header:hover,
 .search:hover,
 .list-card-btn button:hover,
-.useracc-left-nav a:hover,
 .openModalBtn:hover,
 #add-to-list-click:hover,
 .button:hover,
 .yelp-link:hover,
 .home-button:hover,
-.list-content3 button:hover {
+.list-content3 button:hover,
+.pending-btns button:hover,
+.pending-details p,
+.friend-link p {
   color: #333333;
 }
 
@@ -539,7 +637,10 @@ a {
     font-size: 14px;
   }
 
-  .list-h1 {
+  .list-h1,
+  .follow-req-container h2,
+  .user-account-h1,
+  #friend-h1 {
     font-size: 18px;
   }
 

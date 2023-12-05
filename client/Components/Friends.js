@@ -67,17 +67,21 @@ const Friends = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label>search for friends on Dish it :</label>
-        <input
-          placeholder="email"
-          value={email.value}
-          name="email"
-          type="email"
-          onChange={handleChange}
-        />
-        <button type="submit">submit</button>
+    <div id="friend-contnr">
+      <form id="find-friend" onSubmit={handleSubmit}>
+        <div>
+          <label>search for friends on Dish it :</label>
+        </div>
+        <div classname="email-input">
+          <input
+            placeholder="email"
+            value={email.value}
+            name="email"
+            type="email"
+            onChange={handleChange}
+          />
+          <button type="submit">submit</button>
+        </div>
       </form>
       {popUpSeen && (
         <FriendModal openPopUp={setPopUpSeen} friend={friends.friend} />
@@ -86,7 +90,7 @@ const Friends = () => {
         <ContentModal openErrorModal={setErrorModal} content={errorMessage} />
       )}
       <main>
-        <h1>Friends on Dish it :</h1>
+        <h1 id="friend-h1">Friends on Dish it :</h1>
         {friends?.friends.length > 0 &&
           friends.friends.map((friend, index) => {
             return <AllFriends key={index} friend={friend} />;
