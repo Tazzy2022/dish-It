@@ -22,13 +22,12 @@ const AllFriends = (props) => {
       })
     );
   };
-
   return (
     <div className="friend-card">
       <button onClick={deleteAFriend}>delete</button>
       <img
-        className="profile-img"
-        src={props.friend.imageData}
+        className="friend-img"
+        // src={props.friend.image}
         alt="friend's image"
       />
       <Link className="friend-link" to={`/friendHome/${props.friend.email}`}>

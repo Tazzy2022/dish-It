@@ -18,7 +18,11 @@ const Login = () => {
     try {
       const loggedUser = await dispatch(loginUser(user));
       if (loggedUser.payload.user) {
-        dispatch(setLocation(loggedUser.payload.user.city));
+        dispatch(
+          setLocation(
+            loggedUser.payload.user.city + "," + loggedUser.payload.user.state
+          )
+        );
         navigate("/usersearch");
         setUser({ email: "", password: "" });
       } else {

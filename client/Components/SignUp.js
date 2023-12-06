@@ -3,6 +3,7 @@ import { registerUser } from "../features/authSlice";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import ContentModal from "./ContentModal";
+import { setLocation } from "../features/searchSlice";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const SignUp = () => {
     try {
       const loggedUser = await dispatch(registerUser(user));
       if (loggedUser.payload.user) {
+        dispatch(setLocation(user.city + "," + user.state));
         navigate("/usersearch");
         setUser({ username: "", email: "", password: "", city: "", state: "" });
       } else {

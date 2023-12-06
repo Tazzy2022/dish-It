@@ -5,7 +5,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   user: {},
-  // image: {},
   error: "",
   token: "",
 };
@@ -56,52 +55,6 @@ export const updateUserInfo = createAsyncThunk(
   }
 );
 
-// export const getUserImage = createAsyncThunk(
-//   "auth/getUserImage",
-//   async ({ id, token }) => {
-//     console.log("ID", id, token);
-//     try {
-//       const response = await axios.get(
-//         `/api/users/${id}/image`,
-//         {
-//           headers: {
-//             authorization: token,
-//           },
-//         },
-//         { responseType: "blob" }
-//       );
-//       console.log("response.data", response.data);
-
-// const split = response.data.file_path.split('/');
-// const filename = split[split.length - 1];
-// response.send(download(response.data, filename, response.data.file_mimetype));
-//return response.data;
-//     } catch (error) {
-//       return error.message;
-//     }
-//   }
-// );
-
-export const updatePhoto = createAsyncThunk(
-  "auth/updatePhoto",
-  async (userInfo) => {
-    try {
-      const { data: updated } = await axios.post(
-        `/api/users/${userInfo.userId}/avatar`,
-        userInfo.avatar,
-        {
-          headers: {
-            authorization: userInfo.token,
-          },
-        }
-      );
-      return updated;
-    } catch (error) {
-      return error.message;
-    }
-  }
-);
-
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
   async (userInfo) => {
@@ -139,12 +92,12 @@ const authSlice = createSlice({
     builder.addCase(updateUserInfo.rejected, (state, action) => {
       state.error = action.error.message;
     });
-    builder.addCase(updatePhoto.fulfilled, (state, action) => {
-      state.user = action.payload;
-    });
-    builder.addCase(updatePhoto.rejected, (state, action) => {
-      state.error = action.error.message;
-    });
+    // builder.addCase(updatePhoto.fulfilled, (state, action) => {
+    //   state.user = action.payload;
+    // });
+    // builder.addCase(updatePhoto.rejected, (state, action) => {
+    //   state.error = action.error.message;
+    // });
     builder.addCase(loginUser.fulfilled, (state, action) => {
       return action.payload;
     });

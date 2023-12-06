@@ -159,6 +159,7 @@ a {
   box-shadow: 1px 1px rgb(244, 239, 239);
   border-radius: 15px;
   width: 70vw;
+  /* min-height: 15vh; */
   height: 15vh;
   margin: 3vh 0vh 3vh;
 }
@@ -217,6 +218,7 @@ a {
   height: 15vh;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
+  border: 2px red;
 }
 
 .listcard-img {
@@ -227,6 +229,7 @@ a {
 
 #rest-list-card1 {
   flex: 5 5 0;
+  border: 2px blue;
 }
 
 #rest-list-card2 {
@@ -309,9 +312,11 @@ a {
   color: aliceblue;
 }
 
-.profile-img {
+.profile-img,
+.friend-img {
   padding: 20px;
-  width: 10vw;
+  width: 8vw;
+  height: 8vh;
   border-radius: 30px;
 }
 
@@ -474,6 +479,7 @@ a {
 .pending-btns,
 .pending-details {
   display: flex;
+  align-items: center;
 }
 
 .pending-friend-contnr {
@@ -498,7 +504,7 @@ a {
 .useracc-left-nav {
   display: flex;
   flex-direction: column;
-  width: 15vw;
+  width: 12vw;
   padding: 20px;
 }
 
@@ -507,9 +513,9 @@ a {
   font-size: 2rem;
 }
 
-.account-img,
-.friend-img {
-  width: 10vw;
+.account-img {
+  width: 15vw;
+  height: 16vh;
   border-radius: 30px;
 }
 
@@ -552,6 +558,7 @@ a {
 
 .friend-card {
   display: flex;
+  align-items: center;
 }
 
 .friend-card button {
@@ -603,8 +610,16 @@ a {
 .list-content3 button:hover,
 .pending-btns button:hover,
 .pending-details p,
-.friend-link p {
+.friend-link p,
+.friend-card button:hover {
   color: #333333;
+}
+
+@media only screen and (max-height: 701px) {
+  .restaurant-list-card p {
+    font-size: 14px;
+    margin: 5px 0px;
+  }
 }
 
 @media only screen and (max-width: 768px) {
@@ -800,9 +815,11 @@ a {
   }
 
   #rest-list-card1 {
-    flex: 5 5 0;
+    /* flex: 5 5 0; */
     width: 20vw;
+    height: 17vh;
   }
+
   #rest-list-card2,
   #rest-list-card3 {
     flex: 1 1 auto;

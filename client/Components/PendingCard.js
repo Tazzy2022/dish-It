@@ -43,13 +43,12 @@ const PendingCard = (props) => {
       })
     );
   };
-
   return (
     <div className="pending-friend-contnr">
       <section className="pending-card">
         <img
           className="friend-img"
-          // src={props.friend.imageData}
+          // src={props.friend.image}
           alt="friend's image"
         />
         <Link
