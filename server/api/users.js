@@ -45,24 +45,6 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-// router.get("/:id/image", async (req, res, next) => {
-//   try {
-//     console.log("req.params.id", req.params.id);
-//     const avatar = await Image.findOne({ where: { userId: req.params.id } });
-//     // res.set({
-//     //   "Content-Type": avatar.file_mimetype,
-//     // });
-//     // res.sendFile(path.join(__dirname, "..", avatar.file_path));
-//     console.log("avatar", avatar);
-//     res.send(avatar);
-//   } catch (ex) {
-//     res.status(404).json({
-//       message: "could not find user",
-//       error: ex.message,
-//     });
-//   }
-// });
-
 //PUT "/api/users/id"  update user account info
 router.put("/:id", async (req, res, next) => {
   try {
@@ -79,8 +61,8 @@ router.put("/:id", async (req, res, next) => {
 //POST "/api/users/avatar/:id"  update user account info
 router.post("/avatar/:id", upload.single("image"), async (req, res, next) => {
   try {
-    console.log("req.file", req.file);
     const { buffer } = req.file;
+    console.log("buffer", buffer);
     const user = await User.findOne({ where: { id: req.params.id } });
     if (user) {
       res.send(

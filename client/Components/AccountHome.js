@@ -1,30 +1,25 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import ReactCrop from "react-image-crop";
-import "react-image-crop/dist/ReactCrop.css";
 import axios from "axios";
 import { getPendingFriends } from "../features/FriendsSlice";
 import { getUser } from "../features/authSlice";
-import {
-  setCroppedImage,
-  setUploadStatus,
-  setError,
-  selectCroppedImage,
-  selectUploadStatus,
-  selectError,
-} from "../features/imageSlice";
+// import {
+//   // setCroppedImage,
+//   setUploadStatus,
+//   setError,
+//   // selectCroppedImage,
+//   selectUploadStatus,
+//   selectError,
+// } from "../features/imageSlice";
 import PendingCard from "./PendingCard";
 
 const AccountHome = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const friends = useSelector((state) => state.friends);
-  const croppedImage = useSelector(selectCroppedImage);
-  const uploadStatus = useSelector(selectUploadStatus);
-  const error = useSelector(selectError);
-  const [crop, setCrop] = useState({ aspect: 1 / 1 });
-  const [image, setImage] = useState(null);
-  const imgRef = useRef(null);
+
+  let file;
+  let image;
 
   useEffect(() => {
     dispatch(
@@ -33,71 +28,55 @@ const AccountHome = () => {
         token: auth.token,
       })
     );
+    // console.log("auth.user.image.data", auth.user.image.data);
+    // console.log("auth.user.image.data.length", auth.user.image.data.length);
+    // if (auth.user.image.data.length > 0) {
+    //   //image = bufferToString(auth.user.image.data);
+    //   image = encode(auth.user.image.data);
+    // }
   }, []);
 
+  const bufferToString = (buffer) => {
+    console.log("HI");
+    //convert array buffer to a typed array
+    let TYPED_ARRAY = new Uint8Array(buffer);
+    console.log("TYPED_ARRAY", TYPED_ARRAY);
+    //convert unicode values into a string of characters
+    //using .apply() will pass them as list of arguments
+    // const STRING_CHAR = String.fromCharCode.apply(null, TYPED_ARRAY); out of range error
+    const STRING_CHAR = TYPED_ARRAY.reduce((data, byte) => {
+      return data + String.fromCharCode(byte);
+    }, "");
+    console.log("STRING_CHAR", STRING_CHAR);
+    //return base-64 encoded ASCII string
+    let base64String = btoa(STRING_CHAR);
+    console.log("base64String", base64String);
+  };
+
   const handleChange = (e) => {
-    const file = e.target.files[0];
+    file = e.target.files[0];
     console.log("file", file);
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => setImage(reader.result);
-      reader.readAsDataURL(file);
-    }
   };
 
-  const handleCrop = (crop) => {
-    setCrop(crop);
-  };
-
-  const handleImageLoaded = (image) => {
-    imgRef.current = image;
-  };
-
-  const handleCropComplete = (crop) => {
-    if (imgRef.current && crop.width && crop.height) {
-      const croppedImageUrl = getCroppedImg(imgRef.current, crop);
-      dispatch(setCroppedImage(croppedImageUrl));
-    }
-  };
-
-  const getCroppedImg = (image, crop) => {
-    const canvas = document.createElement("canvas");
-    const scaleX = image.naturalWidth / image.width;
-    const scaleY = image.naturalHeight / image.height;
-    canvas.width = crop.width;
-    canvas.height = crop.height;
-    const ctx = canvas.getContext("2d");
-
-    ctx.drawImage(
-      image,
-      crop.x * scaleX,
-      crop.y * scaleY,
-      crop.width * scaleX,
-      crop.height * scaleY,
-      0,
-      0,
-      crop.width,
-      crop.height
-    );
-    return canvas.toDataURL("image/jpeg");
-  };
   const handleUpload = async (e) => {
     e.preventDefault();
-
-    dispatch(uploadStatus("loading"));
+    console.log("handleUpload");
 
     try {
+      const formData = new FormData();
+      console.log("formData", formData);
+      formData.append("image", file);
+      console.log("formData after image append", formData);
       const res = await axios.post(
         `/api/users/avatar/${auth.user.id}`,
-        { image: croppedImage },
+        formData,
         {
           headers: {
             authorization: auth.token,
           },
         }
       );
-      dispatch(setUploadStatus("success"));
-      console.log(res.data);
+      console.log("res.data", res.data);
       // Handle successful upload response here
 
       // await dispatch(
@@ -107,8 +86,6 @@ const AccountHome = () => {
       //   })
       // );
     } catch (err) {
-      dispatch(setUploadStatus("failed"));
-      dispatch(setError(err.message));
       console.error("error uploading image: ", err);
       // Handle error here
     }
@@ -123,15 +100,14 @@ const AccountHome = () => {
           // src={auth.user.image}
           alt="personal image"
         />
-        {/* <p>+ update image</p> */}
-        {/* <form onSubmit={handleSubmit} method="POST" encType="multipart/form-data"> */}
-        <input
-          type="file"
-          name="file"
-          accept="image/*"
-          onChange={handleChange}
-        />
-        {image && (
+        <form onSubmit={handleUpload} encType="multipart/form-data">
+          <input
+            type="file"
+            // name="file"
+            // accept="image/*"
+            onChange={handleChange}
+          />
+          {/* {image && (
           <ReactCrop
             src={image}
             crop={crop}
@@ -139,15 +115,10 @@ const AccountHome = () => {
             onComplete={handleCropComplete}
             onImageLoaded={handleImageLoaded}
           />
-        )}
-        {croppedImage && <img src={croppedImage} alt="cropped image" />}
-        <button onClick={handleUpload} disabled={uploadStatus === "loading"}>
-          update image
-        </button>
-
-        {uploadStatus === "failed" && <div>Error: {error}</div>}
-
-        {/* </form> */}
+        )} */}
+          {/* {croppedImage && <img src={croppedImage} alt="cropped image" />} */}
+          <button type="submit">update image</button>
+        </form>
       </section>
       <section className="follow-req-container">
         <h2>Pending follow requests:</h2>

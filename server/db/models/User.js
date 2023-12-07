@@ -3,6 +3,7 @@ const { UUID, UUIDV4, STRING, BLOB } = Sequelize;
 const db = require("../db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const base64Arraybuffer = require("base64-arraybuffer")
 require("dotenv").config();
 
 const User = db.define(
@@ -50,7 +51,7 @@ const User = db.define(
       },
     },
     image: {
-      type: STRING,
+      type: BLOB("long"),
     },
   },
   {
@@ -125,24 +126,8 @@ User.validate = async (token) => {
   }
 };
 
-// User.addHook("beforeSave", async (user) => {
-//   if (user.changed("password")) {
-//     user.password = await bcrypt.hash(user.password, 5);
-//   }
-// });
-
-/**
- * hooks
- */
-// const hashPassword = async (user) => {
-//   //in case the password has been changed, we want to encrypt it with bcrypt
-//   if (user.changed("password")) {
-//     user.password = await bcrypt.hash(user.password, parseInt(process.env.ROUNDS));
-//   }
-// };
-
-// User.beforeCreate(hashPassword);
-// User.beforeUpdate(hashPassword);
-// User.beforeBulkCreate((users) => Promise.all(users.map(hashPassword)));
+User.getImage = async(imageBuffer) => {
+  
+}
 
 module.exports = User;

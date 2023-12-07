@@ -21,7 +21,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 // );
 
 const initialState = {
-  croppedImage: null,
+  image: null,
     uploadStatus: 'idle',
     error: null,
 };
@@ -30,9 +30,9 @@ const imageSlice = createSlice({
   name: 'image',
   initialState,
   reducers: {
-    setCroppedImage: (state, action) => {
-      state.croppedImage = action.payload;
-    },
+    // setCroppedImage: (state, action) => {
+    //   state.croppedImage = action.payload;
+    // },
     setUploadStatus: (state, action) => {
       state.uploadStatus = action.payload;
     },
@@ -42,8 +42,10 @@ const imageSlice = createSlice({
   },
 });
 
-export const { setCroppedImage, setUploadStatus, setError } = imageSlice.actions;
-export const selectCroppedImage = (state) => state.image.croppedImage;
+export const {
+  // setCroppedImage,
+  setUploadStatus, setError } = imageSlice.actions;
+// export const selectCroppedImage = (state) => state.image.croppedImage;
 export const selectUploadStatus = (state) => state.image.uploadStatus;
 export const selectError = (state) => state.image.error;
 
