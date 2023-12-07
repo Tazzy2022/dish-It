@@ -30,4 +30,9 @@ module.exports = {
       { test: /\.css$/, use: "css-loader" },
     ],
   },
+  plugins: [
+    new webpack.ProvidePlugin({
+      Buffer: ["buffer", "Buffer"],
+    }),
+  ],
 };

@@ -1,4 +1,9 @@
 const User = require("../db/models/User");
+// const base64Arraybuffer = require("base64-arraybuffer");
+
+// const convertBuffer = (bufferArray) => {
+//   return encode(bufferArray);
+// };
 
 const validateToken = async (req, res, next) => {
   try {
@@ -13,7 +18,5 @@ const validateToken = async (req, res, next) => {
       .json({ message: "Please provide jwt in the header" });
   }
 };
-
-
 
 module.exports = validateToken;

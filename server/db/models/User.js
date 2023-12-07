@@ -3,7 +3,6 @@ const { UUID, UUIDV4, STRING, BLOB } = Sequelize;
 const db = require("../db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const base64Arraybuffer = require("base64-arraybuffer")
 require("dotenv").config();
 
 const User = db.define(
@@ -127,7 +126,7 @@ User.validate = async (token) => {
 };
 
 User.getImage = async(imageBuffer) => {
-  
+
 }
 
 module.exports = User;

@@ -15,6 +15,7 @@
     "@reduxjs/toolkit": "^1.9.6",
     "base64-arraybuffer": "^1.0.2",
     "bcrypt": "^5.0.1",
+    "buffer": "^6.0.3",
     "cors": "^2.8.5",
     "css-loader": "^6.8.1",
     "dotenv": "^16.3.1",

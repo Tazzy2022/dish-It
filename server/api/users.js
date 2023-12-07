@@ -5,36 +5,11 @@ const { User } = require("../db/index");
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-// const upload = multer({
-//   storage: multer.diskStorage({
-//     destination: (req, res, callback) => {
-//       callback(null, "public/Images");
-//     },
-//     filename: (req, file, callback) => {
-//       callback(null, `${new Date().getTime()}_${file.originalname}`);
-//     },
-//   }),
-//   limits: { fileSize: "1000000" },
-//   fileFilter: (req, file, callback) => {
-//     if (!file.originalname.match(/\.(jpeg|jpg|png|gif)$/)) {
-//       return callback(
-//         new Error(
-//           "only upload files with jpg, jpeg, png, pdf, doc, docx, xslx, xls format."
-//         )
-//       );
-//     }
-//     callback(undefined, true); // continue with upload
-//   },
-// });
-
 //GET "/api/users/id" get single user
 router.get("/:id", async (req, res, next) => {
   try {
     const user = await User.findByPk(
       req.params.id
-      //   , {
-      //   include: [{ model: Image }],
-      // }
     );
     res.send(user);
   } catch (ex) {
@@ -58,7 +33,7 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
-//POST "/api/users/avatar/:id"  update user account info
+//POST "/api/users/avatar/:id"  update user image
 router.post("/avatar/:id", upload.single("image"), async (req, res, next) => {
   try {
     const { buffer } = req.file;
