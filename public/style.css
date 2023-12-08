@@ -25,8 +25,14 @@ a {
 #price-form,
 #searched-filters,
 .home-lists,
-.list-content {
+.list-content,
+.email-input {
   display: flex;
+}
+
+.email-input button {
+  height: 18px;
+  margin-top: 2px;
 }
 
 .home-lists {
@@ -159,7 +165,6 @@ a {
   box-shadow: 1px 1px rgb(244, 239, 239);
   border-radius: 15px;
   width: 70vw;
-  /* min-height: 15vh; */
   height: 15vh;
   margin: 3vh 0vh 3vh;
 }
@@ -314,9 +319,9 @@ a {
 
 .profile-img,
 .friend-img {
-  padding: 20px;
-  width: 6vw;
-  height: 8vh;
+  padding: 20px 10px 20px 20px;
+  width: 80px;
+  height: 80px;
   border-radius: 30px;
 }
 
@@ -438,6 +443,10 @@ a {
   border-radius: 40px;
 }
 
+.search-link {
+  color: #e00707;
+}
+
 #login-signup-link a {
   color: #e00707;
   font-weight: bolder;
@@ -454,6 +463,7 @@ a {
 
 .user-account-home {
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .follow-req-container {
@@ -463,7 +473,6 @@ a {
 }
 
 .follow-req-container h2 {
-  margin-top: 20px;
   text-align: center;
 }
 
@@ -509,8 +518,13 @@ a {
 }
 
 .user-account-h1 {
-  margin: 20px 0px;
+  margin: 20px 0px 16px;
   font-size: 2rem;
+}
+
+.img-upload {
+  text-align: center;
+  margin: 10px;
 }
 
 .account-img {
@@ -542,8 +556,7 @@ a {
   left: 80%;
 }
 
-#find-friend,
-.email-input {
+#find-friend {
   display: flex;
   flex-direction: column;
 }
@@ -611,7 +624,8 @@ a {
 .pending-btns button:hover,
 .pending-details p,
 .friend-link p,
-.friend-card button:hover {
+.friend-card button:hover,
+.search-link:hover {
   color: #333333;
 }
 

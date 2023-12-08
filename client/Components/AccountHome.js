@@ -12,9 +12,7 @@ const AccountHome = () => {
   const auth = useSelector((state) => state.auth);
   const friends = useSelector((state) => state.friends);
   const [image, setImage] = useState("");
-
-  let file;
-  //let image;
+  const [file, setFile] = useState("");
 
   useEffect(() => {
     dispatch(
@@ -28,7 +26,7 @@ const AccountHome = () => {
     // if (auth.user.image.data.length > 0) {
     //  image = bufferToString(auth.user.image.data);
     // }
-  }, []);
+  }, [file]);
 
   // const bufferToString = (buffer) => {
   //   console.log("HI");
@@ -66,8 +64,7 @@ const AccountHome = () => {
   };
 
   const handleChange = (e) => {
-    file = e.target.files[0];
-    console.log("file", file);
+    setFile(e.target.files[0]);
 
     // if (file) {
     //   try {
@@ -110,7 +107,7 @@ const AccountHome = () => {
     }
   };
 
-  console.log("auth.user.image", auth.user.image);
+  console.log("file above rendered jsx", file);
   return (
     <div className="account-home-container">
       <section className="user-account-home">
@@ -131,8 +128,8 @@ const AccountHome = () => {
           />
         )}
         <form onSubmit={handleUpload} encType="multipart/form-data">
-          <input type="file" onChange={handleChange} />
-          <button type="submit">update image</button>
+          <input className="img-upload" type="file" onChange={handleChange} />
+          {file && <button type="submit">update image</button>}
         </form>
       </section>
       <section className="follow-req-container">

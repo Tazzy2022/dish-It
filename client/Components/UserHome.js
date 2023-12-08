@@ -41,7 +41,6 @@ const UserHome = () => {
   return (
     <div>
       <section className="home-header-container">
-        {/* <img className="profile-img" src={auth.user.image} alt="profile pic" /> */}
         {auth.user.image === null ? (
           <img
             className="profile-img"
@@ -67,7 +66,7 @@ const UserHome = () => {
         {lists?.length === 0 ? (
           <div>
             <p>no saved lists yet...</p>
-            <Link to="/usersearch">start your search here</Link>
+            <Link className="search-link" to="/usersearch">start your search here</Link>
           </div>
         ) : (
           lists?.length > 0 &&

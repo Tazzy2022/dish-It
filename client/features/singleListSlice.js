@@ -29,7 +29,7 @@ export const createList = createAsyncThunk(
   "list/createList",
   async ({ id, token, listName }) => {
     try {
-      const response = await axios.post(`/api/user/${id}/list`, listName, {
+      const response = await axios.post(`/api/user/createlist/${id}`, listName, {
         headers: {
           authorization: token,
         },

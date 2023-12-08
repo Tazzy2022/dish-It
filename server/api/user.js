@@ -189,8 +189,8 @@ router.get("/friend/:friendEmail/lists", async (req, res, next) => {
 //split all spaces in req.body with &
 // image: results.links.download_location
 
-//POST "/api/user/:id/list  create new list
-router.post("/:id/list", async (req, res, next) => {
+//POST "/api/user/createlist/:id  create new list
+router.post("/createlist/:id", async (req, res, next) => {
   try {
     console.log(
       "req.params.id",
@@ -204,15 +204,26 @@ router.post("/:id/list", async (req, res, next) => {
     } else {
       listName = req.body.listName;
     }
-    const image = await getImage(listName).then(
+    console.log("listName", listName);
+    // const image = await getImage(listName).then(
+    //   res.send(
+    //     await List.create({
+    //       userId: req.params.id,
+    //       listName: req.body.listName,
+    //       image: image,
+    //     })
+    //   )
+    // );
+    let image = await getImage(listName);
+    if (image.length > 0) {
       res.send(
         await List.create({
           userId: req.params.id,
           listName: req.body.listName,
           image: image,
         })
-      )
-    );
+      );
+    }
   } catch (err) {
     res.status(500).json({
       message: "could not create new list",
@@ -228,59 +239,17 @@ const getImage = async (listName) => {
       "get",
       `https://api.unsplash.com/search/photos?per=1&per_page=1&orientation=landscape&query=${listName}&client_id=${process.env.UNSPLASH_KEY}`
     );
-    return image.body.results[0].links.download_location;
+    //this would've been a download but not working / need to to a get request
+    // console.log(
+    //   "image.body.results[0].links.download_location",
+    //   image.body.results[0].links.download_location
+    // );
+    //this is a hotlink
+    return image.body.results[0].urls.small;
   } catch (error) {
     console.log(error);
   }
 };
-
-//below is unsplash call - returning undefined
-// console.log(
-//   "req.params.id",
-//   req.params.id,
-//   "req.body.listName",
-//   req.body.listName
-// );
-// let listName;
-// if (req.body.listName.includes(" ")) {
-//   listName = req.body.listName.split(" ").join("&");
-// } else {
-//   listName = req.body.listName;
-// }
-// console.log("LIST NAME", listName);
-// const image = await needle(
-//   "get",
-//   `https://api.unsplash.com/search/photos?per_page=1&orientation=landscape&query=${listName}&client_id=${process.env.UNSPLASH_KEY}`
-// );
-// console.log("image.results", image.results);
-
-//below is OG post w/o get image
-// router.post("/:id/list", async (req, res, next) => {
-//   try {
-//     const newList = await List.create({
-//       userId: req.params.id,
-//       listName: req.body.listName,
-//     });
-//     res.send(newList);
-//   } catch (err) {
-//     res.status(500).json({
-//       message: "could not create new list",
-//       error: err.message,
-//     });
-//     next(err);
-//   }
-// });
-
-//below is pexels
-// const image = await needle(
-//   "get",
-//   `https://api.pexels.com/v1//search?imageName=${listName}&per_page=1`,
-//   {
-//     headers: {
-//       Authorization: `${process.env.PEXELS_API_KEY}`,
-//     },
-//   }
-// );
 
 //POST "/api/user/copied/:id/list  create new list
 router.post("/copied/:id/:listName", async (req, res, next) => {
