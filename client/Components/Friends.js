@@ -72,7 +72,7 @@ const Friends = () => {
         <div>
           <label>search for friends on Dish it :</label>
         </div>
-        <div classname="email-input">
+        <div className="email-input">
           <input
             placeholder="email"
             value={email.value}

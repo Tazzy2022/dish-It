@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteFriend, getPendingFriends } from "../features/FriendsSlice";
+import { Buffer } from "buffer";
 
 const AllFriends = (props) => {
   const dispatch = useDispatch();
@@ -25,11 +26,21 @@ const AllFriends = (props) => {
   return (
     <div className="friend-card">
       <button onClick={deleteAFriend}>delete</button>
+      {props.friend.image === null ? (
+          <img
+            className="profile-img"
+            src="/avatar-placeholder.jpeg"
+            alt="friend's image"
+          />
+        ) : (
       <img
         className="friend-img"
-        // src={props.friend.image}
+        src={`data:image/jpeg;base64,${Buffer.from(
+          props.friend.image.data
+        ).toString("base64")}`}
         alt="friend's image"
       />
+        )}
       <Link className="friend-link" to={`/friendHome/${props.friend.email}`}>
         <p>{props.friend.username}</p>
         <p>

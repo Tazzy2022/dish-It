@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sendFriendRequest } from "../features/FriendsSlice";
 import ContentModal from "./ContentModal";
+import { Buffer } from "buffer";
 
 const FriendModal = (props) => {
   const dispatch = useDispatch();
@@ -29,16 +30,29 @@ const FriendModal = (props) => {
     <div className="modalBackground">
       <main className="addFriend-modal">
         <div className="close-modal">
-          <button className="modalbutton" onClick={() => props.openPopUp(false)}>
+          <button
+            className="modalbutton"
+            onClick={() => props.openPopUp(false)}
+          >
             X
           </button>
         </div>
         <section className="friendModal-content">
-          <img
-            className="profile-img"
-            src={props.friend.imageData}
-            alt="friend's image"
-          />
+          {props.friend.image === null ? (
+            <img
+              className="profile-img"
+              src="/avatar-placeholder.jpeg"
+              alt="friend's image"
+            />
+          ) : (
+            <img
+              className="profile-img"
+              src={`data:image/jpeg;base64,${Buffer.from(
+                props.friend.image.data
+              ).toString("base64")}`}
+              alt="friend's image"
+            />
+          )}
           <div>
             <p className="friend-modal-p">{props.friend.username}</p>
             <p className="friend-modal-p">
@@ -48,7 +62,7 @@ const FriendModal = (props) => {
         </section>
         <div>
           <button className="modalbutt" onClick={() => sendInvite()}>
-          send friend request
+            send friend request
           </button>
         </div>
       </main>

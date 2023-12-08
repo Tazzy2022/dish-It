@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getAllLists } from "../features/listSlice";
+import { Buffer } from "buffer";
 import ListCard from "./ListCard";
 import NewListModal from "./NewListModal";
 
@@ -40,20 +41,28 @@ const UserHome = () => {
   return (
     <div>
       <section className="home-header-container">
-        <img className="profile-img" src={auth.user.image} alt="profile pic" />
+        {/* <img className="profile-img" src={auth.user.image} alt="profile pic" /> */}
+        {auth.user.image === null ? (
+          <img
+            className="profile-img"
+            src="/avatar-placeholder.jpeg"
+            alt="profile image"
+          />
+        ) : (
+          <img
+            className="profile-img"
+            src={`data:image/jpeg;base64,${Buffer.from(
+              auth.user.image.data
+            ).toString("base64")}`}
+            alt="profile image"
+          />
+        )}
         <p className="profile-name">{auth.user.username}'s lists...</p>
         <button className="home-button" onClick={() => setModalOpen(true)}>
           + new list
         </button>
         {modalOpen && <NewListModal openModal={setModalOpen} />}
       </section>
-      {/* <section className="home-filter-container">
-        <label>filter by:</label>
-        <input type="checkbox" className="filter-personal-checkbox" />
-        <label>personal</label>
-        <input type="checkbox" className="filter-following-checkbox" />
-        <label>following</label>
-      </section> */}
       <main className="user-home-list">
         {lists?.length === 0 ? (
           <div>

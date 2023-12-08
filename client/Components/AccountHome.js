@@ -3,22 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { getPendingFriends } from "../features/FriendsSlice";
 import { getUser } from "../features/authSlice";
-import { Buffer } from 'buffer';
-
-// import {
-//   // setCroppedImage,
-//   setUploadStatus,
-//   setError,
-//   // selectCroppedImage,
-//   selectUploadStatus,
-//   selectError,
-// } from "../features/imageSlice";
+import { Buffer } from "buffer";
 import PendingCard from "./PendingCard";
+import Resizer from "react-image-file-resizer";
 
 const AccountHome = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const friends = useSelector((state) => state.friends);
+  const [image, setImage] = useState("");
 
   let file;
   //let image;
@@ -54,9 +47,36 @@ const AccountHome = () => {
   //   console.log("base64String", base64String);
   // };
 
+  const resizeFile = (file) => {
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        file,
+        200,
+        200,
+        100,
+        0,
+        "JPEG",
+        (uri) => {
+          resolve(uri);
+        },
+        "base64"
+      );
+      console.log("file after resize", file);
+    });
+  };
+
   const handleChange = (e) => {
     file = e.target.files[0];
     console.log("file", file);
+
+    // if (file) {
+    //   try {
+    //     setImage(resizeFile(file))
+    //     console.log("image", image);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // }
   };
 
   const handleUpload = async (e) => {
@@ -78,45 +98,40 @@ const AccountHome = () => {
         }
       );
       console.log("res.data", res.data);
+      dispatch(
+        getUser({
+          id: auth.user.id,
+          token: auth.token,
+        })
+      );
     } catch (err) {
       console.error("error uploading image: ", err);
       // Handle error here
     }
   };
 
+  console.log("auth.user.image", auth.user.image);
   return (
     <div className="account-home-container">
       <section className="user-account-home">
         <h1 className="user-account-h1">{auth.user.username}</h1>
-        {auth.user.image.data.length > 0 ? (
+        {auth.user.image === null ? (
+          <img
+            className="account-img"
+            src="/avatar-placeholder.jpeg"
+            alt="profile image"
+          />
+        ) : (
           <img
             className="account-img"
             src={`data:image/jpeg;base64,${Buffer.from(
               auth.user.image.data
             ).toString("base64")}`}
-            alt="personal image"
+            alt="profile image"
           />
-        ) : (
-          <img className="account-img" alt="personal image" />
         )}
-
         <form onSubmit={handleUpload} encType="multipart/form-data">
-          <input
-            type="file"
-            // name="file"
-            // accept="image/*"
-            onChange={handleChange}
-          />
-          {/* {image && (
-          <ReactCrop
-            src={image}
-            crop={crop}
-            onChange={handleCrop}
-            onComplete={handleCropComplete}
-            onImageLoaded={handleImageLoaded}
-          />
-        )} */}
-          {/* {croppedImage && <img src={croppedImage} alt="cropped image" />} */}
+          <input type="file" onChange={handleChange} />
           <button type="submit">update image</button>
         </form>
       </section>

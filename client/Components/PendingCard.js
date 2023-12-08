@@ -6,6 +6,7 @@ import {
   acceptFriendRequest,
   getPendingFriends,
 } from "../features/FriendsSlice";
+import { Buffer } from "buffer";
 
 const PendingCard = (props) => {
   const dispatch = useDispatch();
@@ -46,11 +47,21 @@ const PendingCard = (props) => {
   return (
     <div className="pending-friend-contnr">
       <section className="pending-card">
-        <img
-          className="friend-img"
-          // src={props.friend.image}
+      {props.friend.image === null ? (
+          <img
+            className="profile-img"
+            src="/avatar-placeholder.jpeg"
+            alt="friend's image"
+          />
+        ) : (
+          <img
+          className="profile-img"
+          src={`data:image/jpeg;base64,${Buffer.from(
+            props.friend.image.data
+          ).toString("base64")}`}
           alt="friend's image"
         />
+          )}
         <Link
           className="pending-details"
           to={`/friendHome/${props.friend.email}`}

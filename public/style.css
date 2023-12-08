@@ -315,7 +315,7 @@ a {
 .profile-img,
 .friend-img {
   padding: 20px;
-  width: 8vw;
+  width: 6vw;
   height: 8vh;
   border-radius: 30px;
 }
@@ -514,7 +514,7 @@ a {
 }
 
 .account-img {
-  width: 15vw;
+  width: 13vw;
   height: 16vh;
   border-radius: 30px;
 }
