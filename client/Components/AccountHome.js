@@ -21,47 +21,25 @@ const AccountHome = () => {
         token: auth.token,
       })
     );
-    // console.log("auth.user.image.data", auth.user.image.data);
-    // console.log("auth.user.image.data.length", auth.user.image.data.length);
-    // if (auth.user.image.data.length > 0) {
-    //  image = bufferToString(auth.user.image.data);
-    // }
   }, [file]);
 
-  // const bufferToString = (buffer) => {
-  //   console.log("HI");
-  //   //convert array buffer to a typed array
-  //   let TYPED_ARRAY = new Uint8Array(buffer);
-  //   console.log("TYPED_ARRAY", TYPED_ARRAY);
-  //   //convert unicode values into a string of characters
-  //   //using .apply() will pass them as list of arguments
-  //   // const STRING_CHAR = String.fromCharCode.apply(null, TYPED_ARRAY); out of range error
-  //   const STRING_CHAR = TYPED_ARRAY.reduce((data, byte) => {
-  //     return data + String.fromCharCode(byte);
-  //   }, "");
-  //   console.log("STRING_CHAR", STRING_CHAR);
-  //   //return base-64 encoded ASCII string
-  //   let base64String = btoa(STRING_CHAR);
-  //   console.log("base64String", base64String);
+  // const resizeFile = (file) => {
+  //   new Promise((resolve) => {
+  //     Resizer.imageFileResizer(
+  //       file,
+  //       200,
+  //       200,
+  //       100,
+  //       0,
+  //       "JPEG",
+  //       (uri) => {
+  //         resolve(uri);
+  //       },
+  //       "base64"
+  //     );
+  //     console.log("file after resize", file);
+  //   });
   // };
-
-  const resizeFile = (file) => {
-    new Promise((resolve) => {
-      Resizer.imageFileResizer(
-        file,
-        200,
-        200,
-        100,
-        0,
-        "JPEG",
-        (uri) => {
-          resolve(uri);
-        },
-        "base64"
-      );
-      console.log("file after resize", file);
-    });
-  };
 
   const handleChange = (e) => {
     setFile(e.target.files[0]);
@@ -78,13 +56,9 @@ const AccountHome = () => {
 
   const handleUpload = async (e) => {
     e.preventDefault();
-    console.log("handleUpload");
-
     try {
       const formData = new FormData();
-      console.log("formData", formData);
       formData.append("image", file);
-      console.log("formData after image append", formData);
       const res = await axios.post(
         `/api/users/avatar/${auth.user.id}`,
         formData,
@@ -94,7 +68,6 @@ const AccountHome = () => {
           },
         }
       );
-      console.log("res.data", res.data);
       dispatch(
         getUser({
           id: auth.user.id,
@@ -103,11 +76,9 @@ const AccountHome = () => {
       );
     } catch (err) {
       console.error("error uploading image: ", err);
-      // Handle error here
     }
   };
 
-  console.log("file above rendered jsx", file);
   return (
     <div className="account-home-container">
       <section className="user-account-home">
@@ -128,7 +99,7 @@ const AccountHome = () => {
           />
         )}
         <form onSubmit={handleUpload} encType="multipart/form-data">
-          <input className="img-upload" type="file" onChange={handleChange} />
+          <input id="img-upload" type="file" onChange={handleChange} />
           {file && <button type="submit">update image</button>}
         </form>
       </section>

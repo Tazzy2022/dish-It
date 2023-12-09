@@ -6,8 +6,9 @@ const FriendListCard = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <div className="home-lists-container">
-      <Link to={`/friendlists/${props.list.id}`} className="list-card">
+    <section className="list-card-container">
+      <main>
+      <Link to={`/friendlists/${props.list.id}`}>
         <img
           className="card-img"
           src={props.list.image}
@@ -15,14 +16,15 @@ const FriendListCard = (props) => {
         />
         <p>{props.list.listName}</p>
       </Link>
-      <span>
-        <button onClick={() => setModalOpen(true)}></button>
+      </main>
+      <div className="copy-list">
+        <button className="copy-list-btn" onClick={() => setModalOpen(true)}>+</button>
         <label>add to my lists</label>
-      </span>
+      </div>
       {modalOpen && (
         <CopyFriendListModal list={props.list} openModal={setModalOpen} />
       )}
-    </div>
+    </section>
   );
 };
 

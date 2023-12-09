@@ -20,7 +20,6 @@ router.get("/:id/friends", async (req, res, next) => {
         id: allFriends,
       },
       attributes: ["username", "city", "state", "email", "image"],
-      // include: [{ model: Image }],
     });
     res.send(result);
   } catch (err) {
@@ -32,14 +31,12 @@ router.get("/:id/friends", async (req, res, next) => {
   }
 });
 
-//same as OG
 //GET "/api/user/friend/:email  find a friend to request to follow
 router.get("/friend/:email", async (req, res, next) => {
   try {
     const newFollow = await User.findOne({
       where: { email: req.params.email },
       attributes: ["username", "city", "state", "email", "image"],
-      // include: [{ model: Image }],
     });
     res.send(newFollow);
   } catch (err) {
@@ -185,35 +182,15 @@ router.get("/friend/:friendEmail/lists", async (req, res, next) => {
   }
 });
 
-//const unsplashUrl = `https://api.unsplash.com/search/photos?per_page=1&orientation=landscape&query=${req.body.listName}&client_id=${process.env.UNSPLASH_KEY}`;
-//split all spaces in req.body with &
-// image: results.links.download_location
-
 //POST "/api/user/createlist/:id  create new list
 router.post("/createlist/:id", async (req, res, next) => {
   try {
-    console.log(
-      "req.params.id",
-      req.params.id,
-      "req.body.listName",
-      req.body.listName
-    );
     let listName;
     if (req.body.listName.includes(" ")) {
       listName = req.body.listName.split(" ").join("&");
     } else {
       listName = req.body.listName;
     }
-    console.log("listName", listName);
-    // const image = await getImage(listName).then(
-    //   res.send(
-    //     await List.create({
-    //       userId: req.params.id,
-    //       listName: req.body.listName,
-    //       image: image,
-    //     })
-    //   )
-    // );
     let image = await getImage(listName);
     if (image.length > 0) {
       res.send(
@@ -239,12 +216,7 @@ const getImage = async (listName) => {
       "get",
       `https://api.unsplash.com/search/photos?per=1&per_page=1&orientation=landscape&query=${listName}&client_id=${process.env.UNSPLASH_KEY}`
     );
-    //this would've been a download but not working / need to to a get request
-    // console.log(
-    //   "image.body.results[0].links.download_location",
-    //   image.body.results[0].links.download_location
-    // );
-    //this is a hotlink
+    //download but not working, this is a hotlink
     return image.body.results[0].urls.small;
   } catch (error) {
     console.log(error);
@@ -342,7 +314,9 @@ router.get("/list/:id", async (req, res, next) => {
       const notes = await RestaurantNotes.findAll({
         where: { restaurantId: restaurantIdArray },
       });
-      res.send({ listName, id, list, notes });
+      if (list.length > 0 && notes.length > 0) {
+        res.send({ listName, id, list, notes });
+      }
     } else {
       res.send({});
     }

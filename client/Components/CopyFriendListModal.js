@@ -31,7 +31,12 @@ const CopyFriendListModal = (props) => {
 
   return (
     <div className="modalBackground">
-      <main className="new-list-modal">
+      <main className="create-list-modal">
+        <div className="close-modal">
+          <button className="modalbtn" onClick={() => props.openModal(false)}>
+            X
+          </button>
+        </div>
         <form className="create-list-form" onSubmit={copyThisList}>
           <label>new list name:</label>
           <input
@@ -43,11 +48,8 @@ const CopyFriendListModal = (props) => {
             onChange={handleChange}
           />
           <div>
-            <button className="modalbtn" type="submit">
+            <button className="modalbutton" type="submit">
               create
-            </button>
-            <button className="modalbtn" onClick={() => props.openModal(false)}>
-              cancel
             </button>
           </div>
         </form>

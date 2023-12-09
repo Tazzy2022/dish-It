@@ -30,9 +30,9 @@ a {
   display: flex;
 }
 
-.email-input button {
+.email-input-btn {
   height: 18px;
-  margin-top: 2px;
+  margin-top: 6px;
 }
 
 .home-lists {
@@ -247,14 +247,16 @@ a {
   width: 20vw;
 }
 
-.list-card-btn {
+.list-card-btn,
+.copy-list {
   display: flex;
   margin: 5px;
   justify-content: center;
 }
 
 .list-card-btn button,
-#find-friend button {
+#find-friend button,
+.copy-list-btn {
   margin-right: 5px;
   background-color: #e00707;
   border: #e00707;
@@ -522,9 +524,8 @@ a {
   font-size: 2rem;
 }
 
-.img-upload {
-  text-align: center;
-  margin: 10px;
+#img-upload {
+  margin: 10px 0px 10px 50px;
 }
 
 .account-img {
@@ -625,7 +626,8 @@ a {
 .pending-details p,
 .friend-link p,
 .friend-card button:hover,
-.search-link:hover {
+.search-link:hover,
+.copy-list-btn:hover {
   color: #333333;
 }
 
@@ -805,7 +807,7 @@ a {
 
   .restaurant-list-container {
     border: none;
-    border-top: 1px solid rgb(214, 213, 213);
+    border-bottom: 1px solid rgb(214, 213, 213);
     border-radius: 0px;
     width: 95vw;
     box-shadow: none;

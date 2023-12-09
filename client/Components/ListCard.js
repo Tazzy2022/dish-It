@@ -26,7 +26,6 @@ const ListCard = (props) => {
       console.log(error);
     }
   };
-console.log("props.list.image", props.list.image)
   return (
     <section className="list-card-container">
       <main>

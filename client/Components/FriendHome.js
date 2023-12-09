@@ -46,16 +46,28 @@ const FriendHome = () => {
     <div>
       {friends.friends.length > 0 && (
         <section className="home-header-container">
+
+{friends.friends[0].image === null ? (
           <img
             className="profile-img"
-            src={friends.friends[0].image}
-            alt="profile pic"
+            src="/avatar-placeholder.jpeg"
+            alt="profile image"
           />
+        ) : (
+          <img
+            className="profile-img"
+            src={`data:image/jpeg;base64,${Buffer.from(
+              friends.friends[0].image
+            ).toString("base64")}`}
+            alt="profile image"
+          />
+        )}
           <p className="profile-name">
             {friends.friends[0].username}'s lists...
           </p>
         </section>
       )}
+      <main className="user-home-list">
       {friends.friendsLists?.length === 0 ? (
         <div>
           <p>no saved lists yet...</p>
@@ -66,6 +78,7 @@ const FriendHome = () => {
           return <FriendListCard key={list.id} list={list} />;
         })
       )}
+      </main>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import AddToListModal from "./AddToListModal";
+import CategoriesCard from "./CategoriesCard";
 
 const FriendsRestaurantCard = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -11,35 +12,44 @@ const FriendsRestaurantCard = (props) => {
 
   return (
     <div className="restaurant-list-container">
-      <section className="list-card">
-        <img
-          className="card-img"
-          src={props.restaurant.image_url}
-          alt="restaurant image"
-        />
-        <p>{props.restaurant.name}</p>
-        <p>{props.restaurant.address1}</p>
-        <p>
-          {props.restaurant.location.city}, {props.restaurant.location.state},{" "}
-          {props.restaurant.location.zip_code}
-        </p>
-        <p>phone: {props.restaurant.display_phone}</p>
-        <p>price: {props.restaurant.price}</p>
-        <Link className="yelp-link" to={props.restaurant.url}>
-          yelp link
-        </Link>
-        <p>Food category:</p>
-        {props.restaurant.categories.map((cat, index) => {
-          return <p key={index}>{cat.title},</p>;
-        })}
-        <button onClick={() => setModalOpen(true)}>+</button>
-        <label>add to list</label>
-        {modalOpen && (
-          <AddToListModal
-            openModal={setModalOpen}
-            restaurantId={props.restaurant.id}
+      <main className="list-content">
+        <section className="list-content1">
+          <img
+            className="listcard-img"
+            src={props.restaurant.image_url}
+            alt="restaurant image"
           />
-        )}
+        </section>
+        <section className="list-content2">
+          <p>{props.restaurant.name}</p>
+          <p>{props.restaurant.address1}</p>
+          <p>
+            {props.restaurant.location.city}, {props.restaurant.location.state},{" "}
+            {props.restaurant.location.zip_code}
+          </p>
+          <p>phone: {props.restaurant.display_phone}</p>
+          <Link className="yelp-link" to={props.restaurant.url}>
+            yelp link
+          </Link>
+        </section>
+        <section className="list-content3">
+          <CategoriesCard category={props.restaurant.categories} />
+
+          {/* {props.restaurant.categories.map((cat, index) => {
+          return <p key={index}>{cat.title},</p>;
+        })} */}
+          <p>price: {props.restaurant.price}</p>
+          <button onClick={() => setModalOpen(true)}>+</button>
+          <label>add to list</label>
+          {modalOpen && (
+            <AddToListModal
+              openModal={setModalOpen}
+              restaurantId={props.restaurant.id}
+            />
+          )}
+        </section>
+      </main>
+      <section className="list-card-notes">
         <p>Notes:</p>
         {note?.personalNotes?.length > 0 ? (
           <p>{note.personalNotes}</p>

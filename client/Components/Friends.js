@@ -80,7 +80,7 @@ const Friends = () => {
             type="email"
             onChange={handleChange}
           />
-          <button type="submit">submit</button>
+          <button className="email-input-btn" type="submit">submit</button>
         </div>
       </form>
       {popUpSeen && (

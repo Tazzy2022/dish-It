@@ -37,7 +37,6 @@ router.put("/:id", async (req, res, next) => {
 router.post("/avatar/:id", upload.single("image"), async (req, res, next) => {
   try {
     const { buffer } = req.file;
-    console.log("buffer", buffer);
     const user = await User.findOne({ where: { id: req.params.id } });
     if (user) {
       res.send(

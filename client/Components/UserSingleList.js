@@ -52,7 +52,7 @@ const UserSingleList = () => {
       {list?.list?.length === 0 || Object.keys(list).length === 0 ? (
         <div>
           <p>this list is empty...</p>
-          <Link to="/usersearch">you can start your search here</Link>
+          <Link className="search-link" to="/usersearch">you can start your search here</Link>
         </div>
       ) : (
         list?.list?.length > 0 &&

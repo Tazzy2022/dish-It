@@ -12,6 +12,7 @@ const FriendSingleList = () => {
 
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
+  //const [listName, setListName] = useState("")
 
   useEffect(() => {
     const getList = async () => {
@@ -36,19 +37,9 @@ const FriendSingleList = () => {
     return <div className="loading-p">Loading...</div>;
   }
 
-  let listname;
-
-  if (lists.length > 0) {
-    lists.filter((list) => {
-      if (list.id === id) {
-        listname = list.listName;
-      }
-    });
-  }
-
   return (
     <div className="single-list-container">
-      <p className="list-name">{listname}</p>
+      <p className="list-h1">{list?.listName}</p>
       {list?.list?.length === 0 || Object.keys(list).length === 0 ? (
         <div>
           <p>this list is empty...</p>
