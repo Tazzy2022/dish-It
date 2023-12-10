@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+// import { useLocation, useNavigate } from "react-router-dom";
 import { addRestoToList } from "../features/singleListSlice";
 import { getAllLists } from "../features/listSlice";
 import ContentModal from "./ContentModal";
 
 const AddToListModal = ({ openModal, restaurantId }) => {
   const dispatch = useDispatch();
-  const location = useLocation();
-  const navigate = useNavigate();
+  // const location = useLocation();
+  // const navigate = useNavigate();
 
   const auth = useSelector((state) => state.auth);
   const lists = useSelector((state) => state.lists);
@@ -42,9 +42,9 @@ const AddToListModal = ({ openModal, restaurantId }) => {
         setErrorMessage("that restaurant is already on that list");
         setErrorModal(true);
       }
-      if (location.pathname.includes("friendlists")) {
-        navigate(-1);
-      }
+      // if (location.pathname.includes("friendlists")) {
+      //   navigate(-1);
+      // }
     } catch (error) {
       console.log(error);
     }

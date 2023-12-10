@@ -138,7 +138,7 @@ const FilterCategorySearch = ({ openModal }) => {
           })
         );
       }
-      dispatch(setCategories(updatedCat));
+      dispatch(setCategories(category));
       dispatch(setPrice(pricing));
     } catch (error) {
       console.log(error);

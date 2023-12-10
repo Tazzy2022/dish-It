@@ -46,6 +46,8 @@ const UserSingleList = () => {
     });
   }
 
+  console.log("LIST in get list", list)
+
   return (
     <div className="single-list-container">
       <h1 className="list-h1">{listname}</h1>

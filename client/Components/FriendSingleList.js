@@ -6,13 +6,12 @@ import FriendsRestaurantCard from "./FriendsRestaurantCard";
 
 const FriendSingleList = () => {
   const list = useSelector(renderSingleList);
-  const lists = useSelector((state) => state.lists);
+  // const lists = useSelector((state) => state.lists);
   const auth = useSelector((state) => state.auth);
   const { id } = useParams();
 
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  //const [listName, setListName] = useState("")
 
   useEffect(() => {
     const getList = async () => {

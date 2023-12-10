@@ -142,7 +142,7 @@ a {
 }
 
 .list-card-container {
-  margin: 0px 20px;
+  margin: 0px 20px 25px 20px;
 }
 
 .list-card {
@@ -691,7 +691,7 @@ a {
 
   #acc-update-contr,
   #friend-contnr {
-margin-left: 10px;
+    margin-left: 10px;
   }
 
   .yelp-link,

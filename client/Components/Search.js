@@ -86,10 +86,13 @@ const Search = () => {
   let priceArray = [];
   let priceFilters;
 
+  console.log("searchInfo", searchInfo);
+
+  //if not length-1 add comme and space
   if (searchInfo.categories.length > 1) {
-    searchCategories = searchInfo.categories.join(", ").toString();
+    searchCategories = searchInfo.categories.join(", ");
   } else if (searchInfo.categories.length > 0) {
-    searchCategories = searchInfo.categories.join(" ").toString();
+    searchCategories = searchInfo.categories.join(" ");
   }
 
   if (searchInfo.price.length > 0) {
@@ -111,7 +114,7 @@ const Search = () => {
           <div className="search-label-input">
             <label>search by name (optional)</label>
             <input
-            id="resto-input"
+              id="resto-input"
               placeholder="restaurant name"
               value={search.restaurant}
               name="restaurant"
@@ -121,7 +124,7 @@ const Search = () => {
           <div className="search-label-input">
             <label>and / or by location:</label>
             <input
-            id="location-input"
+              id="location-input"
               placeholder={search.location || auth.user.city}
               value={search.location}
               name="location"
@@ -144,7 +147,7 @@ const Search = () => {
       {searchInfo.categories.length > 0 && searchInfo.price.length > 0 && (
         <section id="searched-filters">
           <p>
-            Current filters: {searchCategories + " "}, {priceFilters} in{" "}
+            Current filters: {searchCategories}, {priceFilters} in{" "}
             {searchInfo.location}{" "}
           </p>
           <button onClick={resetFilters}>clear all</button>
