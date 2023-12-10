@@ -100,7 +100,7 @@ const AccountHome = () => {
         )}
         <form onSubmit={handleUpload} encType="multipart/form-data">
           <input id="img-upload" type="file" onChange={handleChange} />
-          {file && <button type="submit">update image</button>}
+          {file && <button id="img-upload-btn" type="submit">update image</button>}
         </form>
       </section>
       <section className="follow-req-container">

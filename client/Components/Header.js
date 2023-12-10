@@ -33,7 +33,7 @@ const Header = () => {
           <div className="dropdown-content">
             <Link to="/userhome">my lists</Link>
             <Link to="/usersearch">search for restaurants</Link>
-            <Link to="/account">my account</Link>
+            <Link to="/account">account info</Link>
             <Link onClick={handleLogout} to="/">
               log out
             </Link>

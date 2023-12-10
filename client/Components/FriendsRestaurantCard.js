@@ -34,10 +34,6 @@ const FriendsRestaurantCard = (props) => {
         </section>
         <section className="list-content3">
           <CategoriesCard category={props.restaurant.categories} />
-
-          {/* {props.restaurant.categories.map((cat, index) => {
-          return <p key={index}>{cat.title},</p>;
-        })} */}
           <p>price: {props.restaurant.price}</p>
           <button onClick={() => setModalOpen(true)}>+</button>
           <label>add to list</label>

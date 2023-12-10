@@ -19,7 +19,6 @@ const FriendModal = (props) => {
         token: auth.token,
         id: auth.user.id,
         userEmail: friends.friend.email,
-        //userEmail: props.friend.email,
       })
     );
     setContentModal(true);
@@ -53,9 +52,9 @@ const FriendModal = (props) => {
               alt="friend's image"
             />
           )}
-          <div>
-            <p className="friend-modal-p">{props.friend.username}</p>
-            <p className="friend-modal-p">
+          <div className="friend-modalps">
+            <p>{props.friend.username}</p>
+            <p>
               {props.friend.city}, {props.friend.state}
             </p>
           </div>

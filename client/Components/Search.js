@@ -111,6 +111,7 @@ const Search = () => {
           <div className="search-label-input">
             <label>search by name (optional)</label>
             <input
+            id="resto-input"
               placeholder="restaurant name"
               value={search.restaurant}
               name="restaurant"
@@ -120,6 +121,7 @@ const Search = () => {
           <div className="search-label-input">
             <label>and / or by location:</label>
             <input
+            id="location-input"
               placeholder={search.location || auth.user.city}
               value={search.location}
               name="location"

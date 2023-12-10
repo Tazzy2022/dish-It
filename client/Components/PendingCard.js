@@ -17,7 +17,6 @@ const PendingCard = (props) => {
       deleteFriend({
         id: auth.user.id,
         token: auth.token,
-        //friendId: friendId,
         friendEmail: props.friend.email,
       })
     );
@@ -49,13 +48,13 @@ const PendingCard = (props) => {
       <section className="pending-card">
       {props.friend.image === null ? (
           <img
-            className="profile-img"
+            className="friend-img"
             src="/avatar-placeholder.jpeg"
             alt="friend's image"
           />
         ) : (
           <img
-          className="profile-img"
+          className="friend-img"
           src={`data:image/jpeg;base64,${Buffer.from(
             props.friend.image.data
           ).toString("base64")}`}

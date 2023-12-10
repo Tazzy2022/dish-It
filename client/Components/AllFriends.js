@@ -28,7 +28,7 @@ const AllFriends = (props) => {
       <button onClick={deleteAFriend}>delete</button>
       {props.friend.image === null ? (
           <img
-            className="profile-img"
+            className="friend-img"
             src="/avatar-placeholder.jpeg"
             alt="friend's image"
           />

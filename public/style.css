@@ -166,7 +166,7 @@ a {
   border-radius: 15px;
   width: 70vw;
   height: 15vh;
-  margin: 3vh 0vh 3vh;
+  margin: 3vh 0vw 3vh;
 }
 
 .restaurant-list-container {
@@ -234,7 +234,6 @@ a {
 
 #rest-list-card1 {
   flex: 5 5 0;
-  border: 2px blue;
 }
 
 #rest-list-card2 {
@@ -264,7 +263,8 @@ a {
   color: white;
 }
 
-.edit-acc-btn {
+.edit-acc-btn,
+#img-upload-btn {
   border: 1px solid #e00707;
   border-radius: 5px;
   color: #e00707;
@@ -325,6 +325,10 @@ a {
   width: 80px;
   height: 80px;
   border-radius: 30px;
+}
+
+.profile-img {
+  padding: 20px 0px 20px 20px;
 }
 
 .home-filter-container label {
@@ -476,6 +480,7 @@ a {
 
 .follow-req-container h2 {
   text-align: center;
+  margin-bottom: 0px;
 }
 
 .pending-btns button {
@@ -487,19 +492,22 @@ a {
 
 .pending-friend-contnr,
 .pending-card,
-.pending-btns,
-.pending-details {
+.pending-btns {
   display: flex;
   align-items: center;
 }
 
 .pending-friend-contnr {
-  margin-top: 20px;
   justify-content: center;
 }
 
 .pending-btns,
 .pending-details {
+  flex-direction: column;
+}
+
+.pending-details {
+  display: flex;
   flex-direction: column;
 }
 
@@ -529,8 +537,8 @@ a {
 }
 
 .account-img {
-  width: 13vw;
-  height: 16vh;
+  width: 100px;
+  height: 100px;
   border-radius: 30px;
 }
 
@@ -639,7 +647,7 @@ a {
 }
 
 @media only screen and (max-width: 768px) {
-  /* For mobile phones: */
+  /* For smaller devices: */
   p,
   label,
   input,
@@ -664,7 +672,9 @@ a {
   .restaurant-list-container p,
   .restaurant-list-container a,
   .loading-p,
-  .modalbtn {
+  .modalbtn,
+  #resto-input,
+  #location-input {
     font-size: 14px;
   }
 
@@ -679,13 +689,21 @@ a {
     padding: 15px 15px 5px;
   }
 
-  #stars,
+  #acc-update-contr,
+  #friend-contnr {
+margin-left: 10px;
+  }
+
   .yelp-link,
   #rest-list-card3 p,
-  #restaurantCard-rating-link,
   #add-to-list-click,
-  .restaurant-list-container label {
-    font-size: 12px;
+  .home-button {
+    font-size: 13px;
+  }
+
+  #stars,
+  #restaurantCard-rating {
+    font-size: 10px;
   }
 
   #searched-filters {
@@ -707,6 +725,10 @@ a {
     margin: 0px;
   }
 
+  .profile-name {
+    padding: 20px 20px 20px 10px;
+  }
+
   .profile-add-list {
     margin: 0px;
     background-color: white;
@@ -714,8 +736,22 @@ a {
     padding-top: 20px;
   }
 
-  .profile-img {
-    display: none;
+  .account-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+  }
+
+  .profile-img,
+  .friend-img {
+    padding: 20px 10px 20px 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+  }
+
+  .pending-btns div {
+    margin: 5px 15px 5px 0px;
   }
 
   .home-lists,
@@ -796,8 +832,8 @@ a {
     border: none;
     border-radius: 0px;
     width: 95vw;
-    height: 15vh;
-    margin: 2vh 5vw 2vh;
+    height: auto;
+    margin: 2vh 2.5vw 2vh;
     box-shadow: none;
   }
 
@@ -822,8 +858,12 @@ a {
     margin-top: 10px;
   }
 
+  .nav-dropdown-container {
+    max-width: 100px;
+  }
+
   .nav-dropdown-container .dropbtn {
-    padding: 8px 8px;
+    padding: 8px;
   }
 
   .dropdown-content a {
@@ -831,7 +871,6 @@ a {
   }
 
   #rest-list-card1 {
-    /* flex: 5 5 0; */
     width: 20vw;
     height: 17vh;
   }
@@ -860,5 +899,12 @@ a {
 
   #add-to-list-click {
     margin: 0px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  /* For phones: */
+  .pending-friend-contnr {
+    justify-content: flex-start;
   }
 }

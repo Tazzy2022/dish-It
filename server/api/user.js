@@ -149,7 +149,6 @@ router.get("/:id/lists", async (req, res, next) => {
         {
           model: User,
           attributes: ["username", "image"],
-          // , include: [{ model: Image }]
         },
       ],
     });
@@ -217,6 +216,7 @@ const getImage = async (listName) => {
       `https://api.unsplash.com/search/photos?per=1&per_page=1&orientation=landscape&query=${listName}&client_id=${process.env.UNSPLASH_KEY}`
     );
     //download but not working, this is a hotlink
+    console.log("image", image)
     return image.body.results[0].urls.small;
   } catch (error) {
     console.log(error);
@@ -249,6 +249,7 @@ router.put("/:id/:listName", async (req, res, next) => {
       where: { userId: req.params.id, listName: req.params.listName },
       defaults: { restaurantIdArray: [] },
     });
+    console.log("list", list)
     if (list.restaurantIdArray.includes(restaurantId)) {
       res.status(409).json({
         message: "that restaurant is already on that list",

@@ -20,7 +20,7 @@ const Login = () => {
       if (loggedUser.payload.user) {
         dispatch(
           setLocation(
-            loggedUser.payload.user.city + "," + loggedUser.payload.user.state
+            loggedUser.payload.user.city + ", " + loggedUser.payload.user.state
           )
         );
         navigate("/usersearch");

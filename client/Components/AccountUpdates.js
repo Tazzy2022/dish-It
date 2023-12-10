@@ -6,7 +6,7 @@ const AccountUpdates = () => {
   const auth = useSelector((state) => state.auth);
 
   return (
-    <div>
+    <div id="acc-update-contr">
       <h1 className="user-account-h1">Update account info</h1>
       <section className="user-section">
         <div className="useracc-info">

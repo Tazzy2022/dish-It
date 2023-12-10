@@ -49,7 +49,7 @@ const AllRestaurants = (props) => {
       </section>
       <section id="rest-list-card3">
         <div id="rest-card-cat">
-          <span id="restaurantCard-rating-link">
+          <span id="restaurantCard-rating">
             <StarRating id="stars" rating={props.restaurant.rating} />(
             {props.restaurant.review_count + " "}
             reviews)
