@@ -5,12 +5,13 @@ import { getPendingFriends } from "../features/FriendsSlice";
 import { getUser } from "../features/authSlice";
 import { Buffer } from "buffer";
 import PendingCard from "./PendingCard";
+//import Resizer from "react-image-file-resizer";
 
 const AccountHome = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const friends = useSelector((state) => state.friends);
-  const [image, setImage] = useState("");
+  //const [image, setImage] = useState("");
   const [file, setFile] = useState("");
 
   useEffect(() => {
