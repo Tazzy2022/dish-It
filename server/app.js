@@ -30,7 +30,6 @@ app.use("/auth", require("./auth/authRouter"));
 
 // static file-serving middleware
 app.use(express.static(path.join(__dirname, "..", "public")));
-//app.use("uploads", express.static("./uploads"));
 
 // sends index.html
 // app.use("*", (req, res) => {
