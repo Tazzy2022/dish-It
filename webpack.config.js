@@ -32,16 +32,4 @@ module.exports = {
       { test: /\.css$/, use: "css-loader" },
     ],
   },
-  plugins: [
-    new webpack.ProvidePlugin({
-      Buffer: ["buffer", "Buffer"],
-    }),
-  ],
-  resolve: {
-    modules: [node_modules],
-    fallback: {
-      buffer: require.resolve("buffer"),
-      util: require.resolve("util/"),
-    },
-  },
 };

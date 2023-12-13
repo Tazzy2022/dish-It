@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Buffer } from "buffer";
+// import { Buffer } from "buffer";
 import { findFriend, getSingleFriendsLists } from "../features/FriendsSlice";
 import FriendListCard from "./FriendListCard";
 
@@ -48,7 +48,7 @@ const FriendHome = () => {
       {friends.friends.length > 0 && (
         <section className="home-header-container">
 
-{friends.friends[0].image === null ? (
+{/* {friends.friends[0].image === null ? (
           <img
             className="profile-img"
             src="/avatar-placeholder.jpeg"
@@ -62,7 +62,7 @@ const FriendHome = () => {
             ).toString("base64")}`}
             alt="profile image"
           />
-        )}
+        )} */}
           <p className="profile-name">
             {friends.friends[0].username}'s lists...
           </p>

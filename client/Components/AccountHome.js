@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { getPendingFriends } from "../features/FriendsSlice";
 import { getUser } from "../features/authSlice";
-import { Buffer } from "buffer";
+// import { Buffer } from "buffer";
 import PendingCard from "./PendingCard";
 //import Resizer from "react-image-file-resizer";
 
@@ -13,16 +13,6 @@ const AccountHome = () => {
   const friends = useSelector((state) => state.friends);
   const [file, setFile] = useState("");
 
-  // useEffect(() => {
-  //   dispatch(
-  //     getPendingFriends({
-  //       id: auth.user.id,
-  //       token: auth.token,
-  //     })
-  //   );
-  // }, []);
-
-  //below is with buffer
   useEffect(() => {
     dispatch(
       getPendingFriends({
@@ -30,42 +20,52 @@ const AccountHome = () => {
         token: auth.token,
       })
     );
-  }, [file]);
+  }, []);
 
-  const handleChange = (e) => {
-    setFile(e.target.files[0]);
-  };
+  //below is with buffer
+  // useEffect(() => {
+  //   dispatch(
+  //     getPendingFriends({
+  //       id: auth.user.id,
+  //       token: auth.token,
+  //     })
+  //   );
+  // }, [file]);
 
-  const handleUpload = async (e) => {
-    e.preventDefault();
-    try {
-      const formData = new FormData();
-      formData.append("image", file);
-      const res = await axios.post(
-        `/api/users/avatar/${auth.user.id}`,
-        formData,
-        {
-          headers: {
-            authorization: auth.token,
-          },
-        }
-      );
-      dispatch(
-        getUser({
-          id: auth.user.id,
-          token: auth.token,
-        })
-      );
-    } catch (err) {
-      console.error("error uploading image: ", err);
-    }
-  };
+  // const handleChange = (e) => {
+  //   setFile(e.target.files[0]);
+  // };
+
+  // const handleUpload = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append("image", file);
+  //     const res = await axios.post(
+  //       `/api/users/avatar/${auth.user.id}`,
+  //       formData,
+  //       {
+  //         headers: {
+  //           authorization: auth.token,
+  //         },
+  //       }
+  //     );
+  //     dispatch(
+  //       getUser({
+  //         id: auth.user.id,
+  //         token: auth.token,
+  //       })
+  //     );
+  //   } catch (err) {
+  //     console.error("error uploading image: ", err);
+  //   }
+  // };
 
   return (
     <div className="account-home-container">
       <section className="user-account-home">
         <h1 className="user-account-h1">{auth.user.username}</h1>
-        {auth.user.image === null ? (
+        {/* {auth.user.image === null ? (
           <img
             className="account-img"
             src="/avatar-placeholder.jpeg"
@@ -79,15 +79,15 @@ const AccountHome = () => {
             ).toString("base64")}`}
             alt="profile image"
           />
-        )}
-        <form onSubmit={handleUpload} encType="multipart/form-data">
+        )} */}
+        {/* <form onSubmit={handleUpload} encType="multipart/form-data">
           <input id="img-upload" type="file" onChange={handleChange} />
           {file && (
             <button id="img-upload-btn" type="submit">
               update image
             </button>
           )}
-        </form>
+        </form> */}
       </section>
       <section className="follow-req-container">
         <h2>Pending follow requests:</h2>
