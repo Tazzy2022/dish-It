@@ -11,9 +11,18 @@ const AccountHome = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const friends = useSelector((state) => state.friends);
-  //const [image, setImage] = useState("");
   const [file, setFile] = useState("");
 
+  // useEffect(() => {
+  //   dispatch(
+  //     getPendingFriends({
+  //       id: auth.user.id,
+  //       token: auth.token,
+  //     })
+  //   );
+  // }, []);
+
+  //below is with buffer
   useEffect(() => {
     dispatch(
       getPendingFriends({
@@ -23,35 +32,8 @@ const AccountHome = () => {
     );
   }, [file]);
 
-  // const resizeFile = (file) => {
-  //   new Promise((resolve) => {
-  //     Resizer.imageFileResizer(
-  //       file,
-  //       200,
-  //       200,
-  //       100,
-  //       0,
-  //       "JPEG",
-  //       (uri) => {
-  //         resolve(uri);
-  //       },
-  //       "base64"
-  //     );
-  //     console.log("file after resize", file);
-  //   });
-  // };
-
   const handleChange = (e) => {
     setFile(e.target.files[0]);
-
-    // if (file) {
-    //   try {
-    //     setImage(resizeFile(file))
-    //     console.log("image", image);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // }
   };
 
   const handleUpload = async (e) => {

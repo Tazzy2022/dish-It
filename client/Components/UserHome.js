@@ -41,7 +41,7 @@ const UserHome = () => {
   return (
     <div>
       <section className="home-header-container">
-        {auth.user.image === null ? (
+        {/* {auth.user.image === null ? (
           <img
             className="profile-img"
             src="/avatar-placeholder.jpeg"
@@ -55,7 +55,7 @@ const UserHome = () => {
             ).toString("base64")}`}
             alt="profile image"
           />
-        )}
+        )} */}
         <p className="profile-name">{auth.user.username}'s lists...</p>
         <button className="home-button" onClick={() => setModalOpen(true)}>
           + new list
