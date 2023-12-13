@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sendFriendRequest } from "../features/FriendsSlice";
 import ContentModal from "./ContentModal";
-import { Buffer } from "buffer";
+// import { Buffer } from "buffer";
 
 const FriendModal = (props) => {
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ const FriendModal = (props) => {
           </button>
         </div>
         <section className="friendModal-content">
-          {props.friend.image === null ? (
+          {/* {props.friend.image === null ? (
             <img
               className="profile-img"
               src="/avatar-placeholder.jpeg"
@@ -51,7 +51,7 @@ const FriendModal = (props) => {
               ).toString("base64")}`}
               alt="friend's image"
             />
-          )}
+          )} */}
           <div className="friend-modalps">
             <p>{props.friend.username}</p>
             <p>
