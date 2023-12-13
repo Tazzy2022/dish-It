@@ -38,6 +38,7 @@ module.exports = {
     }),
   ],
   resolve: {
+    modules: [node_modules],
     fallback: {
       buffer: require.resolve("buffer"),
       util: require.resolve("util/"),
