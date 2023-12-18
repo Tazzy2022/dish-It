@@ -1,16 +1,10 @@
 const authRouter = require("express").Router();
 const User = require("../db/models/User");
-const Image = require("../db/models/Image");
 
 //POST '/auth/login'
 authRouter.post("/login", async (req, res, next) => {
   try {
-    const user = await User.authenticate(
-      req.body
-      //   , {
-      //   include: [{ model: Image }],
-      // }
-    );
+    const user = await User.authenticate(req.body);
     res.send(user);
   } catch (err) {
     res.status(500).json({
@@ -24,7 +18,9 @@ authRouter.post("/login", async (req, res, next) => {
 //POST '/auth/signup'
 authRouter.post("/signup", async (req, res, next) => {
   try {
+    console.log("inside POST, req.body", req.body);
     const checkUser = await User.findOne({ where: { email: req.body.email } });
+    console.log("checkUser", checkUser);
     if (checkUser) {
       res.status(409).json({
         message:
@@ -32,6 +28,7 @@ authRouter.post("/signup", async (req, res, next) => {
       });
     } else {
       const user = await User.encryptUser(req.body);
+      console.log("user", user);
       res.send(user);
     }
   } catch (err) {

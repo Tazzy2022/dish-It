@@ -50,7 +50,9 @@ const User = db.define(
       },
     },
     image: {
-      type: BLOB("long"),
+      type: STRING,
+      default:
+        "https://media01.stockfood.com/largepreviews/Mjk5MDcwMDI=/00964742-Amusing-face-made-from-vegetables-rosemary-and-mushroom.jpg",
     },
   },
   {
@@ -89,11 +91,6 @@ User.encryptUser = async (user) => {
   };
 };
 
-// User.prototype.correctPassword = function (candidatePwd) {
-//   //we need to compare the plain version to an encrypted version of the password
-//   return bcrypt.compare(candidatePwd, this.password);
-// };
-
 User.authenticate = async function ({ email, password }) {
   const user = await User.findOne({ where: { email: email } });
   if (user && (await bcrypt.compare(password, user.dataValues.password))) {
@@ -125,8 +122,6 @@ User.validate = async (token) => {
   }
 };
 
-User.getImage = async(imageBuffer) => {
-
-}
+User.getImage = async (imageBuffer) => {};
 
 module.exports = User;

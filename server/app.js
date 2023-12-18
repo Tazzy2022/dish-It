@@ -8,13 +8,13 @@ const app = express();
 // logging middleware
 app.use(morgan("dev"));
 
-app.use(
-  cors({
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     credentials: true,
+//   })
+// );
 
-//app.use(cors());   ??
+app.use(cors());
 
 // body parsing middleware
 app.use(express.urlencoded({ extended: true }));
