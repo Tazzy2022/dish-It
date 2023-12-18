@@ -1,14 +1,11 @@
 const User = require("../db/models/User");
-// const base64Arraybuffer = require("base64-arraybuffer");
-
-// const convertBuffer = (bufferArray) => {
-//   return encode(bufferArray);
-// };
 
 const validateToken = async (req, res, next) => {
   try {
+    console.log("req.headers.authorization", req.headers.authorization);
     const token = req.headers.authorization;
     const user = await User.validate(token);
+    console.log("user in middleware", user);
     req.user = user.dataValues;
     next();
   } catch (error) {
