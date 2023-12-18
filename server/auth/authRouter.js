@@ -5,7 +5,6 @@ const User = require("../db/models/User");
 authRouter.post("/login", async (req, res) => {
   try {
     const user = await User.authenticate(req.body);
-    console.log("user in login", user);
     return res.send(user);
   } catch (err) {
     res.status(500).json({
@@ -17,6 +16,7 @@ authRouter.post("/login", async (req, res) => {
 
 //POST '/auth/signup'
 authRouter.post("/signup", async (req, res) => {
+  console.log("USER model", User);
   try {
     console.log("inside POST, req.body", req.body);
     const checkUser = await User.findOne({ where: { email: req.body.email } });
