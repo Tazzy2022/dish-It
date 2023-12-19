@@ -27,12 +27,13 @@ const SignUp = () => {
         dispatch(setLocation(user.city + "," + user.state));
         navigate("/usersearch");
         setUser({ username: "", email: "", password: "", city: "", state: "" });
-      } else {
-        setErrorMessage(
-          "That user already exists. Please use a different email or sign in above"
-        );
-        setErrorModal(true);
       }
+      // else {
+      //   setErrorMessage(
+      //     "That user already exists. Please use a different email or sign in above"
+      //   );
+      //   setErrorModal(true);
+      // }
     } catch (err) {
       console.log(err);
     }

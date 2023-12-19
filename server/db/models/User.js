@@ -6,7 +6,8 @@ const bcrypt = require("bcrypt");
 require("dotenv").config();
 
 const User = db.define(
-  "user",
+  "users",
+  //"user",
   {
     id: {
       type: UUID,

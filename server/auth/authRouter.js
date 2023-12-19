@@ -19,6 +19,7 @@ authRouter.post("/signup", async (req, res) => {
   try {
     console.log("inside POST, req.body", req.body);
     const user = await User.create(req.body);
+    console.log("user", user);
     // const checkUser = await User.findOne({ where: { email: req.body.email } });
     // if (!checkUser) {
     //   console.log("checkUser in !checkUser", checkUser);
