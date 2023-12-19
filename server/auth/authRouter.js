@@ -18,14 +18,14 @@ authRouter.post("/login", async (req, res) => {
 authRouter.post("/signup", async (req, res) => {
   try {
     console.log("inside POST, req.body", req.body);
-    const user = await User.create(req.body);
-    console.log("user", user);
+    //const user = await User.create(req.body);
+    // console.log("user", user);
     // const checkUser = await User.findOne({ where: { email: req.body.email } });
     // if (!checkUser) {
     //   console.log("checkUser in !checkUser", checkUser);
-    //   const user = await User.create(req.body)
-    // const user = await User.encryptUser(req.body);
-    // console.log("user in signup", user);
+    //   //const user = await User.create(req.body)
+    const user = await User.encryptUser(req.body);
+    //   console.log("user in signup", user);
     return res.send(user);
     // } else {
     //   console.log("checkUser in else", checkUser);
