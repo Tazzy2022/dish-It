@@ -1,5 +1,4 @@
 import axios from "axios";
-//import download from 'downloadjs';
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -74,8 +73,6 @@ const authSlice = createSlice({
     //Logout action
     loggedoutUser: (state) => {
       state.user = {};
-      // state.error = "";
-      // state.token = "";
     },
   },
   //extraReducers handle axios calls - unlike "reducers:{}"
@@ -92,12 +89,6 @@ const authSlice = createSlice({
     builder.addCase(updateUserInfo.rejected, (state, action) => {
       state.error = action.error.message;
     });
-    // builder.addCase(updatePhoto.fulfilled, (state, action) => {
-    //   state.user = action.payload;
-    // });
-    // builder.addCase(updatePhoto.rejected, (state, action) => {
-    //   state.error = action.error.message;
-    // });
     builder.addCase(loginUser.fulfilled, (state, action) => {
       return action.payload;
     });

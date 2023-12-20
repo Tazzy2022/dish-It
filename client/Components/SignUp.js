@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { registerUser } from "../features/authSlice";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import ContentModal from "./ContentModal";
 import { setLocation } from "../features/searchSlice";
@@ -26,14 +26,19 @@ const SignUp = () => {
       if (loggedUser.payload.user) {
         dispatch(setLocation(user.city + "," + user.state));
         navigate("/usersearch");
-        setUser({ username: "", email: "", password: "", city: "", state: "" });
+        setUser({
+          username: "",
+          email: "",
+          password: "",
+          city: "",
+          state: "",
+        });
+      } else if (loggedUser.payload.includes(400)) {
+        setErrorMessage(
+          "That user already exists. Please use a different email or sign in above"
+        );
+        setErrorModal(true);
       }
-      // else {
-      //   setErrorMessage(
-      //     "That user already exists. Please use a different email or sign in above"
-      //   );
-      //   setErrorModal(true);
-      // }
     } catch (err) {
       console.log(err);
     }
