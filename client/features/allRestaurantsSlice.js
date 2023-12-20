@@ -104,7 +104,11 @@ export const getSingleRestaurant = createAsyncThunk(
 const allRestaurantsSlice = createSlice({
   name: "allRestaurants",
   initialState,
-  reducers: {},
+  reducers: {
+    clearRestos: (state) => {
+      return initialState;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getAllRestaurants.rejected, (state, action) => {
       state.error = action.error.message;
@@ -138,6 +142,8 @@ const allRestaurantsSlice = createSlice({
     });
   },
 });
+
+export const { clearRestos } = allRestaurantsSlice.actions
 
 export const renderAllRestaurants = (state) => state.restaurants;
 

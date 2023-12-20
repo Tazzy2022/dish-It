@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   restaurant: "",
@@ -16,6 +16,9 @@ const searchSlice = createSlice({
       state.restaurant = input.payload;
       state.categories = [];
       state.price = [];
+    },
+    clearSearch: (state) => {
+      return initialState;
     },
     setLocation: (state, input) => {
       state.location = input.payload;
@@ -36,8 +39,14 @@ const searchSlice = createSlice({
   },
 });
 
-export const { setRestaurant, setLocation, setPrice, setCategories, resetAll } =
-  searchSlice.actions;
+export const {
+  setRestaurant,
+  setLocation,
+  setPrice,
+  setCategories,
+  resetAll,
+  clearSearch,
+} = searchSlice.actions;
 
 export const searchState = (state) => state.search;
 

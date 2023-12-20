@@ -72,7 +72,7 @@ const authSlice = createSlice({
   reducers: {
     //Logout action
     loggedoutUser: (state) => {
-      state.user = {};
+      return initialState;
     },
   },
   //extraReducers handle axios calls - unlike "reducers:{}"

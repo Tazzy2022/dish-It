@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loggedoutUser } from "../features/authSlice";
 import { loggoutUserLists } from "../features/listSlice";
+import { clearSearch } from "../features/searchSlice";
+import { clearRestos } from "../features/allRestaurantsSlice";
 
 const Header = () => {
   const auth = useSelector((state) => state.auth);
@@ -12,6 +14,9 @@ const Header = () => {
   const handleLogout = () => {
     dispatch(loggedoutUser());
     dispatch(loggoutUserLists());
+    dispatch(clearSearch());
+    dispatch(clearRestos());
+    dispatch(logoutFriends());
   };
 
   return (

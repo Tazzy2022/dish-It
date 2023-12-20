@@ -142,7 +142,11 @@ export const getSingleFriendsLists = createAsyncThunk(
 const FriendsSlice = createSlice({
   name: "friends",
   initialState,
-  reducers: {},
+  reducers: {
+    logoutFriends: (state) => {
+      return initialState;
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(getFriendsList.fulfilled, (state, action) => {
       state.friends = action.payload;
@@ -190,6 +194,6 @@ const FriendsSlice = createSlice({
   },
 });
 
-//export const { loggedoutUser } = authSlice.actions;
+export const { logoutFriends } = FriendsSlice.actions;
 
 export default FriendsSlice.reducer;
