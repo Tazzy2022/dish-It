@@ -17,11 +17,7 @@ authRouter.post("/login", async (req, res) => {
 //POST '/auth/signup'
 authRouter.post("/signup", async (req, res) => {
   try {
-    console.log("inside POST, req.body", req.body);
-    //const user = await User.create(req.body);
-    // console.log("user", user);
     const user = await User.encryptUser(req.body);
-    //   console.log("user in signup", user);
     return res.send(user);
   } catch (err) {
     res.status(500).json({

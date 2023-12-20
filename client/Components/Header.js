@@ -19,11 +19,11 @@ const Header = () => {
       <nav>
         {auth?.user?.id ? (
           <Link to="/usersearch" className="header">
-            Dish iT
+            Dish-it
           </Link>
         ) : (
           <Link to="/" className="header">
-            Dish iT
+            Dish-it
           </Link>
         )}
       </nav>

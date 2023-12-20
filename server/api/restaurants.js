@@ -17,7 +17,7 @@ router.get("/city/:location", async (req, res, next) => {
       }
     );
     const data = restaurants.body;
-    data["testMsg"] = "got here";
+    // data["testMsg"] = "got here";
     res.send(data);
   } catch (err) {
     res.status(404).json({

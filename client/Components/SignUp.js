@@ -23,7 +23,6 @@ const SignUp = () => {
     event.preventDefault();
     try {
       const loggedUser = await dispatch(registerUser(user));
-      console.log("loggedUser.payload.user", loggedUser.payload.user);
       if (loggedUser.payload.user) {
         dispatch(setLocation(user.city + "," + user.state));
         navigate("/usersearch");
