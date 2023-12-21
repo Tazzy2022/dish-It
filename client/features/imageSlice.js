@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
   image: "",
@@ -8,7 +9,6 @@ const initialState = {
 export const getPhoto = createAsyncThunk(
   "auth/getPhoto",
   async ({ token, id }) => {
-    console.log("token, id", token, id);
     try {
       const response = await axios.get(`/api/users/image/${id}`, {
         headers: {

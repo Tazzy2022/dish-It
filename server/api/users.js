@@ -23,18 +23,21 @@ router.get("/:id", async (req, res, next) => {
 //GET "/api/users/image/:id" get single user
 router.get("/image/:id", async (req, res) => {
   try {
-    console.log("HIIIIII", req.params.id);
+    //const userImage = await User.getImage(req.params.id);
     const user = await User.findByPk(req.params.id);
-    console.log("user in get image", user);
     // console.log(
-    //   "Buffer.isBuffer(user.user.dataValues.image)",
-    //   Buffer.isBuffer(user.user.dataValues.image)
+    //   "Buffer.isBuffer(user.dataValues.image)",
+    //   Buffer.isBuffer(user.dataValues.image)
     // );
-    // if(Buffer.isBuffer(user.user.dataValues.image)) {
-    //   const image = Buffer.from(user.user.dataValues.image).toString("base64")
-    //   res.send(image)
-    // }
-    res.send(user);
+    console.log("user.dataValues.image", user.dataValues.image);
+    if (Buffer.isBuffer(user.dataValues.image)) {
+      //const image = Buffer.from(user.dataValues.image).toString("base64");
+      const image = user.dataValues.image.toString("base64");
+      res.send(image);
+    } else {
+      res.send(user.dataValues.image);
+    }
+    // res.send(userImage);
   } catch (err) {
     res.status(500).json({
       message: "could not login user",

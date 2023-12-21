@@ -75,26 +75,18 @@ const AccountHome = () => {
       console.error("error uploading image: ", err);
     }
   };
-
+  console.log("image.image.data", image.image.data);
   return (
     <div className="account-home-container">
       <section className="user-account-home">
         <h1 className="user-account-h1">{auth.user.username}</h1>
-        {/* {auth.user.image === null ? (
+        {image?.image?.data && (
           <img
             className="account-img"
-            src="/avatar-placeholder.jpeg"
+            src={image.image.data}
             alt="profile image"
           />
-        ) : (
-          <img
-            className="account-img"
-            src={`data:image/jpeg;base64,${Buffer.from(
-              auth.user.image.data
-            ).toString("base64")}`}
-            alt="profile image"
-          />
-        )} */}
+        )}
         <form onSubmit={handleUpload} encType="multipart/form-data">
           <input id="img-upload" type="file" onChange={handleChange} />
           {file && (

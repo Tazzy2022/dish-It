@@ -12,7 +12,7 @@ const Home = () => {
           Don't have the energy to search for a restaurant? Check out a friend's
           restaurant list.
           <br />
-          The options are endless on Dish iT.
+          The options are endless on Dish-it.
           <br />
         </p>
       </article>
