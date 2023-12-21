@@ -86,9 +86,6 @@ const Search = () => {
   let priceArray = [];
   let priceFilters;
 
-  console.log("searchInfo", searchInfo);
-
-  //if not length-1 add comme and space
   if (searchInfo.categories.length > 1) {
     searchCategories = searchInfo.categories.join(", ");
   } else if (searchInfo.categories.length > 0) {

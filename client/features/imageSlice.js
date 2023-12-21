@@ -1,47 +1,45 @@
-//import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-// export const updatePhoto = createAsyncThunk(
-//   "auth/updatePhoto",
-//   async (userInfo) => {
-//     try {
-//       const { data: updated } = await axios.post(
-//         `/api/users/${userInfo.userId}/avatar`,
-//         userInfo.avatar,
-//         {
-//           headers: {
-//             authorization: userInfo.token,
-//           },
-//         }
-//       );
-//       return updated;
-//     } catch (error) {
-//       return error.message;
-//     }
-//   }
-// );
+const initialState = {
+  image: "",
+  error: "",
+};
 
-// const initialState = {
-//   image: null,
-//     uploadStatus: 'idle',
-//     error: null,
-// };
+export const getPhoto = createAsyncThunk(
+  "auth/getPhoto",
+  async ({ token, id }) => {
+    console.log("token, id", token, id);
+    try {
+      const response = await axios.get(`/api/users/image/${id}`, {
+        headers: {
+          authorization: token,
+        },
+      });
+      return response;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
 
-// const imageSlice = createSlice({
-//   name: 'image',
-//   initialState,
-//   reducers: {
-//     setUploadStatus: (state, action) => {
-//       state.uploadStatus = action.payload;
-//     },
-//     setError: (state, action) => {
-//       state.error = action.payload;
-//     },
-//   },
-// });
+const imageSlice = createSlice({
+  name: "image",
+  initialState,
+  reducers: {
+    logoutImage: (state) => {
+      return initialState;
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getPhoto.fulfilled, (state, action) => {
+      state.image = action.payload;
+    });
+    builder.addCase(getPhoto.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+  },
+});
 
-// export const {
-//   setUploadStatus, setError } = imageSlice.actions;
-// export const selectUploadStatus = (state) => state.image.uploadStatus;
-// export const selectError = (state) => state.image.error;
+export const { logoutImage } = imageSlice.actions;
 
-// export default imageSlice.reducer;
+export default imageSlice.reducer;
