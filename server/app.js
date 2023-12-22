@@ -8,12 +8,6 @@ const app = express();
 // logging middleware
 app.use(morgan("dev"));
 
-// app.use(
-//   cors({
-//     credentials: true,
-//   })
-// );
-
 app.use(cors());
 
 // body parsing middleware
@@ -24,17 +18,8 @@ app.use(express.json());
 app.use("/api", require("./api"));
 app.use("/auth", require("./auth/authRouter"));
 
-// app.get("/", (req, res) =>
-//   res.sendFile(path.join(__dirname, "..", "public/index.html"))
-// );
-
 // static file-serving middleware
 app.use(express.static(path.join(__dirname, "..", "public")));
-
-// sends index.html
-// app.use("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "..", "public/index.html"));
-// });
 
 app.use("*", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "public/bundle.js"));

@@ -83,24 +83,6 @@ const syncAndSeed = async () => {
         listId: sf.id,
       }),
     ]);
-    // await Promise.all([
-    //   Follow.create({
-    //     userId: michele.id,
-    //     follower_id: jen.id,
-    //   }),
-    //   Follow.create({
-    //     userId: michele.id,
-    //     follower_id: kim.id,
-    //   }),
-    //   Follow.create({
-    //     userId: amanda.id,
-    //     follower_id: michele.id,
-    //   }),
-    //   Follow.create({
-    //     userId: jen.id,
-    //     follower_id: michele.id,
-    //   }),
-    // ]);
     await Promise.all([
       Friend.create({
         userId: michele.id,
@@ -125,4 +107,4 @@ const syncAndSeed = async () => {
   }
 };
 
-syncAndSeed();
+module.exports = syncAndSeed

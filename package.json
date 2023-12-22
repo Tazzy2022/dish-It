@@ -9,8 +9,7 @@
     "start": "node server/index.js --ignore public/ --ignore client/",
     "start:dev": "npm run build:dev & npm run start-server",
     "start:dev:logger": "LOGGING=true npm run start:dev",
-    "start-server": "nodemon server -e html,js,scss --ignore public --ignore client",
-    "seed-database": "DATABASE_URL=postgres://dish_user:GkS7Xi2ZHXnpY8Mkdo9dGvXIUcNeMULZ@dpg-cm0djli1hbls73d9h28g-a.oregon-postgres.render.com/dish node ./server/db/models/seed.js"
+    "start-server": "nodemon server -e html,js,scss --ignore public --ignore client"
   },
   "dependencies": {
     "@babel/core": "^7.18.13",
