@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 const { Buffer } = require("node:buffer");
-const { UUID, UUIDV4, STRING, BYTEA } = Sequelize;
+const { UUID, UUIDV4, STRING, BLOB } = Sequelize;
 const db = require("../db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -56,7 +56,7 @@ const User = db.define(
     //     "https://media01.stockfood.com/largepreviews/Mjk5MDcwMDI=/00964742-Amusing-face-made-from-vegetables-rosemary-and-mushroom.jpg",
     // },
     image: {
-      type: BYTEA
+      type: BLOB,
     },
   },
   {
