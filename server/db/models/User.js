@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 const { Buffer } = require("node:buffer");
-const { UUID, UUIDV4, STRING } = Sequelize;
+const { UUID, UUIDV4, STRING, BYTEA } = Sequelize;
 const db = require("../db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -50,10 +50,13 @@ const User = db.define(
         notEmpty: true,
       },
     },
+    // image: {
+    //   type: STRING,
+    //   default:
+    //     "https://media01.stockfood.com/largepreviews/Mjk5MDcwMDI=/00964742-Amusing-face-made-from-vegetables-rosemary-and-mushroom.jpg",
+    // },
     image: {
-      type: STRING,
-      default:
-        "https://media01.stockfood.com/largepreviews/Mjk5MDcwMDI=/00964742-Amusing-face-made-from-vegetables-rosemary-and-mushroom.jpg",
+      type: BYTEA
     },
   },
   {
