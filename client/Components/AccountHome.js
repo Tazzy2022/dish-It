@@ -22,15 +22,6 @@ const AccountHome = () => {
     );
   }, []);
 
-  // useEffect(() => {
-  //   dispatch(
-  //     getPhoto({
-  //       token: auth.token,
-  //       id: auth.user.id,
-  //     })
-  //   );
-  // }, []);
-
   useEffect(() => {
     dispatch(
       getPhoto({
@@ -38,7 +29,7 @@ const AccountHome = () => {
         id: auth.user.id,
       })
     );
-  }, [file]);
+  }, []);
 
   const handleChange = (e) => {
     setFile(e.target.files[0]);
@@ -59,9 +50,9 @@ const AccountHome = () => {
         }
       );
       dispatch(
-        getUser({
-          id: auth.user.id,
+        getPhoto({
           token: auth.token,
+          id: auth.user.id,
         })
       );
       if (res.ok) {
@@ -71,7 +62,7 @@ const AccountHome = () => {
       console.error("error uploading image: ", err);
     }
   };
-  //console.log("image.image.data", image.image.data);
+  
   return (
     <div className="account-home-container">
       <section className="user-account-home">
