@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-//import { Buffer } from "buffer";
 import { getPendingFriends } from "../features/FriendsSlice";
 import { getUser } from "../features/authSlice";
 import PendingCard from "./PendingCard";
@@ -14,14 +13,14 @@ const AccountHome = () => {
   const image = useSelector((state) => state.image);
   const [file, setFile] = useState("");
 
-  // useEffect(() => {
-  //   dispatch(
-  //     getPendingFriends({
-  //       id: auth.user.id,
-  //       token: auth.token,
-  //     })
-  //   );
-  // }, []);
+  useEffect(() => {
+    dispatch(
+      getPendingFriends({
+        id: auth.user.id,
+        token: auth.token,
+      })
+    );
+  }, []);
 
   // useEffect(() => {
   //   dispatch(
@@ -33,12 +32,6 @@ const AccountHome = () => {
   // }, []);
 
   useEffect(() => {
-    dispatch(
-      getPendingFriends({
-        id: auth.user.id,
-        token: auth.token,
-      })
-    );
     dispatch(
       getPhoto({
         token: auth.token,
@@ -71,11 +64,14 @@ const AccountHome = () => {
           token: auth.token,
         })
       );
+      if (res.ok) {
+        setFile("");
+      }
     } catch (err) {
       console.error("error uploading image: ", err);
     }
   };
-  console.log("image.image.data", image.image.data);
+  //console.log("image.image.data", image.image.data);
   return (
     <div className="account-home-container">
       <section className="user-account-home">
@@ -83,7 +79,7 @@ const AccountHome = () => {
         {image?.image?.data && (
           <img
             className="account-img"
-            src={image.image.data}
+            src={`data:image/jpeg;base64,${image.image.data}`}
             alt="profile image"
           />
         )}
@@ -108,3 +104,28 @@ const AccountHome = () => {
 };
 
 export default AccountHome;
+
+// const handleUpload = async (e) => {
+//   e.preventDefault();
+//   try {
+//     const formData = new FormData();
+//     formData.append("image", file);
+//     const res = await axios.post(
+//       `/api/users/avatar/${auth.user.id}`,
+//       formData,
+//       {
+//         headers: {
+//           authorization: auth.token,
+//         },
+//       }
+//     );
+//     dispatch(
+//       getUser({
+//         id: auth.user.id,
+//         token: auth.token,
+//       })
+//     );
+//   } catch (err) {
+//     console.error("error uploading image: ", err);
+//   }
+// };

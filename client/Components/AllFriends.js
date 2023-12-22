@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteFriend, getPendingFriends } from "../features/FriendsSlice";
-// import { Buffer } from "buffer";
 
 const AllFriends = (props) => {
   const dispatch = useDispatch();
