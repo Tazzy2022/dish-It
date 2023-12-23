@@ -533,7 +533,11 @@ a {
 }
 
 #img-upload {
-  margin: 10px 0px 10px 50px;
+  margin: 10px 0px 10px 40px;
+  border: 1px solid #e00707;
+  border-radius: 5px;
+  color: #e00707;
+  background-color: white;
 }
 
 .account-img {
@@ -601,7 +605,9 @@ a {
   display: block;
 }
 
-.nav-dropdown-container:hover .dropbtn {
+.nav-dropdown-container:hover .dropbtn,
+#img-upload-btn:hover,
+#img-upload:hover {
   background-color: #e00707;
   color: white;
 }

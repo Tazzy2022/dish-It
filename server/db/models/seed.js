@@ -1,4 +1,4 @@
-const { db, User, RestaurantNotes, List, Follow, Friend } = require("../index");
+const { db, User, RestaurantNotes, List, Friend } = require("../index");
 
 const syncAndSeed = async () => {
   try {
@@ -10,8 +10,6 @@ const syncAndSeed = async () => {
         password: "123",
         city: "San Mateo",
         state: "California",
-        // image:
-        //   "https://m.media-amazon.com/images/M/MV5BNWNmY2U1MjMtMDhhZS00MjcyLWJmYWUtMjI1MjZlNDBmYTVlXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_.jpg",
       }),
       User.create({
         username: "kim",
@@ -19,8 +17,6 @@ const syncAndSeed = async () => {
         password: "123",
         city: "Dublin",
         state: "California",
-        // image:
-        //   "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Kim_Kardashian_West_2014.jpg/1200px-Kim_Kardashian_West_2014.jpg",
       }),
       User.create({
         username: "jen",
@@ -28,8 +24,6 @@ const syncAndSeed = async () => {
         password: "123",
         city: "El Grenada",
         state: "California",
-        // image:
-        //   "https://media.vanityfair.com/photos/629e60058c7e24b0c393f562/master/pass/jennifer-lopez-mtv-movie-and-tv-awards-2022.jpg",
       }),
       User.create({
         username: "amanda",
@@ -107,4 +101,4 @@ const syncAndSeed = async () => {
   }
 };
 
-module.exports = { syncAndSeed };
+module.exports = syncAndSeed
