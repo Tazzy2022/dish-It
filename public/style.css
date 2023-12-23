@@ -264,7 +264,8 @@ a {
 }
 
 .edit-acc-btn,
-#img-upload-btn {
+#img-upload-btn,
+#img-upload button {
   border: 1px solid #e00707;
   border-radius: 5px;
   color: #e00707;
@@ -532,14 +533,6 @@ a {
   font-size: 2rem;
 }
 
-#img-upload {
-  margin: 10px 0px 10px 40px;
-  border: 1px solid #e00707;
-  border-radius: 5px;
-  color: #e00707;
-  background-color: white;
-}
-
 .account-img {
   width: 100px;
   height: 100px;
@@ -607,7 +600,7 @@ a {
 
 .nav-dropdown-container:hover .dropbtn,
 #img-upload-btn:hover,
-#img-upload:hover {
+#img-upload button:hover {
   background-color: #e00707;
   color: white;
 }
