@@ -107,4 +107,4 @@ const syncAndSeed = async () => {
   }
 };
 
-module.exports = syncAndSeed
+module.exports = { syncAndSeed };
