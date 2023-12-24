@@ -17,7 +17,6 @@ router.get("/city/:location", async (req, res, next) => {
       }
     );
     const data = restaurants.body;
-    // data["testMsg"] = "got here";
     res.send(data);
   } catch (err) {
     res.status(404).json({
@@ -101,14 +100,20 @@ router.get(
 );
 
 //GET https://api.yelp.com/v3/businesses/north-india-restaurant-san-francisco
-//GET /api/restaurants/:search  get specific restaurant by name
-router.get("/:search", async (req, res, next) => {
+//GET /api/restaurants/singleResto/:loc/:name  get specific restaurant by name
+router.get("/singleResto/:loc/:name", async (req, res, next) => {
   try {
-    const restaurant = await needle("get", `${BASE_URL}${req.params.search}`, {
-      headers: {
-        Authorization: `Bearer ${process.env.API_KEY}`,
-      },
-    });
+    console.log("req.params.loc", req.params.loc);
+    console.log("req.params.name", req.params.name);
+    const restaurant = await needle(
+      "get",
+      `${BASE_URL}search?location=${req.params.loc}&term=${req.params.name}`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.API_KEY}`,
+        },
+      }
+    );
     const data = restaurant.body;
     res.send(data);
   } catch (err) {

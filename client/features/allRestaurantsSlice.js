@@ -87,9 +87,9 @@ export const getSingleRestaurant = createAsyncThunk(
   "singleRestaurant/getSingleRestaurant",
   async ({ name, location, token }) => {
     try {
-      const nameLocation = name + "-" + location;
-      const search = nameLocation.split(" ").join("-");
-      const response = await axios.get(`/api/restaurants/${search}`, {
+      const loc = location.replaceAll(",", "");
+      console.log("loc", loc);
+      const response = await axios.get(`/api/restaurants/singleResto/${loc}/${name}`, {
         headers: {
           authorization: token,
         },
@@ -143,7 +143,7 @@ const allRestaurantsSlice = createSlice({
   },
 });
 
-export const { clearRestos } = allRestaurantsSlice.actions
+export const { clearRestos } = allRestaurantsSlice.actions;
 
 export const renderAllRestaurants = (state) => state.restaurants;
 
