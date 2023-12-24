@@ -58,7 +58,11 @@ const AllRestaurants = (props) => {
           <CategoriesCard category={props.restaurant.categories} />
           <p>price: {props.restaurant.price}</p>
           <div className="searchcard-link-addbttn">
-            <Link className="yelp-link" to={props.restaurant.url}>
+            <Link
+              className="yelp-link"
+              target="_blank"
+              to={props.restaurant.url}
+            >
               yelp link
             </Link>
             <p id="add-to-list-click" onClick={() => handleModalClick()}>

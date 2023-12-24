@@ -41,7 +41,9 @@ const AccountModal = (props) => {
 
   return (
     <div>
-      <button className="edit-acc-btn" onClick={() => setModalOpen(true)}>edit</button>
+      <button className="edit-acc-btn" onClick={() => setModalOpen(true)}>
+        edit
+      </button>
       {modalOpen && (
         <div className="modalBackground">
           <main className="update-acc-modal">

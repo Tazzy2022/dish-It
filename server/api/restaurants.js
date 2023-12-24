@@ -99,7 +99,6 @@ router.get(
   }
 );
 
-//GET https://api.yelp.com/v3/businesses/north-india-restaurant-san-francisco
 //GET /api/restaurants/singleResto/:loc/:name  get specific restaurant by name
 router.get("/singleResto/:loc/:name", async (req, res, next) => {
   try {
