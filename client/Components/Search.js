@@ -4,6 +4,7 @@ import {
   renderAllRestaurants,
   getSingleRestaurant,
   getAllRestaurants,
+  filterSearch,
 } from "../features/allRestaurantsSlice";
 import AllRestaurants from "./AllRestaurants";
 import FilterCategorySearch from "./FilterCategorySearch";
@@ -21,12 +22,29 @@ const Search = () => {
   });
   const [modalOpen, setModalOpen] = useState(false);
 
+  // useEffect(() => {
+  //   try {
+  //     dispatch(
+  //       getAllRestaurants({
+  //         token: auth.token,
+  //         location: searchInfo.location,
+  //       })
+  //     );
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }, []);
+
   useEffect(() => {
     try {
+      console.log("searchInfo", searchInfo);
       dispatch(
-        getAllRestaurants({
+        filterSearch({
           token: auth.token,
+          name: searchInfo.restaurant || "",
           location: searchInfo.location,
+          categories: searchInfo.categories || [],
+          price: searchInfo.price || [],
         })
       );
     } catch (error) {
@@ -109,7 +127,7 @@ const Search = () => {
       <section id="form-section">
         <form id="search-form" onSubmit={getSearch}>
           <div className="search-label-input">
-            <label>search by name (optional)</label>
+            <label>search by restaurant name (optional)</label>
             <input
               id="resto-input"
               placeholder="restaurant name"

@@ -2,16 +2,26 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getAllLists } from "../features/listSlice";
-// import { Buffer } from "buffer";
 import ListCard from "./ListCard";
 import NewListModal from "./NewListModal";
+import { getPhoto } from "../features/imageSlice";
 
 const UserHome = () => {
-  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+  const image = useSelector((state) => state.image);
 
   const [isLoading, setIsLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+
+  useEffect(() => {
+    dispatch(
+      getPhoto({
+        token: auth.token,
+        id: auth.user.id,
+      })
+    );
+  }, []);
 
   useEffect(() => {
     const getList = async () => {
@@ -41,6 +51,13 @@ const UserHome = () => {
   return (
     <div>
       <section className="home-header-container">
+        {image?.image?.data && (
+          <img
+            className="profile-img"
+            src={`data:image/jpeg;base64,${image.image.data}`}
+            alt="profile image"
+          />
+        )}
         {/* {auth.user.image === null ? (
           <img
             className="profile-img"
@@ -66,7 +83,9 @@ const UserHome = () => {
         {lists?.length === 0 ? (
           <div>
             <p>no saved lists yet...</p>
-            <Link className="search-link" to="/usersearch">start your search here</Link>
+            <Link className="search-link" to="/usersearch">
+              start your search here
+            </Link>
           </div>
         ) : (
           lists?.length > 0 &&

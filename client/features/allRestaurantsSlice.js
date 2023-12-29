@@ -1,16 +1,132 @@
 import axios from "axios";
-
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   restaurants: [],
 };
 
+const refactorCategories = (categories) => {
+  let newCategory = [];
+  categories.forEach((cat) => {
+    if (cat.includes("&")) {
+      newCategory.push(cat.replace(" & ", "_"));
+    } else if (cat.includes(" ")) {
+      newCategory.push(cat.replace(/\s/g, ""));
+    } else {
+      newCategory.push(cat);
+    }
+  });
+  return newCategory;
+};
+
+export const filterSearch = createAsyncThunk(
+  "allRestaurants/filterSearch",
+  async (searchObj) => {
+    try {
+      console.log("searchObj", searchObj);
+      if (searchObj.price.length === 0 && searchObj.categories.length === 0) {
+        const loc = searchObj.location.replaceAll(",", "");
+        const response = await axios.get(`/api/restaurants/city/${loc}`, {
+          headers: {
+            authorization: searchObj.token,
+          },
+        });
+        return response?.data;
+      } else if (
+        searchObj.price.length > 0 &&
+        searchObj.categories.length > 0
+      ) {
+        const loc = searchObj.location.replaceAll(",", "");
+        const cat = refactorCategories(searchObj.categories);
+        const allCategories = "&categories=" + cat.join("&categories=");
+        const pricing = "&price=" + searchObj.price.join("&price=");
+        const response = await axios.get(
+          `/api/restaurants/allFilters/${loc}/${allCategories}/${pricing}`,
+          {
+            headers: {
+              authorization: searchObj.token,
+            },
+          }
+        );
+        return response?.data;
+      } else if (
+        searchObj.price.length > 0 &&
+        searchObj.categories.length === 0
+      ) {
+        const loc = searchObj.location.replaceAll(",", "");
+        const pricing = "&price=" + searchObj.price.join("&price=");
+        const response = await axios.get(
+          `/api/restaurants/price/${pricing}/${loc}`,
+          {
+            headers: {
+              authorization: searchObj.token,
+            },
+          }
+        );
+        return response?.data;
+      } else if (
+        searchObj.price.length === 0 &&
+        searchObj.categories.length > 0
+      ) {
+        const loc = searchObj.location.replaceAll(",", "");
+        const cat = refactorCategories(searchObj.categories);
+        const category = "&term=" + cat.join(" ");
+        const response = await axios.get(
+          `/api/restaurants/catPrice/${category}/${loc}`,
+          {
+            headers: {
+              authorization: searchObj.token,
+            },
+          }
+        );
+        console.log("response?.data", response?.data);
+        return response?.data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+//   if (searchInfo.price.length === 0 && searchInfo.categories.length === 0) {
+//     getAllRestaurants({
+//       token: auth.token,
+//       location: searchInfo.location,
+//     });
+//   } else if (searchInfo.price.length > 0 && searchInfo.categories.length > 0) {
+//     getRestLocationPriceCat({
+//       token: auth.token,
+//       location: searchInfo.location,
+//       categories: category,
+//       price: pricing,
+//     });
+//   } else if (
+//     searchInfo.price.length > 0 &&
+//     searchInfo.categories.length === 0
+//   ) {
+//     getRestaurantsLocationPrice({
+//       token: auth.token,
+//       location: searchInfo.location,
+//       price: pricing,
+//     });
+//   } else if (
+//     searchInfo.price.length === 0 &&
+//     searchInfo.categories.length > 0
+//   ) {
+//     getRestaurantLocationCat({
+//       token: auth.token,
+//       location: searchInfo.location,
+//       categories: category,
+//     });
+//   }
+// };
+
 export const getAllRestaurants = createAsyncThunk(
   "allRestaurants/getAllRestaurants",
   async ({ token, location }) => {
     try {
-      const response = await axios.get(`/api/restaurants/city/${location}`, {
+      const loc = location.replaceAll(",", "");
+      const response = await axios.get(`/api/restaurants/city/${loc}`, {
         headers: {
           authorization: token,
         },
@@ -26,9 +142,10 @@ export const getRestaurantsLocationPrice = createAsyncThunk(
   "allRestaurants/getRestaurantsLocationPrice",
   async ({ token, location, price }) => {
     try {
+      const loc = location.replaceAll(",", "");
       const pricing = "&price=" + price.join("&price=");
       const response = await axios.get(
-        `/api/restaurants/price/${pricing}/${location}`,
+        `/api/restaurants/price/${pricing}/${loc}`,
         {
           headers: {
             authorization: token,
@@ -45,10 +162,12 @@ export const getRestaurantsLocationPrice = createAsyncThunk(
 export const getRestaurantLocationCat = createAsyncThunk(
   "allRestaurants/getRestaurantLocationCat",
   async ({ token, location, categories }) => {
-    const category = "&categories=" + categories.join("&categories=");
     try {
+      const loc = location.replaceAll(",", "");
+      const cat = refactorCategories(categories);
+      const category = "&term=" + cat.join(" ");
       const response = await axios.get(
-        `/api/restaurants/catPrice/${category}/${location}`,
+        `/api/restaurants/catPrice/${category}/${loc}`,
         {
           headers: {
             authorization: token,
@@ -66,10 +185,12 @@ export const getRestLocationPriceCat = createAsyncThunk(
   "allRestaurants/getRestLocationPriceCat",
   async ({ token, location, price, categories }) => {
     try {
+      const loc = location.replaceAll(",", "");
+      const cat = refactorCategories(categories);
+      const allCategories = "&categories=" + cat.join("&categories=");
       const pricing = "&price=" + price.join("&price=");
-      const allCategories = "&categories=" + categories.join("&categories=");
       const response = await axios.get(
-        `/api/restaurants/allFilters/${location}/${allCategories}/${pricing}`,
+        `/api/restaurants/allFilters/${loc}/${allCategories}/${pricing}`,
         {
           headers: {
             authorization: token,
@@ -88,12 +209,14 @@ export const getSingleRestaurant = createAsyncThunk(
   async ({ name, location, token }) => {
     try {
       const loc = location.replaceAll(",", "");
-      console.log("loc", loc);
-      const response = await axios.get(`/api/restaurants/singleResto/${loc}/${name}`, {
-        headers: {
-          authorization: token,
-        },
-      });
+      const response = await axios.get(
+        `/api/restaurants/singleResto/${loc}/${name}`,
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
       return response?.data;
     } catch (error) {
       return error.message;
@@ -138,6 +261,9 @@ const allRestaurantsSlice = createSlice({
       state.error = action.error.message;
     });
     builder.addCase(getRestaurantLocationCat.fulfilled, (state, action) => {
+      return action.payload;
+    });
+    builder.addCase(filterSearch.fulfilled, (state, action) => {
       return action.payload;
     });
   },

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { getPendingFriends } from "../features/FriendsSlice";
-import { getUser } from "../features/authSlice";
 import PendingCard from "./PendingCard";
 import { getPhoto } from "../features/imageSlice";
 
@@ -62,7 +61,7 @@ const AccountHome = () => {
       console.error("error uploading image: ", err);
     }
   };
-  
+
   return (
     <div className="account-home-container">
       <section className="user-account-home">

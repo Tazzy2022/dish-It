@@ -101,31 +101,16 @@ const FilterCategorySearch = ({ openModal }) => {
     }
   };
 
-  const refactorCategories = (categories) => {
-    let newCategory = [];
-    categories.forEach((cat) => {
-      if (cat.includes("&")) {
-        newCategory.push(cat.replace(" & ", "_"));
-      } else if (cat.includes(" ")) {
-        newCategory.push(cat.replace(/\s/g, ""));
-      } else {
-        newCategory.push(cat);
-      }
-    });
-    return newCategory;
-  };
-
   const getCategorySearch = async (e) => {
     e.preventDefault();
     openModal(false);
-    let updatedCat = refactorCategories(category);
     try {
       if (pricing.length === 0) {
         await dispatch(
           getRestaurantLocationCat({
             token: auth.token,
             location: searchInfo.location,
-            categories: updatedCat,
+            categories: category,
           })
         );
       } else {
@@ -133,13 +118,14 @@ const FilterCategorySearch = ({ openModal }) => {
           getRestLocationPriceCat({
             token: auth.token,
             location: searchInfo.location,
-            categories: updatedCat,
+            categories: category,
             price: pricing,
           })
         );
       }
       dispatch(setCategories(category));
       dispatch(setPrice(pricing));
+      //dispatch(filterSearch())
     } catch (error) {
       console.log(error);
     }
