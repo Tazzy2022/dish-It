@@ -17,31 +17,17 @@ const Search = () => {
   const restaurants = useSelector(renderAllRestaurants);
 
   const [search, setSearch] = useState({
-    restaurant: "",
+    restaurant: searchInfo.restaurant || "",
     location: searchInfo.location,
   });
   const [modalOpen, setModalOpen] = useState(false);
 
-  // useEffect(() => {
-  //   try {
-  //     dispatch(
-  //       getAllRestaurants({
-  //         token: auth.token,
-  //         location: searchInfo.location,
-  //       })
-  //     );
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }, []);
-
   useEffect(() => {
     try {
-      console.log("searchInfo", searchInfo);
       dispatch(
         filterSearch({
           token: auth.token,
-          name: searchInfo.restaurant || "",
+          restaurant: searchInfo.restaurant || "",
           location: searchInfo.location,
           categories: searchInfo.categories || [],
           price: searchInfo.price || [],

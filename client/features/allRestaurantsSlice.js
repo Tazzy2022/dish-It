@@ -24,7 +24,21 @@ export const filterSearch = createAsyncThunk(
   async (searchObj) => {
     try {
       console.log("searchObj", searchObj);
-      if (searchObj.price.length === 0 && searchObj.categories.length === 0) {
+      if (searchObj.restaurant.length > 0) {
+        const loc = searchObj.location.replaceAll(",", "");
+        const response = await axios.get(
+          `/api/restaurants/singleResto/${loc}/${searchObj.restaurant}`,
+          {
+            headers: {
+              authorization: searchObj.token,
+            },
+          }
+        );
+        return response?.data;
+      } else if (
+        searchObj.price.length === 0 &&
+        searchObj.categories.length === 0
+      ) {
         const loc = searchObj.location.replaceAll(",", "");
         const response = await axios.get(`/api/restaurants/city/${loc}`, {
           headers: {
@@ -87,39 +101,6 @@ export const filterSearch = createAsyncThunk(
     }
   }
 );
-
-//   if (searchInfo.price.length === 0 && searchInfo.categories.length === 0) {
-//     getAllRestaurants({
-//       token: auth.token,
-//       location: searchInfo.location,
-//     });
-//   } else if (searchInfo.price.length > 0 && searchInfo.categories.length > 0) {
-//     getRestLocationPriceCat({
-//       token: auth.token,
-//       location: searchInfo.location,
-//       categories: category,
-//       price: pricing,
-//     });
-//   } else if (
-//     searchInfo.price.length > 0 &&
-//     searchInfo.categories.length === 0
-//   ) {
-//     getRestaurantsLocationPrice({
-//       token: auth.token,
-//       location: searchInfo.location,
-//       price: pricing,
-//     });
-//   } else if (
-//     searchInfo.price.length === 0 &&
-//     searchInfo.categories.length > 0
-//   ) {
-//     getRestaurantLocationCat({
-//       token: auth.token,
-//       location: searchInfo.location,
-//       categories: category,
-//     });
-//   }
-// };
 
 export const getAllRestaurants = createAsyncThunk(
   "allRestaurants/getAllRestaurants",
