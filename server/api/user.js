@@ -19,7 +19,7 @@ router.get("/:id/friends", async (req, res, next) => {
       where: {
         id: allFriends,
       },
-      attributes: ["username", "city", "state", "email", "image"],
+      attributes: ["username", "city", "state", "email"],
     });
     res.send(result);
   } catch (err) {
@@ -36,7 +36,7 @@ router.get("/friend/:email", async (req, res, next) => {
   try {
     const newFollow = await User.findOne({
       where: { email: req.params.email },
-      attributes: ["username", "city", "state", "email", "image"],
+      attributes: ["username", "city", "state", "email"],
     });
     res.send(newFollow);
   } catch (err) {
@@ -81,8 +81,7 @@ router.get("/:id/pendingfollowers", async (req, res, next) => {
       where: {
         id: allpending,
       },
-      attributes: ["username", "city", "state", "email", "image"],
-      //  include: [{ model: Image }],
+      attributes: ["username", "city", "state", "email"],
     });
     res.send(result);
   } catch (err) {
@@ -94,14 +93,14 @@ router.get("/:id/pendingfollowers", async (req, res, next) => {
   }
 });
 
-//PUT  "/api/user/:id/addfriend   accept friend request from other user
-router.put("/:id/addfriend", async (req, res, next) => {
+//PUT  "/api/user/addfriend/:friendEmail   accept friend request from other user
+router.put("/addfriend/:friendEmail", async (req, res, next) => {
   try {
-    const friendEmail = Object.keys(req.body).toString();
+    const friendEmail = Object.keys(req.params.friendEmail).toString();
     //adds them to the accepted user's friends list
     const friendId = await User.findOne({ where: { email: friendEmail } });
     const pendingFriend = await Friend.findOne({
-      where: { userId: req.params.id, friendId: friendId.id, pending: true },
+      where: { userId: req.body.id, friendId: friendId.id, pending: true },
     });
     await pendingFriend.update({ pending: false });
     //adds accepted user to the friend's list (that sent request)
@@ -120,14 +119,14 @@ router.put("/:id/addfriend", async (req, res, next) => {
   }
 });
 
-//PUT (delete)  "/api/user/:id/deleteFriend   delete friend request from other user OR confirmed friend
+//PUT (delete)  "/api/user/:friendEmail/deleteFriend   delete friend request from other user OR confirmed friend
 //on one user only - other user will not know and will still show them in friends list
-router.put("/:id/deleteFriend", async (req, res, next) => {
+router.put("/deleteFriend/:friendEmail", async (req, res, next) => {
   try {
-    const friendEmail = Object.keys(req.body).toString();
+    const friendEmail = Object.keys(req.params.friendEmail).toString();
     const friendId = await User.findOne({ where: { email: friendEmail } });
     const friend = await Friend.findOne({
-      where: { userId: req.params.id, friendId: friendId.id },
+      where: { userId: req.body.id, friendId: friendId.id },
     });
     await friend.destroy();
     res.status(201).json({ message: "friend was removed from your list" });
@@ -148,7 +147,7 @@ router.get("/:id/lists", async (req, res, next) => {
       include: [
         {
           model: User,
-          attributes: ["username", "image"],
+          attributes: ["username"],
         },
       ],
     });
@@ -162,8 +161,8 @@ router.get("/:id/lists", async (req, res, next) => {
   }
 });
 
-//GET "/api/user/friend/:friendEmail/lists
-router.get("/friend/:friendEmail/lists", async (req, res, next) => {
+//GET "/api/user/friend/lists/:friendEmail
+router.get("/friend/lists/:friendEmail", async (req, res, next) => {
   try {
     const friend = await User.findOne({
       where: { email: req.params.friendEmail },
@@ -216,7 +215,7 @@ const getImage = async (listName) => {
       `https://api.unsplash.com/search/photos?per=1&per_page=1&orientation=landscape&query=${listName}&client_id=${process.env.UNSPLASH_KEY}`
     );
     //download but not working, this is a hotlink
-    console.log("image", image)
+    console.log("image", image);
     return image.body.results[0].urls.small;
   } catch (error) {
     console.log(error);
@@ -249,7 +248,7 @@ router.put("/:id/:listName", async (req, res, next) => {
       where: { userId: req.params.id, listName: req.params.listName },
       defaults: { restaurantIdArray: [] },
     });
-    console.log("list", list)
+    console.log("list", list);
     if (list.restaurantIdArray.includes(restaurantId)) {
       res.status(409).json({
         message: "that restaurant is already on that list",

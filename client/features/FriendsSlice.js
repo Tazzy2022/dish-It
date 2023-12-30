@@ -12,8 +12,8 @@ const initialState = {
   error: "",
 };
 
-export const getFriendsList = createAsyncThunk(
-  "friends/getFriendsList",
+export const getAllFriends = createAsyncThunk(
+  "friends/getAllFriends",
   async ({ token, id }) => {
     try {
       const response = await axios.get(`/api/user/${id}/friends`, {
@@ -86,8 +86,8 @@ export const acceptFriendRequest = createAsyncThunk(
   async ({ token, id, friendEmail }) => {
     try {
       const response = await axios.put(
-        `/api/user/${id}/addfriend`,
-        friendEmail,
+        `/api/user/addfriend/${friendEmail}`,
+        id,
         {
           headers: {
             authorization: token,
@@ -106,8 +106,8 @@ export const deleteFriend = createAsyncThunk(
   async ({ token, id, friendEmail }) => {
     try {
       const response = await axios.put(
-        `/api/user/${id}/deleteFriend`,
-        friendEmail,
+        `/api/user/deleteFriend/${friendEmail}`,
+        id,
         {
           headers: {
             authorization: token,
@@ -126,7 +126,7 @@ export const getSingleFriendsLists = createAsyncThunk(
   async ({ token, friendEmail }) => {
     try {
       const response = await axios.get(
-        `/api/user/friend/${friendEmail}/lists`,
+        `/api/user/friend/lists/${friendEmail}`,
         {
           headers: {
             authorization: token,
@@ -146,13 +146,13 @@ const FriendsSlice = createSlice({
   reducers: {
     logoutFriends: (state) => {
       return initialState;
-    }
+    },
   },
   extraReducers: (builder) => {
-    builder.addCase(getFriendsList.fulfilled, (state, action) => {
+    builder.addCase(getAllFriends.fulfilled, (state, action) => {
       state.friends = action.payload;
     });
-    builder.addCase(getFriendsList.rejected, (state, action) => {
+    builder.addCase(getAllFriends.rejected, (state, action) => {
       state.error = action.error.message;
     });
     builder.addCase(findFriend.fulfilled, (state, action) => {

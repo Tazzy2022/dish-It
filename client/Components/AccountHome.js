@@ -81,15 +81,6 @@ const AccountHome = () => {
             alt="profile image"
           />
         )}
-
-        {/*
-        {image?.image?.data && (
-          <img
-            className="account-img"
-            src={`data:image/jpeg;base64,${image.image.data}`}
-            alt="profile image"
-          />
-        )} */}
         <form onSubmit={handleUpload} encType="multipart/form-data">
           <input id="img-upload" type="file" onChange={handleChange} />
           {file && (
@@ -112,27 +103,3 @@ const AccountHome = () => {
 
 export default AccountHome;
 
-// const handleUpload = async (e) => {
-//   e.preventDefault();
-//   try {
-//     const formData = new FormData();
-//     formData.append("image", file);
-//     const res = await axios.post(
-//       `/api/users/avatar/${auth.user.id}`,
-//       formData,
-//       {
-//         headers: {
-//           authorization: auth.token,
-//         },
-//       }
-//     );
-//     dispatch(
-//       getUser({
-//         id: auth.user.id,
-//         token: auth.token,
-//       })
-//     );
-//   } catch (err) {
-//     console.error("error uploading image: ", err);
-//   }
-// };

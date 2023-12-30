@@ -52,10 +52,12 @@ const FriendHome = () => {
   if (isLoading) {
     return <div className="loading-p">Loading...</div>;
   }
+  console.log("friends.friend", friends.friend);
 
+  console.log("image", image);
   return (
     <div>
-      {friends.friends.length > 0 && (
+      {friends?.friend && (
         <section className="home-header-container">
           {!image?.image?.data ? (
             <img
@@ -71,7 +73,7 @@ const FriendHome = () => {
             />
           )}
           <p className="profile-name">
-            {friends.friends[0].username}'s lists...
+            {friends.friend.username}'s lists...
           </p>
         </section>
       )}

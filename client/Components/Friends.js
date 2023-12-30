@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AllFriends from "./AllFriends";
-import { getFriendsList, findFriend } from "../features/FriendsSlice";
+import { getAllFriends, findFriend } from "../features/FriendsSlice";
 import FriendModal from "./FriendModal";
 import ContentModal from "./ContentModal";
 
@@ -19,7 +19,7 @@ const Friends = () => {
 
   useEffect(() => {
     dispatch(
-      getFriendsList({
+      getAllFriends({
         id: auth.user.id,
         token: auth.token,
       })
