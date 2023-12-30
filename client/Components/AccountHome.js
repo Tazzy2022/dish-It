@@ -48,20 +48,21 @@ const AccountHome = () => {
           },
         }
       );
-      dispatch(
-        getPhoto({
-          token: auth.token,
-          id: auth.user.email,
-        })
-      );
-      if (res.ok) {
+      console.log("res.status", res.status);
+      if (res.status === 200) {
+        dispatch(
+          getPhoto({
+            token: auth.token,
+            email: auth.user.email,
+          })
+        )
         setFile("");
       }
     } catch (err) {
       console.error("error uploading image: ", err);
     }
   };
-  
+
   return (
     <div className="account-home-container">
       <section className="user-account-home">

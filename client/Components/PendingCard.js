@@ -42,7 +42,7 @@ const PendingCard = (props) => {
       })
     );
   };
-  console.log("props.friend.image", props.friend.image);
+  
   return (
     <div className="pending-friend-contnr">
       <section className="pending-card">

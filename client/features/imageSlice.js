@@ -9,6 +9,7 @@ const initialState = {
 export const getPhoto = createAsyncThunk(
   "auth/getPhoto",
   async ({ token, email }) => {
+    console.log("email", email)
     try {
       const response = await axios.get(`/api/users/image/${email}`, {
         headers: {
