@@ -1,16 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-// import { Buffer } from "buffer";
 import { findFriend, getSingleFriendsLists } from "../features/FriendsSlice";
 import FriendListCard from "./FriendListCard";
+import { getPhoto } from "../features/imageSlice";
 
 const FriendHome = () => {
-  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const friendEmail = useParams();
+  const auth = useSelector((state) => state.auth);
+  const image = useSelector((state) => state.image);
 
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    dispatch(
+      getPhoto({
+        token: auth.token,
+        email: friendEmail.email,
+      })
+    );
+  }, []);
 
   useEffect(() => {
     dispatch(
@@ -47,38 +57,35 @@ const FriendHome = () => {
     <div>
       {friends.friends.length > 0 && (
         <section className="home-header-container">
-
-{/* {friends.friends[0].image === null ? (
-          <img
-            className="profile-img"
-            src="/avatar-placeholder.jpeg"
-            alt="profile image"
-          />
-        ) : (
-          <img
-            className="profile-img"
-            src={`data:image/jpeg;base64,${Buffer.from(
-              friends.friends[0].image
-            ).toString("base64")}`}
-            alt="profile image"
-          />
-        )} */}
+          {!image?.image?.data ? (
+            <img
+              className="profile-img"
+              src="/avatar-placeholder.jpeg"
+              alt="profile image"
+            />
+          ) : (
+            <img
+              className="profile-img"
+              src={`data:image/jpeg;base64,${image.image.data}`}
+              alt="profile image"
+            />
+          )}
           <p className="profile-name">
             {friends.friends[0].username}'s lists...
           </p>
         </section>
       )}
       <main className="user-home-list">
-      {friends.friendsLists?.length === 0 ? (
-        <div>
-          <p>no saved lists yet...</p>
-        </div>
-      ) : (
-        friends.friendsLists?.length > 0 &&
-        friends.friendsLists?.map((list) => {
-          return <FriendListCard key={list.id} list={list} />;
-        })
-      )}
+        {friends.friendsLists?.length === 0 ? (
+          <div>
+            <p>no saved lists yet...</p>
+          </div>
+        ) : (
+          friends.friendsLists?.length > 0 &&
+          friends.friendsLists?.map((list) => {
+            return <FriendListCard key={list.id} list={list} />;
+          })
+        )}
       </main>
     </div>
   );

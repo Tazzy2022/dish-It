@@ -8,9 +8,9 @@ const initialState = {
 
 export const getPhoto = createAsyncThunk(
   "auth/getPhoto",
-  async ({ token, id }) => {
+  async ({ token, email }) => {
     try {
-      const response = await axios.get(`/api/users/image/${id}`, {
+      const response = await axios.get(`/api/users/image/${email}`, {
         headers: {
           authorization: token,
         },

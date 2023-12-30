@@ -6,7 +6,6 @@ import FriendsRestaurantCard from "./FriendsRestaurantCard";
 
 const FriendSingleList = () => {
   const list = useSelector(renderSingleList);
-  // const lists = useSelector((state) => state.lists);
   const auth = useSelector((state) => state.auth);
   const { id } = useParams();
 

@@ -19,10 +19,14 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-//GET "/api/users/image/:id" get single user
-router.get("/image/:id", async (req, res) => {
+//GET "/api/users/image/:email" get single user
+router.get("/image/:email", async (req, res) => {
   try {
-    const user = await User.findByPk(req.params.id);
+    const user = await User.findOne({
+      where: {
+        email: req.params.email,
+      },
+    });
     if (Buffer.isBuffer(user.dataValues.image)) {
       const image = user.dataValues.image.toString("base64");
       res.send(image);
@@ -40,7 +44,9 @@ router.get("/image/:id", async (req, res) => {
 //PUT "/api/users/id"  update user account info
 router.put("/:id", async (req, res, next) => {
   try {
-    const user = await User.findByPk(req.params.id);
+    const user = await User.findByPk(req.params.id, {
+      attributes: ["email", "password", "username", "city", "state"],
+    });
     res.send(await user.update(req.body));
   } catch (ex) {
     res.status(500).json({

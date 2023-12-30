@@ -21,8 +21,10 @@ const Search = () => {
     location: searchInfo.location,
   });
   const [modalOpen, setModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     try {
       dispatch(
         filterSearch({
@@ -35,8 +37,14 @@ const Search = () => {
       );
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   }, []);
+
+  if (isLoading) {
+    return <div className="loading-p">Loading...</div>;
+  }
 
   const getSearch = async (event) => {
     event.preventDefault();

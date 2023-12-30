@@ -2,10 +2,21 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteFriend, getPendingFriends } from "../features/FriendsSlice";
+import { getPhoto } from "../features/imageSlice";
 
 const AllFriends = (props) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
+  const image = useSelector((state) => state.image);
+
+  // useEffect(() => {
+  //   dispatch(
+  //     getPhoto({
+  //       token: auth.token,
+  //       email: props.friend.email,
+  //     })
+  //   );
+  // }, []);
 
   const deleteAFriend = async () => {
     await dispatch(
@@ -26,20 +37,18 @@ const AllFriends = (props) => {
     <div className="friend-card">
       <button onClick={deleteAFriend}>delete</button>
       {/* {props.friend.image === null ? (
-          <img
-            className="friend-img"
-            src="/avatar-placeholder.jpeg"
-            alt="friend's image"
-          />
-        ) : (
-      <img
-        className="friend-img"
-        src={`data:image/jpeg;base64,${Buffer.from(
-          props.friend.image.data
-        ).toString("base64")}`}
-        alt="friend's image"
-      />
-        )} */}
+        <img
+          className="friend-img"
+          src="/avatar-placeholder.jpeg"
+          alt="friend's image"
+        />
+      ) : (
+        <img
+          className="profile-img"
+          src={`data:image/jpeg;base64,${image.image.data}`}
+          alt="profile image"
+        />
+      )} */}
       <Link className="friend-link" to={`/friendHome/${props.friend.email}`}>
         <p>{props.friend.username}</p>
         <p>

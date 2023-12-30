@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sendFriendRequest } from "../features/FriendsSlice";
 import ContentModal from "./ContentModal";
-// import { Buffer } from "buffer";
+import { getPhoto } from "../features/imageSlice";
 
 const FriendModal = (props) => {
   const dispatch = useDispatch();

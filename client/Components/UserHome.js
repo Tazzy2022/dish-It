@@ -18,7 +18,7 @@ const UserHome = () => {
     dispatch(
       getPhoto({
         token: auth.token,
-        id: auth.user.id,
+        email: auth.user.email,
       })
     );
   }, []);
@@ -51,25 +51,25 @@ const UserHome = () => {
   return (
     <div>
       <section className="home-header-container">
-        {image?.image?.data && (
+        {!image?.image?.data ? (
+          <img
+            className="profile-img"
+            src="/avatar-placeholder.jpeg"
+            alt="friend's image"
+          />
+        ) : (
           <img
             className="profile-img"
             src={`data:image/jpeg;base64,${image.image.data}`}
             alt="profile image"
           />
         )}
-        {/* {auth.user.image === null ? (
+
+        {/*
+        {image?.image?.data && (
           <img
             className="profile-img"
-            src="/avatar-placeholder.jpeg"
-            alt="profile image"
-          />
-        ) : (
-          <img
-            className="profile-img"
-            src={`data:image/jpeg;base64,${Buffer.from(
-              auth.user.image.data
-            ).toString("base64")}`}
+            src={`data:image/jpeg;base64,${image.image.data}`}
             alt="profile image"
           />
         )} */}

@@ -4,7 +4,6 @@ import AllFriends from "./AllFriends";
 import { getFriendsList, findFriend } from "../features/FriendsSlice";
 import FriendModal from "./FriendModal";
 import ContentModal from "./ContentModal";
-//import { getPhoto } from "../features/imageSlice";
 
 const Friends = () => {
   const dispatch = useDispatch();
@@ -15,7 +14,6 @@ const Friends = () => {
   const [popUpSeen, setPopUpSeen] = useState(false);
   const [error, setErrorModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  //const [image, setImage] = useState("");
 
   let tempEmail;
 
@@ -27,16 +25,6 @@ const Friends = () => {
       })
     );
   }, []);
-
-  // useEffect(() => {
-  //   const friendImage = dispatch(
-  //     getPhoto({
-  //       token: auth.token,
-  //       id: auth.user.id,
-  //     })
-  //   );
-  //   setImage(friendImage)
-  // }, []);
 
   const handleChange = (e) => {
     setEmail(e.target.value);
