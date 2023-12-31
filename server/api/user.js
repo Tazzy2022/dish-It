@@ -19,9 +19,11 @@ router.get("/:id/friends", async (req, res, next) => {
       where: {
         id: allFriends,
       },
-      attributes: ["username", "city", "state", "email"],
+      attributes: ["username", "city", "state", "email", "image"],
     });
-    res.send(result);
+    //console.log("result", result);
+    const updatedFriends = updateImages(result);
+    res.send(updatedFriends);
   } catch (err) {
     res.status(404).json({
       message: "looks like you haven't added any friends yet",
@@ -31,12 +33,61 @@ router.get("/:id/friends", async (req, res, next) => {
   }
 });
 
+//function to update buffer to base64?
+//loop through object and replace images with base64?
+const updateImages = (userArray) => {
+  for (key of userArray) {
+    //console.log("key.dataValues.image", key.dataValues.image);
+    //console.log("key.dataValues", key.dataValues);
+    if (Buffer.isBuffer(key.dataValues.image)) {
+      //console.log("key.dataValues.image in the if", key.dataValues.image);
+      key.dataValues.image = key.dataValues.image.toString("base64");
+    }
+  }
+  // console.log("userArray", userArray);
+  return userArray;
+};
+
+//GET "/api/user/friendImages/:friendEmail  get all friends images
+//receive array of friends emails
+//grab all their images
+//map through each one tochange them to a string
+// router.put("/friendImages", async (req, res, next) => {
+//   try {
+//     let imagesArr = [];
+//     console.log("req.body", req.body);
+//     await req.body
+//       .forEach((e) => {
+//         let image = User.findAll({
+//           where: {
+//             email: e,
+//           },
+//           attributes: ["image"],
+//         });
+//         console.log("image", image);
+//         imagesArr.push(image);
+//       })
+//       .then((result) => {
+//         console.log("result", result);
+//         console.log("imagesArr", imagesArr);
+//       });
+
+//     //res.send(images);
+//   } catch (err) {
+//     res.status(404).json({
+//       message: "looks like you haven't added any friends yet",
+//       error: err.message,
+//     });
+//     next(err);
+//   }
+// });
+
 //GET "/api/user/friend/:email  find a friend to request to follow
 router.get("/friend/:email", async (req, res, next) => {
   try {
     const newFollow = await User.findOne({
       where: { email: req.params.email },
-      attributes: ["username", "city", "state", "email"],
+      attributes: ["username", "city", "state", "email", "image"],
     });
     res.send(newFollow);
   } catch (err) {
@@ -81,7 +132,7 @@ router.get("/:id/pendingfollowers", async (req, res, next) => {
       where: {
         id: allpending,
       },
-      attributes: ["username", "city", "state", "email"],
+      attributes: ["username", "city", "state", "email", "image"],
     });
     res.send(result);
   } catch (err) {

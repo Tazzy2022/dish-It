@@ -3,15 +3,34 @@ import axios from "axios";
 
 const initialState = {
   image: "",
+  friendImages: [],
   error: "",
 };
 
 //consider sending the dummy image here
 export const getPhoto = createAsyncThunk(
-  "auth/getPhoto",
+  "image/getPhoto",
   async ({ token, email }) => {
     try {
       const response = await axios.get(`/api/users/image/${email}`, {
+        headers: {
+          authorization: token,
+        },
+      });
+      console.log("response", response);
+      return response;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
+export const getFriendsPhotos = createAsyncThunk(
+  "image/getFriendsPhotos",
+  async ({ token, friendEmail }) => {
+    console.log("friendEmail in axios call", friendEmail);
+    try {
+      const response = await axios.put(`/api/user/friendImages`, friendEmail, {
         headers: {
           authorization: token,
         },
@@ -37,6 +56,12 @@ const imageSlice = createSlice({
       state.image = action.payload;
     });
     builder.addCase(getPhoto.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(getFriendsPhotos.fulfilled, (state, action) => {
+      state.friendImages = action.payload;
+    });
+    builder.addCase(getFriendsPhotos.rejected, (state, action) => {
       state.error = action.error.message;
     });
   },

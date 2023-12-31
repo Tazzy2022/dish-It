@@ -7,7 +7,6 @@ const initialState = {
   friend: {},
   friendRequests: [],
   friendsLists: [],
-  friendImages: [],
   message: "",
   error: "",
 };

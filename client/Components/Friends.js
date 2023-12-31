@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AllFriends from "./AllFriends";
 import { getAllFriends, findFriend } from "../features/FriendsSlice";
+import { getFriendsPhotos } from "../features/imageSlice";
 import FriendModal from "./FriendModal";
 import ContentModal from "./ContentModal";
 
@@ -9,12 +10,12 @@ const Friends = () => {
   const dispatch = useDispatch();
   const friends = useSelector((state) => state.friends);
   const auth = useSelector((state) => state.auth);
+  const image = useSelector((state) => state.image);
 
   const [email, setEmail] = useState("");
   const [popUpSeen, setPopUpSeen] = useState(false);
   const [error, setErrorModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
   let tempEmail;
 
   useEffect(() => {
@@ -25,6 +26,39 @@ const Friends = () => {
       })
     );
   }, []);
+
+  // const fetchFriends = () => {
+  //   let friendEmailArr = [];
+  //   dispatch(
+  //     getAllFriends({
+  //       id: auth.user.id,
+  //       token: auth.token,
+  //     })
+  //   )
+  //     .then((result) => {
+  //       console.log("result", result);
+  //       result.payload.map((f) => {
+  //         console.log("f.email", f.email);
+  //         friendEmailArr.push(f.email);
+  //       });
+  //     })
+  //     .then(() => {
+  //       console.log("friendEmailArr before get pics", friendEmailArr);
+  //       getAllPics(friendEmailArr);
+  //     });
+  // };
+
+  // const getAllPics = async (emailArr) => {
+  //   console.log("emailArr in get pics", emailArr);
+  //   await dispatch(
+  //     getFriendsPhotos({
+  //       token: auth.token,
+  //       friendEmail: emailArr,
+  //     })
+  //   );
+  // };
+
+  console.log("friends.friends", friends.friends);
 
   const handleChange = (e) => {
     setEmail(e.target.value);
@@ -49,6 +83,7 @@ const Friends = () => {
     e.target.reset();
   };
 
+  //add logic to get singleFriendImage and add call in friendslice
   const getFriend = async () => {
     try {
       const invite = await dispatch(

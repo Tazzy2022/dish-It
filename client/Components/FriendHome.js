@@ -52,9 +52,7 @@ const FriendHome = () => {
   if (isLoading) {
     return <div className="loading-p">Loading...</div>;
   }
-  console.log("friends.friend", friends.friend);
-
-  console.log("image", image);
+  
   return (
     <div>
       {friends?.friend && (

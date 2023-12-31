@@ -31,7 +31,7 @@ router.get("/image/:email", async (req, res) => {
       const image = user.dataValues.image.toString("base64");
       res.send(image);
     } else {
-      res.send(user.dataValues.image);
+    res.send(user.dataValues.image);
     }
   } catch (err) {
     res.status(500).json({
