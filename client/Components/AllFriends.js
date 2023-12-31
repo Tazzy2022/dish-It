@@ -1,22 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteFriend, getPendingFriends } from "../features/FriendsSlice";
-import { getPhoto } from "../features/imageSlice";
+import { deleteFriend, getAllFriends } from "../features/FriendsSlice";
 
 const AllFriends = (props) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  const image = useSelector((state) => state.image);
-
-  // useEffect(() => {
-  //   dispatch(
-  //     getPhoto({
-  //       token: auth.token,
-  //       email: props.friend.email,
-  //     })
-  //   );
-  // }, []);
 
   const deleteAFriend = async () => {
     await dispatch(
@@ -27,7 +16,7 @@ const AllFriends = (props) => {
       })
     );
     await dispatch(
-      getPendingFriends({
+      getAllFriends({
         id: auth.user.id,
         token: auth.token,
       })

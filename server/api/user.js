@@ -5,7 +5,7 @@ require("dotenv").config();
 const { User, List, RestaurantNotes, Friend } = require("../db/index");
 const Sequelize = require("sequelize");
 
-///NEW "/api/user/:id/friends  get all friends
+//GET "/api/user/:id/friends  get all friends
 router.get("/:id/friends", async (req, res, next) => {
   try {
     const allFriends = [];
@@ -21,7 +21,6 @@ router.get("/:id/friends", async (req, res, next) => {
       },
       attributes: ["username", "city", "state", "email", "image"],
     });
-    //console.log("result", result);
     const updatedFriends = updateImages(result);
     res.send(updatedFriends);
   } catch (err) {
@@ -33,54 +32,15 @@ router.get("/:id/friends", async (req, res, next) => {
   }
 });
 
-//function to update buffer to base64?
-//loop through object and replace images with base64?
+//function to update buffer images to base64 (loop)
 const updateImages = (userArray) => {
   for (key of userArray) {
-    //console.log("key.dataValues.image", key.dataValues.image);
-    //console.log("key.dataValues", key.dataValues);
     if (Buffer.isBuffer(key.dataValues.image)) {
-      //console.log("key.dataValues.image in the if", key.dataValues.image);
       key.dataValues.image = key.dataValues.image.toString("base64");
     }
   }
-  // console.log("userArray", userArray);
   return userArray;
 };
-
-//GET "/api/user/friendImages/:friendEmail  get all friends images
-//receive array of friends emails
-//grab all their images
-//map through each one tochange them to a string
-// router.put("/friendImages", async (req, res, next) => {
-//   try {
-//     let imagesArr = [];
-//     console.log("req.body", req.body);
-//     await req.body
-//       .forEach((e) => {
-//         let image = User.findAll({
-//           where: {
-//             email: e,
-//           },
-//           attributes: ["image"],
-//         });
-//         console.log("image", image);
-//         imagesArr.push(image);
-//       })
-//       .then((result) => {
-//         console.log("result", result);
-//         console.log("imagesArr", imagesArr);
-//       });
-
-//     //res.send(images);
-//   } catch (err) {
-//     res.status(404).json({
-//       message: "looks like you haven't added any friends yet",
-//       error: err.message,
-//     });
-//     next(err);
-//   }
-// });
 
 //GET "/api/user/friend/:email  find a friend to request to follow
 router.get("/friend/:email", async (req, res, next) => {
@@ -89,6 +49,10 @@ router.get("/friend/:email", async (req, res, next) => {
       where: { email: req.params.email },
       attributes: ["username", "city", "state", "email", "image"],
     });
+    if (Buffer.isBuffer(newFollow.dataValues.image)) {
+      newFollow.dataValues.image =
+        newFollow.dataValues.image.toString("base64");
+    }
     res.send(newFollow);
   } catch (err) {
     console.log(err);
@@ -147,17 +111,23 @@ router.get("/:id/pendingfollowers", async (req, res, next) => {
 //PUT  "/api/user/addfriend/:friendEmail   accept friend request from other user
 router.put("/addfriend/:friendEmail", async (req, res, next) => {
   try {
-    const friendEmail = Object.keys(req.params.friendEmail).toString();
+    const userid = Object.keys(req.body).toString();
     //adds them to the accepted user's friends list
-    const friendId = await User.findOne({ where: { email: friendEmail } });
+    const friendId = await User.findOne({
+      where: { email: req.params.friendEmail },
+    });
     const pendingFriend = await Friend.findOne({
-      where: { userId: req.body.id, friendId: friendId.id, pending: true },
+      where: {
+        userId: userid,
+        friendId: friendId.dataValues.id,
+        pending: true,
+      },
     });
     await pendingFriend.update({ pending: false });
     //adds accepted user to the friend's list (that sent request)
     await Friend.create({
-      userId: friendId.id,
-      friendId: req.params.id,
+      userId: userid,
+      friendId: friendId.dataValues.id,
       pending: false,
     });
     res.status(201).json({ message: "added new friend" });
@@ -174,10 +144,12 @@ router.put("/addfriend/:friendEmail", async (req, res, next) => {
 //on one user only - other user will not know and will still show them in friends list
 router.put("/deleteFriend/:friendEmail", async (req, res, next) => {
   try {
-    const friendEmail = Object.keys(req.params.friendEmail).toString();
-    const friendId = await User.findOne({ where: { email: friendEmail } });
+    const userid = Object.keys(req.body).toString();
+    const friendId = await User.findOne({
+      where: { email: req.params.friendEmail },
+    });
     const friend = await Friend.findOne({
-      where: { userId: req.body.id, friendId: friendId.id },
+      where: { userId: userid, friendId: friendId.dataValues.id },
     });
     await friend.destroy();
     res.status(201).json({ message: "friend was removed from your list" });

@@ -3,24 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { findFriend, getSingleFriendsLists } from "../features/FriendsSlice";
 import FriendListCard from "./FriendListCard";
-import { getPhoto } from "../features/imageSlice";
 
 const FriendHome = () => {
   const dispatch = useDispatch();
   const friendEmail = useParams();
   const auth = useSelector((state) => state.auth);
-  const image = useSelector((state) => state.image);
 
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    dispatch(
-      getPhoto({
-        token: auth.token,
-        email: friendEmail.email,
-      })
-    );
-  }, []);
 
   useEffect(() => {
     dispatch(
@@ -52,12 +41,12 @@ const FriendHome = () => {
   if (isLoading) {
     return <div className="loading-p">Loading...</div>;
   }
-  
+
   return (
     <div>
       {friends?.friend && (
         <section className="home-header-container">
-          {!image?.image?.data ? (
+          {!friends?.friend?.image ? (
             <img
               className="profile-img"
               src="/avatar-placeholder.jpeg"
@@ -66,13 +55,11 @@ const FriendHome = () => {
           ) : (
             <img
               className="profile-img"
-              src={`data:image/jpeg;base64,${image.image.data}`}
+              src={`data:image/jpeg;base64,${friends?.friend?.image}`}
               alt="profile image"
             />
           )}
-          <p className="profile-name">
-            {friends.friend.username}'s lists...
-          </p>
+          <p className="profile-name">{friends.friend.username}'s lists...</p>
         </section>
       )}
       <main className="user-home-list">
