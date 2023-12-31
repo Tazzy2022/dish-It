@@ -42,19 +42,11 @@ const PendingCard = (props) => {
       })
     );
   };
-  
+
   return (
     <div className="pending-friend-contnr">
       <section className="pending-card">
-        {/* {props.friend.image?.image?.data && (
-          <img
-            className="profile-img"
-            src={`data:image/jpeg;base64,${image.image.data}`}
-            alt="profile image"
-          />
-        )} */}
-
-        {/* {props.friend.image === null ? (
+        {props.friend.image === null ? (
           <img
             className="friend-img"
             src="/avatar-placeholder.jpeg"
@@ -63,12 +55,10 @@ const PendingCard = (props) => {
         ) : (
           <img
           className="friend-img"
-          src={`data:image/jpeg;base64,${Buffer.from(
-            props.friend.image.data
-          ).toString("base64")}`}
+          src={`data:image/jpeg;base64,${props.friend.image}`}
           alt="friend's image"
         />
-          )} */}
+          )}
         <Link
           className="pending-details"
           to={`/friendHome/${props.friend.email}`}

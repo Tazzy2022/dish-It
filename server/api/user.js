@@ -98,7 +98,8 @@ router.get("/:id/pendingfollowers", async (req, res, next) => {
       },
       attributes: ["username", "city", "state", "email", "image"],
     });
-    res.send(result);
+    const pendingFriends = updateImages(result);
+    res.send(pendingFriends);
   } catch (err) {
     res.status(404).json({
       message: "no pending friend requests right now",
