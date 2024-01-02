@@ -46,19 +46,19 @@ const PendingCard = (props) => {
   return (
     <div className="pending-friend-contnr">
       <section className="pending-card">
-        {props.friend.image === null ? (
+        {props.friend.image !== null ? (
+          <img
+            className="friend-img"
+            src={`data:image/jpeg;base64,${props.friend.image}`}
+            alt="friend's image"
+          />
+        ) : (
           <img
             className="friend-img"
             src="/avatar-placeholder.jpeg"
             alt="friend's image"
           />
-        ) : (
-          <img
-          className="friend-img"
-          src={`data:image/jpeg;base64,${props.friend.image}`}
-          alt="friend's image"
-        />
-          )}
+        )}
         <Link
           className="pending-details"
           to={`/friendHome/${props.friend.email}`}
@@ -71,12 +71,14 @@ const PendingCard = (props) => {
       </section>
       <section className="pending-btns">
         <div>
-          <button onClick={acceptFriendReq}>+</button>
-          <label>accept</label>
+          <button onClick={acceptFriendReq}>
+            accept
+          </button>
         </div>
         <div>
-          <button onClick={deletePendingFriend}>x</button>
-          <label>delete</label>
+          <button onClick={deletePendingFriend}>
+            delete
+          </button>
         </div>
       </section>
     </div>

@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { useLocation, useNavigate } from "react-router-dom";
 import { addRestoToList } from "../features/singleListSlice";
 import { getAllLists } from "../features/listSlice";
 import ContentModal from "./ContentModal";
 
 const AddToListModal = ({ openModal, restaurantId }) => {
   const dispatch = useDispatch();
-  // const location = useLocation();
-  // const navigate = useNavigate();
-
   const auth = useSelector((state) => state.auth);
   const lists = useSelector((state) => state.lists);
 
@@ -100,13 +96,13 @@ const AddToListModal = ({ openModal, restaurantId }) => {
               return (
                 <div key={list.id}>
                   <section id="modal-lists">
-                    <p>{list.listName}</p>
                     <button
                       onClick={() => newAdd(restaurantId, list.listName)}
-                      className="modalbutton"
+                      className="add-bttn"
                     >
-                      +
+                      add
                     </button>
+                    <p>{list.listName}</p>
                   </section>
                 </div>
               );

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
-import { getSingleList, renderSingleList } from "../features/singleListSlice";
+import { getSingleList } from "../features/singleListSlice";
 import RestaurantCard from "./RestaurantCard";
 
 const UserSingleList = () => {
-  const list = useSelector(renderSingleList);
+  const list = useSelector((state) => state.list);
   const lists = useSelector((state) => state.lists);
   const auth = useSelector((state) => state.auth);
   const { id } = useParams();
@@ -46,15 +46,15 @@ const UserSingleList = () => {
     });
   }
 
-  console.log("LIST in get list", list)
-
   return (
     <div className="single-list-container">
       <h1 className="list-h1">{listname}</h1>
       {list?.list?.length === 0 || Object.keys(list).length === 0 ? (
         <div>
           <p>this list is empty...</p>
-          <Link className="search-link" to="/usersearch">you can start your search here</Link>
+          <Link className="search-link" to="/usersearch">
+            you can start your search here
+          </Link>
         </div>
       ) : (
         list?.list?.length > 0 &&

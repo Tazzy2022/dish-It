@@ -122,9 +122,14 @@ a {
 
 #searched-filters p,
 #add-to-list-click,
-.yelp-link {
+.yelp-link,
+.updte-button {
   font-size: 14px;
   color: #e00707;
+}
+
+.updte-button {
+  padding: 0;
 }
 
 .card-img {
@@ -206,11 +211,8 @@ a {
 }
 
 .list-content3 button {
-  font-size: 18px;
-  margin-top: 2px;
   background-color: white;
   border: none;
-  padding: 2px;
   color: #e00707;
 }
 
@@ -264,12 +266,19 @@ a {
 }
 
 .edit-acc-btn,
+.add-bttn,
 #img-upload-btn,
 #img-upload button {
   border: 1px solid #e00707;
   border-radius: 5px;
   color: #e00707;
   background-color: white;
+}
+
+.add-bttn {
+  font-size: 12px;
+  padding: 0px 2px;
+  margin-right: 8px;
 }
 
 .list-card p,
@@ -486,7 +495,7 @@ a {
 
 .pending-btns button {
   color: #e00707;
-  font-size: 16px;
+  font-size: 14px;
   background-color: white;
   border: none;
 }
@@ -606,7 +615,8 @@ a {
 }
 
 .list-card-container p:hover,
-.useracc-left-nav a:hover {
+.useracc-left-nav a:hover,
+.openModalBtn:hover {
   color: #e00707;
 }
 
@@ -623,12 +633,11 @@ a {
 .header:hover,
 .search:hover,
 .list-card-btn button:hover,
-.openModalBtn:hover,
 #add-to-list-click:hover,
 .button:hover,
 .yelp-link:hover,
+.updte-button:hover,
 .home-button:hover,
-.list-content3 button:hover,
 .pending-btns button:hover,
 .pending-details p,
 .friend-link p,
@@ -696,7 +705,8 @@ a {
   .yelp-link,
   #rest-list-card3 p,
   #add-to-list-click,
-  .home-button {
+  .home-button,
+  .updte-button {
     font-size: 13px;
   }
 

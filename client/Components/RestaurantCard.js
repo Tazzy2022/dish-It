@@ -5,13 +5,12 @@ import NotesModal from "./NotesModal";
 import {
   removeRestaurantFromList,
   getSingleList,
-  renderSingleList,
 } from "../features/singleListSlice";
 import CategoriesCard from "./CategoriesCard";
 
 const RestaurantCard = (props) => {
   const dispatch = useDispatch();
-  const list = useSelector(renderSingleList);
+  const list = useSelector((state) => state.list);
   const auth = useSelector((state) => state.auth);
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -19,7 +18,6 @@ const RestaurantCard = (props) => {
 
   const deleteFromList = async (restId) => {
     try {
-      setIsLoading(true);
       await dispatch(
         removeRestaurantFromList({
           listId: list.id,
@@ -27,6 +25,7 @@ const RestaurantCard = (props) => {
           restaurantId: restId,
         })
       );
+      setIsLoading(true);
       await dispatch(
         getSingleList({
           id: list.id,
@@ -74,8 +73,7 @@ const RestaurantCard = (props) => {
           <CategoriesCard category={props.restaurant.categories} />
           <p>price: {props.restaurant.price}</p>
           <p>
-            <button onClick={() => setModalOpen(true)}>+</button>
-            <label>notes</label>
+            <button className="updte-button" onClick={() => setModalOpen(true)}>add notes</button>
           </p>
           {modalOpen && (
             <NotesModal
@@ -85,10 +83,10 @@ const RestaurantCard = (props) => {
             />
           )}
           <p>
-            <button onClick={() => deleteFromList(props.restaurant.id)}>
-              x
+            <button className="updte-button" onClick={() => deleteFromList(props.restaurant.id)}>
+              delete restaurant
             </button>
-            <label>delete restaurant</label>
+            <label></label>
           </p>
         </section>
       </main>

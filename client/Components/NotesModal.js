@@ -1,16 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  updateNotes,
-  getSingleList,
-  renderSingleList,
-} from "../features/singleListSlice";
+import { updateNotes, getSingleList } from "../features/singleListSlice";
 
 const NotesModal = (props) => {
   const dispatch = useDispatch();
 
   const auth = useSelector((state) => state.auth);
-  const list = useSelector(renderSingleList);
+  const list = useSelector((state) => state.list);
 
   const [notes, setNotes] = useState(props.notes || "");
 
@@ -26,14 +22,14 @@ const NotesModal = (props) => {
           personalNotes: notes,
         })
       );
-      if(newNote.payload) {
-				await dispatch(
-					getSingleList({
-						id: list.id,
-						token: auth.token,
-					})
-				);
-			}
+      if (newNote.payload) {
+        await dispatch(
+          getSingleList({
+            id: list.id,
+            token: auth.token,
+          })
+        );
+      }
     } catch (error) {
       console.log(error);
     }

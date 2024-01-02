@@ -29,11 +29,15 @@ export const createList = createAsyncThunk(
   "list/createList",
   async ({ id, token, listName }) => {
     try {
-      const response = await axios.post(`/api/user/createlist/${id}`, listName, {
-        headers: {
-          authorization: token,
-        },
-      });
+      const response = await axios.post(
+        `/api/user/createlist/${id}`,
+        listName,
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
       return response?.data;
     } catch (error) {
       return error.message;
@@ -172,7 +176,5 @@ const singleListSlice = createSlice({
 });
 
 export const { loggoutSingleList } = singleListSlice.actions;
-
-export const renderSingleList = (state) => state.list;
 
 export default singleListSlice.reducer;

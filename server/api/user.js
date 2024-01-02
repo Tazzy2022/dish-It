@@ -127,8 +127,8 @@ router.put("/addfriend/:friendEmail", async (req, res, next) => {
     await pendingFriend.update({ pending: false });
     //adds accepted user to the friend's list (that sent request)
     await Friend.create({
-      userId: userid,
-      friendId: friendId.dataValues.id,
+      userId: friendId.dataValues.id,
+      friendId: userid,
       pending: false,
     });
     res.status(201).json({ message: "added new friend" });
@@ -272,8 +272,10 @@ router.put("/:id/:listName", async (req, res, next) => {
       where: { userId: req.params.id, listName: req.params.listName },
       defaults: { restaurantIdArray: [] },
     });
-    console.log("list", list);
-    if (list.restaurantIdArray.includes(restaurantId)) {
+    if (
+      list.restaurantIdArray !== null &&
+      list.restaurantIdArray.includes(restaurantId)
+    ) {
       res.status(409).json({
         message: "that restaurant is already on that list",
       });
@@ -338,11 +340,7 @@ router.get("/list/:id", async (req, res, next) => {
       const notes = await RestaurantNotes.findAll({
         where: { restaurantId: restaurantIdArray },
       });
-      if (list.length > 0 && notes.length > 0) {
-        res.send({ listName, id, list, notes });
-      }
-    } else {
-      res.send({});
+      res.send({ listName, id, list, notes });
     }
   } catch (err) {
     res.status(404).json({

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getSingleList, renderSingleList } from "../features/singleListSlice";
+import { getSingleList } from "../features/singleListSlice";
 import FriendsRestaurantCard from "./FriendsRestaurantCard";
 
 const FriendSingleList = () => {
-  const list = useSelector(renderSingleList);
+  const list = useSelector((state) => state.list);
   const auth = useSelector((state) => state.auth);
   const { id } = useParams();
 
