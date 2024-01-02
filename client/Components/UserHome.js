@@ -64,15 +64,6 @@ const UserHome = () => {
             alt="profile image"
           />
         )}
-
-        {/*
-        {image?.image?.data && (
-          <img
-            className="profile-img"
-            src={`data:image/jpeg;base64,${image.image.data}`}
-            alt="profile image"
-          />
-        )} */}
         <p className="profile-name">{auth.user.username}'s lists...</p>
         <button className="home-button" onClick={() => setModalOpen(true)}>
           + new list

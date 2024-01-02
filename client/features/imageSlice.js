@@ -17,7 +17,6 @@ export const getPhoto = createAsyncThunk(
           authorization: token,
         },
       });
-      console.log("response", response);
       return response;
     } catch (error) {
       return error.message;
