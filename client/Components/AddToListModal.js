@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addRestoToList } from "../features/singleListSlice";
-import { getAllLists } from "../features/listSlice";
+import { useNavigate, useLocation } from "react-router-dom";
 import ContentModal from "./ContentModal";
 
 const AddToListModal = ({ openModal, restaurantId }) => {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
   const auth = useSelector((state) => state.auth);
   const lists = useSelector((state) => state.lists);
 
@@ -13,19 +15,9 @@ const AddToListModal = ({ openModal, restaurantId }) => {
   const [error, setErrorModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  useEffect(() => {
-    dispatch(
-      getAllLists({
-        id: auth.user.id,
-        token: auth.token,
-      })
-    );
-  }, []);
-
   const newAdd = async (restId, listName) => {
     try {
-      openModal(false);
-      const newAdd = await dispatch(
+      const added = await dispatch(
         addRestoToList({
           userId: auth.user.id,
           token: auth.token,
@@ -33,14 +25,14 @@ const AddToListModal = ({ openModal, restaurantId }) => {
           restaurantId: restId,
         })
       );
-      //modal not opening for below
-      if (newAdd.payload.id === undefined) {
+      if (added.payload.id === undefined) {
         setErrorMessage("that restaurant is already on that list");
         setErrorModal(true);
+      } else if (location.pathname.includes("friendlists")) {
+        navigate(-1);
+      } else {
+        openModal(false);
       }
-      // if (location.pathname.includes("friendlists")) {
-      //   navigate(-1);
-      // }
     } catch (error) {
       console.log(error);
     }
@@ -55,7 +47,6 @@ const AddToListModal = ({ openModal, restaurantId }) => {
 
   const createNewList = async (e) => {
     e.preventDefault();
-    openModal(false);
     await dispatch(
       addRestoToList({
         userId: auth.user.id,
@@ -64,6 +55,11 @@ const AddToListModal = ({ openModal, restaurantId }) => {
         restaurantId: restaurantId,
       })
     );
+    if (location.pathname.includes("friendlists")) {
+      navigate(-1);
+    } else {
+      openModal(false);
+    }
   };
 
   return (

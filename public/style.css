@@ -123,12 +123,14 @@ a {
 #searched-filters p,
 #add-to-list-click,
 .yelp-link,
-.updte-button {
+.updte-button,
+#add-to-list {
   font-size: 14px;
   color: #e00707;
 }
 
-.updte-button {
+.updte-button,
+#add-to-list {
   padding: 0;
 }
 
@@ -216,7 +218,8 @@ a {
   color: #e00707;
 }
 
-#add-to-list-click {
+#add-to-list-click,
+#add-to-list {
   margin: 0px;
 }
 
@@ -331,14 +334,9 @@ a {
 
 .profile-img,
 .friend-img {
-  padding: 20px 10px 20px 20px;
   width: 80px;
   height: 80px;
-  border-radius: 30px;
-}
-
-.profile-img {
-  padding: 20px 0px 20px 20px;
+  border-radius: 20px;
 }
 
 .home-filter-container label {
@@ -509,6 +507,7 @@ a {
 
 .pending-friend-contnr {
   justify-content: center;
+  margin-bottom: 25px;
 }
 
 .pending-btns,
@@ -587,6 +586,7 @@ a {
 .friend-card {
   display: flex;
   align-items: center;
+  margin-bottom: 25px;
 }
 
 .friend-card button {
@@ -634,6 +634,7 @@ a {
 .search:hover,
 .list-card-btn button:hover,
 #add-to-list-click:hover,
+#add-to-list:hover,
 .button:hover,
 .yelp-link:hover,
 .updte-button:hover,
@@ -705,6 +706,7 @@ a {
   .yelp-link,
   #rest-list-card3 p,
   #add-to-list-click,
+  #add-to-list,
   .home-button,
   .updte-button {
     font-size: 13px;
@@ -756,7 +758,7 @@ a {
     padding: 20px 10px 20px 20px;
     width: 60px;
     height: 60px;
-    border-radius: 30px;
+    border-radius: 20px;
   }
 
   .pending-btns div {
@@ -906,7 +908,8 @@ a {
     margin-right: 0vw;
   }
 
-  #add-to-list-click {
+  #add-to-list-click,
+  #add-to-list {
     margin: 0px;
   }
 }

@@ -207,18 +207,14 @@ router.get("/friend/lists/:friendEmail", async (req, res, next) => {
 //POST "/api/user/createlist/:id  create new list
 router.post("/createlist/:id", async (req, res, next) => {
   try {
-    console.log("req.body.listName", req.body.listName);
     let listName;
     if (req.body.listName.includes(" ")) {
       listName = req.body.listName.split(" ").join("&");
     } else {
       listName = req.body.listName;
     }
-    console.log("listName", listName);
     let image = await getImage(listName);
-    console.log("image before if", image);
     if (image.length > 0) {
-      console.log("image after if", image);
       res.send(
         await List.create({
           userId: req.params.id,
@@ -238,13 +234,10 @@ router.post("/createlist/:id", async (req, res, next) => {
 
 const getImage = async (listName) => {
   try {
-    console.log("HIIIII listName", listName);
     const image = await needle(
       "get",
       `https://api.unsplash.com/search/photos?per=1&per_page=1&orientation=landscape&query=${listName}&client_id=${process.env.UNSPLASH_KEY}`
     );
-    //download but not working, this is a hotlink
-    console.log("image", image);
     return image.body.results[0].urls.small;
   } catch (error) {
     console.log(error);

@@ -8,9 +8,7 @@ import CategoriesCard from "./CategoriesCard";
 
 const AllRestaurants = (props) => {
   const dispatch = useDispatch();
-
   const auth = useSelector((state) => state.auth);
-
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleModalClick = async () => {
