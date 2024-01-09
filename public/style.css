@@ -648,13 +648,6 @@ a {
   color: #333333;
 }
 
-@media only screen and (max-height: 701px) {
-  .restaurant-list-card p {
-    font-size: 14px;
-    margin: 5px 0px;
-  }
-}
-
 @media only screen and (max-width: 768px) {
   /* For smaller devices: */
   p,
@@ -685,6 +678,12 @@ a {
   #resto-input,
   #location-input {
     font-size: 14px;
+  }
+
+  .friend-card {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
   }
 
   .list-h1,
@@ -755,7 +754,7 @@ a {
 
   .profile-img,
   .friend-img {
-    padding: 20px 10px 20px 20px;
+    /* padding: 20px 10px 20px 20px; */
     width: 60px;
     height: 60px;
     border-radius: 20px;
@@ -914,9 +913,22 @@ a {
   }
 }
 
+@media only screen and (max-height: 701px) {
+  .restaurant-list-card p {
+    font-size: 14px;
+    margin: 5px 0px;
+  }
+}
+
 @media only screen and (max-width: 400px) {
   /* For phones: */
   .pending-friend-contnr {
     justify-content: flex-start;
   }
+
+  #img-upload,
+   #img-upload-btn {
+    font-size: 12px;
+  }
+
 }
