@@ -1,24 +1,15 @@
 This is a social website to create and track lists of favorite restaurants or ones to try and share them with friends
 
-Built with:
-
-postgresql
-
-Sequelize
-
-Express
-
-React.js
-
-Redux toolkit
-
-Node.js
-
-Unsplash API
-
-Yelp Fusion API
-
-JWT
+Built with:                          
+postgresql                    
+Sequelize                
+Express                
+React.js                      
+Redux toolkit                    
+Node.js                     
+Unsplash API                             
+Yelp Fusion API                       
+JWT                                   
 
 
 Users can:
