@@ -11,6 +11,7 @@ Unsplash API
 Yelp Fusion API
 JWT
 
+
 Users can:
 [] log in or create an account
 [] update account info and upload avatar image from their device
