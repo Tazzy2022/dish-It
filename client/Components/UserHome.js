@@ -49,7 +49,7 @@ const UserHome = () => {
   }
 
   return (
-    <div>
+    <div className="userhome-contr">
       <section className="home-header-container">
         {!image?.image?.data ? (
           <img

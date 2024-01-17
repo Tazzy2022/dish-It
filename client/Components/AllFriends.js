@@ -24,9 +24,9 @@ const AllFriends = (props) => {
   };
 
   return (
-    <div className="friend-card">
-      <button onClick={deleteAFriend}>delete</button>
-      {props.friend.image !== null ? (
+      <div className="friend-card">
+        <button onClick={deleteAFriend}>delete</button>
+        {props.friend.image !== null ? (
           <img
             className="friend-img"
             src={`data:image/jpeg;base64,${props.friend.image}`}
@@ -39,13 +39,13 @@ const AllFriends = (props) => {
             alt="friend's image"
           />
         )}
-      <Link className="friend-link" to={`/friendHome/${props.friend.email}`}>
-        <p>{props.friend.username}</p>
-        <p>
-          {props.friend.city}, {props.friend.state}
-        </p>
-      </Link>
-    </div>
+        <Link className="friend-link" to={`/friendHome/${props.friend.email}`}>
+          <p>{props.friend.username}</p>
+          <p>
+            {props.friend.city}, {props.friend.state}
+          </p>
+        </Link>
+      </div>
   );
 };
 

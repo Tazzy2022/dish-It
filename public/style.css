@@ -320,6 +320,8 @@ a {
 .follow-req-container h2 {
   font-size: 2rem;
   font-weight: lighter;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .profile-add-list {
@@ -486,11 +488,6 @@ a {
   justify-content: center;
 }
 
-.follow-req-container h2 {
-  text-align: center;
-  margin-bottom: 0px;
-}
-
 .pending-btns button {
   color: #e00707;
   font-size: 14px;
@@ -583,10 +580,16 @@ a {
   margin: 5px 5px 0px 0px;
 }
 
+.friend-card-contr {
+  display: flex;
+  flex-direction: row;
+}
+
 .friend-card {
   display: flex;
   align-items: center;
-  margin-bottom: 25px;
+  width: 28vw;
+  margin: 5px;
 }
 
 .friend-card button {
@@ -646,6 +649,18 @@ a {
 .search-link:hover,
 .copy-list-btn:hover {
   color: #333333;
+}
+
+@media only screen and (max-width: 1000px) {
+  .friend-card-contr {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .friend-card {
+    width: 50vw;
+    margin: 20px;
+  }
 }
 
 @media only screen and (max-width: 768px) {
@@ -754,7 +769,6 @@ a {
 
   .profile-img,
   .friend-img {
-    /* padding: 20px 10px 20px 20px; */
     width: 60px;
     height: 60px;
     border-radius: 20px;
@@ -911,6 +925,11 @@ a {
   #add-to-list {
     margin: 0px;
   }
+
+  .user-home-list,
+  .home-header-container {
+    margin-top: 20px;
+  }
 }
 
 @media only screen and (max-height: 701px) {
@@ -927,8 +946,7 @@ a {
   }
 
   #img-upload,
-   #img-upload-btn {
+  #img-upload-btn {
     font-size: 12px;
   }
-
 }
