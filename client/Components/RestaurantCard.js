@@ -48,57 +48,65 @@ const RestaurantCard = (props) => {
   }
 
   return (
-    <div className="restaurant-list-container">
-      <main className="list-content">
-        <section className="list-content1">
-          <img
-            className="listcard-img"
-            src={props.restaurant.image_url}
-            alt="restaurant image"
-          />
-        </section>
-        <section className="list-content2">
-          <p>{props.restaurant.name}</p>
-          <p>{props.restaurant.address1}</p>
-          <p>
-            {props.restaurant.location.city}, {props.restaurant.location.state},{" "}
-            {props.restaurant.location.zip_code}
-          </p>
-          <p>{props.restaurant.display_phone}</p>
-          <Link className="yelp-link" to={props.restaurant.url}>
-            yelp link
-          </Link>
-        </section>
-        <section className="list-content3">
-          <CategoriesCard category={props.restaurant.categories} />
-          <p>price: {props.restaurant.price}</p>
-          <p>
-            <button className="updte-button" onClick={() => setModalOpen(true)}>add notes</button>
-          </p>
-          {modalOpen && (
-            <NotesModal
-              openModal={setModalOpen}
-              notes={note?.personalNotes || ""}
-              restaurantId={props.restaurant.id}
+      <div className="restaurant-list-container">
+        <main className="list-content">
+          <section className="list-content1">
+            <img
+              className="listcard-image"
+              src={props.restaurant.image_url}
+              alt="restaurant image"
             />
+          </section>
+          <section className="list-content2">
+            <p>{props.restaurant.name}</p>
+            <p>{props.restaurant.address1}</p>
+            <p>
+              {props.restaurant.location.city},{" "}
+              {props.restaurant.location.state},{" "}
+              {props.restaurant.location.zip_code}
+            </p>
+            <p>{props.restaurant.display_phone}</p>
+            <Link className="yelp-link" to={props.restaurant.url}>
+              yelp link
+            </Link>
+          </section>
+          <section className="list-content3">
+            <CategoriesCard category={props.restaurant.categories} />
+            <p>price: {props.restaurant.price}</p>
+            <p>
+              <button
+                className="updte-button"
+                onClick={() => setModalOpen(true)}
+              >
+                add notes
+              </button>
+            </p>
+            {modalOpen && (
+              <NotesModal
+                openModal={setModalOpen}
+                notes={note?.personalNotes || ""}
+                restaurantId={props.restaurant.id}
+              />
+            )}
+            <p>
+              <button
+                className="updte-button"
+                onClick={() => deleteFromList(props.restaurant.id)}
+              >
+                delete restaurant
+              </button>
+            </p>
+          </section>
+        </main>
+        <section className="list-card-notes">
+          <p>Notes:</p>
+          {note?.personalNotes?.length > 0 ? (
+            <p>{note.personalNotes}</p>
+          ) : (
+            <p></p>
           )}
-          <p>
-            <button className="updte-button" onClick={() => deleteFromList(props.restaurant.id)}>
-              delete restaurant
-            </button>
-            <label></label>
-          </p>
         </section>
-      </main>
-      <section className="list-card-notes">
-        <p>Notes:</p>
-        {note?.personalNotes?.length > 0 ? (
-          <p>{note.personalNotes}</p>
-        ) : (
-          <p></p>
-        )}
-      </section>
-    </div>
+      </div>
   );
 };
 

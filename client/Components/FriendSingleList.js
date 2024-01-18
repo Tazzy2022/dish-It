@@ -39,7 +39,7 @@ const FriendSingleList = () => {
     <div className="single-list-container">
       <p className="list-h1">{list?.listName}</p>
       {list?.list?.length === 0 || Object.keys(list).length === 0 ? (
-        <div>
+        <div className="empty-list">
           <p>this list is empty...</p>
         </div>
       ) : (

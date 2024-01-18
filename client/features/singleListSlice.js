@@ -18,7 +18,8 @@ export const getSingleList = createAsyncThunk(
           authorization: token,
         },
       });
-      return response?.data;
+      console.log("response?.data", response.data);
+      return response.data;
     } catch (error) {
       return error.message;
     }

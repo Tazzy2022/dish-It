@@ -162,10 +162,6 @@ a {
   justify-content: center;
 }
 
-.single-list-container {
-  margin-left: 15vw;
-}
-
 .restaurant-list-card {
   display: flex;
   border: solid 1px rgb(214, 213, 213);
@@ -177,25 +173,20 @@ a {
 }
 
 .restaurant-list-container {
+  align-self: center;
   display: flex;
   border: solid 1px rgb(214, 213, 213);
   box-shadow: 1px 1px rgb(244, 239, 239);
   border-radius: 10px;
   width: 70vw;
-  margin: 3vh 0vh 3vh;
+  margin: 3vh 15vw 3vh 15vw;
   flex-direction: column;
-  padding: 10px;
 }
 
 .restaurant-list-card p,
 .restaurant-list-container p,
 .restaurant-list-container a {
   margin: 8px 0px;
-}
-
-.restaurant-list-container label {
-  font-size: 14px;
-  margin-right: 25px;
 }
 
 .list-content2 {
@@ -230,8 +221,19 @@ a {
   border-bottom-left-radius: 15px;
   border: 2px red;
 }
-
+.listcard-image,
+.list-card-notes,
 .listcard-img {
+  margin-left: 10px;
+}
+
+.listcard-image,
+.listcard-img {
+  margin-top: 10px;
+}
+
+.listcard-img,
+.listcard-image {
   width: 12vw;
   height: 15vh;
   border-radius: 10px;
@@ -266,6 +268,10 @@ a {
   border: #e00707;
   border-radius: 5px;
   color: white;
+}
+
+.empty-list {
+  margin: 30px;
 }
 
 .edit-acc-btn,
@@ -661,6 +667,13 @@ a {
     width: 50vw;
     margin: 20px;
   }
+
+  .listcard-image {
+    width: 12vw;
+    height: 12vh;
+    border-radius: 10px;
+  }
+
 }
 
 @media only screen and (max-width: 768px) {
@@ -862,7 +875,8 @@ a {
   }
 
   .single-list-container {
-    margin: 0vw 2.5vw;
+    display: flex;
+    flex-direction: column;
   }
 
   .restaurant-list-container {
@@ -874,6 +888,7 @@ a {
   }
 
   .restaurant-card-img,
+  .listcard-image,
   .listcard-img {
     width: 18vw;
     height: 10vh;

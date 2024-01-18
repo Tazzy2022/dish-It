@@ -20,12 +20,13 @@ const Search = () => {
     restaurant: searchInfo.restaurant || "",
     location: searchInfo.location,
   });
+
   const [modalOpen, setModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  let isLoading;
 
   useEffect(() => {
-    setIsLoading(true);
     try {
+      isLoading = true;
       dispatch(
         filterSearch({
           token: auth.token,
@@ -38,11 +39,12 @@ const Search = () => {
     } catch (error) {
       console.log(error);
     } finally {
-      setIsLoading(false);
+      isLoading = false;
     }
   }, []);
 
   if (isLoading) {
+    console.log("IS LOADING!!!!");
     return <div className="loading-p">Loading...</div>;
   }
 

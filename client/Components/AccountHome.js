@@ -81,7 +81,7 @@ const AccountHome = () => {
             alt="profile image"
           />
         )}
-        <form class="upload-form" onSubmit={handleUpload} encType="multipart/form-data">
+        <form className="upload-form" onSubmit={handleUpload} encType="multipart/form-data">
           <input id="img-upload" type="file" onChange={handleChange} />
           {file && (
             <button id="img-upload-btn" type="submit">

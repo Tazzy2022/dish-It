@@ -50,7 +50,7 @@ const UserSingleList = () => {
     <div className="single-list-container">
       <h1 className="list-h1">{listname}</h1>
       {list?.list?.length === 0 || Object.keys(list).length === 0 ? (
-        <div>
+        <div className="empty-list">
           <p>this list is empty...</p>
           <Link className="search-link" to="/usersearch">
             you can start your search here

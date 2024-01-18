@@ -346,7 +346,11 @@ router.get("/list/:id", async (req, res, next) => {
       attributes: ["restaurantIdArray", "listName", "id"],
     });
     const { listName, id, restaurantIdArray } = idArray;
-    if (restaurantIdArray !== null) {
+    if (restaurantIdArray === null) {
+      res.status(204).json({
+        message: "could not find restaurants",
+      });
+    } else {
       const list = await loopThroughArray(restaurantIdArray);
       const notes = await RestaurantNotes.findAll({
         where: { restaurantId: restaurantIdArray },

@@ -23,7 +23,6 @@ export const filterSearch = createAsyncThunk(
   "allRestaurants/filterSearch",
   async (searchObj) => {
     try {
-      //console.log("searchObj", searchObj);
       if (searchObj.restaurant.length > 0) {
         const loc = searchObj.location.replaceAll(",", "");
         const response = await axios.get(
