@@ -28,6 +28,7 @@ const AddToListModal = ({ openModal, restaurantId }) => {
       if (added.payload.id === undefined) {
         setErrorMessage("that restaurant is already on that list");
         setErrorModal(true);
+        // return <p>oops this restaurant is already on that list</p>;
       } else if (location.pathname.includes("friendlists")) {
         navigate(-1);
       } else {
@@ -85,6 +86,9 @@ const AddToListModal = ({ openModal, restaurantId }) => {
             </button>
           </section>
         </form>
+        {error && (
+          <ContentModal openErrorModal={setErrorModal} content={errorMessage} />
+        )}
         <section id="all-lists-container">
           {lists?.length > 0 && <p>OR add to existing list:</p>}
           {lists?.length > 0 &&
@@ -105,9 +109,6 @@ const AddToListModal = ({ openModal, restaurantId }) => {
             })}
         </section>
       </main>
-      {error && (
-        <ContentModal openErrorModal={setErrorModal} content={errorMessage} />
-      )}
     </div>
   );
 };
