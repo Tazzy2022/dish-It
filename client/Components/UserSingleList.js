@@ -13,11 +13,13 @@ const UserSingleList = () => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
+  let thisList;
+
   useEffect(() => {
     const getList = async () => {
       try {
         setIsLoading(true);
-        await dispatch(
+        thisList = await dispatch(
           getSingleList({
             id: id,
             token: auth.token,
@@ -48,7 +50,7 @@ const UserSingleList = () => {
 
   return (
     <div className="single-list-container">
-      <h1 className="list-h1">{listname}</h1>
+      <h1 className="list-h1">{listname || list.listName}</h1>
       {list?.list?.length === 0 || Object.keys(list).length === 0 ? (
         <div className="empty-list">
           <p>this list is empty...</p>

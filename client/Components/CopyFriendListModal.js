@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { copyList } from "../features/singleListSlice";
 
 const CopyFriendListModal = (props) => {
+  console.log("PROPS", props);
   const [listName, setListName] = useState("");
   const navigate = useNavigate();
 
@@ -23,6 +24,7 @@ const CopyFriendListModal = (props) => {
         token: auth.token,
         listName: listName || props.list.listName,
         restaurantIdArray: props.list.restaurantIdArray,
+        image: props.list.image,
       })
     );
 

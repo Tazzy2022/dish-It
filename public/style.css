@@ -511,6 +511,8 @@ a {
 .pending-friend-contnr {
   justify-content: center;
   margin-bottom: 25px;
+  width: 30vw;
+  align-self: center;
 }
 
 .pending-btns,
@@ -673,7 +675,6 @@ a {
     height: 12vh;
     border-radius: 10px;
   }
-
 }
 
 @media only screen and (max-width: 768px) {
@@ -963,5 +964,9 @@ a {
   #img-upload,
   #img-upload-btn {
     font-size: 12px;
+  }
+
+  .pending-friend-contnr {
+    align-self:normal;
   }
 }

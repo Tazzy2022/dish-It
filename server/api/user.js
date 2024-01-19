@@ -250,7 +250,8 @@ router.post("/copied/:id/:listName", async (req, res, next) => {
     const newList = await List.create({
       userId: req.params.id,
       listName: req.params.listName,
-      restaurantIdArray: req.body,
+      restaurantIdArray: req.body.restaurantIdArray,
+      image: req.body.image
     });
     res.send(newList);
   } catch (err) {
