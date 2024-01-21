@@ -13,6 +13,7 @@ const UserHome = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  let newList;
 
   useEffect(() => {
     dispatch(
@@ -48,6 +49,21 @@ const UserHome = () => {
     return <div className="loading-p">Loading...</div>;
   }
 
+  if (lists.length > 0) {
+    newList = [...lists];
+    newList.sort((a, b) => {
+      const x = a.listName.toLowerCase();
+      const y = b.listName.toLowerCase();
+      if (x < y) {
+        return -1;
+      }
+      if (x > y) {
+        return 1;
+      }
+      return 0;
+    });
+  }
+
   return (
     <div className="userhome-contr">
       <section className="home-header-container">
@@ -71,7 +87,7 @@ const UserHome = () => {
         {modalOpen && <NewListModal openModal={setModalOpen} />}
       </section>
       <main className="user-home-list">
-        {lists?.length === 0 ? (
+        {newList?.length === undefined ? (
           <div>
             <p>no saved lists yet...</p>
             <Link className="search-link" to="/usersearch">
@@ -79,8 +95,8 @@ const UserHome = () => {
             </Link>
           </div>
         ) : (
-          lists?.length > 0 &&
-          lists?.map((list) => {
+          newList?.length > 0 &&
+          newList?.map((list) => {
             return <ListCard key={list.id} list={list} auth={auth} />;
           })
         )}

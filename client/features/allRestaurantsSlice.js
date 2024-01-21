@@ -145,7 +145,7 @@ export const getRestaurantLocationCat = createAsyncThunk(
     try {
       const loc = location.replaceAll(",", "");
       const cat = refactorCategories(categories);
-      const category = "&term=" + cat.join(" ");
+      const category = "&categories=" + cat.join("&categories=");
       const response = await axios.get(
         `/api/restaurants/catPrice/${category}/${loc}`,
         {

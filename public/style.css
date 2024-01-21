@@ -499,23 +499,33 @@ a {
   font-size: 14px;
   background-color: white;
   border: none;
+  margin-bottom: 10px;
 }
 
-.pending-friend-contnr,
-.pending-card,
-.pending-btns {
+.pending-info {
+  display: flex;
+  justify-content: space-between;
+  width: 75%;
+}
+
+.pending-friend-contnr {
   display: flex;
   align-items: center;
 }
 
 .pending-friend-contnr {
-  justify-content: center;
   margin-bottom: 25px;
   width: 30vw;
   align-self: center;
 }
 
-.pending-btns,
+.pending-btns {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  margin-top: 5px;
+}
+
 .pending-details {
   flex-direction: column;
 }
@@ -530,14 +540,10 @@ a {
   margin: 5px 10px 5px 10px;
 }
 
-.pending-btns div {
-  margin: 5px 20px;
-}
-
 .useracc-left-nav {
   display: flex;
   flex-direction: column;
-  width: 12vw;
+  width: 15vw;
   padding: 20px;
 }
 
@@ -591,13 +597,14 @@ a {
 .friend-card-contr {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .friend-card {
   display: flex;
   align-items: center;
-  width: 28vw;
-  margin: 5px;
+  width: 25vw;
+  margin: 0px 10px 25px 10px;
 }
 
 .friend-card button {
@@ -712,7 +719,7 @@ a {
   .friend-card {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
+    margin: 0px 0px 10px 0px;
   }
 
   .list-h1,
@@ -736,7 +743,8 @@ a {
   #add-to-list-click,
   #add-to-list,
   .home-button,
-  .updte-button {
+  .updte-button,
+  .pending-btns button {
     font-size: 13px;
   }
 
@@ -786,10 +794,6 @@ a {
     width: 60px;
     height: 60px;
     border-radius: 20px;
-  }
-
-  .pending-btns div {
-    margin: 5px 15px 5px 0px;
   }
 
   .home-lists,
@@ -946,6 +950,10 @@ a {
   .home-header-container {
     margin-top: 20px;
   }
+
+  .pending-friend-contnr {
+    width: 60vw;
+  }
 }
 
 @media only screen and (max-height: 701px) {
@@ -967,6 +975,6 @@ a {
   }
 
   .pending-friend-contnr {
-    align-self:normal;
+    align-self: normal;
   }
 }

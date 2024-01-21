@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addRestoToList } from "../features/singleListSlice";
+import { addRestoToList, createListAndAdd } from "../features/singleListSlice";
 import { useNavigate, useLocation } from "react-router-dom";
 import ContentModal from "./ContentModal";
 
@@ -28,7 +28,6 @@ const AddToListModal = ({ openModal, restaurantId }) => {
       if (added.payload.id === undefined) {
         setErrorMessage("that restaurant is already on that list");
         setErrorModal(true);
-        // return <p>oops this restaurant is already on that list</p>;
       } else if (location.pathname.includes("friendlists")) {
         navigate(-1);
       } else {
@@ -44,12 +43,17 @@ const AddToListModal = ({ openModal, restaurantId }) => {
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+    const checkDupe = lists.find((list) => list.listName === e.target.value);
+    if (checkDupe) {
+      setErrorMessage("oops, that list name already exists");
+      setErrorModal(true);
+    }
   };
 
   const createNewList = async (e) => {
     e.preventDefault();
     await dispatch(
-      addRestoToList({
+      createListAndAdd({
         userId: auth.user.id,
         token: auth.token,
         listName: listName.listName,

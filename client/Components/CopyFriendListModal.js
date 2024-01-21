@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { copyList } from "../features/singleListSlice";
 
 const CopyFriendListModal = (props) => {
-  console.log("PROPS", props);
   const [listName, setListName] = useState("");
   const navigate = useNavigate();
 

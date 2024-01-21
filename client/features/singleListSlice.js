@@ -45,6 +45,26 @@ export const createList = createAsyncThunk(
   }
 );
 
+export const createListAndAdd = createAsyncThunk(
+  "list/createListAndAdd",
+  async ({ userId, token, listName, restaurantId }) => {
+    try {
+    const response = await axios.post(
+      `/api/user/createPopList/${userId}/${listName}`,
+      restaurantId,
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+      return response?.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
 export const copyList = createAsyncThunk(
   "list/copyList",
   async ({ id, token, listName, restaurantIdArray, image }) => {
@@ -139,6 +159,12 @@ const singleListSlice = createSlice({
       state.error = action.error.message;
     });
     builder.addCase(createList.fulfilled, (state, action) => {
+      return action.payload;
+    });
+    builder.addCase(createListAndAdd.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(createListAndAdd.fulfilled, (state, action) => {
       return action.payload;
     });
     builder.addCase(getSingleList.rejected, (state, action) => {

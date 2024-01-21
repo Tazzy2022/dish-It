@@ -251,7 +251,7 @@ router.post("/copied/:id/:listName", async (req, res, next) => {
       userId: req.params.id,
       listName: req.params.listName,
       restaurantIdArray: req.body.restaurantIdArray,
-      image: req.body.image
+      image: req.body.image,
     });
     res.send(newList);
   } catch (err) {
@@ -263,9 +263,10 @@ router.post("/copied/:id/:listName", async (req, res, next) => {
   }
 });
 
-//PUT "/api/user/:id/:listName add restaurant to a newly created list or existing list
-router.put("/:id/:listName", async (req, res, next) => {
+//POST "/api/user/createPopList/:id/:listName create list with restaurant added
+router.post("/createPopList/:id/:listName", async (req, res, next) => {
   try {
+    const restaurantId = Object.keys(req.body).toString();
     let listName;
     if (req.params.listName.includes(" ")) {
       listName = req.params.listName.split(" ").join("&");
@@ -273,33 +274,23 @@ router.put("/:id/:listName", async (req, res, next) => {
       listName = req.params.listName;
     }
     let image = await getImage(listName);
-    const restaurantId = Object.keys(req.body).toString();
+
     if (image.length > 0) {
-      const [list, created] = await List.findOrCreate({
-        where: {
-          userId: req.params.id,
-          listName: req.params.listName,
-          image: image,
-        },
-        defaults: { restaurantIdArray: [] },
+      const newList = await List.create({
+        userId: req.params.id,
+        listName: req.params.listName,
+        image: image,
       });
-      if (
-        list.restaurantIdArray !== null &&
-        list.restaurantIdArray.includes(restaurantId)
-      ) {
-        res.status(409).json({
-          message: "that restaurant is already on that list",
-        });
-      } else {
-        await list.update({
+      if (newList) {
+        await newList.update({
           restaurantIdArray: Sequelize.fn(
             "array_append",
             Sequelize.col("restaurantIdArray"),
             restaurantId
           ),
         });
-        res.send(list);
       }
+      res.send(newList);
     }
   } catch (err) {
     res.status(500).json({
@@ -309,6 +300,87 @@ router.put("/:id/:listName", async (req, res, next) => {
     next(err);
   }
 });
+
+//PUT "/api/user/:id/:listName add restaurant to existing list
+router.put("/:id/:listName", async (req, res, next) => {
+  try {
+    const restaurantId = Object.keys(req.body).toString();
+    const list = await List.findOne({
+      where: {
+        userId: req.params.id,
+        listName: req.params.listName,
+      },
+    });
+    if (
+      list.restaurantIdArray !== null &&
+      list.restaurantIdArray.includes(restaurantId)
+    ) {
+      res.status(409).json({
+        message: "that restaurant is already on that list",
+      });
+    } else {
+      await list.update({
+        restaurantIdArray: Sequelize.fn(
+          "array_append",
+          Sequelize.col("restaurantIdArray"),
+          restaurantId
+        ),
+      });
+      res.send(list);
+    }
+  } catch (err) {
+    res.status(500).json({
+      message: "could not add that restaurant",
+      error: err.message,
+    });
+    next(err);
+  }
+});
+
+// router.put("/:id/:listName", async (req, res, next) => {
+//   try {
+//     let listName;
+//     if (req.params.listName.includes(" ")) {
+//       listName = req.params.listName.split(" ").join("&");
+//     } else {
+//       listName = req.params.listName;
+//     }
+//     let image = await getImage(listName);
+//     const restaurantId = Object.keys(req.body).toString();
+//     if (image.length > 0) {
+//       const [list, created] = await List.findOrCreate({
+//         where: {
+//           userId: req.params.id,
+//           listName: req.params.listName,
+//         },
+//         defaults: { restaurantIdArray: [], image: image },
+//       });
+//       if (
+//         list.restaurantIdArray !== null &&
+//         list.restaurantIdArray.includes(restaurantId)
+//       ) {
+//         res.status(409).json({
+//           message: "that restaurant is already on that list",
+//         });
+//       } else {
+//         await list.update({
+//           restaurantIdArray: Sequelize.fn(
+//             "array_append",
+//             Sequelize.col("restaurantIdArray"),
+//             restaurantId
+//           ),
+//         });
+//         res.send(list);
+//       }
+//     }
+//   } catch (err) {
+//     res.status(500).json({
+//       message: "could not add that restaurant",
+//       error: err.message,
+//     });
+//     next(err);
+//   }
+// });
 
 //PUT "/api/user/lists/:listId/:restaurantId  update/add notes to restaurant in a user's list
 router.put("/lists/:listId/:restaurantId", async (req, res, next) => {
@@ -400,6 +472,14 @@ const getRestosFromApi = async (id) => {
 router.delete("/:list", async (req, res, next) => {
   try {
     const list = await List.findByPk(req.params.list);
+    const notes = await RestaurantNotes.findAll({
+      where: { listId: req.params.list },
+      attributes: ["id"],
+    });
+    if (notes) {
+      const ids = notes.map((note) => note.dataValues.id);
+      await RestaurantNotes.destroy({ where: { id: ids } });
+    }
     await list.destroy();
     res.status(204).end();
   } catch (err) {
@@ -415,6 +495,21 @@ router.delete("/:list", async (req, res, next) => {
 router.delete("/:listId/:restaurantId", async (req, res, next) => {
   try {
     const list = await List.findByPk(req.params.listId);
+    console.log(
+      "req.params.listId",
+      req.params.listId,
+      "req.params.restaurantId",
+      req.params.restaurantId
+    );
+    const note = await RestaurantNotes.findOne({
+      where: {
+        listId: req.params.listId,
+        restaurantId: req.params.restaurantId,
+      },
+    });
+    if (note) {
+      await note.destroy();
+    }
     await list.update({
       restaurantIdArray: Sequelize.fn(
         "array_remove",

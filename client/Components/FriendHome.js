@@ -8,6 +8,7 @@ const FriendHome = () => {
   const dispatch = useDispatch();
   const friendEmail = useParams();
   const auth = useSelector((state) => state.auth);
+  let newList;
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -42,6 +43,21 @@ const FriendHome = () => {
     return <div className="loading-p">Loading...</div>;
   }
 
+  if (friends.friendsLists.length > 0) {
+    newList = [...friends.friendsLists];
+    newList.sort((a, b) => {
+      const x = a.listName.toLowerCase();
+      const y = b.listName.toLowerCase();
+      if (x < y) {
+        return -1;
+      }
+      if (x > y) {
+        return 1;
+      }
+      return 0;
+    });
+  }
+
   return (
     <div>
       {friends?.friend && (
@@ -63,13 +79,13 @@ const FriendHome = () => {
         </section>
       )}
       <main className="user-home-list">
-        {friends.friendsLists?.length === 0 ? (
+        {newList?.length === undefined ? (
           <div>
             <p>no saved lists yet...</p>
           </div>
         ) : (
-          friends.friendsLists?.length > 0 &&
-          friends.friendsLists?.map((list) => {
+          newList?.length > 0 &&
+          newList?.map((list) => {
             return <FriendListCard key={list.id} list={list} />;
           })
         )}

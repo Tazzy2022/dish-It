@@ -102,8 +102,6 @@ router.get(
 //GET /api/restaurants/singleResto/:loc/:name  get specific restaurant by name
 router.get("/singleResto/:loc/:name", async (req, res, next) => {
   try {
-    console.log("req.params.loc", req.params.loc);
-    console.log("req.params.name", req.params.name);
     const restaurant = await needle(
       "get",
       `${BASE_URL}search?location=${req.params.loc}&term=${req.params.name}`,

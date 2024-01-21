@@ -24,7 +24,7 @@ const SignUp = () => {
     try {
       const loggedUser = await dispatch(registerUser(user));
       if (loggedUser.payload.user) {
-        dispatch(setLocation(user.city + "," + user.state));
+        dispatch(setLocation(user.city + ", " + user.state));
         navigate("/usersearch");
         setUser({
           username: "",
