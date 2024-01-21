@@ -594,6 +594,10 @@ a {
   margin: 5px 5px 0px 0px;
 }
 
+.error-modal-div {
+  width: 25vw;
+}
+
 .friend-card-contr {
   display: flex;
   flex-direction: row;

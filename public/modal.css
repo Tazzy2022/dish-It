@@ -195,6 +195,10 @@
   margin: 5px;
 }
 
+.modal-content {
+  font-size: 14px;
+}
+
 .friendModal-content {
   display: flex;
   align-items: center;

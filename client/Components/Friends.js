@@ -87,9 +87,11 @@ const Friends = () => {
       {popUpSeen && (
         <FriendModal openPopUp={setPopUpSeen} friend={friends.friend} />
       )}
+      <div className="error-modal-div">
       {error && (
         <ContentModal openErrorModal={setErrorModal} content={errorMessage} />
       )}
+      </div>
       <main>
         <h1 id="friend-h1">Friends on Dish it :</h1>
         <div className="friend-card-contr">
