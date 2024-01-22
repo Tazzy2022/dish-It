@@ -121,6 +121,11 @@
   width: 100%;
 }
 
+textarea {
+  margin: 5px;
+  padding: 5px;
+}
+
 .modalbtn {
   color: white;
   background-color: #e00707;
@@ -169,7 +174,7 @@
 }
 
 #all-lists-container {
-  margin: 20px 0px 20px 20px;
+  margin: 0px 0px 20px 20px;
   overflow-y: auto;
 }
 
@@ -190,9 +195,12 @@
   justify-content: flex-end;
 }
 
-.modal-content,
-.closeX {
+.modal-content {
   margin: 5px;
+}
+
+.closeX {
+  margin-top: 5px;
 }
 
 .modal-content {
@@ -218,7 +226,7 @@
   color: #e00707;
   border-radius: 5px;
   margin: 5px 0px;
-  padding: 0px 10px;
+  padding: 0px 5px;
 }
 
 .modalX,
