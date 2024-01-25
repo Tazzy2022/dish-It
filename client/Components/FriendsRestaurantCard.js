@@ -61,6 +61,7 @@ const FriendsRestaurantCard = (props) => {
             <AddToListModal
               openModal={setModalOpen}
               restaurantId={props.restaurant.id}
+              notes={props.notes}
             />
           )}
         </section>

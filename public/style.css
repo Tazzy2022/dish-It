@@ -315,12 +315,18 @@ a {
 
 .profile-name,
 .list-name,
-.loading-p {
+.loading-p,
+.friend-name {
   font-size: 2rem;
   padding: 20px;
 }
 
+.friend-name {
+  margin: 20px 0px 0px 20px;
+}
+
 .list-h1,
+.list-h2,
 #friend-h1,
 .user-account-h1,
 .follow-req-container h2 {
@@ -328,6 +334,10 @@ a {
   font-weight: lighter;
   text-align: center;
   margin-bottom: 20px;
+}
+
+.list-h2 {
+  margin-top: 0;
 }
 
 .profile-add-list {
@@ -728,8 +738,7 @@ a {
 
   .list-h1,
   .follow-req-container h2,
-  .user-account-h1,
-  #friend-h1 {
+  .user-account-h1 {
     font-size: 18px;
   }
 

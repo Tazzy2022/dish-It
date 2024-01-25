@@ -80,7 +80,7 @@ const UserHome = () => {
             alt="profile image"
           />
         )}
-        <p className="profile-name">{auth.user.username}'s lists...</p>
+        <h1 className="profile-name">{auth.user.username}'s lists...</h1>
         <button className="home-button" onClick={() => setModalOpen(true)}>
           + new list
         </button>

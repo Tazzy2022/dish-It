@@ -11,7 +11,7 @@ import Friends from "./Friends";
 import AccountSideNav from "./AccountSideNav";
 import AccountUpdates from "./AccountUpdates";
 import FriendHome from "./FriendHome";
-import FriendSingleList from "./FriendSingleList"
+import FriendSingleList from "./FriendSingleList";
 
 const App = () => {
   return (

@@ -245,15 +245,32 @@ const getImage = async (listName) => {
 };
 
 //POST "/api/user/copied/:id/list  create new list
+//need to find all notes associated with listname and put in array of
+//objects as [ {listId: listId, restaurantId: restoId, personalNotes: ""} ]
+//then when creating this list create notes based on array info
 router.post("/copied/:id/:listName", async (req, res, next) => {
   try {
-    const newList = await List.create({
-      userId: req.params.id,
-      listName: req.params.listName,
-      restaurantIdArray: req.body.restaurantIdArray,
-      image: req.body.image,
-    });
-    res.send(newList);
+    let listName;
+    if (req.params.listName.includes(" ")) {
+      listName = req.params.listName.split(" ").join("&");
+    } else {
+      listName = req.params.listName;
+    }
+    let image = await getImage(listName);
+    if (image.length > 0) {
+      const newList = await List.create({
+        userId: req.params.id,
+        listName: req.params.listName,
+        restaurantIdArray: req.body.restaurantIdArray,
+        image: image,
+      });
+
+      if (req.body.restaurantNotes && newList) {
+        const notes = updateRestNotes(req.body.restaurantNotes, newList.id);
+        await RestaurantNotes.bulkCreate(notes);
+      }
+      res.send(newList);
+    }
   } catch (err) {
     res.status(500).json({
       message: "could not create new list",
@@ -263,10 +280,21 @@ router.post("/copied/:id/:listName", async (req, res, next) => {
   }
 });
 
+const updateRestNotes = (restoNotesArr, listId) => {
+  let newNotesArr = [];
+  restoNotesArr.forEach((note) => {
+    newNotesArr.push({
+      listId: listId,
+      restaurantId: note.restaurantId,
+      personalNotes: note.personalNotes,
+    });
+  });
+  return newNotesArr;
+};
+
 //POST "/api/user/createPopList/:id/:listName create list with restaurant added
 router.post("/createPopList/:id/:listName", async (req, res, next) => {
   try {
-    const restaurantId = Object.keys(req.body).toString();
     let listName;
     if (req.params.listName.includes(" ")) {
       listName = req.params.listName.split(" ").join("&");
@@ -286,9 +314,16 @@ router.post("/createPopList/:id/:listName", async (req, res, next) => {
           restaurantIdArray: Sequelize.fn(
             "array_append",
             Sequelize.col("restaurantIdArray"),
-            restaurantId
+            req.body.restaurantId
           ),
         });
+        if (req.body.notes !== "empty") {
+          await RestaurantNotes.create({
+            listId: newList.id,
+            restaurantId: req.body.restaurantId,
+            personalNotes: req.body.notes,
+          });
+        }
       }
       res.send(newList);
     }
@@ -303,8 +338,8 @@ router.post("/createPopList/:id/:listName", async (req, res, next) => {
 
 //PUT "/api/user/:id/:listName add restaurant to existing list
 router.put("/:id/:listName", async (req, res, next) => {
+  console.log("req.body.notes", req.body.notes);
   try {
-    const restaurantId = Object.keys(req.body).toString();
     const list = await List.findOne({
       where: {
         userId: req.params.id,
@@ -313,7 +348,7 @@ router.put("/:id/:listName", async (req, res, next) => {
     });
     if (
       list.restaurantIdArray !== null &&
-      list.restaurantIdArray.includes(restaurantId)
+      list.restaurantIdArray.includes(req.body.restaurantId)
     ) {
       res.status(409).json({
         message: "that restaurant is already on that list",
@@ -323,9 +358,16 @@ router.put("/:id/:listName", async (req, res, next) => {
         restaurantIdArray: Sequelize.fn(
           "array_append",
           Sequelize.col("restaurantIdArray"),
-          restaurantId
+          req.body.restaurantId
         ),
       });
+      if (req.body.notes !== "empty") {
+        await RestaurantNotes.create({
+          listId: list.id,
+          restaurantId: req.body.restaurantId,
+          personalNotes: req.body.notes,
+        });
+      }
       res.send(list);
     }
   } catch (err) {
@@ -337,54 +379,10 @@ router.put("/:id/:listName", async (req, res, next) => {
   }
 });
 
-// router.put("/:id/:listName", async (req, res, next) => {
-//   try {
-//     let listName;
-//     if (req.params.listName.includes(" ")) {
-//       listName = req.params.listName.split(" ").join("&");
-//     } else {
-//       listName = req.params.listName;
-//     }
-//     let image = await getImage(listName);
-//     const restaurantId = Object.keys(req.body).toString();
-//     if (image.length > 0) {
-//       const [list, created] = await List.findOrCreate({
-//         where: {
-//           userId: req.params.id,
-//           listName: req.params.listName,
-//         },
-//         defaults: { restaurantIdArray: [], image: image },
-//       });
-//       if (
-//         list.restaurantIdArray !== null &&
-//         list.restaurantIdArray.includes(restaurantId)
-//       ) {
-//         res.status(409).json({
-//           message: "that restaurant is already on that list",
-//         });
-//       } else {
-//         await list.update({
-//           restaurantIdArray: Sequelize.fn(
-//             "array_append",
-//             Sequelize.col("restaurantIdArray"),
-//             restaurantId
-//           ),
-//         });
-//         res.send(list);
-//       }
-//     }
-//   } catch (err) {
-//     res.status(500).json({
-//       message: "could not add that restaurant",
-//       error: err.message,
-//     });
-//     next(err);
-//   }
-// });
-
 //PUT "/api/user/lists/:listId/:restaurantId  update/add notes to restaurant in a user's list
 router.put("/lists/:listId/:restaurantId", async (req, res, next) => {
   try {
+    console.log("req.body.personalNotes", req.body.personalNotes);
     const note = await RestaurantNotes.findOne({
       where: {
         listId: req.params.listId,
@@ -392,8 +390,10 @@ router.put("/lists/:listId/:restaurantId", async (req, res, next) => {
       },
     });
     if (note) {
-      await note.update({ personalNotes: req.body.personalNotes });
-      res.send(note);
+      const updated = await note.update({
+        personalNotes: req.body.personalNotes,
+      });
+      res.send(updated);
     } else {
       const note = await RestaurantNotes.create({
         listId: req.params.listId,
@@ -426,7 +426,7 @@ router.get("/list/:id", async (req, res, next) => {
     } else {
       const list = await loopThroughArray(restaurantIdArray);
       const notes = await RestaurantNotes.findAll({
-        where: { restaurantId: restaurantIdArray },
+        where: { listId: req.params.id, restaurantId: restaurantIdArray },
       });
       res.send({ listName, id, list, notes });
     }
@@ -495,12 +495,6 @@ router.delete("/:list", async (req, res, next) => {
 router.delete("/:listId/:restaurantId", async (req, res, next) => {
   try {
     const list = await List.findByPk(req.params.listId);
-    console.log(
-      "req.params.listId",
-      req.params.listId,
-      "req.params.restaurantId",
-      req.params.restaurantId
-    );
     const note = await RestaurantNotes.findOne({
       where: {
         listId: req.params.listId,

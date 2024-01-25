@@ -4,7 +4,7 @@ import { addRestoToList, createListAndAdd } from "../features/singleListSlice";
 import { useNavigate, useLocation } from "react-router-dom";
 import ContentModal from "./ContentModal";
 
-const AddToListModal = ({ openModal, restaurantId }) => {
+const AddToListModal = ({ openModal, restaurantId, notes }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -14,15 +14,28 @@ const AddToListModal = ({ openModal, restaurantId }) => {
   const [listName, setListName] = useState("");
   const [error, setErrorModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  let note = "empty";
+
+  if (notes.length > 0) {
+    console.log("hi");
+    notes.find((n) => {
+      if (n.restaurantId === restaurantId) {
+        note = n.personalNotes;
+      }
+    });
+    console.log("note in find", note);
+  }
 
   const newAdd = async (restId, listName) => {
     try {
+      console.log("note", note);
       const added = await dispatch(
         addRestoToList({
           userId: auth.user.id,
           token: auth.token,
           listName: listName,
           restaurantId: restId,
+          notes: note,
         })
       );
       if (added.payload.id === undefined) {
@@ -52,14 +65,16 @@ const AddToListModal = ({ openModal, restaurantId }) => {
 
   const createNewList = async (e) => {
     e.preventDefault();
-    await dispatch(
+    const added = await dispatch(
       createListAndAdd({
         userId: auth.user.id,
         token: auth.token,
         listName: listName.listName,
         restaurantId: restaurantId,
+        notes: note,
       })
     );
+    console.log("added.payload", added.payload);
     if (location.pathname.includes("friendlists")) {
       navigate(-1);
     } else {
@@ -100,10 +115,7 @@ const AddToListModal = ({ openModal, restaurantId }) => {
               return (
                 <div key={list.id}>
                   <section id="modal-lists">
-                    <button
-                      onClick={() => newAdd(restaurantId, list.listName)}
-                      className="add-bttn"
-                    >
+                    <button onClick={() => newAdd(restaurantId, list.listName)}>
                       add
                     </button>
                     <p>{list.listName}</p>

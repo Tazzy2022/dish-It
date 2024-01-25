@@ -47,11 +47,11 @@ export const createList = createAsyncThunk(
 
 export const createListAndAdd = createAsyncThunk(
   "list/createListAndAdd",
-  async ({ userId, token, listName, restaurantId }) => {
+  async ({ userId, token, listName, restaurantId, notes }) => {
     try {
     const response = await axios.post(
       `/api/user/createPopList/${userId}/${listName}`,
-      restaurantId,
+      { restaurantId, notes },
       {
         headers: {
           authorization: token,
@@ -67,11 +67,11 @@ export const createListAndAdd = createAsyncThunk(
 
 export const copyList = createAsyncThunk(
   "list/copyList",
-  async ({ id, token, listName, restaurantIdArray, image }) => {
+  async ({ id, token, listName, restaurantIdArray, image, restaurantNotes }) => {
     try {
       const response = await axios.post(
         `/api/user/copied/${id}/${listName}`,
-        { restaurantIdArray: restaurantIdArray, image: image },
+        { restaurantIdArray: restaurantIdArray, image: image, restaurantNotes: restaurantNotes },
         {
           headers: {
             authorization: token,
@@ -87,11 +87,11 @@ export const copyList = createAsyncThunk(
 
 export const addRestoToList = createAsyncThunk(
   "list/addRestoToList",
-  async ({ userId, token, listName, restaurantId }) => {
+  async ({ userId, token, listName, restaurantId, notes }) => {
     try {
       const response = await axios.put(
         `/api/user/${userId}/${listName}`,
-        restaurantId,
+        { restaurantId, notes },
         {
           headers: {
             authorization: token,
@@ -118,7 +118,8 @@ export const updateNotes = createAsyncThunk(
           },
         }
       );
-      return response?.data;
+      console.log("response.data", response.data)
+      return response.data;
     } catch (error) {
       return error.message;
     }

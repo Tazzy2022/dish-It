@@ -6,7 +6,6 @@ import { copyList } from "../features/singleListSlice";
 const CopyFriendListModal = (props) => {
   const [listName, setListName] = useState("");
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
@@ -14,20 +13,26 @@ const CopyFriendListModal = (props) => {
     setListName(e.target.value);
   };
 
+  let restArr = [];
+  props.list.forEach((resto) => {
+    restArr.push(resto.id);
+  });
+
   const copyThisList = async (e) => {
     e.preventDefault();
     props.openModal(false);
-    const list = await dispatch(
+    const copiedList = await dispatch(
       copyList({
         id: auth.user.id,
         token: auth.token,
-        listName: listName || props.list.listName,
-        restaurantIdArray: props.list.restaurantIdArray,
+        listName: listName,
+        restaurantIdArray: restArr,
         image: props.list.image,
+        restaurantNotes: props.notes || "",
       })
     );
 
-    if (list.payload.id) navigate(`/userlists/${list.payload.id}`);
+    if (copiedList.payload.id) navigate(`/userlists/${copiedList.payload.id}`);
   };
 
   return (
@@ -44,7 +49,6 @@ const CopyFriendListModal = (props) => {
             id="line-input"
             type="text"
             name="listName"
-            placeholder={props.list.listName}
             value={listName.value}
             onChange={handleChange}
           />

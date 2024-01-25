@@ -75,7 +75,7 @@ const FriendHome = () => {
               alt="profile image"
             />
           )}
-          <p className="profile-name">{friends.friend.username}'s lists...</p>
+          <h1 className="profile-name">{friends.friend.username}'s lists...</h1>
         </section>
       )}
       <main className="user-home-list">
