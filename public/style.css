@@ -275,7 +275,7 @@ a {
 }
 
 .edit-acc-btn,
-.add-bttn,
+#add-bttn,
 #img-upload-btn,
 #img-upload button {
   border: 1px solid #e00707;
@@ -284,7 +284,7 @@ a {
   background-color: white;
 }
 
-.add-bttn {
+#add-bttn {
   font-size: 12px;
   padding: 0px 2px;
   margin-right: 8px;
@@ -678,6 +678,11 @@ a {
 .search-link:hover,
 .copy-list-btn:hover {
   color: #333333;
+}
+
+#add-bttn:hover {
+  background-color: #fdd9d9;
+  color: #e00707;
 }
 
 @media only screen and (max-width: 1000px) {

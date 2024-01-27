@@ -16,19 +16,16 @@ const AddToListModal = ({ openModal, restaurantId, notes }) => {
   const [errorMessage, setErrorMessage] = useState("");
   let note = "empty";
 
-  if (notes.length > 0) {
-    console.log("hi");
+  if (notes !== undefined) {
     notes.find((n) => {
       if (n.restaurantId === restaurantId) {
         note = n.personalNotes;
       }
     });
-    console.log("note in find", note);
   }
 
   const newAdd = async (restId, listName) => {
     try {
-      console.log("note", note);
       const added = await dispatch(
         addRestoToList({
           userId: auth.user.id,
@@ -74,7 +71,6 @@ const AddToListModal = ({ openModal, restaurantId, notes }) => {
         notes: note,
       })
     );
-    console.log("added.payload", added.payload);
     if (location.pathname.includes("friendlists")) {
       navigate(-1);
     } else {
@@ -115,7 +111,7 @@ const AddToListModal = ({ openModal, restaurantId, notes }) => {
               return (
                 <div key={list.id}>
                   <section id="modal-lists">
-                    <button onClick={() => newAdd(restaurantId, list.listName)}>
+                    <button id="add-bttn" onClick={() => newAdd(restaurantId, list.listName)}>
                       add
                     </button>
                     <p>{list.listName}</p>
