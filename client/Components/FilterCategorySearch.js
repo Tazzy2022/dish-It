@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategories, searchState, setPrice } from "../features/searchSlice";
 import {
-  getRestaurantLocationCat,
-  getRestLocationPriceCat,
+  // getRestaurantLocationCat,
+  // getRestLocationPriceCat,
+  // getRestaurantsLocationPrice,
+  filterSearch,
 } from "../features/allRestaurantsSlice";
 
 const categories = [
   "african",
-  "american (new)",
-  "american (traditional)",
+  "american",
   "asian fusion",
   "bagels",
   "bakeries",
@@ -105,27 +106,35 @@ const FilterCategorySearch = ({ openModal }) => {
     e.preventDefault();
     openModal(false);
     try {
-      if (pricing.length === 0) {
-        await dispatch(
-          getRestaurantLocationCat({
-            token: auth.token,
-            location: searchInfo.location,
-            categories: category,
-          })
-        );
-      } else {
-        await dispatch(
-          getRestLocationPriceCat({
-            token: auth.token,
-            location: searchInfo.location,
-            categories: category,
-            price: pricing,
-          })
-        );
-      }
+      // if (pricing.length === 0) {
+      //   await dispatch(
+      //     getRestaurantLocationCat({
+      //       token: auth.token,
+      //       location: searchInfo.location,
+      //       categories: category,
+      //     })
+      //   );
+      // } else {
+      //   await dispatch(
+      //     getRestLocationPriceCat({
+      //       token: auth.token,
+      //       location: searchInfo.location,
+      //       categories: category,
+      //       price: pricing,
+      //     })
+      //   );
+      // }
+      await dispatch(
+        filterSearch({
+          token: auth.token,
+          restaurant: "",
+          location: searchInfo.location,
+          categories: category,
+          price: pricing,
+        })
+      );
       dispatch(setCategories(category));
       dispatch(setPrice(pricing));
-      //dispatch(filterSearch())
     } catch (error) {
       console.log(error);
     }

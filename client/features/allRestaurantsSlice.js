@@ -6,25 +6,25 @@ const initialState = {
 };
 
 const refactorCategories = (categories) => {
-  let newCategory = [];
-  categories.forEach((cat) => {
-    if (cat.includes("&")) {
-      newCategory.push(cat.replace(" & ", "_"));
-    } else if (cat.includes(" ")) {
-      newCategory.push(cat.replace(/\s/g, ""));
-    } else {
-      newCategory.push(cat);
-    }
-  });
-  return newCategory;
+  if (categories.length > 0) {
+    return categories
+      .join(",")
+      .replaceAll("&", "%26")
+      .replaceAll(" ", "%20")
+      .replaceAll(",", "%2C");
+  }
 };
 
 export const filterSearch = createAsyncThunk(
   "allRestaurants/filterSearch",
   async (searchObj) => {
+    const loc = searchObj.location
+      .replaceAll(",", "%2C")
+      .replaceAll(" ", "%20");
+    const categories = searchObj.categories;
+    const category = refactorCategories(searchObj.categories);
     try {
       if (searchObj.restaurant.length > 0) {
-        const loc = searchObj.location.replaceAll(",", "");
         const response = await axios.get(
           `/api/restaurants/singleResto/${loc}/${searchObj.restaurant}`,
           {
@@ -38,7 +38,6 @@ export const filterSearch = createAsyncThunk(
         searchObj.price.length === 0 &&
         searchObj.categories.length === 0
       ) {
-        const loc = searchObj.location.replaceAll(",", "");
         const response = await axios.get(`/api/restaurants/city/${loc}`, {
           headers: {
             authorization: searchObj.token,
@@ -49,12 +48,9 @@ export const filterSearch = createAsyncThunk(
         searchObj.price.length > 0 &&
         searchObj.categories.length > 0
       ) {
-        const loc = searchObj.location.replaceAll(",", "");
-        const cat = refactorCategories(searchObj.categories);
-        const allCategories = "&categories=" + cat.join("&categories=");
         const pricing = "&price=" + searchObj.price.join("&price=");
         const response = await axios.get(
-          `/api/restaurants/allFilters/${loc}/${allCategories}/${pricing}`,
+          `/api/restaurants/allFilters/${loc}/${category}/${pricing}`,
           {
             headers: {
               authorization: searchObj.token,
@@ -66,7 +62,6 @@ export const filterSearch = createAsyncThunk(
         searchObj.price.length > 0 &&
         searchObj.categories.length === 0
       ) {
-        const loc = searchObj.location.replaceAll(",", "");
         const pricing = "&price=" + searchObj.price.join("&price=");
         const response = await axios.get(
           `/api/restaurants/price/${pricing}/${loc}`,
@@ -81,18 +76,15 @@ export const filterSearch = createAsyncThunk(
         searchObj.price.length === 0 &&
         searchObj.categories.length > 0
       ) {
-        const loc = searchObj.location.replaceAll(",", "");
-        const cat = refactorCategories(searchObj.categories);
-        const category = "&term=" + cat.join(" ");
+        const location = searchObj.location;
         const response = await axios.get(
-          `/api/restaurants/catPrice/${category}/${loc}`,
+          `/api/restaurants/category/${categories}/${location}`,
           {
             headers: {
               authorization: searchObj.token,
             },
           }
         );
-        console.log("response?.data", response?.data);
         return response?.data;
       }
     } catch (error) {
@@ -105,7 +97,7 @@ export const getAllRestaurants = createAsyncThunk(
   "allRestaurants/getAllRestaurants",
   async ({ token, location }) => {
     try {
-      const loc = location.replaceAll(",", "");
+      const loc = location.replaceAll(",", "%2C").replaceAll(" ", "%20");
       const response = await axios.get(`/api/restaurants/city/${loc}`, {
         headers: {
           authorization: token,
@@ -118,77 +110,75 @@ export const getAllRestaurants = createAsyncThunk(
   }
 );
 
-export const getRestaurantsLocationPrice = createAsyncThunk(
-  "allRestaurants/getRestaurantsLocationPrice",
-  async ({ token, location, price }) => {
-    try {
-      const loc = location.replaceAll(",", "");
-      const pricing = "&price=" + price.join("&price=");
-      const response = await axios.get(
-        `/api/restaurants/price/${pricing}/${loc}`,
-        {
-          headers: {
-            authorization: token,
-          },
-        }
-      );
-      return response?.data;
-    } catch (error) {
-      return error.message;
-    }
-  }
-);
+// export const getRestaurantsLocationPrice = createAsyncThunk(
+//   "allRestaurants/getRestaurantsLocationPrice",
+//   async ({ token, location, price }) => {
+//     console.log("location", location);
+//     console.log("price", price);
+//     try {
+//       const pricing = "&price=" + price.join("&price=");
+//       const response = await axios.get(
+//         `/api/restaurants/price/${pricing}/${location}`,
+//         {
+//           headers: {
+//             authorization: token,
+//           },
+//         }
+//       );
+//       return response?.data;
+//     } catch (error) {
+//       return error.message;
+//     }
+//   }
+// );
 
-export const getRestaurantLocationCat = createAsyncThunk(
-  "allRestaurants/getRestaurantLocationCat",
-  async ({ token, location, categories }) => {
-    try {
-      const loc = location.replaceAll(",", "");
-      const cat = refactorCategories(categories);
-      const category = "&categories=" + cat.join("&categories=");
-      const response = await axios.get(
-        `/api/restaurants/catPrice/${category}/${loc}`,
-        {
-          headers: {
-            authorization: token,
-          },
-        }
-      );
-      return response?.data;
-    } catch (error) {
-      return error.message;
-    }
-  }
-);
+// export const getRestaurantLocationCat = createAsyncThunk(
+//   "allRestaurants/getRestaurantLocationCat",
+//   async ({ token, location, categories }) => {
+//     try {
+//       const response = await axios.get(
+//         `/api/restaurants/category/${categories}/${location}`,
+//         {
+//           headers: {
+//             authorization: token,
+//           },
+//         }
+//       );
+//       return response?.data;
+//     } catch (error) {
+//       return error.message;
+//     }
+//   }
+// );
 
-export const getRestLocationPriceCat = createAsyncThunk(
-  "allRestaurants/getRestLocationPriceCat",
-  async ({ token, location, price, categories }) => {
-    try {
-      const loc = location.replaceAll(",", "");
-      const cat = refactorCategories(categories);
-      const allCategories = "&categories=" + cat.join("&categories=");
-      const pricing = "&price=" + price.join("&price=");
-      const response = await axios.get(
-        `/api/restaurants/allFilters/${loc}/${allCategories}/${pricing}`,
-        {
-          headers: {
-            authorization: token,
-          },
-        }
-      );
-      return response?.data;
-    } catch (error) {
-      return error.message;
-    }
-  }
-);
+// export const getRestLocationPriceCat = createAsyncThunk(
+//   "allRestaurants/getRestLocationPriceCat",
+//   async ({ token, location, price, categories }) => {
+//     try {
+//       const loc = location.replaceAll(",", "");
+//       const cat = refactorCategories(categories);
+//       const allCategories = "&categories=" + cat.join("&categories=");
+//       const pricing = "&price=" + price.join("&price=");
+//       const response = await axios.get(
+//         `/api/restaurants/allFilters/${loc}/${allCategories}/${pricing}`,
+//         {
+//           headers: {
+//             authorization: token,
+//           },
+//         }
+//       );
+//       return response?.data;
+//     } catch (error) {
+//       return error.message;
+//     }
+//   }
+// );
 
 export const getSingleRestaurant = createAsyncThunk(
   "singleRestaurant/getSingleRestaurant",
   async ({ name, location, token }) => {
     try {
-      const loc = location.replaceAll(",", "");
+      const loc = location.replaceAll(",", "%2C").replaceAll(" ", "%20");
       const response = await axios.get(
         `/api/restaurants/singleResto/${loc}/${name}`,
         {
@@ -225,26 +215,29 @@ const allRestaurantsSlice = createSlice({
     builder.addCase(getSingleRestaurant.fulfilled, (state, action) => {
       return action.payload;
     });
-    builder.addCase(getRestaurantsLocationPrice.rejected, (state, action) => {
-      state.error = action.error.message;
-    });
-    builder.addCase(getRestaurantsLocationPrice.fulfilled, (state, action) => {
-      return action.payload;
-    });
-    builder.addCase(getRestLocationPriceCat.rejected, (state, action) => {
-      state.error = action.error.message;
-    });
-    builder.addCase(getRestLocationPriceCat.fulfilled, (state, action) => {
-      return action.payload;
-    });
-    builder.addCase(getRestaurantLocationCat.rejected, (state, action) => {
-      state.error = action.error.message;
-    });
-    builder.addCase(getRestaurantLocationCat.fulfilled, (state, action) => {
-      return action.payload;
-    });
+    // builder.addCase(getRestaurantsLocationPrice.rejected, (state, action) => {
+    //   state.error = action.error.message;
+    // });
+    // builder.addCase(getRestaurantsLocationPrice.fulfilled, (state, action) => {
+    //   return action.payload;
+    // });
+    // builder.addCase(getRestLocationPriceCat.rejected, (state, action) => {
+    //   state.error = action.error.message;
+    // });
+    // builder.addCase(getRestLocationPriceCat.fulfilled, (state, action) => {
+    //   return action.payload;
+    // });
+    // builder.addCase(getRestaurantLocationCat.rejected, (state, action) => {
+    //   state.error = action.error.message;
+    // });
+    // builder.addCase(getRestaurantLocationCat.fulfilled, (state, action) => {
+    //   return action.payload;
+    // });
     builder.addCase(filterSearch.fulfilled, (state, action) => {
       return action.payload;
+    });
+    builder.addCase(filterSearch.rejected, (state, action) => {
+      state.error = action.error.message;
     });
   },
 });

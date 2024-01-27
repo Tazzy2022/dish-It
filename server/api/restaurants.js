@@ -4,6 +4,14 @@ const router = require("express").Router();
 const needle = require("needle");
 require("dotenv").config();
 
+const refactorCategories = (categories) => {
+  console.log("categories in refactor function", categories);
+  return categories
+    .replaceAll("&", "%26")
+    .replaceAll(" ", "%20")
+    .replaceAll(",", "%2C");
+};
+
 //GET /api/restaurants/city/:location
 router.get("/city/:location", async (req, res, next) => {
   try {
@@ -30,9 +38,12 @@ router.get("/city/:location", async (req, res, next) => {
 //GET /api/restaurants/price/:pricing/:location  get restaurants by location and pricing
 router.get("/price/:pricing/:location", async (req, res, next) => {
   try {
+    const loc = req.params.location
+      .replaceAll(",", "%2C")
+      .replaceAll(" ", "%20");
     const restaurants = await needle(
       "get",
-      `${BASE_URL}search?location=${req.params.location}${req.params.pricing}`,
+      `${BASE_URL}search?location=${loc}${req.params.pricing}`,
       {
         headers: {
           Authorization: `Bearer ${process.env.API_KEY}`,
@@ -50,12 +61,14 @@ router.get("/price/:pricing/:location", async (req, res, next) => {
   }
 });
 
-//GET /api/restaurants/catPrice/:category/:location
-router.get("/catPrice/:category/:location", async (req, res, next) => {
+//GET /api/restaurants/category/:categories/:location
+router.get("/category/:categories/:location", async (req, res, next) => {
+  const loc = req.params.location.replaceAll(",", "%2C").replaceAll(" ", "%20");
+  const category = refactorCategories(req.params.categories);
   try {
     const restaurants = await needle(
       "get",
-      `${BASE_URL}search?location=${req.params.location}${req.params.category}`,
+      `${BASE_URL}search?location=${loc}&term=${category}&categories=`,
       {
         headers: {
           Authorization: `Bearer ${process.env.API_KEY}`,
@@ -73,14 +86,14 @@ router.get("/catPrice/:category/:location", async (req, res, next) => {
   }
 });
 
-//GET /api/restaurants/allFilters/location/categories/price
+//GET /api/restaurants/allFilters/loc/category/pricing
 router.get(
-  "/allFilters/:location/:allCategories/:pricing",
+  "/allFilters/:loc/:category/:pricing",
   async (req, res, next) => {
     try {
       const restaurants = await needle(
         "get",
-        `${BASE_URL}search?location=${req.params.location}${req.params.allCategories}${req.params.pricing}`,
+        `${BASE_URL}search?location=${req.params.loc}&term=${req.params.category}&categories=${req.params.pricing}`,
         {
           headers: {
             Authorization: `Bearer ${process.env.API_KEY}`,
