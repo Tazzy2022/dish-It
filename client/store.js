@@ -6,7 +6,7 @@ import allRestaurantsReducer from "./features/allRestaurantsSlice";
 import searchReducer from "./features/searchSlice";
 import FriendsReducer from "./features/FriendsSlice";
 import imageReducer from "./features/imageSlice";
-import logger from "redux-logger";
+//import logger from "redux-logger";
 import thunk from "redux-thunk";
 
 const store = configureStore({
@@ -19,8 +19,8 @@ const store = configureStore({
     friends: FriendsReducer,
     restaurants: allRestaurantsReducer,
   },
-  //middleware: [thunk],
-  middleware: [thunk, logger],
+  middleware: [thunk],
+  //middleware: [thunk, logger],
 });
 
 export default store;

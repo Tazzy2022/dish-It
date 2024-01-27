@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategories, searchState, setPrice } from "../features/searchSlice";
 import {
-  // getRestaurantLocationCat,
-  // getRestLocationPriceCat,
-  // getRestaurantsLocationPrice,
   filterSearch,
 } from "../features/allRestaurantsSlice";
 
@@ -106,24 +103,6 @@ const FilterCategorySearch = ({ openModal }) => {
     e.preventDefault();
     openModal(false);
     try {
-      // if (pricing.length === 0) {
-      //   await dispatch(
-      //     getRestaurantLocationCat({
-      //       token: auth.token,
-      //       location: searchInfo.location,
-      //       categories: category,
-      //     })
-      //   );
-      // } else {
-      //   await dispatch(
-      //     getRestLocationPriceCat({
-      //       token: auth.token,
-      //       location: searchInfo.location,
-      //       categories: category,
-      //       price: pricing,
-      //     })
-      //   );
-      // }
       await dispatch(
         filterSearch({
           token: auth.token,
