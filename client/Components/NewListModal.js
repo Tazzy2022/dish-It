@@ -27,7 +27,7 @@ const NewListModal = ({ openModal }) => {
         listName: listName,
       })
     );
-    // if (list.payload) navigate(`/userlists/${list.payload.id}`);
+    if (list.payload) navigate(`/userlists/${list.payload.id}`);
   };
 
   return (

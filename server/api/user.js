@@ -382,7 +382,6 @@ router.put("/:id/:listName", async (req, res, next) => {
 //PUT "/api/user/lists/:listId/:restaurantId  update/add notes to restaurant in a user's list
 router.put("/lists/:listId/:restaurantId", async (req, res, next) => {
   try {
-    console.log("req.body.personalNotes", req.body.personalNotes);
     const note = await RestaurantNotes.findOne({
       where: {
         listId: req.params.listId,
@@ -420,9 +419,7 @@ router.get("/list/:id", async (req, res, next) => {
     });
     const { listName, id, restaurantIdArray } = idArray;
     if (restaurantIdArray === null) {
-      res.status(204).json({
-        message: "could not find restaurants",
-      });
+      res.send({ listName: listName, id: id, list: "empty" });
     } else {
       const list = await loopThroughArray(restaurantIdArray);
       const notes = await RestaurantNotes.findAll({

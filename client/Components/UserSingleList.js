@@ -13,13 +13,11 @@ const UserSingleList = () => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
-  let thisList;
-
   useEffect(() => {
     const getList = async () => {
       try {
         setIsLoading(true);
-        thisList = await dispatch(
+        await dispatch(
           getSingleList({
             id: id,
             token: auth.token,
@@ -48,18 +46,45 @@ const UserSingleList = () => {
     });
   }
 
+  console.log("list.list", list.list);
+  console.log("lists", lists);
+
   return (
     <div className="single-list-container">
       <h1 className="list-h1">{listname || list.listName}</h1>
-      {list?.list?.length === 0 || Object.keys(list).length === 0 ? (
+      {/* {thisList === undefined && (
+        <div className="loading-p">Loading...</div>
+      )} */}
+
+      {/* {list?.list?.length > 0 &&
+        list?.list?.map((restaurant) => {
+          return (
+            <RestaurantCard
+              key={restaurant.id}
+              restaurant={restaurant}
+              auth={auth}
+              notes={list.notes}
+            />
+          );
+        })}
+      {!list?.list &&
+        list.listName(
+          <div className="empty-list">
+            <p>this list is empty...</p>
+            <Link className="search-link" to="/usersearch">
+              you can start your search here
+            </Link>
+          </div>
+        )} */}
+
+      {list?.list === "empty" ? (
         <div className="empty-list">
           <p>this list is empty...</p>
           <Link className="search-link" to="/usersearch">
             you can start your search here
           </Link>
         </div>
-      ) : (
-        list?.list?.length > 0 &&
+      ) : list?.list?.length > 0 ? (
         list?.list?.map((restaurant) => {
           return (
             <RestaurantCard
@@ -70,6 +95,8 @@ const UserSingleList = () => {
             />
           );
         })
+      ) : (
+        <div className="loading-p">Loading...</div>
       )}
     </div>
   );

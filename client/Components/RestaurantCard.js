@@ -18,6 +18,7 @@ const RestaurantCard = (props) => {
 
   const deleteFromList = async (restId) => {
     try {
+      setIsLoading(true);
       await dispatch(
         removeRestaurantFromList({
           listId: list.id,
@@ -25,7 +26,6 @@ const RestaurantCard = (props) => {
           restaurantId: restId,
         })
       );
-      setIsLoading(true);
       await dispatch(
         getSingleList({
           id: list.id,

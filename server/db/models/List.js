@@ -14,7 +14,6 @@ const List = db.define("list", {
     validate: {
       notEmpty: true,
     },
-    unique: true,
   },
   isPersonal: {
     type: BOOLEAN,
