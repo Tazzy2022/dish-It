@@ -5,6 +5,7 @@ import { loggedoutUser } from "../features/authSlice";
 import { loggoutUserLists } from "../features/listSlice";
 import { clearSearch } from "../features/searchSlice";
 import { clearRestos } from "../features/allRestaurantsSlice";
+import { logoutImage } from "../features/imageSlice";
 
 const Header = () => {
   const auth = useSelector((state) => state.auth);
@@ -17,6 +18,7 @@ const Header = () => {
     dispatch(clearSearch());
     dispatch(clearRestos());
     dispatch(logoutFriends());
+    dispatch(logoutImage());
   };
 
   return (
