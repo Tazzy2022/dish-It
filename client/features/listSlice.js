@@ -58,7 +58,6 @@ const listSlice = createSlice({
       state.error = action.error.message;
     });
     builder.addCase(getAllLists.fulfilled, (state, action) => {
-      //state.lists = action.payload.lists;
       return action.payload;
     });
   },

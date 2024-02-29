@@ -27,7 +27,6 @@ export const getAllFriends = createAsyncThunk(
   }
 );
 
-//need to add clause to handle email to get user
 export const findFriend = createAsyncThunk(
   "friends/findFriend",
   async ({ token, email }) => {

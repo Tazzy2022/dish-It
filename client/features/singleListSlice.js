@@ -195,7 +195,6 @@ const singleListSlice = createSlice({
       state.error = action.error.message;
     });
     builder.addCase(updateNotes.fulfilled, (state, action) => {
-      //state.notes = action.payload;
       return action.payload;
     });
     builder.addCase(removeRestaurantFromList.rejected, (state, action) => {

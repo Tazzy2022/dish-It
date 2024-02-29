@@ -71,12 +71,10 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    //Logout action
     loggedoutUser: (state) => {
       return initialState;
     },
   },
-  //extraReducers handle axios calls - unlike "reducers:{}"
   extraReducers: (builder) => {
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.user = action.payload;

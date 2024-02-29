@@ -52,31 +52,6 @@ const UserSingleList = () => {
   return (
     <div className="single-list-container">
       <h1 className="list-h1">{listname || list.listName}</h1>
-      {/* {thisList === undefined && (
-        <div className="loading-p">Loading...</div>
-      )} */}
-
-      {/* {list?.list?.length > 0 &&
-        list?.list?.map((restaurant) => {
-          return (
-            <RestaurantCard
-              key={restaurant.id}
-              restaurant={restaurant}
-              auth={auth}
-              notes={list.notes}
-            />
-          );
-        })}
-      {!list?.list &&
-        list.listName(
-          <div className="empty-list">
-            <p>this list is empty...</p>
-            <Link className="search-link" to="/usersearch">
-              you can start your search here
-            </Link>
-          </div>
-        )} */}
-
       {list?.list === "empty" ? (
         <div className="empty-list">
           <p>this list is empty...</p>

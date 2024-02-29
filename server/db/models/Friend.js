@@ -1,5 +1,5 @@
 const Sequelize = require("sequelize");
-const { UUID, UUIDV4, BOOLEAN } = Sequelize;
+const { BOOLEAN } = Sequelize;
 const db = require("../db");
 
 const Friend = db.define("friend", {

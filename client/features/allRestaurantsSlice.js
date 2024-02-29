@@ -151,24 +151,6 @@ const allRestaurantsSlice = createSlice({
     builder.addCase(getSingleRestaurant.fulfilled, (state, action) => {
       return action.payload;
     });
-    // builder.addCase(getRestaurantsLocationPrice.rejected, (state, action) => {
-    //   state.error = action.error.message;
-    // });
-    // builder.addCase(getRestaurantsLocationPrice.fulfilled, (state, action) => {
-    //   return action.payload;
-    // });
-    // builder.addCase(getRestLocationPriceCat.rejected, (state, action) => {
-    //   state.error = action.error.message;
-    // });
-    // builder.addCase(getRestLocationPriceCat.fulfilled, (state, action) => {
-    //   return action.payload;
-    // });
-    // builder.addCase(getRestaurantLocationCat.rejected, (state, action) => {
-    //   state.error = action.error.message;
-    // });
-    // builder.addCase(getRestaurantLocationCat.fulfilled, (state, action) => {
-    //   return action.payload;
-    // });
     builder.addCase(filterSearch.fulfilled, (state, action) => {
       return action.payload;
     });

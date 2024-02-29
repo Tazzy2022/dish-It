@@ -7,7 +7,6 @@ const initialState = {
   error: "",
 };
 
-//consider sending the dummy image here
 export const getPhoto = createAsyncThunk(
   "image/getPhoto",
   async ({ token, email }) => {

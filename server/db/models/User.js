@@ -1,5 +1,4 @@
 const Sequelize = require("sequelize");
-const { Buffer } = require("node:buffer");
 const { UUID, UUIDV4, STRING, BLOB } = Sequelize;
 const db = require("../db");
 const jwt = require("jsonwebtoken");
@@ -50,11 +49,6 @@ const User = db.define(
         notEmpty: true,
       },
     },
-    // image: {
-    //   type: STRING,
-    //   default:
-    //     "https://media01.stockfood.com/largepreviews/Mjk5MDcwMDI=/00964742-Amusing-face-made-from-vegetables-rosemary-and-mushroom.jpg",
-    // },
     image: {
       type: BLOB,
     },
@@ -125,21 +119,5 @@ User.validate = async (token) => {
     throw (error, err);
   }
 };
-
-// User.getImage = async (id) => {
-//   try {
-//     const user = await User.findByPk(id);
-//     if (Buffer.isBuffer(user.dataValues.image)) {
-//       //const image = Buffer.from(user.dataValues.image).toString("base64");
-//       const buffToString = user.dataValues.image;
-//       const image = buffToString.toString("base64");
-//       return image;
-//     } else {
-//       return user.dataValues.image;
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
 
 module.exports = User;
